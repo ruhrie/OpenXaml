@@ -13,3 +13,7 @@ These are built within the project for each path, but it adds the following depe
 * Visual C++ (Windows)
 * xcode (Mac)
 * xorg-dev (Linux)
+
+## Building
+
+Before building for the first time you need to run make in the Dependencies/glew/auto folder. This can be done from unix, cygwin, or WSL easily.
