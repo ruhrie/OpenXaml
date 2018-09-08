@@ -4,5 +4,5 @@
 	branch = 999f355
 [submodule "Dependencies/glew"]
 	path = Dependencies/glew
-url=https://github.com/nigels-com/glew.git glew
+url=https://github.com/nigels-com/glew.git
 	branch = 3a8eff7
