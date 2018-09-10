@@ -8,5 +8,3 @@ if(OPENGL_FOUND)
         target_link_libraries(GLFWHelloWorld ${OPENGL_glu_LIBRARY})
     endif(OPENGL_GLU_FOUND)
 endif(OPENGL_FOUND)
-
-
