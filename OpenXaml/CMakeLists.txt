@@ -11,5 +11,3 @@ if(OPENGL_FOUND)
 	target_link_libraries(dev ${OPENGL_gl_LIBRARY})
     target_include_directories(dev PRIVATE ${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
-
-
