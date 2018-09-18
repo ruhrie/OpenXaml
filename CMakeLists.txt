@@ -6,3 +6,5 @@ find_package( OpenGL REQUIRED )
 add_subdirectory("Dependencies")
 
 add_subdirectory("OpenXaml")
+
+add_subdirectory("Sample")
