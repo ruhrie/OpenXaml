@@ -1,5 +1,11 @@
+add_subdirectory("Parser")
+
+set(INCLUDE_SRC ${PARSER_SRC})
+
 add_executable(GLFWHelloWorld "GLFWHelloWorld.cpp")
-add_executable(dev "dev.cpp")
+add_executable(dev "dev.cpp" ${INCLUDE_SRC})
+
+target_include_directories(dev PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_link_libraries(GLFWHelloWorld glfw)
 if(OPENGL_FOUND)

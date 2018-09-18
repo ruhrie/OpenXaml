@@ -8,6 +8,7 @@ add_subdirectory("Dependencies")
 add_subdirectory("OpenXaml")
 
 add_subdirectory("Sample")
+
 #Generate the documentation if supported
 find_package(Doxygen)
 if(DOXYGEN_FOUND)

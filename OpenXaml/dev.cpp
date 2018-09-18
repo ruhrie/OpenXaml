@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <fstream>
+#include "Parser/Parser.h"
+
 using namespace std;
 
 int main(int argc, char *argv[], char *envp[])
 {
-	string inputFile;
+	std::string inputFile;
 	for (int i = 1; i < argc; i++)
 	{
 		string parameter(argv[i]);
@@ -30,5 +33,9 @@ int main(int argc, char *argv[], char *envp[])
 		return EXIT_FAILURE;
 	}
 
+	string file = OpenXaml::Parser::ReadFile(inputFile);
+
+	
+	cout << argv[0];
 	cout << "done";
 }
