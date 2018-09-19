@@ -3,6 +3,9 @@ project("OpenXaml")
 
 find_package( OpenGL REQUIRED )
 
+set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(BIN_ROOT_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
 add_subdirectory("Dependencies")
 
 add_subdirectory("OpenXaml")
