@@ -2,3 +2,7 @@
 	path = Dependencies/glfw
 	url = https://github.com/glfw/glfw.git
 	branch = 999f355
+[submodule "Dependencies/xerces"]
+	path = Dependencies/xerces
+	url = git@bitbucket.org:Rossette/xerces-openxaml.git
+	branch = 79d05e8
