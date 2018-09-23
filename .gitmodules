@@ -6,3 +6,6 @@
 	path = Dependencies/xerces
 	url = git@bitbucket.org:Rossette/xerces-openxaml.git
 	branch = 79d05e8
+[submodule "Dependencies/freetype"]
+	path = Dependencies/freetype
+	url = git://git.savannah.gnu.org/freetype/freetype2.git
