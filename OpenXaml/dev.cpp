@@ -3,6 +3,9 @@
 #include <string>
 #include <fstream>
 #include "Parser/Parser.h"
+#include "XamlObjects/XamlObject.h"
+#include <GLFW/glfw3.h>
+#include "XamlObjects/Frame.h"
 
 using namespace std;
 
@@ -33,7 +36,35 @@ int main(int argc, char *argv[], char *envp[])
 		return EXIT_FAILURE;
 	}
 
-	string file = OpenXaml::Parser::ReadFile(inputFile);
+	
+	GLFWwindow *window;
+	if (!glfwInit())
+		return -1;
+	Frame *contents = OpenXaml::Parser::ReadFile(inputFile);
+	window = glfwCreateWindow(contents->Width, contents->Height, "My Window", NULL, NULL);
+	if (!window)
+	{
+		glfwTerminate();
+		return -1;
+	}
+	glfwMakeContextCurrent(window);
+
+	while (!glfwWindowShouldClose(window))
+	{
+		/* Render here */
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		/* Swap front and back buffers */
+		glfwSwapBuffers(window);
+
+		/* Poll for and process events */
+		glfwPollEvents();
+	}
+
+	glfwTerminate();
+	
+	
+	
 
 	
 	cout << argv[0];

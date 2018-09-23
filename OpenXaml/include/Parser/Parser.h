@@ -1,7 +1,9 @@
 #include <string>
+#include <vector>
+#include "XamlObjects/Frame.h"
 
 namespace OpenXaml {
 	namespace Parser {
-		std::string ReadFile(std::string inputFile);
+		Frame * ReadFile(std::string inputFile);
 	}
 }
