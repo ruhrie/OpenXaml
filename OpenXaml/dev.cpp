@@ -51,6 +51,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	while (!glfwWindowShouldClose(window))
 	{
+		contents->Draw();
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 

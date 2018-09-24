@@ -9,3 +9,4 @@
 [submodule "Dependencies/freetype"]
 	path = Dependencies/freetype
 	url = git://git.savannah.gnu.org/freetype/freetype2.git
+	branch = VER-2-9-1

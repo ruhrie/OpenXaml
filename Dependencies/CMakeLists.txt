@@ -6,3 +6,8 @@ include_directories("glfw/include")
 
 add_subdirectory("xerces")
 include_directories("xerces/src")
+
+add_subdirectory("freetype")
+include_directories("freetype/include")
+
+include_directories("glad/include")
