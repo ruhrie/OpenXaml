@@ -9,14 +9,16 @@
 #include <vector>
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Frame.h"
+#include "XamlObjects/Rectangle.h"
+#include <memory>
 using namespace std;
 using namespace xercesc;
 namespace OpenXaml {
 	namespace Parser {
 
-		vector<XamlObject *> getObjects(DOMElement *xml)
+		vector<shared_ptr<XamlObject>> getObjects(DOMElement *xml)
 		{
-			vector<XamlObject *> result;
+			vector<shared_ptr<XamlObject>> result;
 			DOMNodeList *childNodes = xml->getChildNodes();
 			for (int i = 0; i < childNodes->getLength(); i++)
 			{
@@ -28,13 +30,25 @@ namespace OpenXaml {
 					string test = XMLString::transcode(xmlString);
 					if (test == "Frame")
 					{
-						Frame win = Frame();
-						vector<XamlObject *> childObjects;
+						shared_ptr<XamlObject> win = make_shared<Frame>();
+						Frame *frame = (Frame *)win.get();
+						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
 						for (int i = 0; i < childObjects.size(); i++)
 						{
-							win.Children.push_back(childObjects[i]);
+							frame->Children.push_back(childObjects[i]);
 						}
-						result.push_back(&win);
+						result.push_back(win);
+					}
+					else if (test == "Rectangle")
+					{
+						shared_ptr<XamlObject> rec = make_shared<Rectangle>();
+						Rectangle *rect = (Rectangle *)rec.get();
+						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
+						for (int i = 0; i < childObjects.size(); i++)
+						{
+							rect->Children.push_back(childObjects[i]);
+						}
+						result.push_back(rec);
 					}
 					else
 					{
@@ -45,7 +59,7 @@ namespace OpenXaml {
 			return result;
 		}
 
-		Frame * ReadFile(string input)
+		Frame ReadFile(string input)
 		{
 			//http://www.yolinux.com/TUTORIALS/XML-Xerces-C.html
 			string fileText;
@@ -77,14 +91,18 @@ namespace OpenXaml {
 			{
 				throw 2;
 			}
-			//vector<XamlObject *> result = getObjects(elementRoot);
+			vector<shared_ptr<XamlObject>> children = getObjects(elementRoot);
 
-			Frame *result = &Frame();
+			Frame frame = Frame();
+			for (int i = 0; i < children.size(); i++)
+			{
+				frame.Children.push_back(children[i]);
+			}
 			
 			
 			XMLPlatformUtils::Terminate();
 
-			return result;
+			return frame;
 		}
 		
 		

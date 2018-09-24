@@ -4,6 +4,7 @@
 class Frame : public XamlObject
 {
 public:
+	void Draw(float xmin, float xmax, float ymin, float ymax);
 	void Draw();
 	int Width = 640;
 	int Height = 480;

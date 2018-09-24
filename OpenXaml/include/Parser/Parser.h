@@ -4,6 +4,6 @@
 
 namespace OpenXaml {
 	namespace Parser {
-		Frame * ReadFile(std::string inputFile);
+		Frame ReadFile(std::string inputFile);
 	}
 }

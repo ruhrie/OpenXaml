@@ -4,6 +4,7 @@
 #include <fstream>
 #include "Parser/Parser.h"
 #include "XamlObjects/XamlObject.h"
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "XamlObjects/Frame.h"
 
@@ -40,8 +41,8 @@ int main(int argc, char *argv[], char *envp[])
 	GLFWwindow *window;
 	if (!glfwInit())
 		return -1;
-	Frame *contents = OpenXaml::Parser::ReadFile(inputFile);
-	window = glfwCreateWindow(contents->Width, contents->Height, "My Window", NULL, NULL);
+	Frame frame = OpenXaml::Parser::ReadFile(inputFile);
+	window = glfwCreateWindow(frame.Width, frame.Height, "My Window", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -49,9 +50,15 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	glfwMakeContextCurrent(window);
 
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) /* There was an error initilizing GLAD */
+	{
+		glfwTerminate();
+		return EXIT_FAILURE;
+	}
+
 	while (!glfwWindowShouldClose(window))
 	{
-		contents->Draw();
+		frame.Draw();
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
