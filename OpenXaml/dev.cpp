@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include "Parser/Parser.h"
-#include "XamlObjects/XamlObject.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "XamlObjects/Frame.h"
@@ -44,6 +43,7 @@ int main(int argc, char *argv[], char *envp[])
 	GLFWwindow *window;
 	if (!glfwInit())
 		return -1;
+
 	Frame frame = OpenXaml::Parser::ReadFile(inputFile);
 	window = glfwCreateWindow(frame.Width, frame.Height, "My Window", NULL, NULL);
 	if (!window)
@@ -52,23 +52,39 @@ int main(int argc, char *argv[], char *envp[])
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
-
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) /* There was an error initilizing GLAD */
 	{
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
 
+	
+
 	GLuint shader = GL::LoadShaders();
+
 	
 	//glBindBuffer(GL_ARRAY_BUFFER, GL::vertexBuffer);
 	
 	GLint posAttrib = glGetAttribLocation(shader, "position");	
 	
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 
-	glUseProgram(shader);
+	//glEnableVertexAttribArray(posAttrib);	
+
+	glGenBuffers(1, &GL::vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, GL::vertexBuffer);
+
+	//glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+	
+	
+
+
+	//glUseProgram(shader);
+
+	frame.Initialize();
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -77,6 +93,9 @@ int main(int argc, char *argv[], char *envp[])
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		frame.Draw();
+		glEnableVertexAttribArray(posAttrib);
+		glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glUseProgram(shader);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
@@ -87,10 +106,5 @@ int main(int argc, char *argv[], char *envp[])
 
 	glfwTerminate();
 	
-	
-	
-
-	
-	cout << argv[0];
 	cout << "done";
 }

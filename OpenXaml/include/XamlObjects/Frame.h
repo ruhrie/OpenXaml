@@ -9,5 +9,6 @@ public:
 	int Width = 640;
 	int Height = 480;
 	Frame();
+	void Initialize();
 };
 #endif

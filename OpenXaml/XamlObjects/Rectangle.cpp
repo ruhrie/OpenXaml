@@ -1,32 +1,50 @@
-
-#include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Rectangle.h"
-#include <glad/glad.h>
-#include <GL/GLConfig.h>
-	GLfloat vertices[] = {
-		 -1.0f,  1.0f,
-		 1.0f, 1.0f,
-		 -1.0f, -1.0f,
-		 1.0f, -1.0f
-	};
 
-	unsigned int indeces[] =
+namespace OpenXaml
+{
+	GLfloat minx, miny, maxx, maxy;
+
+	unsigned short indeces[] =
 	{
 		0,1,2,
 		1,2,3
 	};
-	
-	
+
+
 	void Rectangle::Draw(float xmin, float xmax, float ymin, float ymax)
 	{
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		if (minx != xmin || maxx != xmax || miny != ymin || maxy != ymax)
+		{
+			minx = xmin;
+			maxx = xmax;
+			miny = ymin;
+			maxy = ymax;
+			GLfloat vertices[] = {
+				minx, maxy,
+				maxx, maxy,
+				minx, miny,
+				maxx, miny
+			};
+			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		}
+		
+		
+
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 	}
 
 	Rectangle::Rectangle()
 	{
-		//glBindBuffer(GL_ARRAY_BUFFER, GL::vertexBuffer);
-		//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-		//glGenBuffers(1, &rectBuffer);
-		//glGenBuffers(1, &vbo);
 	}
+
+	void Rectangle::Initialize()
+	{
+		glGenBuffers(1, &vertexBuffer);
+		glGenBuffers(1, &edgeBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
+	}
+}

@@ -1,5 +1,4 @@
 #include "GL/GLConfig.h"
-#include <glad/glad.h>
 
 namespace GL
 {
@@ -39,12 +38,6 @@ namespace GL
 		glBindFragDataLocation(shaderProgram, 0, "outColor");
 		glLinkProgram(shaderProgram);
 
-		GLuint vao;
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
-
-		glGenBuffers(1, &GL::vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, GL::vertexBuffer);
 		return shaderProgram;
 	}
 }

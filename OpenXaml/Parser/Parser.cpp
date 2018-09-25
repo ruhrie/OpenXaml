@@ -8,19 +8,19 @@
 #include <xercesc/dom/DOMText.hpp>
 #include <vector>
 #include "XamlObjects/XamlObject.h"
+#include <memory>
 #include "XamlObjects/Frame.h"
 #include "XamlObjects/Rectangle.h"
-#include <memory>
 using namespace std;
 using namespace xercesc;
 namespace OpenXaml {
 	namespace Parser {
-
+		using namespace OpenXaml;
 		vector<shared_ptr<XamlObject>> getObjects(DOMElement *xml)
 		{
 			vector<shared_ptr<XamlObject>> result;
 			DOMNodeList *childNodes = xml->getChildNodes();
-			for (int i = 0; i < childNodes->getLength(); i++)
+			for (unsigned int i = 0; i < childNodes->getLength(); i++)
 			{
 				DOMNode *currentNode = childNodes->item(i);
 				if (currentNode->getNodeType() && currentNode->getNodeType() == DOMNode::ELEMENT_NODE)
@@ -33,7 +33,7 @@ namespace OpenXaml {
 						shared_ptr<XamlObject> win = make_shared<Frame>();
 						Frame *frame = (Frame *)win.get();
 						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
-						for (int i = 0; i < childObjects.size(); i++)
+						for (unsigned int i = 0; i < childObjects.size(); i++)
 						{
 							frame->Children.push_back(childObjects[i]);
 						}
@@ -41,10 +41,10 @@ namespace OpenXaml {
 					}
 					else if (test == "Rectangle")
 					{
-						shared_ptr<XamlObject> rec = make_shared<Rectangle>();
-						Rectangle *rect = (Rectangle *)rec.get();
+						shared_ptr<XamlObject> rec = make_shared<OpenXaml::Rectangle>();
+						OpenXaml::Rectangle *rect = (OpenXaml::Rectangle *)rec.get();
 						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
-						for (int i = 0; i < childObjects.size(); i++)
+						for (unsigned int i = 0; i < childObjects.size(); i++)
 						{
 							rect->Children.push_back(childObjects[i]);
 						}
@@ -94,7 +94,7 @@ namespace OpenXaml {
 			vector<shared_ptr<XamlObject>> children = getObjects(elementRoot);
 
 			Frame frame = Frame();
-			for (int i = 0; i < children.size(); i++)
+			for (unsigned int i = 0; i < children.size(); i++)
 			{
 				frame.Children.push_back(children[i]);
 			}
