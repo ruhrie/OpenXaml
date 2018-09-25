@@ -2,42 +2,31 @@
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Rectangle.h"
 #include <glad/glad.h>
+#include <GL/GLConfig.h>
+	GLfloat vertices[] = {
+		 -1.0f,  1.0f,
+		 1.0f, 1.0f,
+		 -1.0f, -1.0f,
+		 1.0f, -1.0f
+	};
 
-const GLchar* vertexSource = R"glsl(
-    #version 150 core
-    in vec2 position;
-    void main()
-    {
-        gl_Position = vec4(position, 0.0, 1.0);
-    }
-)glsl";
-const GLchar* fragmentSource = R"glsl(
-    #version 150 core
-    out vec4 outColor;
-    void main()
-    {
-        outColor = vec4(1.0, 1.0, 1.0, 1.0);
-    }
-)glsl";
-
-
-
-GLfloat vertices[] = {
-		 0.0f,  0.5f,
-		 0.5f, -0.5f,
-		-0.5f, -0.5f
-};
-
-void Rectangle::Draw(float xmin, float xmax, float ymin, float ymax)
-{
+	unsigned int indeces[] =
+	{
+		0,1,2,
+		1,2,3
+	};
 	
-
 	
+	void Rectangle::Draw(float xmin, float xmax, float ymin, float ymax)
+	{
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
 
-	
-}
-
-Rectangle::Rectangle()
-{
-	
-}
+	Rectangle::Rectangle()
+	{
+		//glBindBuffer(GL_ARRAY_BUFFER, GL::vertexBuffer);
+		//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+		//glGenBuffers(1, &rectBuffer);
+		//glGenBuffers(1, &vbo);
+	}

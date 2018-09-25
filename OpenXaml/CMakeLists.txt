@@ -1,4 +1,4 @@
-file(GLOB SOURCES "Parser/*" "XamlObjects/*" "../Dependencies/glad/src/*") # 
+file(GLOB SOURCES "Parser/*" "XamlObjects/*" "../Dependencies/glad/src/*" "GL/*") # 
 add_executable(GLFWHelloWorld "GLFWHelloWorld.cpp" ${SOURCES})
 add_executable(dev "dev.cpp" ${SOURCES})
 

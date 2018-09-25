@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const GLchar* vertexSource = R"glsl(
+const GLchar* vertexSourcea = R"glsl(
     #version 150 core
     in vec2 position;
     void main()
@@ -13,7 +13,7 @@ const GLchar* vertexSource = R"glsl(
         gl_Position = vec4(position, 0.0, 1.0);
     }
 )glsl";
-const GLchar* fragmentSource = R"glsl(
+const GLchar* fragmentSourcea = R"glsl(
     #version 150 core
     out vec4 outColor;
     void main()
@@ -66,12 +66,12 @@ int main(void)
 
 	// Create and compile the vertex shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexSource, NULL);
+	glShaderSource(vertexShader, 1, &vertexSourcea, NULL);
 	glCompileShader(vertexShader);
 
 	// Create and compile the fragment shader
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
+	glShaderSource(fragmentShader, 1, &fragmentSourcea, NULL);
 	glCompileShader(fragmentShader);
 
 	// Link the vertex and fragment shader into a shader program

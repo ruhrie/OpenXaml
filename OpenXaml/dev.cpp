@@ -7,8 +7,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "XamlObjects/Frame.h"
+#include "GL/GLConfig.h"
 
 using namespace std;
+
+
 
 int main(int argc, char *argv[], char *envp[])
 {
@@ -56,11 +59,24 @@ int main(int argc, char *argv[], char *envp[])
 		return EXIT_FAILURE;
 	}
 
+	GLuint shader = GL::LoadShaders();
+	
+	//glBindBuffer(GL_ARRAY_BUFFER, GL::vertexBuffer);
+	
+	GLint posAttrib = glGetAttribLocation(shader, "position");	
+	
+	glEnableVertexAttribArray(posAttrib);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glUseProgram(shader);
+
 	while (!glfwWindowShouldClose(window))
 	{
-		frame.Draw();
 		/* Render here */
+		
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		frame.Draw();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
