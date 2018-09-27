@@ -8,6 +8,8 @@ namespace GL
 	GLuint LoadShaders();
 
 	static GLuint vertexBuffer;
+
+	static GLuint shaderProgram;
 }
 
 #endif

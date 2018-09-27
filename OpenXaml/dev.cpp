@@ -10,8 +10,6 @@
 
 using namespace std;
 
-
-
 int main(int argc, char *argv[], char *envp[])
 {
 	std::string inputFile;
@@ -99,6 +97,11 @@ int main(int argc, char *argv[], char *envp[])
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
+
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+
+		glViewport(0, 0, width, height);
 
 		/* Poll for and process events */
 		glfwPollEvents();

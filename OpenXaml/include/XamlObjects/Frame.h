@@ -10,5 +10,9 @@ public:
 	int Height = 480;
 	Frame();
 	void Initialize();
+	void GetAttributes(DOMElement *element);
+private:
+	GLuint vertexBuffer;
+	GLuint edgeBuffer;
 };
 #endif

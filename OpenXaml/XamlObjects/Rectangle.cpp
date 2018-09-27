@@ -47,4 +47,20 @@ namespace OpenXaml
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 	}
+
+	void Rectangle::GetAttributes(DOMElement *element)
+	{
+		const XMLCh *xmlWidth = element->getAttribute(XMLString::transcode("Width"));
+		string width = XMLString::transcode(xmlWidth);
+		if (width != "")
+		{
+			Rectangle::Width = stoi(width);
+		}
+		const XMLCh *xmlHeight = element->getAttribute(XMLString::transcode("Height"));
+		string height = XMLString::transcode(xmlHeight);
+		if (width != "")
+		{
+			Rectangle::Height = stoi(height);
+		}
+	}
 }

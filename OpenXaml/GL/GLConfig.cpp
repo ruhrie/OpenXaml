@@ -1,35 +1,37 @@
 #include "GL/GLConfig.h"
-
+#include <fstream>
+#include <string>
+#include <iostream>
+using namespace std;
 namespace GL
 {
-	//this being embedded is likely temporary
-
-	const GLchar* vertexCode = R"glsl(
-    #version 150 core
-    in vec2 position;
-    void main()
-    {
-        gl_Position = vec4(position, 0.0, 1.0);
-    }
-)glsl";
-	const GLchar* fragmentCode = R"glsl(
-    #version 150 core
-    out vec4 outColor;
-    void main()
-    {
-        outColor = vec4(1.0, 0.0, 1.0, 1.0);
-    }
-)glsl";
-
-
 	GLuint LoadShaders()
 	{
+		string fragment;
+		string vertex;
+		ifstream fragmentFile("Shaders/fragment.glsl");
+		string line;
+		while (getline(fragmentFile, line))
+		{
+			fragment += line + "\n";
+		}
+		fragmentFile.close();
+		ifstream vertexFile("Shaders/vertex.glsl");
+		while (getline(vertexFile, line))
+		{
+			vertex += line + "\n";
+		}
+		vertexFile.close();
+
+		const char * vertexsrc = vertex.c_str();
+		const char * fragmentsrc = fragment.c_str();
+
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vertexShader, 1, &vertexCode, NULL);
+		glShaderSource(vertexShader, 1, &vertexsrc, NULL);
 		glCompileShader(vertexShader);
 
 		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragmentShader, 1, &fragmentCode, NULL);
+		glShaderSource(fragmentShader, 1, &fragmentsrc, NULL);
 		glCompileShader(fragmentShader);
 
 		GLuint shaderProgram = glCreateProgram();
@@ -37,6 +39,12 @@ namespace GL
 		glAttachShader(shaderProgram, fragmentShader);
 		glBindFragDataLocation(shaderProgram, 0, "outColor");
 		glLinkProgram(shaderProgram);
+
+		GL::shaderProgram = glCreateProgram();
+		glAttachShader(GL::shaderProgram, vertexShader);
+		glAttachShader(GL::shaderProgram, fragmentShader);
+		glBindFragDataLocation(GL::shaderProgram, 0, "outColor");
+		glLinkProgram(GL::shaderProgram);
 
 		return shaderProgram;
 	}

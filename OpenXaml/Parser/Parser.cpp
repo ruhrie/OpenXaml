@@ -32,6 +32,7 @@ namespace OpenXaml {
 					{
 						shared_ptr<XamlObject> win = make_shared<Frame>();
 						Frame *frame = (Frame *)win.get();
+						frame->GetAttributes(element);
 						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
 						for (unsigned int i = 0; i < childObjects.size(); i++)
 						{
@@ -43,6 +44,7 @@ namespace OpenXaml {
 					{
 						shared_ptr<XamlObject> rec = make_shared<OpenXaml::Rectangle>();
 						OpenXaml::Rectangle *rect = (OpenXaml::Rectangle *)rec.get();
+						rect->GetAttributes(element);
 						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
 						for (unsigned int i = 0; i < childObjects.size(); i++)
 						{
@@ -91,9 +93,11 @@ namespace OpenXaml {
 			{
 				throw 2;
 			}
+
 			vector<shared_ptr<XamlObject>> children = getObjects(elementRoot);
 
 			Frame frame = Frame();
+			frame.GetAttributes(elementRoot);
 			for (unsigned int i = 0; i < children.size(); i++)
 			{
 				frame.Children.push_back(children[i]);

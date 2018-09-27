@@ -11,6 +11,7 @@ namespace OpenXaml
 		Rectangle();
 		void Draw(float xmin, float xmax, float ymin, float ymax);
 		void Initialize();
+		void GetAttributes(DOMElement *element);
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;
