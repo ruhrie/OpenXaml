@@ -15,8 +15,9 @@ class XamlObject
 public:
 	virtual void Draw(float xmin, float xmax, float ymin, float ymax) = 0;
 	std::vector<std::shared_ptr<XamlObject>> Children;
-	virtual void Initialize() = 0;
+	virtual void Initialize(GLuint shader) = 0;
 	virtual void GetAttributes(DOMElement *element) = 0;
+	GLuint shaderProgram;
 };
 
 #endif

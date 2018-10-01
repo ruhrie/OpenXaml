@@ -10,7 +10,7 @@ namespace OpenXaml
 		int Height = 100;
 		Rectangle();
 		void Draw(float xmin, float xmax, float ymin, float ymax);
-		void Initialize();
+		void Initialize(GLuint shader);
 		void GetAttributes(DOMElement *element);
 	private:
 		GLuint vertexBuffer;

@@ -15,9 +15,9 @@ Frame::Frame()
 
 void Frame::Draw(float xmin, float xmax, float ymin, float ymax)
 {
-	glUseProgram(GL::shaderProgram);
-	int vertexColorLocation = glGetUniformLocation(GL::shaderProgram, "thecolor");	
-	glUniform4f(vertexColorLocation, 0.0f, 0.0f, 0.0f, 1.0f);
+	glUseProgram(Frame::shaderProgram);
+	int vertexColorLocation = glGetUniformLocation(Frame::shaderProgram, "thecolor");
+	glUniform4f(vertexColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
@@ -32,8 +32,9 @@ void Frame::Draw()
 	Frame::Draw(-1.0f, 1.0f, -1.0f, 1.0f);
 }
 
-void Frame::Initialize()
+void Frame::Initialize(GLuint shader)
 {
+	Frame::shaderProgram = shader;
 	GLfloat vertices[] = {
 				-1, 1,
 				1, 1,
@@ -48,7 +49,7 @@ void Frame::Initialize()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	for (unsigned int i = 0; i < Children.size(); i++)
 	{
-		Children[i]->Initialize();
+		Children[i]->Initialize(shader);
 	}
 }
 

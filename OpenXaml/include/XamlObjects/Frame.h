@@ -9,7 +9,7 @@ public:
 	int Width = 640;
 	int Height = 480;
 	Frame();
-	void Initialize();
+	void Initialize(GLuint shader);
 	void GetAttributes(DOMElement *element);
 private:
 	GLuint vertexBuffer;

@@ -40,8 +40,9 @@ namespace OpenXaml
 	{
 	}
 
-	void Rectangle::Initialize()
+	void Rectangle::Initialize(GLuint shader)
 	{
+		Rectangle::shaderProgram = shader;
 		glGenBuffers(1, &vertexBuffer);
 		glGenBuffers(1, &edgeBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);

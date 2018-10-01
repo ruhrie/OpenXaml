@@ -40,12 +40,6 @@ namespace GL
 		glBindFragDataLocation(shaderProgram, 0, "outColor");
 		glLinkProgram(shaderProgram);
 
-		GL::shaderProgram = glCreateProgram();
-		glAttachShader(GL::shaderProgram, vertexShader);
-		glAttachShader(GL::shaderProgram, fragmentShader);
-		glBindFragDataLocation(GL::shaderProgram, 0, "outColor");
-		glLinkProgram(GL::shaderProgram);
-
 		return shaderProgram;
 	}
 }

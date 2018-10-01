@@ -59,30 +59,14 @@ int main(int argc, char *argv[], char *envp[])
 	
 
 	GLuint shader = GL::LoadShaders();
-
-	
-	//glBindBuffer(GL_ARRAY_BUFFER, GL::vertexBuffer);
 	
 	GLint posAttrib = glGetAttribLocation(shader, "position");	
-	
+
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	//glEnableVertexAttribArray(posAttrib);	
-
-	glGenBuffers(1, &GL::vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, GL::vertexBuffer);
-
-	//glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-	
-	
-
-
-	//glUseProgram(shader);
-
-	frame.Initialize();
+	frame.Initialize(shader);
 
 	while (!glfwWindowShouldClose(window))
 	{
