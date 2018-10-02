@@ -8,6 +8,7 @@
 #include <xercesc/util/XMLUni.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <string>
+#include "GL/GLConfig.h"
 using namespace xercesc;
 using namespace std;
 class XamlObject

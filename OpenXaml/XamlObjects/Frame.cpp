@@ -1,6 +1,5 @@
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Frame.h"
-#include "GL/GLConfig.h"
 
 unsigned short indeces[] =
 {
@@ -18,9 +17,14 @@ void Frame::Draw(float xmin, float xmax, float ymin, float ymax)
 	glUseProgram(Frame::shaderProgram);
 	int vertexColorLocation = glGetUniformLocation(Frame::shaderProgram, "thecolor");
 	glUniform4f(vertexColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
+	
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+	
+	//glBindVertexArray(*Frame::vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+	//glBindVertexArray(0);
 	for (unsigned int i = 0; i < Children.size(); i++)
 	{
 		Children[i]->Draw(xmin, xmax, ymin, ymax);
@@ -34,13 +38,14 @@ void Frame::Draw()
 
 void Frame::Initialize(GLuint shader)
 {
-	Frame::shaderProgram = shader;
+	Frame::shaderProgram = GL::LoadShaders();
 	GLfloat vertices[] = {
 				-1, 1,
 				1, 1,
 				-1, -1,
 				1, -1
 	};
+
 	glGenBuffers(1, &vertexBuffer);
 	glGenBuffers(1, &edgeBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);

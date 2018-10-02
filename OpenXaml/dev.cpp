@@ -66,18 +66,28 @@ int main(int argc, char *argv[], char *envp[])
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
+	
+	
 	frame.Initialize(shader);
+
+	//glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	//glEnableVertexAttribArray(posAttrib);
+	glEnableVertexAttribArray(0);
+
+	//https://stackoverflow.com/questions/34068792/drawing-multiple-objects-in-opengl-with-different-buffers
 
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		//glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		//glEnableVertexAttribArray(posAttrib);
 		frame.Draw();
-		glEnableVertexAttribArray(posAttrib);
-		glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glUseProgram(shader);
+		
+		
+		//glUseProgram(shader);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
@@ -86,7 +96,7 @@ int main(int argc, char *argv[], char *envp[])
 		glfwGetWindowSize(window, &width, &height);
 
 		glViewport(0, 0, width, height);
-
+		
 		/* Poll for and process events */
 		glfwPollEvents();
 	}
