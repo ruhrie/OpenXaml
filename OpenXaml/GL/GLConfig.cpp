@@ -7,6 +7,9 @@ namespace GL
 {
 	GLuint LoadShaders()
 	{
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glClearColor(0.0, 0.0, 0.0, 0.0);
 		string fragment;
 		string vertex;
 		ifstream fragmentFile("Shaders/fragment.glsl");

@@ -1,3 +1,3 @@
-<Frame Width ="1024" Height="768">
-  <Rectangle Width="100" Height="100"/>
+<Frame Width ="1024" Height="768" Background="#FF111111">
+  <Rectangle Fill="#440000FF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 </Frame>

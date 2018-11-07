@@ -8,6 +8,7 @@ public:
 	void Draw();
 	int Width = 640;
 	int Height = 480;
+	unsigned int Background = 0xFF000000;
 	Frame();
 	void Initialize(GLuint shader);
 	void GetAttributes(DOMElement *element);

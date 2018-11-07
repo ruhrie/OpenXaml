@@ -6,12 +6,13 @@ namespace OpenXaml
 	class Rectangle : public XamlObject
 	{
 	public:
-		int Width = 100;
-		int Height = 100;
+		int Width = 0;
+		int Height = 0;
 		Rectangle();
 		void Draw(float xmin, float xmax, float ymin, float ymax);
 		void Initialize(GLuint shader);
 		void GetAttributes(DOMElement *element);
+		unsigned int Fill = 0xFF000000;
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;

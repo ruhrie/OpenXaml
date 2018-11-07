@@ -9,6 +9,8 @@
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <string>
 #include "GL/GLConfig.h"
+#include "Properties/HorizontalAlignment.h";
+#include "Properties/VerticalAlignment.h";
 using namespace xercesc;
 using namespace std;
 class XamlObject
@@ -19,6 +21,13 @@ public:
 	virtual void Initialize(GLuint shader) = 0;
 	virtual void GetAttributes(DOMElement *element) = 0;
 	GLuint shaderProgram;
+	void SetScale(float scale, bool isHorizontal);
+	float GetScale(bool horizontal);
+	char HorizontalAlignment = HorizontalAlignment::Stretch;
+	char VerticalAlignment = VerticalAlignment::Stretch;
+private:
+	float xScale;
+	float yScale;
 };
 
 #endif

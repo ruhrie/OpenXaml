@@ -1,4 +1,3 @@
-
 namespace HorizontalAlignment
 {
 	static char Stretch = 0;

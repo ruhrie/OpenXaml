@@ -1,6 +1,6 @@
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Frame.h"
-
+#include <sstream>
 unsigned short indeces[] =
 {
 	0,1,2,
@@ -16,7 +16,13 @@ void Frame::Draw(float xmin, float xmax, float ymin, float ymax)
 {
 	glUseProgram(Frame::shaderProgram);
 	int vertexColorLocation = glGetUniformLocation(Frame::shaderProgram, "thecolor");
-	glUniform4f(vertexColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
+
+	float a, r, g, b;
+	a = ((Background & 0xFF000000) >> 24) / 255.0;
+	r = ((Background & 0x00FF0000) >> 16) / 255.0;
+	g = ((Background & 0x0000FF00) >> 8) / 255.0;
+	b = ((Background & 0x000000FF)) / 255.0;
+	glUniform4f(vertexColorLocation, r, g, b, a);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -72,5 +78,18 @@ void Frame::GetAttributes(DOMElement *element)
 	{
 		Frame::Height = stoi(height);
 	}
-
+	const XMLCh *xmlBackground = element->getAttribute(XMLString::transcode("Background"));
+	string background = XMLString::transcode(xmlBackground);
+	if (background != "")
+	{
+		if (background[0] != '#')
+		{
+			throw 3;
+		}
+		else
+		{
+			std::istringstream iss(background.substr(1, background.size()));
+			iss >> std::hex >> Frame::Background;
+		}
+	}
 }
