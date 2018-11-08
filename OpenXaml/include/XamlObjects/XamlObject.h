@@ -9,8 +9,8 @@
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <string>
 #include "GL/GLConfig.h"
-#include "Properties/HorizontalAlignment.h";
-#include "Properties/VerticalAlignment.h";
+#include "Properties/HorizontalAlignment.h"
+#include "Properties/VerticalAlignment.h"
 using namespace xercesc;
 using namespace std;
 class XamlObject

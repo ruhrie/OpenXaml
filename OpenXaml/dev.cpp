@@ -7,7 +7,7 @@
 #include <GLFW/glfw3.h>
 #include "XamlObjects/Frame.h"
 #include "GL/GLConfig.h"
-
+#include "GL/Font.h"
 using namespace std;
 
 int main(int argc, char *argv[], char *envp[])
@@ -37,15 +37,15 @@ int main(int argc, char *argv[], char *envp[])
 		return EXIT_FAILURE;
 	}
 
-	
+
 	GLFWwindow *window;
 	if (!glfwInit())
 		return -1;
 
 	Frame frame = OpenXaml::Parser::ReadFile(inputFile);
 	window = glfwCreateWindow(frame.Width, frame.Height, "My Window", NULL, NULL);
-	frame.SetScale(1.0 / frame.Width, true);
-	frame.SetScale(1.0 / frame.Height, false);
+	frame.SetScale(1.0f / frame.Width, true);
+	frame.SetScale(1.0f / frame.Height, false);
 	if (!window)
 	{
 		glfwTerminate();
@@ -57,8 +57,9 @@ int main(int argc, char *argv[], char *envp[])
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
-
-	
+	FT_Library fontLibrary;
+	FT_Init_FreeType(&fontLibrary);
+	Font font = Font(fontLibrary, "D:\\Arimo-Regular.ttf");
 
 	GLuint shader = GL::LoadShaders();
 	
@@ -83,11 +84,10 @@ int main(int argc, char *argv[], char *envp[])
 		/* Render here */
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		
 		//glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		//glEnableVertexAttribArray(posAttrib);
-		frame.Draw();
-		
+		frame.Draw();		
 		
 		//glUseProgram(shader);
 

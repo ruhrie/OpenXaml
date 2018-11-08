@@ -18,10 +18,10 @@ void Frame::Draw(float xmin, float xmax, float ymin, float ymax)
 	int vertexColorLocation = glGetUniformLocation(Frame::shaderProgram, "thecolor");
 
 	float a, r, g, b;
-	a = ((Background & 0xFF000000) >> 24) / 255.0;
-	r = ((Background & 0x00FF0000) >> 16) / 255.0;
-	g = ((Background & 0x0000FF00) >> 8) / 255.0;
-	b = ((Background & 0x000000FF)) / 255.0;
+	a = ((Background & 0xFF000000) >> 24) / 255.0f;
+	r = ((Background & 0x00FF0000) >> 16) / 255.0f;
+	g = ((Background & 0x0000FF00) >> 8) / 255.0f;
+	b = ((Background & 0x000000FF)) / 255.0f;
 	glUniform4f(vertexColorLocation, r, g, b, a);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);

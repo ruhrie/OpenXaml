@@ -102,10 +102,10 @@ namespace OpenXaml
 		glUseProgram(Rectangle::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(Rectangle::shaderProgram, "thecolor");
 		float a, r, g, b;
-		a = ((Fill & 0xFF000000) >> 24) / 255.0;
-		r = ((Fill & 0x00FF0000) >> 16) / 255.0;
-		g = ((Fill & 0x0000FF00) >> 8) / 255.0;
-		b = ((Fill & 0x000000FF)) / 255.0;
+		a = ((Fill & 0xFF000000) >> 24) / 255.0f;
+		r = ((Fill & 0x00FF0000) >> 16) / 255.0f;
+		g = ((Fill & 0x0000FF00) >> 8) / 255.0f;
+		b = ((Fill & 0x000000FF)) / 255.0f;
 		glUniform4f(vertexColorLocation, r, g, b, a);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
