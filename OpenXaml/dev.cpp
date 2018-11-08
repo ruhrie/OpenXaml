@@ -8,7 +8,10 @@
 #include "XamlObjects/Frame.h"
 #include "GL/GLConfig.h"
 #include "GL/Font.h"
+#include "Globals.h"
 using namespace std;
+
+Font fa;
 
 int main(int argc, char *argv[], char *envp[])
 {
@@ -59,10 +62,11 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	FT_Library fontLibrary;
 	FT_Init_FreeType(&fontLibrary);
-	Font font = Font(fontLibrary, "D:\\Arimo-Regular.ttf");
-
+	Font font = Font(fontLibrary, "C:\\Arimo-Regular.ttf", 24);
+	auto hi = font['a'];
+	auto hio = font['a'];
 	GLuint shader = GL::LoadShaders();
-	
+	fa = font;
 	GLint posAttrib = glGetAttribLocation(shader, "position");	
 
 	GLuint vao;

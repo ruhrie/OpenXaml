@@ -6,10 +6,14 @@
 #include "GL/Character.h"
 #include FT_FREETYPE_H
 using namespace std;
+
 class Font
 {
 public:
-	Font(FT_Library lib, string file);
+	Font();
+	Font(FT_Library lib, string file, int size);
+	Character& operator[](const char index);
+	~Font();
 private:
 	FT_Face face;
 	map<char, Character> characterMap;

@@ -1,10 +1,19 @@
-#ifndef FRAME_H
-#define FRAME_H
+#ifndef TEXTBLOCK_H
+#define TEXTBLOCK_H
 #include "XamlObjects/XamlObject.h"
 //https://learnopengl.com/In-Practice/Text-Rendering
-class TextBlock : public XamlObject
+namespace OpenXaml 
 {
-	void Draw(float xmin, float xmax, float ymin, float ymax);
-};
-
+	class TextBlock : public XamlObject
+	{
+	public:
+		void Draw(float xmin, float xmax, float ymin, float ymax);
+		string Text;
+		void GetAttributes(DOMElement *element);
+		void Initialize(GLuint shader);
+	private:
+		GLuint vertexBuffer;
+		GLuint edgeBuffer;
+	};
+}
 #endif
