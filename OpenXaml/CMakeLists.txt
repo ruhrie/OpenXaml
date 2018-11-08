@@ -1,7 +1,6 @@
 add_subdirectory(Shaders)
 
-file(GLOB SOURCES "Parser/*" "XamlObjects/*" "../Dependencies/glad/src/*" "GL/*") # 
-add_executable(GLFWHelloWorld "GLFWHelloWorld.cpp" ${SOURCES})
+file(GLOB SOURCES "Parser/*" "XamlObjects/*" "../Dependencies/glad/src/*" "GL/*") 
 add_executable(dev "dev.cpp" ${SOURCES})
 
 set (INCLUDE_DIRS {
@@ -13,17 +12,12 @@ set (INCLUDE_DIRS {
 })
 target_include_directories(dev PRIVATE ${INCLUDE_DIRS} )
 target_link_libraries(dev xerces-c glfw freetype)
-target_include_directories(GLFWHelloWorld PRIVATE ${INCLUDE_DIRS})
-target_link_libraries(GLFWHelloWorld xerces-c glfw freetype)
 
 
 if(OPENGL_FOUND)
 	target_link_libraries(dev ${OPENGL_gl_LIBRARY})
 	target_include_directories(dev PRIVATE ${OPENGL_INCLUDE_DIR})
-    target_link_libraries(GLFWHelloWorld ${OPENGL_gl_LIBRARY})
-    target_include_directories(GLFWHelloWorld PRIVATE ${OPENGL_INCLUDE_DIR})
     if(OPENGL_GLU_FOUND)
-        target_link_libraries(GLFWHelloWorld ${OPENGL_glu_LIBRARY})
 		target_link_libraries(dev ${OPENGL_glu_LIBRARY})
     endif(OPENGL_GLU_FOUND)
 endif(OPENGL_FOUND)
