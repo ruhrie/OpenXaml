@@ -9,8 +9,9 @@ namespace OpenXaml {
 	{
 		glUseProgram(TextBlock::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(TextBlock::shaderProgram, "thecolor");
+		int modeLoc = glGetUniformLocation(TextBlock::shaderProgram, "mode");
 		glUniform4f(vertexColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
-
+		glUniform1i(modeLoc, 2);
 		float asdf = xmin;
 		float fdsa = 0.0f;
 		float x0, x1, y0, y1;
@@ -26,20 +27,22 @@ namespace OpenXaml {
 			x1 = asdf + (ch.BearingX + ch.Width) * GetScale(true);
 			y0 = fdsa + ch.BearingY * GetScale(false);
 			y1 = fdsa + (ch.BearingY - ch.Height) * GetScale(false);
-			GLfloat vertices[8] = {
-				x0, y0,
-				x1, y0,
-				x0, y1,
-				x1, y1
+			GLfloat vertices[16] = {
+				x0, y0, 0,0,
+				x1, y0, 1,0,
+				x0, y1, 0,1,
+				x1, y1, 1,1
 			};
 
 			glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *) (2 * sizeof(float)));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
-			//glBindVertexArray(*Rectangle::vao);
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 			/*

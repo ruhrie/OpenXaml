@@ -16,18 +16,21 @@ void Frame::Draw(float xmin, float xmax, float ymin, float ymax)
 {
 	glUseProgram(Frame::shaderProgram);
 	int vertexColorLocation = glGetUniformLocation(Frame::shaderProgram, "thecolor");
-
+	int modeLoc = glGetUniformLocation(Frame::shaderProgram, "mode");
 	float a, r, g, b;
 	a = ((Background & 0xFF000000) >> 24) / 255.0f;
 	r = ((Background & 0x00FF0000) >> 16) / 255.0f;
 	g = ((Background & 0x0000FF00) >> 8) / 255.0f;
 	b = ((Background & 0x000000FF)) / 255.0f;
 	glUniform4f(vertexColorLocation, r, g, b, a);
-	
+	glUniform1i(modeLoc, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 	//glBindVertexArray(*Frame::vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 	//glBindVertexArray(0);
@@ -46,10 +49,10 @@ void Frame::Initialize(GLuint shader)
 {
 	Frame::shaderProgram = GL::LoadShaders();
 	GLfloat vertices[] = {
-				-1, 1,
-				1, 1,
-				-1, -1,
-				1, -1
+				-1, 1, 0, 1,
+				1, 1, 1, 1,
+				-1, -1, 0, 0,
+				1, -1, 1, 0
 	};
 
 	glGenBuffers(1, &vertexBuffer);
