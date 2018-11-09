@@ -8,7 +8,7 @@ struct Character
 	int Height;
 	int BearingX;
 	int BearingY;
-	GLuint Advance;
+	GLuint AdvanceX;
 };
 
 #endif

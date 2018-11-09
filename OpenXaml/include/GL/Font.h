@@ -13,6 +13,7 @@ public:
 	Font();
 	Font(FT_Library lib, string file, int size);
 	Character& operator[](const char index);
+	int Height;
 	~Font();
 private:
 	FT_Face face;

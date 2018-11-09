@@ -13,7 +13,7 @@ namespace OpenXaml {
 		glUniform4f(vertexColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
 		glUniform1i(modeLoc, 2);
 		float asdf = xmin;
-		float fdsa = 0.0f;
+		float fdsa = ymax;
 		float x0, x1, y0, y1;
 
 		GLfloat x = 0.0f;
@@ -23,44 +23,73 @@ namespace OpenXaml {
 		{
 			char a = Text[i];
 			Character ch = fa[a];
-			x0 = asdf + ch.BearingX * GetScale(true);
-			x1 = asdf + (ch.BearingX + ch.Width) * GetScale(true);
-			y0 = fdsa + ch.BearingY * GetScale(false);
-			y1 = fdsa + (ch.BearingY - ch.Height) * GetScale(false);
-			GLfloat vertices[16] = {
-				x0, y0, 0,0,
-				x1, y0, 1,0,
-				x0, y1, 0,1,
-				x1, y1, 1,1
-			};
+			if (a == '\n')
+			{
+				fdsa -= (fa.Height >> 6) * GetScale(false);
+				asdf = xmin;
+			}
+			else if (a == '\t')
+			{
 
-			glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-			glEnableVertexAttribArray(1);
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *) (2 * sizeof(float)));
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+			}
+			else
+			{
+				x0 = asdf + ch.BearingX * GetScale(true);
+				x1 = asdf + (ch.BearingX + ch.Width) * GetScale(true);
 
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-			/*
-			glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			// Render quad
-			glDrawArrays(GL_TRIANGLES, 0, 6);
-			*/
-			asdf += (ch.Advance >> 6) * GetScale(true);
+				if (x1 > xmax)
+				{
+					fdsa -= (fa.Height >> 6) * GetScale(false);
+					asdf = xmin;
+					x0 = asdf + ch.BearingX * GetScale(true);
+					x1 = asdf + (ch.BearingX + ch.Width) * GetScale(true);
+				}
+
+				y0 = fdsa + ch.BearingY * GetScale(false);
+				y1 = fdsa + (ch.BearingY - ch.Height) * GetScale(false);
+				GLfloat vertices[16] = {
+					x0, y0, 0,0,
+					x1, y0, 1,0,
+					x0, y1, 0,1,
+					x1, y1, 1,1
+				};
+
+				glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+				glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+				glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+				glEnableVertexAttribArray(0);
+				glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+				glEnableVertexAttribArray(1);
+				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+
+				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+			}
+			asdf += (ch.AdvanceX >> 6) * GetScale(true);
+			
 		}
 	}
 	void TextBlock::GetAttributes(DOMElement *element)
 	{
-		auto bodyConst = element->getTextContent();
-		string body = XMLString::transcode(bodyConst);
-		Text = body;
+		const XMLCh *xmlText = element->getAttribute(XMLString::transcode("Text"));
+		string text = XMLString::transcode(xmlText);
+		if (text != "")
+		{
+			Text = text;
+		}
+		else
+		{
+			auto bodyConst = element->getTextContent();
+			string body = XMLString::transcode(bodyConst);
+			Text = body;
+		}
+		const XMLCh *xmlTextWrapping = element->getAttribute(XMLString::transcode("TextWrapping"));
+		string textWrapping = XMLString::transcode(xmlTextWrapping);
+		if (textWrapping != "")
+		{
+
+		}
 	}
 	void TextBlock::Initialize(GLuint shader)
 	{

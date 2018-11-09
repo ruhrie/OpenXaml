@@ -15,6 +15,7 @@ Font::Font(FT_Library lib, string file, int size)
 		return;
 	}
 	FT_Set_Char_Size(face, 0, size * 64, 300, 300);
+	Height = face->size->metrics.height;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }
 Character& Font::operator[](const char index)

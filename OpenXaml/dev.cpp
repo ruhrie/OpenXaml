@@ -62,7 +62,7 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	FT_Library fontLibrary;
 	FT_Init_FreeType(&fontLibrary);
-	Font font = Font(fontLibrary, "C:\\Arimo-Regular.ttf", 24);
+	Font font = Font(fontLibrary, "C:\\arial.ttf", 12);
 	auto hi = font['a'];
 	auto hio = font['a'];
 	GLuint shader = GL::LoadShaders();
