@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://xamlstandard"
+           elementFormDefault="qualified"
+           xmlns="http://xamlstandard">
+
+  <xs:element name="Frame">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" ref="Rectangle"/>
+        <xs:element minOccurs="0" ref="TextBlock"/>
+      </xs:all>
+      <xs:attribute ref="Width" default="1024"/>
+      <xs:attribute ref="Height" default="768"/>
+      <xs:attribute ref="Fill" default="#FFFFFFFF"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Rectangle" id="Rectangle">
+    <xs:complexType>
+      <xs:attribute ref="Width"/>
+      <xs:attribute ref="Height"/>
+      <xs:attribute ref="Fill" default="#FFFFFFFF"/>
+      <xs:attribute ref="HorizontalAlignment" default="Stretch"/>
+      <xs:attribute ref="VerticalAlignment" default="Stretch"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="TextBlock" id="TextBlock">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute ref="Width"/>
+          <xs:attribute ref="Height"/>
+          <xs:attribute ref="TextWrapping" default="NoWrap"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:attribute name="Width" id="Width">
+    <xs:simpleType>
+      <xs:restriction base="xs:integer">
+        <xs:minInclusive value="0"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  
+  <xs:attribute name="Height" id="Height">
+    <xs:simpleType>
+      <xs:restriction base="xs:integer">
+        <xs:minInclusive value="0"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  
+  <xs:attribute name="TextWrapping" id="TextWrapping">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Wrap"/>
+        <xs:enumeration value="NoWrap"/>
+        <xs:enumeration value="WrapWholeWords"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="HorizontalAlignment" id="HorizontalAlignment">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Right"/>
+        <xs:enumeration value="Left"/>
+        <xs:enumeration value="Center"/>
+        <xs:enumeration value="Stretch"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="VerticalAlignment" id="VerticalAlignment">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Top"/>
+        <xs:enumeration value="Bottom"/>
+        <xs:enumeration value="Center"/>
+        <xs:enumeration value="Stretch"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="Fill" id="Fill">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="#[0-9,A-F][0-9,A-F][0-9,A-F][0-9,A-F][0-9,A-F][0-9,A-F][0-9,A-F][0-9,A-F]"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  
+</xs:schema>
