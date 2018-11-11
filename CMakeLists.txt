@@ -12,6 +12,8 @@ add_subdirectory("OpenXaml")
 
 add_subdirectory("Sample")
 
+add_subdirectory("Schema")
+
 #Generate the documentation if supported
 find_package(Doxygen)
 if(DOXYGEN_FOUND)

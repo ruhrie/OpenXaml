@@ -88,14 +88,19 @@ namespace OpenXaml {
 			inputStream.close();
 
 			XMLPlatformUtils::Initialize();
-
-
 			XercesDOMParser* parser = new XercesDOMParser();
+			parser->setExternalSchemaLocation("../Schema/XamlStandard.xsd");
+			parser->setDoSchema(true);
 			parser->setValidationScheme(XercesDOMParser::Val_Always);
 			parser->setDoNamespaces(true);    // optional
+			parser->setValidationSchemaFullChecking(true);
 
-			
-			parser->parse(input.c_str());
+			int error = parser->getErrorCount();
+
+			if (error != 0)
+			{
+				throw 1;
+			}
 
 			DOMDocument* xmlDoc = parser->getDocument();
 			
