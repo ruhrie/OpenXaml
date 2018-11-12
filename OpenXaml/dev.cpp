@@ -10,7 +10,7 @@
 #include "GL/Font.h"
 #include "Globals.h"
 using namespace std;
-
+using namespace OpenXaml;
 Font fa;
 
 int main(int argc, char *argv[], char *envp[])

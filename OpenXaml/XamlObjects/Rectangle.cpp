@@ -238,4 +238,9 @@ namespace OpenXaml
 			Rectangle::VerticalAlignment = VerticalAlignment::Stretch;
 		}
 	}
+
+	void Rectangle::LoadFromDOM(DOMElement *root)
+	{
+
+	}
 }

@@ -7,6 +7,9 @@
 #include <xercesc/dom/DOMText.hpp>
 #include <xercesc/util/XMLUni.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <string>
 #include "GL/GLConfig.h"
 #include "Properties/HorizontalAlignment.h"
@@ -25,9 +28,13 @@ public:
 	float GetScale(bool horizontal);
 	char HorizontalAlignment = HorizontalAlignment::Stretch;
 	char VerticalAlignment = VerticalAlignment::Stretch;
+	virtual void LoadFromDOM(DOMElement *root) = 0;
+	static shared_ptr<XamlObject> ParseObject(DOMElement* obj);
 private:
 	float xScale;
 	float yScale;
+protected:
+	void LoadChildrenFromDOM(DOMElement *root);
 };
 
 #endif

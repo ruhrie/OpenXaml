@@ -11,6 +11,7 @@ namespace OpenXaml
 		string Text;
 		void GetAttributes(DOMElement *element);
 		void Initialize(GLuint shader);
+		void LoadFromDOM(DOMElement *root);
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;

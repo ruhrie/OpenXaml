@@ -104,4 +104,9 @@ namespace OpenXaml {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 	}
+
+	void TextBlock::LoadFromDOM(DOMElement *root)
+	{
+
+	}
 }
