@@ -241,6 +241,28 @@ namespace OpenXaml
 
 	void Rectangle::LoadFromDOM(DOMElement *root)
 	{
-
+		DOMNamedNodeMap* attributes = root->getAttributes();
+		for (int i = 0; i < attributes->getLength(); i++)
+		{
+			DOMNode* item = attributes->item(i);
+			const XMLCh* nameXML = item->getNodeName();
+			const XMLCh* valXML = item->getNodeValue();
+			string name = XMLString::transcode(nameXML);
+			string value = XMLString::transcode(valXML);
+			if (name == "Fill")
+			{
+				std::istringstream iss(value.substr(1, value.size()));
+				iss >> std::hex >> Rectangle::Fill;
+			}
+			else if (name == "Height")
+			{
+				Rectangle::Height = stoi(value);
+			}
+			else if (name == "Width")
+			{
+				Rectangle::Width = stoi(value);
+			}
+		}
+		LoadChildrenFromDOM(root);
 	}
 }

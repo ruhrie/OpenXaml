@@ -120,17 +120,21 @@ namespace OpenXaml {
 			vector<shared_ptr<XamlObject>> children = getObjects(elementRoot);
 			shared_ptr<XamlObject> obj = XamlObject::ParseObject(elementRoot);
 			
-			//ParseObject(elementRoot);
-
+			//auto testa = ParseObject(elementRoot);
+			Frame frame = Frame();
 			//frame->LoadFromDOM(elementRoot);
-			/*
+			Frame asdf = Frame();
+			
+			asdf.LoadFromDOM(elementRoot);
+			XMLPlatformUtils::Terminate();
+			return asdf;
 			frame.GetAttributes(elementRoot);
 			for (unsigned int i = 0; i < children.size(); i++)
 			{
 				frame.Children.push_back(children[i]);
 			}
-			*/
 			
+			return frame;
 			XMLPlatformUtils::Terminate();
 			
 			return *(Frame*)obj.get();

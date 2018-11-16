@@ -1,5 +1,10 @@
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Frame.h"
+#include "XamlObjects/Rectangle.h"
+#include <iostream>
+
+using namespace OpenXaml;
+
 void XamlObject::SetScale(float scale, bool isHorizontal)
 {
 	if (isHorizontal)
@@ -47,5 +52,25 @@ shared_ptr<XamlObject> XamlObject::ParseObject(DOMElement * obj)
 
 void XamlObject::LoadChildrenFromDOM(DOMElement *root)
 {
-	
+	size_t childCount = root->getChildElementCount();
+	auto children = root->getChildNodes();
+	for (int i = 0; i < childCount; i++)
+	{
+		auto child = children->item(i);
+		auto typeC = child->getNodeName();
+		string type = XMLString::transcode(typeC);
+		if (type == "Rectangle")
+		{
+			//OpenXaml::Rectangle rect = OpenXaml::Rectangle();
+			//rect.LoadFromDOM((DOMElement*) child);
+			shared_ptr<OpenXaml::Rectangle> asdf = make_shared<OpenXaml::Rectangle>();
+			asdf->LoadFromDOM((DOMElement*)child);
+			Children.push_back(asdf);
+		}
+		else
+		{
+			std::cout << "Unrecognized type: " << type << "\n";
+		}
+		
+	}
 }
