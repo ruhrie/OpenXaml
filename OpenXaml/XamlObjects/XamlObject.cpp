@@ -1,6 +1,7 @@
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Frame.h"
 #include "XamlObjects/Rectangle.h"
+#include "XamlObjects/TextBlock.h"
 #include <iostream>
 
 using namespace OpenXaml;
@@ -61,15 +62,19 @@ void XamlObject::LoadChildrenFromDOM(DOMElement *root)
 		string type = XMLString::transcode(typeC);
 		if (type == "Rectangle")
 		{
-			//OpenXaml::Rectangle rect = OpenXaml::Rectangle();
-			//rect.LoadFromDOM((DOMElement*) child);
-			shared_ptr<OpenXaml::Rectangle> asdf = make_shared<OpenXaml::Rectangle>();
-			asdf->LoadFromDOM((DOMElement*)child);
-			Children.push_back(asdf);
+			shared_ptr<OpenXaml::Rectangle> res = make_shared<OpenXaml::Rectangle>();
+			res->LoadFromDOM((DOMElement*)child);
+			Children.push_back(res);
+		}
+		else if (type == "TextBlock")
+		{
+			shared_ptr<OpenXaml::TextBlock> res = make_shared<OpenXaml::TextBlock>();
+			res->LoadFromDOM((DOMElement*)child);
+			Children.push_back(res);
 		}
 		else
 		{
-			std::cout << "Unrecognized type: " << type << "\n";
+			std::cerr << "Unrecognized type: " << type << "\n";	
 		}
 		
 	}

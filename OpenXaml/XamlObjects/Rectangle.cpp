@@ -262,6 +262,44 @@ namespace OpenXaml
 			{
 				Rectangle::Width = stoi(value);
 			}
+			else if (name == "HorizontalAlignment")
+			{
+				if (value == "Right")
+				{
+					Rectangle::HorizontalAlignment = HorizontalAlignment::Right;
+				}
+				else if (value == "Left")
+				{
+					Rectangle::HorizontalAlignment = HorizontalAlignment::Left;
+				}
+				else if (value == "Center")
+				{
+					Rectangle::HorizontalAlignment = HorizontalAlignment::Center;
+				}
+				else if (value == "Stretch")
+				{
+					Rectangle::HorizontalAlignment = HorizontalAlignment::Stretch;
+				}
+			}
+			else if (name == "VerticalAlignment")
+			{
+				if (value == "Top")
+				{
+					Rectangle::VerticalAlignment = VerticalAlignment::Top;
+				}
+				else if (value == "Bottom")
+				{
+					Rectangle::VerticalAlignment = VerticalAlignment::Bottom;
+				}
+				else if (value == "Center")
+				{
+					Rectangle::VerticalAlignment = VerticalAlignment::Center;
+				}
+				else if (value == "Stretch")
+				{
+					Rectangle::VerticalAlignment = VerticalAlignment::Stretch;
+				}
+			}
 		}
 		LoadChildrenFromDOM(root);
 	}

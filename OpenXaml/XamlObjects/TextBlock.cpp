@@ -107,6 +107,64 @@ namespace OpenXaml {
 
 	void TextBlock::LoadFromDOM(DOMElement *root)
 	{
+		DOMNamedNodeMap* attributes = root->getAttributes();
+		for (int i = 0; i < attributes->getLength(); i++)
+		{
+			DOMNode* item = attributes->item(i);
+			const XMLCh* nameXML = item->getNodeName();
+			const XMLCh* valXML = item->getNodeValue();
+			string name = XMLString::transcode(nameXML);
+			string value = XMLString::transcode(valXML);
+			if (name == "Height")
+			{
+				TextBlock::Height = stoi(value);
+			}
+			else if (name == "Width")
+			{
+				TextBlock::Width = stoi(value);
+			}
+			else if (name == "HorizontalAlignment")
+			{
+				if (value == "Right")
+				{
+					TextBlock::HorizontalAlignment = HorizontalAlignment::Right;
+				}
+				else if (value == "Left")
+				{
+					TextBlock::HorizontalAlignment = HorizontalAlignment::Left;
+				}
+				else if (value == "Center")
+				{
+					TextBlock::HorizontalAlignment = HorizontalAlignment::Center;
+				}
+				else if (value == "Stretch")
+				{
+					TextBlock::HorizontalAlignment = HorizontalAlignment::Stretch;
+				}
+			}
+			else if (name == "VerticalAlignment")
+			{
+				if (value == "Top")
+				{
+					TextBlock::VerticalAlignment = VerticalAlignment::Top;
+				}
+				else if (value == "Bottom")
+				{
+					TextBlock::VerticalAlignment = VerticalAlignment::Bottom;
+				}
+				else if (value == "Center")
+				{
+					TextBlock::VerticalAlignment = VerticalAlignment::Center;
+				}
+				else if (value == "Stretch")
+				{
+					TextBlock::VerticalAlignment = VerticalAlignment::Stretch;
+				}
+			}
+		}
 
+		auto text = root->getTextContent();
+		TextBlock::Text = XMLString::transcode(text);
+		LoadChildrenFromDOM(root);
 	}
 }

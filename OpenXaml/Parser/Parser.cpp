@@ -95,7 +95,7 @@ namespace OpenXaml {
 			parser->setDoSchema(true);
 			parser->setValidationScheme(XercesDOMParser::Val_Always);
 			parser->setDoNamespaces(true);			
-			
+			parser->setIncludeIgnorableWhitespace(false);
 			parser->parse(input.c_str());
 
 

@@ -35,6 +35,8 @@
           <xs:attributeGroup ref="Width"/>
           <xs:attributeGroup ref="Height"/>
           <xs:attributeGroup ref="TextWrapping"/>
+          <xs:attributeGroup ref="HorizontalAlignment"/>
+          <xs:attributeGroup ref="VerticalAlignment"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
