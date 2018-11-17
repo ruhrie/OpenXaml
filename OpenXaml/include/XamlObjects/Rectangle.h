@@ -13,6 +13,7 @@ namespace OpenXaml
 		void Initialize(GLuint shader);
 		unsigned int Fill = 0xFF000000;
 		void LoadFromDOM(DOMElement *root);
+		void Update(float xmin, float xmax, float ymin, float ymax);
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;

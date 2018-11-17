@@ -29,6 +29,8 @@ public:
 	char VerticalAlignment = VerticalAlignment::Stretch;
 	virtual void LoadFromDOM(DOMElement *root) = 0;
 	static shared_ptr<XamlObject> ParseObject(DOMElement* obj);
+	GLuint VAO;
+	virtual void Update(float xmin, float xmax, float ymin, float ymax) = 0;
 private:
 	float xScale;
 	float yScale;

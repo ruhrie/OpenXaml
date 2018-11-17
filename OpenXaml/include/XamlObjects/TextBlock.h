@@ -13,6 +13,7 @@ namespace OpenXaml
 		void LoadFromDOM(DOMElement *root);
 		int Height;
 		int Width;
+		void Update(float xmin, float xmax, float ymin, float ymax);
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;

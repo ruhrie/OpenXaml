@@ -11,100 +11,7 @@ namespace OpenXaml
 
 	void Rectangle::Draw(float xmin, float xmax, float ymin, float ymax)
 	{		
-		float width = Width * GetScale(true);
-		float height = Height * GetScale(false);
-		
-		GLfloat vertices[16];
-
-		if (Rectangle::HorizontalAlignment == HorizontalAlignment::Right)
-		{
-			vertices[0] = xmax - width;
-			vertices[4] = xmax;
-			vertices[8] = xmax - width;
-			vertices[12] = xmax;
-		}
-		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Left)
-		{
-			vertices[0] = xmin;
-			vertices[4] = xmin + width;
-			vertices[8] = xmin;
-			vertices[12] = xmin + width;
-		}
-		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Center)
-		{
-			float mid = (xmin + xmax) / 2;
-			vertices[0] = mid - width / 2;
-			vertices[4] = mid + width / 2;
-			vertices[8] = mid - width / 2;
-			vertices[12] = mid + width / 2;
-		}
-		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Stretch)
-		{
-			if (Width == 0)
-			{
-				vertices[0] = xmin;
-				vertices[4] = xmax;
-				vertices[8] = xmin;
-				vertices[12] = xmax;
-			}
-			else
-			{
-				float mid = (xmin + xmax) / 2;
-				vertices[0] = mid - width / 2;
-				vertices[4] = mid + width / 2;
-				vertices[8] = mid - width / 2;
-				vertices[12] = mid + width / 2;
-			}			
-		}
-
-		if (Rectangle::VerticalAlignment == VerticalAlignment::Top)
-		{
-			vertices[1] = ymax;
-			vertices[5] = ymax;
-			vertices[9] = ymax - height;
-			vertices[13] = ymax - height;
-		}
-		else if (Rectangle::VerticalAlignment == VerticalAlignment::Bottom)
-		{
-			vertices[1] = ymin + height;
-			vertices[5] = ymin + height;
-			vertices[9] = ymin;
-			vertices[13] = ymin;
-		}
-		else if (Rectangle::VerticalAlignment == VerticalAlignment::Center)
-		{
-			float mid = (ymin + ymax) / 2;
-			vertices[1] = mid + height / 2;
-			vertices[5] = mid + height / 2;
-			vertices[9] = mid - height / 2;
-			vertices[13] = mid - height / 2;
-		}
-		else if (Rectangle::VerticalAlignment == VerticalAlignment::Stretch)
-		{
-			if (height == 0)
-			{
-				vertices[1] = ymax;
-				vertices[5] = ymax;
-				vertices[9] = ymin;
-				vertices[13] = ymin;
-			}
-			else
-			{
-				float mid = (ymin + ymax) / 2;
-				vertices[1] = mid + height / 2;
-				vertices[5] = mid + height / 2;
-				vertices[9] = mid - height / 2;
-				vertices[13] = mid - height / 2;
-			}			
-		}
-		vertices[2] = 0.0f;
-		vertices[3] = 1.0f;
-		vertices[6] = 1.0f;
-		vertices[7] = 1.0f;
-		vertices[10] = 0.0f;
-		vertices[11] = 0.0f;
-		vertices[14] = 1.0f;
-		vertices[15] = 0.0f;
+		glBindVertexArray(Rectangle::VAO);
 		
 		glUseProgram(Rectangle::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(Rectangle::shaderProgram, "thecolor");
@@ -116,17 +23,10 @@ namespace OpenXaml
 		b = ((Fill & 0x000000FF)) / 255.0f;
 		glUniform4f(vertexColorLocation, r, g, b, a);
 		glUniform1i(modeLoc, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+		
 		
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		glBindVertexArray(0);
 	}
 
 	Rectangle::Rectangle()
@@ -135,12 +35,18 @@ namespace OpenXaml
 
 	void Rectangle::Initialize(GLuint shader)
 	{
+		glGenVertexArrays(1, &(Rectangle::VAO));
+		glBindVertexArray(Rectangle::VAO);
 		Rectangle::shaderProgram = GL::LoadShaders();
 
 		glGenBuffers(1, &vertexBuffer);
 		glGenBuffers(1, &edgeBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
+
+		Rectangle::Update(-1, 1, -1, 1);
+
+		glBindVertexArray(0);
 	}
 
 	void Rectangle::LoadFromDOM(DOMElement *root)
@@ -206,5 +112,112 @@ namespace OpenXaml
 			}
 		}
 		LoadChildrenFromDOM(root);
+	}
+
+	void Rectangle::Update(float xmin, float xmax, float ymin, float ymax)
+	{
+		float width = Width * GetScale(true);
+		float height = Height * GetScale(false);
+
+		GLfloat vertices[16];
+
+		if (Rectangle::HorizontalAlignment == HorizontalAlignment::Right)
+		{
+			vertices[0] = xmax - width;
+			vertices[4] = xmax;
+			vertices[8] = xmax - width;
+			vertices[12] = xmax;
+		}
+		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Left)
+		{
+			vertices[0] = xmin;
+			vertices[4] = xmin + width;
+			vertices[8] = xmin;
+			vertices[12] = xmin + width;
+		}
+		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Center)
+		{
+			float mid = (xmin + xmax) / 2;
+			vertices[0] = mid - width / 2;
+			vertices[4] = mid + width / 2;
+			vertices[8] = mid - width / 2;
+			vertices[12] = mid + width / 2;
+		}
+		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Stretch)
+		{
+			if (Width == 0)
+			{
+				vertices[0] = xmin;
+				vertices[4] = xmax;
+				vertices[8] = xmin;
+				vertices[12] = xmax;
+			}
+			else
+			{
+				float mid = (xmin + xmax) / 2;
+				vertices[0] = mid - width / 2;
+				vertices[4] = mid + width / 2;
+				vertices[8] = mid - width / 2;
+				vertices[12] = mid + width / 2;
+			}
+		}
+
+		if (Rectangle::VerticalAlignment == VerticalAlignment::Top)
+		{
+			vertices[1] = ymax;
+			vertices[5] = ymax;
+			vertices[9] = ymax - height;
+			vertices[13] = ymax - height;
+		}
+		else if (Rectangle::VerticalAlignment == VerticalAlignment::Bottom)
+		{
+			vertices[1] = ymin + height;
+			vertices[5] = ymin + height;
+			vertices[9] = ymin;
+			vertices[13] = ymin;
+		}
+		else if (Rectangle::VerticalAlignment == VerticalAlignment::Center)
+		{
+			float mid = (ymin + ymax) / 2;
+			vertices[1] = mid + height / 2;
+			vertices[5] = mid + height / 2;
+			vertices[9] = mid - height / 2;
+			vertices[13] = mid - height / 2;
+		}
+		else if (Rectangle::VerticalAlignment == VerticalAlignment::Stretch)
+		{
+			if (height == 0)
+			{
+				vertices[1] = ymax;
+				vertices[5] = ymax;
+				vertices[9] = ymin;
+				vertices[13] = ymin;
+			}
+			else
+			{
+				float mid = (ymin + ymax) / 2;
+				vertices[1] = mid + height / 2;
+				vertices[5] = mid + height / 2;
+				vertices[9] = mid - height / 2;
+				vertices[13] = mid - height / 2;
+			}
+		}
+		vertices[2] = 0.0f;
+		vertices[3] = 1.0f;
+		vertices[6] = 1.0f;
+		vertices[7] = 1.0f;
+		vertices[10] = 0.0f;
+		vertices[11] = 0.0f;
+		vertices[14] = 1.0f;
+		vertices[15] = 0.0f;
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 	}
 }

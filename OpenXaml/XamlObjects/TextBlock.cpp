@@ -72,6 +72,8 @@ namespace OpenXaml {
 	}
 	void TextBlock::Initialize(GLuint shader)
 	{
+		glGenVertexArrays(1, &(TextBlock::VAO));
+		glBindVertexArray(TextBlock::VAO);
 		unsigned short indeces[] =
 		{
 			0,1,2,
@@ -82,6 +84,7 @@ namespace OpenXaml {
 		glGenBuffers(1, &edgeBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
+		glBindVertexArray(0);
 	}
 
 	void TextBlock::LoadFromDOM(DOMElement *root)
@@ -145,5 +148,10 @@ namespace OpenXaml {
 		auto text = root->getTextContent();
 		TextBlock::Text = XMLString::transcode(text);
 		LoadChildrenFromDOM(root);
+	}
+
+	void TextBlock::Update(float xmin, float xmax, float ymin, float ymax)
+	{
+
 	}
 }

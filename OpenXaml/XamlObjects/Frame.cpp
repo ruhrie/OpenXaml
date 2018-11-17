@@ -13,6 +13,7 @@ namespace OpenXaml
 
 	void Frame::Draw(float xmin, float xmax, float ymin, float ymax)
 	{
+		glBindVertexArray(Frame::VAO);
 		glUseProgram(Frame::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(Frame::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(Frame::shaderProgram, "mode");
@@ -23,16 +24,9 @@ namespace OpenXaml
 		b = ((Background & 0x000000FF)) / 255.0f;
 		glUniform4f(vertexColorLocation, r, g, b, a);
 		glUniform1i(modeLoc, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
-		//glBindVertexArray(*Frame::vao);
+		
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-		//glBindVertexArray(0);
+		glBindVertexArray(0);
 		for (unsigned int i = 0; i < Children.size(); i++)
 		{
 			Children[i]->Draw(xmin, xmax, ymin, ymax);
@@ -46,6 +40,8 @@ namespace OpenXaml
 
 	void Frame::Initialize(GLuint shader)
 	{
+		glGenVertexArrays(1, &(Frame::VAO));
+		glBindVertexArray(Frame::VAO);
 		Frame::shaderProgram = GL::LoadShaders();
 		GLfloat vertices[] = {
 					-1, 1, 0, 1,
@@ -66,6 +62,15 @@ namespace OpenXaml
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+		glBindVertexArray(0);
 		for (unsigned int i = 0; i < Children.size(); i++)
 		{
 			Children[i]->Initialize(shader);
@@ -97,5 +102,10 @@ namespace OpenXaml
 			}
 		}
 		LoadChildrenFromDOM(root);
+	}
+
+	void Frame::Update(float xmin, float xmax, float ymin, float ymax)
+	{
+
 	}
 }
