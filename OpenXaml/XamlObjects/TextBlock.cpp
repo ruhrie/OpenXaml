@@ -70,27 +70,6 @@ namespace OpenXaml {
 			
 		}
 	}
-	void TextBlock::GetAttributes(DOMElement *element)
-	{
-		const XMLCh *xmlText = element->getAttribute(XMLString::transcode("Text"));
-		string text = XMLString::transcode(xmlText);
-		if (text != "")
-		{
-			Text = text;
-		}
-		else
-		{
-			auto bodyConst = element->getTextContent();
-			string body = XMLString::transcode(bodyConst);
-			Text = body;
-		}
-		const XMLCh *xmlTextWrapping = element->getAttribute(XMLString::transcode("TextWrapping"));
-		string textWrapping = XMLString::transcode(xmlTextWrapping);
-		if (textWrapping != "")
-		{
-
-		}
-	}
 	void TextBlock::Initialize(GLuint shader)
 	{
 		unsigned short indeces[] =

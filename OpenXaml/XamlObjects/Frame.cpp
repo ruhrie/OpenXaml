@@ -98,34 +98,4 @@ namespace OpenXaml
 		}
 		LoadChildrenFromDOM(root);
 	}
-
-	void Frame::GetAttributes(DOMElement *element)
-	{
-		const XMLCh *xmlWidth = element->getAttribute(XMLString::transcode("Width"));
-		string width = XMLString::transcode(xmlWidth);
-		if (width != "")
-		{
-			Frame::Width = stoi(width);
-		}
-		const XMLCh *xmlHeight = element->getAttribute(XMLString::transcode("Height"));
-		string height = XMLString::transcode(xmlHeight);
-		if (width != "")
-		{
-			Frame::Height = stoi(height);
-		}
-		const XMLCh *xmlBackground = element->getAttribute(XMLString::transcode("Background"));
-		string background = XMLString::transcode(xmlBackground);
-		if (background != "")
-		{
-			if (background[0] != '#')
-			{
-				throw 3;
-			}
-			else
-			{
-				std::istringstream iss(background.substr(1, background.size()));
-				iss >> std::hex >> Frame::Background;
-			}
-		}
-	}
 }

@@ -22,7 +22,6 @@ public:
 	virtual void Draw(float xmin, float xmax, float ymin, float ymax) = 0;
 	std::vector<std::shared_ptr<XamlObject>> Children;
 	virtual void Initialize(GLuint shader) = 0;
-	virtual void GetAttributes(DOMElement *element) = 0;
 	GLuint shaderProgram;
 	void SetScale(float scale, bool isHorizontal);
 	float GetScale(bool horizontal);

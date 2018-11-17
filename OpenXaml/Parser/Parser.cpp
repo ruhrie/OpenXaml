@@ -17,62 +17,6 @@ using namespace xercesc;
 namespace OpenXaml {
 	namespace Parser {
 		using namespace OpenXaml;
-		vector<shared_ptr<XamlObject>> getObjects(DOMElement *xml)
-		{
-			vector<shared_ptr<XamlObject>> result;
-			DOMNodeList *childNodes = xml->getChildNodes();
-			for (unsigned int i = 0; i < childNodes->getLength(); i++)
-			{
-				DOMNode *currentNode = childNodes->item(i);
-				if (currentNode->getNodeType() && currentNode->getNodeType() == DOMNode::ELEMENT_NODE)
-				{
-					DOMElement *element = dynamic_cast<DOMElement *>(currentNode);
-					const XMLCh *xmlString = element->getTagName();
-					string test = XMLString::transcode(xmlString);
-					if (test == "Frame")
-					{
-						shared_ptr<XamlObject> win = make_shared<Frame>();
-						Frame *frame = (Frame *)win.get();
-						frame->GetAttributes(element);
-						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
-						for (unsigned int i = 0; i < childObjects.size(); i++)
-						{
-							frame->Children.push_back(childObjects[i]);
-						}
-						result.push_back(win);
-					}
-					else if (test == "Rectangle")
-					{
-						shared_ptr<XamlObject> rec = make_shared<OpenXaml::Rectangle>();
-						OpenXaml::Rectangle *rect = (OpenXaml::Rectangle *)rec.get();
-						rect->GetAttributes(element);
-						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
-						for (unsigned int i = 0; i < childObjects.size(); i++)
-						{
-							rect->Children.push_back(childObjects[i]);
-						}
-						result.push_back(rec);
-					}
-					else if (test == "TextBlock")
-					{
-						shared_ptr<XamlObject> rec = make_shared<OpenXaml::TextBlock>();
-						OpenXaml::TextBlock *rect = (OpenXaml::TextBlock *)rec.get();
-						rect->GetAttributes(element);
-						vector<shared_ptr<XamlObject>> childObjects = getObjects(element);
-						for (unsigned int i = 0; i < childObjects.size(); i++)
-						{
-							rect->Children.push_back(childObjects[i]);
-						}
-						result.push_back(rec);
-					}
-					else
-					{
-						throw 43;
-					}
-				}
-			}
-			return result;
-		}
 
 		Frame ReadFile(string input)
 		{
@@ -97,18 +41,14 @@ namespace OpenXaml {
 			parser->setDoNamespaces(true);			
 			parser->setIncludeIgnorableWhitespace(false);
 			parser->parse(input.c_str());
-
-
 			
 			size_t error = parser->getErrorCount();
-
 			if (error != 0)
 			{
 				throw 1;
 			}
 
-			DOMDocument* xmlDoc = parser->getDocument();
-			
+			DOMDocument* xmlDoc = parser->getDocument();			
 			DOMElement* elementRoot = xmlDoc->getDocumentElement();
 			const XMLCh *xmlString = elementRoot->getTagName();
 			string test = XMLString::transcode(xmlString);
@@ -117,29 +57,11 @@ namespace OpenXaml {
 				throw 2;
 			}
 
-			vector<shared_ptr<XamlObject>> children = getObjects(elementRoot);
 			shared_ptr<XamlObject> obj = XamlObject::ParseObject(elementRoot);
-			
-			//auto testa = ParseObject(elementRoot);
-			Frame frame = Frame();
-			//frame->LoadFromDOM(elementRoot);
-			Frame asdf = Frame();
-			
-			asdf.LoadFromDOM(elementRoot);
+			Frame frame = Frame();			
+			frame.LoadFromDOM(elementRoot);
 			XMLPlatformUtils::Terminate();
-			return asdf;
-			frame.GetAttributes(elementRoot);
-			for (unsigned int i = 0; i < children.size(); i++)
-			{
-				frame.Children.push_back(children[i]);
-			}
-			
 			return frame;
-			XMLPlatformUtils::Terminate();
-			
-			return *(Frame*)obj.get();
-		}
-		
-		
+		}		
 	}	
 }

@@ -12,7 +12,6 @@ namespace OpenXaml {
 		unsigned int Background = 0xFF000000;
 		Frame();
 		void Initialize(GLuint shader);
-		void GetAttributes(DOMElement *element);
 		void LoadFromDOM(DOMElement *root);
 	private:
 		GLuint vertexBuffer;

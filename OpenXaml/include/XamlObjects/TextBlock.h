@@ -9,7 +9,6 @@ namespace OpenXaml
 	public:
 		void Draw(float xmin, float xmax, float ymin, float ymax);
 		string Text;
-		void GetAttributes(DOMElement *element);
 		void Initialize(GLuint shader);
 		void LoadFromDOM(DOMElement *root);
 		int Height;
