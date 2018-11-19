@@ -6,9 +6,9 @@ namespace OpenXaml {
 	{
 	public:
 		void Draw();
-		int Width = 640;
-		int Height = 480;
-		unsigned int Background = 0xFF000000;
+		XamlProperty<int> Width = 640;
+		XamlProperty<int> Height = 480;
+		XamlProperty<unsigned int> Fill = 0xFF000000;
 		Frame();
 		void Initialize(GLuint shader);
 		void LoadFromDOM(DOMElement *root);

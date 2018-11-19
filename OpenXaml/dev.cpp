@@ -75,17 +75,8 @@ int main(int argc, char *argv[], char *envp[])
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
-
-	
-	
 	frame.Initialize(shader);
-
-	//glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-	//glEnableVertexAttribArray(posAttrib);
 	glEnableVertexAttribArray(0);
-
-	//https://stackoverflow.com/questions/34068792/drawing-multiple-objects-in-opengl-with-different-buffers
-
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */

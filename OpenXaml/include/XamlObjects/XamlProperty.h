@@ -20,7 +20,7 @@ public:
 	{
 		Value = value;
 	}
-
+	
 	operator T()
 	{
 		return Value;
@@ -31,7 +31,7 @@ public:
 	{
 
 	}
-	std::function<void()> onPropertyChanged = 0;
+	std::function<void(void)> onPropertyChanged = 0;
 private:
 	T Value;
 };

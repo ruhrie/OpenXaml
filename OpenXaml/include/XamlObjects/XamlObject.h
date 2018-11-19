@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <glad/glad.h>
+#include <functional>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMText.hpp>
 #include <xercesc/util/XMLUni.hpp>

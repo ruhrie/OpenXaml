@@ -12,6 +12,10 @@ namespace OpenXaml
 		minCoord.y = -1;
 		maxCoord.x = 1;
 		maxCoord.y = 1;
+
+		Width.onPropertyChanged = std::bind(&Frame::Update, this);
+		Height.onPropertyChanged = std::bind(&Frame::Update, this);
+		Fill.onPropertyChanged = std::bind(&Frame::Update, this);
 	}
 
 	void Frame::Draw()
@@ -21,10 +25,10 @@ namespace OpenXaml
 		int vertexColorLocation = glGetUniformLocation(Frame::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(Frame::shaderProgram, "mode");
 		float a, r, g, b;
-		a = ((Background & 0xFF000000) >> 24) / 255.0f;
-		r = ((Background & 0x00FF0000) >> 16) / 255.0f;
-		g = ((Background & 0x0000FF00) >> 8) / 255.0f;
-		b = ((Background & 0x000000FF)) / 255.0f;
+		a = ((Fill & 0xFF000000) >> 24) / 255.0f;
+		r = ((Fill & 0x00FF0000) >> 16) / 255.0f;
+		g = ((Fill & 0x0000FF00) >> 8) / 255.0f;
+		b = ((Fill & 0x000000FF)) / 255.0f;
 		glUniform4f(vertexColorLocation, r, g, b, a);
 		glUniform1i(modeLoc, 0);
 		
@@ -88,7 +92,9 @@ namespace OpenXaml
 			if (name == "Fill")
 			{
 				std::istringstream iss(value.substr(1, value.size()));
-				iss >> std::hex >> Frame::Background;
+				unsigned int val;
+				iss >> std::hex >> val;
+				Frame::Fill = val;
 			}
 			else if (name == "Height")
 			{
