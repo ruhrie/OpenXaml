@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project("OpenXaml")
 
+set (CMAKE_CXX_STANDARD 11)
+
 find_package( OpenGL REQUIRED )
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})

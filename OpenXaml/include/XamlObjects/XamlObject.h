@@ -14,6 +14,7 @@
 #include "GL/GLConfig.h"
 #include "Properties/HorizontalAlignment.h"
 #include "Properties/VerticalAlignment.h"
+#include "XamlObjects/XamlProperty.h"
 using namespace xercesc;
 using namespace std;
 class XamlObject
