@@ -2,9 +2,6 @@
 #include "Globals.h"
 
 namespace OpenXaml {
-
-	
-
 	void TextBlock::Draw(float xmin, float xmax, float ymin, float ymax)
 	{
 		glUseProgram(TextBlock::shaderProgram);
@@ -18,14 +15,14 @@ namespace OpenXaml {
 
 		GLfloat x = 0.0f;
 		GLfloat y = 0.0f;
-		GLfloat scale = 1.0f;
+		GLfloat lscale = 1.0f;
 		for (int i = 0; i < Text.size(); i++)
 		{
 			char a = Text[i];
 			Character ch = fa[a];
 			if (a == '\n')
 			{
-				fdsa -= (fa.Height >> 6) * GetScale(false);
+				fdsa -= (fa.Height >> 6) * PixelScale.y;
 				asdf = xmin;
 			}
 			else if (a == '\t')
@@ -34,19 +31,19 @@ namespace OpenXaml {
 			}
 			else
 			{
-				x0 = asdf + ch.BearingX * GetScale(true);
-				x1 = asdf + (ch.BearingX + ch.Width) * GetScale(true);
+				x0 = asdf + ch.BearingX * PixelScale.x;
+				x1 = asdf + (ch.BearingX + ch.Width) * PixelScale.x;
 
 				if (x1 > xmax)
 				{
-					fdsa -= (fa.Height >> 6) * GetScale(false);
+					fdsa -= (fa.Height >> 6) * PixelScale.y;
 					asdf = xmin;
-					x0 = asdf + ch.BearingX * GetScale(true);
-					x1 = asdf + (ch.BearingX + ch.Width) * GetScale(true);
+					x0 = asdf + ch.BearingX * PixelScale.x;
+					x1 = asdf + (ch.BearingX + ch.Width) * PixelScale.x;
 				}
 
-				y0 = fdsa + ch.BearingY * GetScale(false);
-				y1 = fdsa + (ch.BearingY - ch.Height) * GetScale(false);
+				y0 = fdsa + ch.BearingY * PixelScale.y;
+				y1 = fdsa + (ch.BearingY - ch.Height) * PixelScale.y;
 				GLfloat vertices[16] = {
 					x0, y0, 0,0,
 					x1, y0, 1,0,
@@ -66,7 +63,7 @@ namespace OpenXaml {
 
 				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 			}
-			asdf += (ch.AdvanceX >> 6) * GetScale(true);
+			asdf += (ch.AdvanceX >> 6) * PixelScale.x;
 			
 		}
 	}

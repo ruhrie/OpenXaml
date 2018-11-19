@@ -116,8 +116,8 @@ namespace OpenXaml
 
 	void Rectangle::Update(float xmin, float xmax, float ymin, float ymax)
 	{
-		float width = Width * GetScale(true);
-		float height = Height * GetScale(false);
+		float width = Width * PixelScale.x;
+		float height = Height * PixelScale.y;
 
 		GLfloat vertices[16];
 

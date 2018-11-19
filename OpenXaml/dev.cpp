@@ -12,6 +12,7 @@
 using namespace std;
 using namespace OpenXaml;
 Font fa;
+struct coordinate PixelScale;
 
 int main(int argc, char *argv[], char *envp[])
 {
@@ -47,8 +48,10 @@ int main(int argc, char *argv[], char *envp[])
 
 	Frame frame = OpenXaml::Parser::ReadFile(inputFile);
 	window = glfwCreateWindow(frame.Width, frame.Height, "My Window", NULL, NULL);
-	frame.SetScale(1.0f / frame.Width, true);
-	frame.SetScale(1.0f / frame.Height, false);
+	PixelScale = coordinate({
+		1.0f / frame.Width,
+		1.0f / frame.Height
+		});
 	if (!window)
 	{
 		glfwTerminate();

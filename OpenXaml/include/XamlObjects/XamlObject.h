@@ -15,6 +15,8 @@
 #include "Properties/HorizontalAlignment.h"
 #include "Properties/VerticalAlignment.h"
 #include "XamlObjects/XamlProperty.h"
+#include "XamlObjects/Coordinate.h"
+#include "Globals.h"
 using namespace xercesc;
 using namespace std;
 class XamlObject
@@ -24,8 +26,6 @@ public:
 	std::vector<std::shared_ptr<XamlObject>> Children;
 	virtual void Initialize(GLuint shader) = 0;
 	GLuint shaderProgram;
-	void SetScale(float scale, bool isHorizontal);
-	float GetScale(bool horizontal);
 	char HorizontalAlignment = HorizontalAlignment::Stretch;
 	char VerticalAlignment = VerticalAlignment::Stretch;
 	virtual void LoadFromDOM(DOMElement *root) = 0;
@@ -33,8 +33,8 @@ public:
 	GLuint VAO;
 	virtual void Update(float xmin, float xmax, float ymin, float ymax) = 0;
 private:
-	float xScale;
-	float yScale;
+	coordinate minCoord;
+	coordinate maxCoord;
 protected:
 	void LoadChildrenFromDOM(DOMElement *root);
 };
