@@ -51,3 +51,9 @@ void XamlObject::LoadChildrenFromDOM(DOMElement *root)
 		
 	}
 }
+
+void XamlObject::SetBoundingBox(coordinate min, coordinate max)
+{
+	minCoord = min;
+	maxCoord = max;
+}

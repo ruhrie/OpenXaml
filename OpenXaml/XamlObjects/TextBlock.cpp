@@ -2,15 +2,15 @@
 #include "Globals.h"
 
 namespace OpenXaml {
-	void TextBlock::Draw(float xmin, float xmax, float ymin, float ymax)
+	void TextBlock::Draw()
 	{
 		glUseProgram(TextBlock::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(TextBlock::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(TextBlock::shaderProgram, "mode");
 		glUniform4f(vertexColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
 		glUniform1i(modeLoc, 2);
-		float asdf = xmin;
-		float fdsa = ymax;
+		float asdf = minCoord.x;
+		float fdsa = maxCoord.y;
 		float x0, x1, y0, y1;
 
 		GLfloat x = 0.0f;
@@ -23,7 +23,7 @@ namespace OpenXaml {
 			if (a == '\n')
 			{
 				fdsa -= (fa.Height >> 6) * PixelScale.y;
-				asdf = xmin;
+				asdf = minCoord.x;
 			}
 			else if (a == '\t')
 			{
@@ -34,10 +34,10 @@ namespace OpenXaml {
 				x0 = asdf + ch.BearingX * PixelScale.x;
 				x1 = asdf + (ch.BearingX + ch.Width) * PixelScale.x;
 
-				if (x1 > xmax)
+				if (x1 > maxCoord.x)
 				{
 					fdsa -= (fa.Height >> 6) * PixelScale.y;
-					asdf = xmin;
+					asdf = minCoord.x;
 					x0 = asdf + ch.BearingX * PixelScale.x;
 					x1 = asdf + (ch.BearingX + ch.Width) * PixelScale.x;
 				}
@@ -145,9 +145,13 @@ namespace OpenXaml {
 		auto text = root->getTextContent();
 		TextBlock::Text = XMLString::transcode(text);
 		LoadChildrenFromDOM(root);
+		for (int i = 0; i < Children.size(); i++)
+		{
+			Children[i]->SetBoundingBox(minCoord, maxCoord);
+		}
 	}
 
-	void TextBlock::Update(float xmin, float xmax, float ymin, float ymax)
+	void TextBlock::Update()
 	{
 
 	}

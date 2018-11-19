@@ -7,13 +7,13 @@ namespace OpenXaml
 	class TextBlock : public XamlObject
 	{
 	public:
-		void Draw(float xmin, float xmax, float ymin, float ymax);
+		void Draw();
 		string Text;
 		void Initialize(GLuint shader);
 		void LoadFromDOM(DOMElement *root);
 		int Height;
 		int Width;
-		void Update(float xmin, float xmax, float ymin, float ymax);
+		void Update();
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;

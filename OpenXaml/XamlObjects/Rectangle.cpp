@@ -9,7 +9,7 @@ namespace OpenXaml
 	};
 
 
-	void Rectangle::Draw(float xmin, float xmax, float ymin, float ymax)
+	void Rectangle::Draw()
 	{		
 		glBindVertexArray(Rectangle::VAO);
 		
@@ -44,7 +44,7 @@ namespace OpenXaml
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 
-		Rectangle::Update(-1, 1, -1, 1);
+		Rectangle::Update();
 
 		glBindVertexArray(0);
 	}
@@ -112,9 +112,13 @@ namespace OpenXaml
 			}
 		}
 		LoadChildrenFromDOM(root);
+		for (int i = 0; i < Children.size(); i++)
+		{
+			Children[i]->SetBoundingBox(minCoord, maxCoord);
+		}
 	}
 
-	void Rectangle::Update(float xmin, float xmax, float ymin, float ymax)
+	void Rectangle::Update()
 	{
 		float width = Width * PixelScale.x;
 		float height = Height * PixelScale.y;
@@ -123,21 +127,21 @@ namespace OpenXaml
 
 		if (Rectangle::HorizontalAlignment == HorizontalAlignment::Right)
 		{
-			vertices[0] = xmax - width;
-			vertices[4] = xmax;
-			vertices[8] = xmax - width;
-			vertices[12] = xmax;
+			vertices[0] = maxCoord.x - width;
+			vertices[4] = maxCoord.x;
+			vertices[8] = maxCoord.x - width;
+			vertices[12] = maxCoord.x;
 		}
 		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Left)
 		{
-			vertices[0] = xmin;
-			vertices[4] = xmin + width;
-			vertices[8] = xmin;
-			vertices[12] = xmin + width;
+			vertices[0] = minCoord.x;
+			vertices[4] = minCoord.x + width;
+			vertices[8] = minCoord.x;
+			vertices[12] = minCoord.x + width;
 		}
 		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Center)
 		{
-			float mid = (xmin + xmax) / 2;
+			float mid = (minCoord.x + maxCoord.x) / 2;
 			vertices[0] = mid - width / 2;
 			vertices[4] = mid + width / 2;
 			vertices[8] = mid - width / 2;
@@ -147,14 +151,14 @@ namespace OpenXaml
 		{
 			if (Width == 0)
 			{
-				vertices[0] = xmin;
-				vertices[4] = xmax;
-				vertices[8] = xmin;
-				vertices[12] = xmax;
+				vertices[0] = minCoord.x;
+				vertices[4] = maxCoord.x;
+				vertices[8] = minCoord.x;
+				vertices[12] = maxCoord.x;
 			}
 			else
 			{
-				float mid = (xmin + xmax) / 2;
+				float mid = (minCoord.x + maxCoord.x) / 2;
 				vertices[0] = mid - width / 2;
 				vertices[4] = mid + width / 2;
 				vertices[8] = mid - width / 2;
@@ -164,21 +168,21 @@ namespace OpenXaml
 
 		if (Rectangle::VerticalAlignment == VerticalAlignment::Top)
 		{
-			vertices[1] = ymax;
-			vertices[5] = ymax;
-			vertices[9] = ymax - height;
-			vertices[13] = ymax - height;
+			vertices[1] = maxCoord.y;
+			vertices[5] = maxCoord.y;
+			vertices[9] = maxCoord.y - height;
+			vertices[13] = maxCoord.y - height;
 		}
 		else if (Rectangle::VerticalAlignment == VerticalAlignment::Bottom)
 		{
-			vertices[1] = ymin + height;
-			vertices[5] = ymin + height;
-			vertices[9] = ymin;
-			vertices[13] = ymin;
+			vertices[1] = minCoord.y + height;
+			vertices[5] = minCoord.y + height;
+			vertices[9] = minCoord.y;
+			vertices[13] = minCoord.y;
 		}
 		else if (Rectangle::VerticalAlignment == VerticalAlignment::Center)
 		{
-			float mid = (ymin + ymax) / 2;
+			float mid = (minCoord.y + maxCoord.y) / 2;
 			vertices[1] = mid + height / 2;
 			vertices[5] = mid + height / 2;
 			vertices[9] = mid - height / 2;
@@ -188,14 +192,14 @@ namespace OpenXaml
 		{
 			if (height == 0)
 			{
-				vertices[1] = ymax;
-				vertices[5] = ymax;
-				vertices[9] = ymin;
-				vertices[13] = ymin;
+				vertices[1] = maxCoord.y;
+				vertices[5] = maxCoord.y;
+				vertices[9] = minCoord.y;
+				vertices[13] = minCoord.y;
 			}
 			else
 			{
-				float mid = (ymin + ymax) / 2;
+				float mid = (minCoord.y + maxCoord.y) / 2;
 				vertices[1] = mid + height / 2;
 				vertices[5] = mid + height / 2;
 				vertices[9] = mid - height / 2;

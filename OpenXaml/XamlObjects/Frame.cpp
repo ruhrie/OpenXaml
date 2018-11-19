@@ -8,10 +8,13 @@ namespace OpenXaml
 
 	Frame::Frame()
 	{
-
+		minCoord.x = -1;
+		minCoord.y = -1;
+		maxCoord.x = 1;
+		maxCoord.y = 1;
 	}
 
-	void Frame::Draw(float xmin, float xmax, float ymin, float ymax)
+	void Frame::Draw()
 	{
 		glBindVertexArray(Frame::VAO);
 		glUseProgram(Frame::shaderProgram);
@@ -29,13 +32,8 @@ namespace OpenXaml
 		glBindVertexArray(0);
 		for (unsigned int i = 0; i < Children.size(); i++)
 		{
-			Children[i]->Draw(xmin, xmax, ymin, ymax);
+			Children[i]->Draw();
 		}
-	}
-
-	void Frame::Draw()
-	{
-		Frame::Draw(-1.0f, 1.0f, -1.0f, 1.0f);
 	}
 
 	void Frame::Initialize(GLuint shader)
@@ -102,9 +100,13 @@ namespace OpenXaml
 			}
 		}
 		LoadChildrenFromDOM(root);
+		for (int i = 0; i < Children.size(); i++)
+		{
+			Children[i]->SetBoundingBox(minCoord, maxCoord);
+		}
 	}
 
-	void Frame::Update(float xmin, float xmax, float ymin, float ymax)
+	void Frame::Update()
 	{
 
 	}

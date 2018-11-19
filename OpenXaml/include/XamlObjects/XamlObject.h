@@ -22,7 +22,7 @@ using namespace std;
 class XamlObject
 {
 public:
-	virtual void Draw(float xmin, float xmax, float ymin, float ymax) = 0;
+	virtual void Draw() = 0;
 	std::vector<std::shared_ptr<XamlObject>> Children;
 	virtual void Initialize(GLuint shader) = 0;
 	GLuint shaderProgram;
@@ -31,12 +31,12 @@ public:
 	virtual void LoadFromDOM(DOMElement *root) = 0;
 	static shared_ptr<XamlObject> ParseObject(DOMElement* obj);
 	GLuint VAO;
-	virtual void Update(float xmin, float xmax, float ymin, float ymax) = 0;
-private:
-	coordinate minCoord;
-	coordinate maxCoord;
+	virtual void Update() = 0;
+	void SetBoundingBox(coordinate min, coordinate max);
 protected:
 	void LoadChildrenFromDOM(DOMElement *root);
+	coordinate minCoord;
+	coordinate maxCoord;
 };
 
 #endif

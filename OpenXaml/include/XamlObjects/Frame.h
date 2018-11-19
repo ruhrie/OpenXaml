@@ -5,7 +5,6 @@ namespace OpenXaml {
 	class Frame : public XamlObject
 	{
 	public:
-		void Draw(float xmin, float xmax, float ymin, float ymax);
 		void Draw();
 		int Width = 640;
 		int Height = 480;
@@ -13,7 +12,7 @@ namespace OpenXaml {
 		Frame();
 		void Initialize(GLuint shader);
 		void LoadFromDOM(DOMElement *root);
-		void Update(float xmin, float xmax, float ymin, float ymax);
+		void Update();
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;
