@@ -30,7 +30,7 @@ public:
 	char HorizontalAlignment = HorizontalAlignment::Stretch;
 	char VerticalAlignment = VerticalAlignment::Stretch;
 	virtual void LoadFromDOM(DOMElement *root) = 0;
-	static shared_ptr<XamlObject> ParseObject(DOMElement* obj);
+	static XamlObject* ParseObject(DOMElement* obj);
 	GLuint VAO;
 	virtual void Update() = 0;
 	void SetBoundingBox(coordinate min, coordinate max);

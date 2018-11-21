@@ -57,7 +57,6 @@ namespace OpenXaml {
 				throw 2;
 			}
 
-			shared_ptr<XamlObject> obj = XamlObject::ParseObject(elementRoot);
 			Frame frame = Frame();			
 			frame.LoadFromDOM(elementRoot);
 			XMLPlatformUtils::Terminate();

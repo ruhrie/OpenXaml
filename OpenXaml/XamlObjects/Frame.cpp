@@ -4,10 +4,12 @@
 
 namespace OpenXaml
 {
-	
-
 	Frame::Frame()
 	{
+		glGenVertexArrays(1, &(Frame::VAO));
+		glBindVertexArray(Frame::VAO);
+		glGenBuffers(1, &vertexBuffer);
+		glGenBuffers(1, &edgeBuffer);
 		minCoord.x = -1;
 		minCoord.y = -1;
 		maxCoord.x = 1;
@@ -42,7 +44,6 @@ namespace OpenXaml
 
 	void Frame::Initialize(GLuint shader)
 	{
-		glGenVertexArrays(1, &(Frame::VAO));
 		glBindVertexArray(Frame::VAO);
 		Frame::shaderProgram = GL::LoadShaders();
 		GLfloat vertices[] = {
@@ -58,8 +59,7 @@ namespace OpenXaml
 			1,2,3
 		};
 
-		glGenBuffers(1, &vertexBuffer);
-		glGenBuffers(1, &edgeBuffer);
+		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -115,5 +115,13 @@ namespace OpenXaml
 	void Frame::Update()
 	{
 
+	}
+
+	Frame::~Frame()
+	{
+		glBindVertexArray(Frame::VAO);
+		glDeleteBuffers(1, &vertexBuffer);
+		glDeleteBuffers(1, &edgeBuffer);
+		glDeleteVertexArrays(1, &VAO);
 	}
 }

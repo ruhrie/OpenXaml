@@ -6,14 +6,14 @@
 
 using namespace OpenXaml;
 
-shared_ptr<XamlObject> XamlObject::ParseObject(DOMElement * obj)
+XamlObject* XamlObject::ParseObject(DOMElement * obj)
 {
 	const XMLCh *xmlString = obj->getTagName();
 	string name = XMLString::transcode(xmlString);
-	shared_ptr<XamlObject> result;
+	XamlObject* result;
 	if (name == "Frame")
 	{
-		result = make_shared<OpenXaml::Frame>();
+		result = &OpenXaml::Frame();
 	}
 	else
 	{

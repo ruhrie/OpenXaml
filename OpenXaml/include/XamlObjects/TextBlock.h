@@ -14,6 +14,8 @@ namespace OpenXaml
 		int Height;
 		int Width;
 		void Update();
+		TextBlock();
+		~TextBlock();
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;

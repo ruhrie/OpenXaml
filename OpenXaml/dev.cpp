@@ -45,13 +45,9 @@ int main(int argc, char *argv[], char *envp[])
 	GLFWwindow *window;
 	if (!glfwInit())
 		return -1;
-
-	Frame frame = OpenXaml::Parser::ReadFile(inputFile);
-	window = glfwCreateWindow(frame.Width, frame.Height, "My Window", NULL, NULL);
-	PixelScale = coordinate({
-		1.0f / frame.Width,
-		1.0f / frame.Height
-		});
+	glfwWindowHint(GLFW_VISIBLE, 0);
+	window = glfwCreateWindow(640, 480, "My Window", NULL, NULL);
+	
 	if (!window)
 	{
 		glfwTerminate();
@@ -63,6 +59,13 @@ int main(int argc, char *argv[], char *envp[])
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
+	Frame frame = OpenXaml::Parser::ReadFile(inputFile);
+	glfwSetWindowSize(window, frame.Width, frame.Height);
+	PixelScale = coordinate({
+		1.0f / frame.Width,
+		1.0f / frame.Height
+		});
+	
 	FT_Library fontLibrary;
 	FT_Init_FreeType(&fontLibrary);
 	Font font = Font(fontLibrary, "C:\\Arimo-Regular.ttf", 12);
@@ -77,6 +80,7 @@ int main(int argc, char *argv[], char *envp[])
 	glBindVertexArray(vao);
 	frame.Initialize(shader);
 	glEnableVertexAttribArray(0);
+	glfwShowWindow(window);
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
@@ -102,6 +106,6 @@ int main(int argc, char *argv[], char *envp[])
 	}
 
 	glfwTerminate();
-	
+	FT_Done_FreeType(fontLibrary);
 	cout << "done";
 }

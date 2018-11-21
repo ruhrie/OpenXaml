@@ -2,13 +2,6 @@
 #include <sstream>
 namespace OpenXaml
 {
-	unsigned short indeces[] =
-	{
-		0,1,2,
-		1,2,3
-	};
-
-
 	void Rectangle::Draw()
 	{		
 		glBindVertexArray(Rectangle::VAO);
@@ -23,29 +16,30 @@ namespace OpenXaml
 		b = ((Fill & 0x000000FF)) / 255.0f;
 		glUniform4f(vertexColorLocation, r, g, b, a);
 		glUniform1i(modeLoc, 0);
-		
-		
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 		glBindVertexArray(0);
 	}
 
 	Rectangle::Rectangle()
 	{
+		glGenVertexArrays(1, &(Rectangle::VAO));
+		glBindVertexArray(Rectangle::VAO);
+		glGenBuffers(1, &vertexBuffer);
+		glGenBuffers(1, &edgeBuffer);
 	}
 
 	void Rectangle::Initialize(GLuint shader)
 	{
-		glGenVertexArrays(1, &(Rectangle::VAO));
+		unsigned short indeces[] =
+		{
+			0,1,2,
+			1,2,3
+		};
 		glBindVertexArray(Rectangle::VAO);
 		Rectangle::shaderProgram = GL::LoadShaders();
-
-		glGenBuffers(1, &vertexBuffer);
-		glGenBuffers(1, &edgeBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
-
 		Rectangle::Update();
-
 		glBindVertexArray(0);
 	}
 
@@ -223,5 +217,13 @@ namespace OpenXaml
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	}
+
+	Rectangle::~Rectangle()
+	{
+		glBindVertexArray(Rectangle::VAO);
+		glDeleteBuffers(1, &vertexBuffer);
+		glDeleteBuffers(1, &edgeBuffer);
+		glDeleteVertexArrays(1, &(Rectangle::VAO));
 	}
 }

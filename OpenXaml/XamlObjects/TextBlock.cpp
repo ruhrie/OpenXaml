@@ -69,7 +69,6 @@ namespace OpenXaml {
 	}
 	void TextBlock::Initialize(GLuint shader)
 	{
-		glGenVertexArrays(1, &(TextBlock::VAO));
 		glBindVertexArray(TextBlock::VAO);
 		unsigned short indeces[] =
 		{
@@ -154,5 +153,17 @@ namespace OpenXaml {
 	void TextBlock::Update()
 	{
 
+	}
+
+	TextBlock::TextBlock()
+	{
+		glGenVertexArrays(1, &(TextBlock::VAO));
+		glBindVertexArray(TextBlock::VAO);
+	}
+
+	TextBlock::~TextBlock()
+	{
+		glBindVertexArray(VAO);
+		glDeleteVertexArrays(1, &VAO);
 	}
 }

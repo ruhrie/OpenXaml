@@ -14,6 +14,7 @@ namespace OpenXaml
 		unsigned int Fill = 0xFF000000;
 		void LoadFromDOM(DOMElement *root);
 		void Update();
+		~Rectangle();
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;
