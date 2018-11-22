@@ -67,7 +67,6 @@
         <xs:restriction base="xs:string">
           <xs:enumeration value="Wrap"/>
           <xs:enumeration value="NoWrap"/>
-          <xs:enumeration value="WrapWholeWords"/>
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>

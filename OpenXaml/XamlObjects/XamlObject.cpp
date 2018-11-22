@@ -57,3 +57,9 @@ void XamlObject::SetBoundingBox(coordinate min, coordinate max)
 	minCoord = min;
 	maxCoord = max;
 }
+
+XamlObject::XamlObject()
+{
+	HorizontalAlignment.onPropertyChanged = std::bind(&XamlObject::Update, this);
+	VerticalAlignment.onPropertyChanged = std::bind(&XamlObject::Update, this);
+}

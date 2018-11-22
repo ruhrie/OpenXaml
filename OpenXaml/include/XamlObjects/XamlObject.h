@@ -13,8 +13,8 @@
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <string>
 #include "GL/GLConfig.h"
-#include "Properties/HorizontalAlignment.h"
-#include "Properties/VerticalAlignment.h"
+#include "Properties/Alignment.h"
+#include "Properties/TextWrapping.h"
 #include "XamlObjects/XamlProperty.h"
 #include "XamlObjects/Coordinate.h"
 #include "Globals.h"
@@ -27,13 +27,14 @@ public:
 	std::vector<std::shared_ptr<XamlObject>> Children;
 	virtual void Initialize(GLuint shader) = 0;
 	GLuint shaderProgram;
-	char HorizontalAlignment = HorizontalAlignment::Stretch;
-	char VerticalAlignment = VerticalAlignment::Stretch;
+	XamlProperty<HorizontalAlignment> HorizontalAlignment = HorizontalAlignment::Stretch;
+	XamlProperty<VerticalAlignment> VerticalAlignment = VerticalAlignment::Stretch;
 	virtual void LoadFromDOM(DOMElement *root) = 0;
 	static XamlObject* ParseObject(DOMElement* obj);
 	GLuint VAO;
 	virtual void Update() = 0;
 	void SetBoundingBox(coordinate min, coordinate max);
+	XamlObject();
 protected:
 	void LoadChildrenFromDOM(DOMElement *root);
 	coordinate minCoord;

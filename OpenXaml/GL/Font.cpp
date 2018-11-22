@@ -64,7 +64,8 @@ Character& Font::operator[](const char index)
 			face->glyph->bitmap.rows,
 			face->glyph->bitmap_left,
 			face->glyph->bitmap_top,
-			face->glyph->advance.x
+			face->glyph->advance.x,
+			face->glyph->advance.y
 		};
 		characterMap[index] = character;
 		return characterMap[index];

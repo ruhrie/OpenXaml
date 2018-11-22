@@ -73,6 +73,7 @@ namespace OpenXaml
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBindVertexArray(0);
+		Update();
 		for (unsigned int i = 0; i < Children.size(); i++)
 		{
 			Children[i]->Initialize(shader);

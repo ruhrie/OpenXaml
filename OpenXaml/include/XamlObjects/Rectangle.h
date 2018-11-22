@@ -6,12 +6,12 @@ namespace OpenXaml
 	class Rectangle : public XamlObject
 	{
 	public:
-		int Width = 0;
-		int Height = 0;
+		XamlProperty<int> Width = 0;
+		XamlProperty<int> Height = 0;
 		Rectangle();
 		void Draw();
 		void Initialize(GLuint shader);
-		unsigned int Fill = 0xFF000000;
+		XamlProperty<unsigned int> Fill = 0xFF000000;
 		void LoadFromDOM(DOMElement *root);
 		void Update();
 		~Rectangle();

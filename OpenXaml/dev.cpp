@@ -59,20 +59,17 @@ int main(int argc, char *argv[], char *envp[])
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
+	FT_Library fontLibrary;
+	FT_Init_FreeType(&fontLibrary);
+	Font font = Font(fontLibrary, "C:\\Arimo-Regular.ttf", 12);
+	fa = font;
 	Frame frame = OpenXaml::Parser::ReadFile(inputFile);
 	glfwSetWindowSize(window, frame.Width, frame.Height);
 	PixelScale = coordinate({
 		1.0f / frame.Width,
 		1.0f / frame.Height
 		});
-	
-	FT_Library fontLibrary;
-	FT_Init_FreeType(&fontLibrary);
-	Font font = Font(fontLibrary, "C:\\Arimo-Regular.ttf", 12);
-	auto hi = font['a'];
-	auto hio = font['a'];
 	GLuint shader = GL::LoadShaders();
-	fa = font;
 	GLint posAttrib = glGetAttribLocation(shader, "position");	
 
 	GLuint vao;

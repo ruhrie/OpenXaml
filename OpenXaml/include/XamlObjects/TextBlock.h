@@ -8,17 +8,19 @@ namespace OpenXaml
 	{
 	public:
 		void Draw();
-		string Text;
+		XamlProperty<string> Text;
 		void Initialize(GLuint shader);
 		void LoadFromDOM(DOMElement *root);
-		int Height;
-		int Width;
+		XamlProperty<int> Height = 0;
+		XamlProperty<int> Width = 0;
+		XamlProperty<TextWrapping> TextWrapping = TextWrapping::None;
 		void Update();
 		TextBlock();
 		~TextBlock();
 	private:
-		GLuint vertexBuffer;
 		GLuint edgeBuffer;
+		vector<GLuint> vertexBuffers;
+		map<GLuint, GLuint> textureMap;
 	};
 }
 #endif

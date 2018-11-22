@@ -5,7 +5,6 @@ namespace OpenXaml
 	void Rectangle::Draw()
 	{		
 		glBindVertexArray(Rectangle::VAO);
-		
 		glUseProgram(Rectangle::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(Rectangle::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(Rectangle::shaderProgram, "mode");
@@ -26,6 +25,9 @@ namespace OpenXaml
 		glBindVertexArray(Rectangle::VAO);
 		glGenBuffers(1, &vertexBuffer);
 		glGenBuffers(1, &edgeBuffer);
+		Width.onPropertyChanged = std::bind(&Rectangle::Update, this);
+		Height.onPropertyChanged = std::bind(&Rectangle::Update, this);
+		Fill.onPropertyChanged = std::bind(&Rectangle::Update, this);
 	}
 
 	void Rectangle::Initialize(GLuint shader)
@@ -39,8 +41,8 @@ namespace OpenXaml
 		Rectangle::shaderProgram = GL::LoadShaders();
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
-		Rectangle::Update();
 		glBindVertexArray(0);
+		Update();
 	}
 
 	void Rectangle::LoadFromDOM(DOMElement *root)
@@ -56,7 +58,9 @@ namespace OpenXaml
 			if (name == "Fill")
 			{
 				std::istringstream iss(value.substr(1, value.size()));
-				iss >> std::hex >> Rectangle::Fill;
+				unsigned int fill;
+				iss >> std::hex >> fill;
+				Rectangle::Fill = fill;
 			}
 			else if (name == "Height")
 			{
