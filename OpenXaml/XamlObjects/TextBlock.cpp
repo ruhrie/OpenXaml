@@ -95,6 +95,10 @@ namespace OpenXaml {
 					TextWrapping = TextWrapping::Wrap;
 				}
 			}
+			else if (name == "FontFamily")
+			{
+				TextBlock::FontFamily = value;
+			}
 		}
 
 		auto text = root->getTextContent();

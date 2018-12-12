@@ -37,6 +37,7 @@
           <xs:attributeGroup ref="TextWrapping"/>
           <xs:attributeGroup ref="HorizontalAlignment"/>
           <xs:attributeGroup ref="VerticalAlignment"/>
+          <xs:attributeGroup ref="FontFamily"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -109,5 +110,11 @@
     </xs:attribute>
   </xs:attributeGroup>
 
-
+  <xs:attributeGroup name="FontFamily">
+    <xs:attribute name="FontFamily">
+      <xs:simpleType>
+        <xs:restriction base="xs:string"/>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
 </xs:schema>
