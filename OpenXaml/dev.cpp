@@ -9,6 +9,7 @@
 #include "GL/GLConfig.h"
 #include "GL/Font.h"
 #include "Globals.h"
+#include "Application.h"
 using namespace std;
 using namespace OpenXaml;
 Font fa;
@@ -41,6 +42,8 @@ int main(int argc, char *argv[], char *envp[])
 		return EXIT_FAILURE;
 	}
 
+	Application app = Application();
+
 
 	GLFWwindow *window;
 	if (!glfwInit())
@@ -59,10 +62,6 @@ int main(int argc, char *argv[], char *envp[])
 		glfwTerminate();
 		return EXIT_FAILURE;
 	}
-	FT_Library fontLibrary;
-	FT_Init_FreeType(&fontLibrary);
-	Font font = Font(fontLibrary, "C:\\Arimo-Regular.ttf", 12);
-	fa = font;
 	Frame frame = OpenXaml::Parser::ReadFile(inputFile);
 	glfwSetWindowSize(window, frame.Width, frame.Height);
 	PixelScale = coordinate({
@@ -80,29 +79,16 @@ int main(int argc, char *argv[], char *envp[])
 	glfwShowWindow(window);
 	while (!glfwWindowShouldClose(window))
 	{
-		/* Render here */
-		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		//glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		//glEnableVertexAttribArray(posAttrib);
 		frame.Draw();		
-		
-		//glUseProgram(shader);
-
-		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 
 		int width, height;
 		glfwGetWindowSize(window, &width, &height);
 
 		glViewport(0, 0, width, height);
-		
-		/* Poll for and process events */
 		glfwPollEvents();
 	}
 
 	glfwTerminate();
-	FT_Done_FreeType(fontLibrary);
-	cout << "done";
 }

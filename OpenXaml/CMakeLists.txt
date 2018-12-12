@@ -1,6 +1,6 @@
 add_subdirectory(Shaders)
 
-file(GLOB SOURCES "Parser/*" "XamlObjects/*" "../Dependencies/glad/src/*" "GL/*") 
+file(GLOB SOURCES "Parser/*" "XamlObjects/*" "../Dependencies/glad/src/*" "GL/*" "*") 
 add_executable(dev "dev.cpp" ${SOURCES})
 
 set (INCLUDE_DIRS {

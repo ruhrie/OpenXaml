@@ -1,5 +1,9 @@
 #include "GL/Font.h"
 #include <iostream>
+#include <string>
+#include <vector>
+#include <filesystem>
+
 
 Font::Font()
 {
@@ -76,3 +80,4 @@ Font::~Font()
 {
 	FT_Done_Face(face);
 }
+
