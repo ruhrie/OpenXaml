@@ -1,6 +1,8 @@
 #ifndef TEXTBLOCK_H
 #define TEXTBLOCK_H
 #include "XamlObjects/XamlObject.h"
+#include <map>
+#include <GL/Font.h>
 //https://learnopengl.com/In-Practice/Text-Rendering
 namespace OpenXaml 
 {

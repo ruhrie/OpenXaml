@@ -112,6 +112,7 @@ namespace OpenXaml {
 
 	void TextBlock::Update()
 	{
+		Font fa;
 		glBindVertexArray(VAO);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{
@@ -251,6 +252,7 @@ namespace OpenXaml {
 		Height.onPropertyChanged = std::bind(&TextBlock::Update, this);
 		Text.onPropertyChanged = std::bind(&TextBlock::Update, this);
 		TextWrapping.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		FontFamily.onPropertyChanged = std::bind(&TextBlock::Update, this);
 		glBindVertexArray(0);
 	}
 

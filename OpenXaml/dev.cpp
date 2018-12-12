@@ -68,14 +68,14 @@ int main(int argc, char *argv[], char *envp[])
 		1.0f / frame.Width,
 		1.0f / frame.Height
 		});
+
 	GLuint shader = GL::LoadShaders();
 	GLint posAttrib = glGetAttribLocation(shader, "position");	
 
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
+
 	frame.Initialize(shader);
-	glEnableVertexAttribArray(0);
 	glfwShowWindow(window);
 	while (!glfwWindowShouldClose(window))
 	{

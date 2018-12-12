@@ -35,7 +35,6 @@ namespace OpenXaml
 		glUniform1i(modeLoc, 0);
 		
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-		glBindVertexArray(0);
 		for (unsigned int i = 0; i < Children.size(); i++)
 		{
 			Children[i]->Draw();
@@ -45,7 +44,7 @@ namespace OpenXaml
 	void Frame::Initialize(GLuint shader)
 	{
 		glBindVertexArray(Frame::VAO);
-		Frame::shaderProgram = GL::LoadShaders();
+		Frame::shaderProgram = shader;
 		GLfloat vertices[] = {
 					-1, 1, 0, 1,
 					1, 1, 1, 1,
@@ -72,7 +71,6 @@ namespace OpenXaml
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
-		glBindVertexArray(0);
 		Update();
 		for (unsigned int i = 0; i < Children.size(); i++)
 		{
