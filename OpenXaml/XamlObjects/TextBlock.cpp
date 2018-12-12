@@ -253,7 +253,6 @@ namespace OpenXaml {
 		Text.onPropertyChanged = std::bind(&TextBlock::Update, this);
 		TextWrapping.onPropertyChanged = std::bind(&TextBlock::Update, this);
 		FontFamily.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		glBindVertexArray(0);
 	}
 
 	TextBlock::~TextBlock()

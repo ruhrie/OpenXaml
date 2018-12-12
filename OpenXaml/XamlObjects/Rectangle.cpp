@@ -16,7 +16,6 @@ namespace OpenXaml
 		glUniform4f(vertexColorLocation, r, g, b, a);
 		glUniform1i(modeLoc, 0);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-		glBindVertexArray(0);
 	}
 
 	Rectangle::Rectangle()
@@ -38,7 +37,7 @@ namespace OpenXaml
 			1,2,3
 		};
 		glBindVertexArray(Rectangle::VAO);
-		Rectangle::shaderProgram = GL::LoadShaders();
+		Rectangle::shaderProgram = shader;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		glBindVertexArray(0);

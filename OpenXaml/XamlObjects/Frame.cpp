@@ -45,7 +45,7 @@ namespace OpenXaml
 	{
 		glBindVertexArray(Frame::VAO);
 		Frame::shaderProgram = shader;
-		GLfloat vertices[] = {
+		float vertices[] = {
 					-1, 1, 0, 1,
 					1, 1, 1, 1,
 					-1, -1, 0, 0,
