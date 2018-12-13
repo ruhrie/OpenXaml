@@ -1,27 +1,9 @@
 #include "XamlObjects/XamlObject.h"
-#include "XamlObjects/Frame.h"
 #include "XamlObjects/Rectangle.h"
 #include "XamlObjects/TextBlock.h"
 #include <iostream>
 
 using namespace OpenXaml;
-
-XamlObject* XamlObject::ParseObject(DOMElement * obj)
-{
-	const XMLCh *xmlString = obj->getTagName();
-	string name = XMLString::transcode(xmlString);
-	XamlObject* result;
-	if (name == "Frame")
-	{
-		result = &OpenXaml::Frame();
-	}
-	else
-	{
-		throw 2;
-	}
-	result->LoadFromDOM(obj);
-	return result;
-}
 
 void XamlObject::LoadChildrenFromDOM(DOMElement *root)
 {

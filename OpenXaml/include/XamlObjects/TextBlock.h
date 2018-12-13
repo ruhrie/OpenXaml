@@ -16,7 +16,7 @@ namespace OpenXaml
 		XamlProperty<int> Height = 0;
 		XamlProperty<int> Width = 0;
 		XamlProperty<TextWrapping> TextWrapping = TextWrapping::None;
-		XamlProperty<string> FontFamily = "Arial";
+		XamlProperty<string> FontFamily = string("Arial");
 		void Update();
 		TextBlock();
 		~TextBlock();

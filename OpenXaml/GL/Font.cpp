@@ -35,15 +35,12 @@ Character& Font::operator[](const char index)
 		if (error)
 		{
 			std::cerr << "Failed to load " << index << "\n";
-			return Character{
-			};
 		}
 		error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
 		if (error)
 		{
 			std::cerr << "Failed to render " << index << "\n";
 		}
-		auto test = face->glyph->bitmap;
 		GLuint texture;
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);

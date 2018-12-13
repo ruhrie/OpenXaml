@@ -20,9 +20,12 @@
 #include "Globals.h"
 using namespace xercesc;
 using namespace std;
+
+namespace OpenXaml
+{
 class XamlObject
 {
-public:
+  public:
 	virtual void Draw() = 0;
 	std::vector<std::shared_ptr<XamlObject>> Children;
 	virtual void Initialize(GLuint shader) = 0;
@@ -30,15 +33,16 @@ public:
 	XamlProperty<HorizontalAlignment> HorizontalAlignment = HorizontalAlignment::Stretch;
 	XamlProperty<VerticalAlignment> VerticalAlignment = VerticalAlignment::Stretch;
 	virtual void LoadFromDOM(DOMElement *root) = 0;
-	static XamlObject* ParseObject(DOMElement* obj);
 	GLuint VAO;
 	virtual void Update() = 0;
 	void SetBoundingBox(coordinate min, coordinate max);
 	XamlObject();
-protected:
+
+  protected:
 	void LoadChildrenFromDOM(DOMElement *root);
 	coordinate minCoord;
 	coordinate maxCoord;
 };
+} // namespace OpenXaml
 
 #endif

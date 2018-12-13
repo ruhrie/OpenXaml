@@ -70,7 +70,7 @@ int main(int argc, char *argv[], char *envp[])
 		});
 
 	GLuint shader = GL::LoadShaders();
-	GLint posAttrib = glGetAttribLocation(shader, "position");	
+	//GLint posAttrib = glGetAttribLocation(shader, "position");	
 
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
