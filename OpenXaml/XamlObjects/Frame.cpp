@@ -118,10 +118,10 @@ namespace OpenXaml
 
 	Frame::~Frame()
 	{
-		glBindVertexArray(Frame::VAO);
-		glDeleteBuffers(1, &vertexBuffer);
-		glDeleteBuffers(1, &edgeBuffer);
-		glDeleteVertexArrays(1, &VAO);
+		//glBindVertexArray(Frame::VAO);
+		//glDeleteBuffers(1, &vertexBuffer);
+		//glDeleteBuffers(1, &edgeBuffer);
+		//glDeleteVertexArrays(1, &VAO);
 	}
 
 	OpenXaml::Frame Frame::ParseFrame(DOMElement * obj)
