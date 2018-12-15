@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <GLFW/glfw3.h>
 
 namespace OpenXaml
 {
@@ -12,10 +13,12 @@ namespace OpenXaml
 	public:
 		Application();
 		~Application();
+		void Run();
 	private:
 		FT_Library fontLibrary;
 		void GetFonts();
 		map<string, vector<string>> fontFileMap;
+		GLFWwindow *window;
 	};
 }
 

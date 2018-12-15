@@ -43,14 +43,14 @@ int main(int argc, char *argv[], char *envp[])
 	}
 
 	Application app = Application();
-
+	app.Run();
 
 	GLFWwindow *window;
 	if (!glfwInit())
 		return -1;
 	glfwWindowHint(GLFW_VISIBLE, 0);
 	window = glfwCreateWindow(640, 480, "My Window", NULL, NULL);
-	
+
 	if (!window)
 	{
 		glfwTerminate();
@@ -76,7 +76,7 @@ int main(int argc, char *argv[], char *envp[])
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		frame.Draw();		
+		frame.Draw();
 		glfwSwapBuffers(window);
 
 		int width, height;

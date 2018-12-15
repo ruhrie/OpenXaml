@@ -1,0 +1,18 @@
+<Frame 
+  xmlns="http://xamlstandard"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xamlstandard ../Schema/XamlStandard.xsd"
+  Width ="1024" Height="768" Fill="#FF1FF111">
+  <Rectangle Fill="#440000FF" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="200"/>
+  <!--<TextBlock TextWrapping="Wrap">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat, augue et malesuada aliquet, mauris nisl ultrices erat, vel luctus purus turpis vitae eros. Maecenas dui tellus, sagittis et magna sed, aliquam tincidunt orci. Fusce vel lectus consectetur, luctus dolor nec, semper ante. Aenean ultricies risus sapien, at lacinia tellus mollis sit amet. Nullam vel pellentesque libero. Morbi id sapien eget dui elementum fermentum a nec lorem. Donec auctor efficitur augue, et commodo enim dapibus a. Aenean convallis sed libero bibendum pharetra. In sed accumsan ligula. Nullam congue blandit felis eget scelerisque. Nunc consectetur nisl ut felis egestas, quis pharetra augue convallis. Praesent tincidunt iaculis purus vel congue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean nec pretium orci. Donec fringilla ac magna ac dictum. Morbi laoreet erat est, id hendrerit nulla euismod non.
+
+    Etiam eu scelerisque enim. Maecenas congue faucibus pellentesque. Nunc ac viverra libero, a lacinia quam. Ut tempor sem vitae velit pharetra, in pretium arcu tempus. Suspendisse in dolor ac risus placerat tempus ac sed metus. Aliquam pretium faucibus justo, eget consectetur nisl dapibus quis. Aliquam sagittis pulvinar quam. Sed leo mi, luctus vitae erat eu, molestie facilisis neque. Integer vitae lectus risus. Sed tincidunt nibh id congue tempor. Sed gravida mauris felis, fermentum convallis dui bibendum sit amet. Cras mattis pulvinar turpis, in luctus dolor bibendum vestibulum.
+
+    Duis blandit massa non fringilla sollicitudin. Vestibulum vitae finibus metus. Quisque enim dui, mattis et justo eget, condimentum auctor lacus. In sagittis lectus non bibendum vehicula. Nulla magna nunc, vehicula non porttitor a, egestas accumsan nulla. Nam sit amet scelerisque neque, a interdum tellus. Nulla facilisi. Quisque in pharetra ex, vel molestie ex. Suspendisse potenti. Morbi aliquam mollis ipsum vel elementum. Cras porta enim lorem, a gravida dolor rutrum at. Integer hendrerit, enim in congue aliquet, neque libero gravida ante, sagittis faucibus justo mi non felis. Etiam ut condimentum tellus. Vivamus non arcu vel augue bibendum porta. Integer sollicitudin dui id vestibulum dignissim. Sed feugiat ut ligula eget hendrerit.
+
+    Aliquam nunc magna, consequat non dictum eget, commodo a neque. Nulla pharetra dapibus enim at ultricies. Praesent et pharetra nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent turpis diam, vulputate sed ante sit amet, efficitur maximus nunc. Nam lorem lacus, interdum id vulputate vitae, congue ac leo. Praesent vel nunc sapien. Nulla vitae odio nisl. Vestibulum finibus ex et neque dignissim sodales sodales a nisl. Donec ligula risus, fermentum ac tempus aliquet, mollis a ex.
+
+    Phasellus varius dui eu quam commodo molestie. Donec nec ultrices tortor. Cras dictum orci sit amet orci rutrum vestibulum. Morbi quis urna sed ipsum congue hendrerit. Vivamus pretium feugiat augue, in rutrum metus. Phasellus in mollis odio, sed porta metus. Integer consectetur sem eu lacus luctus porta. Nam lacus risus, venenatis eu metus non, ornare posuere lacus.
+  </TextBlock>-->
+</Frame>
