@@ -1,7 +1,7 @@
 #ifndef TEXTWRAPPING_H
 #define TEXTWRAPPING_H
 
-enum TextWrapping {
+enum class TextWrapping {
 	None,
 	Wrap
 };

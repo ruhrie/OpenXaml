@@ -11,7 +11,7 @@ set (INCLUDE_DIRS {
 	${ROOT_DIR}/Dependencies/freetype/include/
 })
 target_include_directories(dev PRIVATE ${INCLUDE_DIRS} )
-target_link_libraries(dev xerces-c glfw freetype)
+target_link_libraries(dev xerces-c glfw freetype stdc++fs)
 
 
 if(OPENGL_FOUND)

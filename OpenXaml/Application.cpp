@@ -38,6 +38,9 @@ namespace OpenXaml
 		vector<string> fontFiles;
 #if _WIN32
 		fontDirectories.push_back("C:\\Windows\\Fonts");
+#elif __linux__
+		fontDirectories.push_back("/usr/share/fonts");
+		fontDirectories.push_back("/usr/local/share/fonts");
 #else
 		cerr << "Unrecognized platform. Loading no system fonts.\n";
 #endif

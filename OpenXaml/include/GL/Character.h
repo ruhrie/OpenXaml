@@ -8,8 +8,8 @@ struct Character
 	unsigned int Height;
 	int BearingX;
 	int BearingY;
-	int AdvanceX;
-	int AdvanceY;
+	long AdvanceX;
+	long AdvanceY;
 };
 
 #endif
