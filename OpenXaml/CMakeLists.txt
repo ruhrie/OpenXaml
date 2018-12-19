@@ -3,15 +3,9 @@ add_subdirectory(Shaders)
 file(GLOB SOURCES "Parser/*" "XamlObjects/*" "../Dependencies/glad/src/*" "GL/*" "*") 
 add_executable(dev "dev.cpp" ${SOURCES})
 
-set (INCLUDE_DIRS {
-	${ROOT_DIR}/Dependencies/glad/include/
-	${ROOT_DIR}/Dependencies/xerces/src/
-	${BIN_ROOT_DIR}/Dependencies/xerces/src/
-	${CMAKE_CURRENT_SOURCE_DIR}/include/
-	${ROOT_DIR}/Dependencies/freetype/include/
-})
-target_include_directories(dev PRIVATE ${INCLUDE_DIRS} )
-target_link_libraries(dev xerces-c glfw freetype stdc++fs)
+set (INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include/ )
+target_include_directories(dev PRIVATE ${INCLUDE_DIRS} ${XERCES_INC} ${FREETYPE_INC} ${GLAD_INC} ${GLFW_INC})
+target_link_libraries(dev xerces-c glfw freetype)
 
 
 if(OPENGL_FOUND)
