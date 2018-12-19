@@ -45,3 +45,22 @@ XamlObject::XamlObject()
 	HorizontalAlignment.onPropertyChanged = std::bind(&XamlObject::Update, this);
 	VerticalAlignment.onPropertyChanged = std::bind(&XamlObject::Update, this);
 }
+
+void XamlObject::setPixelScale(float x, float y)
+{
+	PixelScale = coordinate{x,y};
+	for (int i = 0; i < Children.size(); i++)
+	{
+		Children[i]->setPixelScale(PixelScale);
+	}
+	Update();
+}
+void XamlObject::setPixelScale(coordinate scale)
+{
+	PixelScale = scale;
+	for (int i = 0; i < Children.size(); i++)
+	{
+		Children[i]->setPixelScale(PixelScale);
+	}
+	Update();
+}

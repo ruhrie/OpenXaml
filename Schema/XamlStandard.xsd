@@ -15,6 +15,7 @@
       <xs:attributeGroup ref="Width"/>
       <xs:attributeGroup ref="Height"/>
       <xs:attributeGroup ref="Fill"/>
+      <xs:attributeGroup ref="Class"/>
     </xs:complexType>
   </xs:element>
 
@@ -112,6 +113,14 @@
 
   <xs:attributeGroup name="FontFamily">
     <xs:attribute name="FontFamily">
+      <xs:simpleType>
+        <xs:restriction base="xs:string"/>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="Class">
+    <xs:attribute name="Class" use="required">
       <xs:simpleType>
         <xs:restriction base="xs:string"/>
       </xs:simpleType>

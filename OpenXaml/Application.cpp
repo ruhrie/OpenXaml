@@ -24,7 +24,6 @@ namespace OpenXaml
 			glfwTerminate();
 			throw 2;
 		}
-		cout << "ha\n";
 	}
 	Application::~Application()
 	{
@@ -92,7 +91,7 @@ namespace OpenXaml
 		while (!glfwWindowShouldClose(window))
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			//frame.Draw();
+			frame->Draw();
 			glfwSwapBuffers(window);
 
 			int width, height;
@@ -102,5 +101,19 @@ namespace OpenXaml
 			glfwPollEvents();
 		}
 		glfwHideWindow(window);
+	}
+
+	void Application::InitializeComponent()
+	{
+
+	}
+
+	void Application::InitializeComponent(string file)
+	{
+		frame = make_shared<Frame>(OpenXaml::Parser::ReadFile(file));
+		glfwSetWindowSize(window, frame->Width, frame->Height);
+		frame->setPixelScale(1.0f / frame->Width, 1.0f / frame->Height);
+		GLuint shader = GL::LoadShaders();
+		frame->Initialize(shader);
 	}
 }

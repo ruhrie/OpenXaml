@@ -41,7 +41,6 @@ namespace OpenXaml
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		glBindVertexArray(0);
-		Update();
 	}
 
 	void Rectangle::LoadFromDOM(DOMElement *root)
@@ -213,7 +212,6 @@ namespace OpenXaml
 		vertices[15] = 0.0f;
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glEnableVertexAttribArray(0);
@@ -224,9 +222,9 @@ namespace OpenXaml
 
 	Rectangle::~Rectangle()
 	{
-		glBindVertexArray(Rectangle::VAO);
-		glDeleteBuffers(1, &vertexBuffer);
-		glDeleteBuffers(1, &edgeBuffer);
-		glDeleteVertexArrays(1, &(Rectangle::VAO));
+		//glBindVertexArray(Rectangle::VAO);
+		//glDeleteBuffers(1, &vertexBuffer);
+		//glDeleteBuffers(1, &edgeBuffer);
+		//glDeleteVertexArrays(1, &(Rectangle::VAO));
 	}
 }

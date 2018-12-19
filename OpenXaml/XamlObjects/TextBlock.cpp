@@ -1,5 +1,4 @@
 #include "XamlObjects/TextBlock.h"
-#include "Globals.h"
 
 namespace OpenXaml {
 	void TextBlock::Draw()

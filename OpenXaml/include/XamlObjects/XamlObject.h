@@ -17,7 +17,6 @@
 #include "Properties/TextWrapping.h"
 #include "XamlObjects/XamlProperty.h"
 #include "XamlObjects/Coordinate.h"
-#include "Globals.h"
 using namespace xercesc;
 using namespace std;
 
@@ -37,11 +36,13 @@ class XamlObject
 	virtual void Update() = 0;
 	void SetBoundingBox(coordinate min, coordinate max);
 	XamlObject();
-
+	void setPixelScale(float x, float y);
+	void setPixelScale(coordinate scale);
   protected:
 	void LoadChildrenFromDOM(DOMElement *root);
 	coordinate minCoord;
 	coordinate maxCoord;
+	coordinate PixelScale;
 };
 } // namespace OpenXaml
 

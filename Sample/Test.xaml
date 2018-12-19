@@ -2,8 +2,9 @@
   xmlns="http://xamlstandard"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://xamlstandard ../Schema/XamlStandard.xsd"
-  Width ="1024" Height="768" Fill="#FF1FF111">
-  <Rectangle Fill="#440000FF" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="200"/>
+  Width ="1024" Height="768" Fill="#FF1FF111"
+  Class="Test">
+  <Rectangle Fill="#440000AA" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="200" FontFamily="Arial"/>
   <!--<TextBlock TextWrapping="Wrap">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat, augue et malesuada aliquet, mauris nisl ultrices erat, vel luctus purus turpis vitae eros. Maecenas dui tellus, sagittis et magna sed, aliquam tincidunt orci. Fusce vel lectus consectetur, luctus dolor nec, semper ante. Aenean ultricies risus sapien, at lacinia tellus mollis sit amet. Nullam vel pellentesque libero. Morbi id sapien eget dui elementum fermentum a nec lorem. Donec auctor efficitur augue, et commodo enim dapibus a. Aenean convallis sed libero bibendum pharetra. In sed accumsan ligula. Nullam congue blandit felis eget scelerisque. Nunc consectetur nisl ut felis egestas, quis pharetra augue convallis. Praesent tincidunt iaculis purus vel congue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean nec pretium orci. Donec fringilla ac magna ac dictum. Morbi laoreet erat est, id hendrerit nulla euismod non.
 
