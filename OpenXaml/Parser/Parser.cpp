@@ -12,6 +12,8 @@
 #include "XamlObjects/Frame.h"
 #include "XamlObjects/Rectangle.h"
 #include "XamlObjects/TextBlock.h"
+#include "Parser/ErrorReader.h"
+
 using namespace std;
 using namespace xercesc;
 namespace OpenXaml {
@@ -32,7 +34,9 @@ namespace OpenXaml {
 			inputStream.close();
 
 			XMLPlatformUtils::Initialize();
+			ErrorReader handler;
 			XercesDOMParser* parser = new XercesDOMParser();
+			parser->setErrorHandler(&handler);
 			parser->loadGrammar("../Schema/XamlStandard.xsd", Grammar::SchemaGrammarType);
 			//parser->setExternalSchemaLocation("../Schema/XamlStandard.xsd"); //using this causes an error, and I can't get the error handler to properly execute
 			//Will need fixing before release
@@ -43,12 +47,12 @@ namespace OpenXaml {
 			parser->parse(input.c_str());
 			
 			size_t error = parser->getErrorCount();
-			if (error != 0)
+			if (error > 0)
 			{
 				throw 1;
 			}
-
-			DOMDocument* xmlDoc = parser->getDocument();			
+			
+			DOMDocument* xmlDoc = parser->getDocument();
 			DOMElement* elementRoot = xmlDoc->getDocumentElement();
 			const XMLCh *xmlString = elementRoot->getTagName();
 			string test = XMLString::transcode(xmlString);
