@@ -13,10 +13,10 @@ namespace OpenXaml
         {
             XMLFileLoc linex = exc.getLineNumber();
             XMLFileLoc colx = exc.getColumnNumber();
-            cout << "Warning: XML Parsing warning on line " << linex << ", column " << colx << ".\n";
+            cerr << "Warning: XML Parsing warning on line " << linex << ", column " << colx << ".\n";
             const XMLCh *message = exc.getMessage();
             string test = XMLString::transcode(message);
-            cout << test;
+            cerr << test;
         }
         void ErrorReader::error(const SAXParseException &exc)
         {
