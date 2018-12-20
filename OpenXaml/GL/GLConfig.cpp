@@ -10,8 +10,8 @@ namespace GL
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glClearColor(0.0, 0.0, 0.0, 0.0);
-		string fragment;
-		string vertex;
+		string fragment("${FRAGMENT_CODE}");
+		string vertex("${VERTEX_CODE}");
 		ifstream fragmentFile("Shaders/fragment.glsl");
 		string line;
 		while (getline(fragmentFile, line))
