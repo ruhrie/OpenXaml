@@ -10,8 +10,8 @@ namespace GL
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glClearColor(0.0, 0.0, 0.0, 0.0);
-		string fragment("@FRAGMENT_CODE@");
-		string vertex("@VERTEX_CODE@");
+		string fragment = R"(@FRAGMENT_CODE@)";
+		string vertex = R"(@VERTEX_CODE@)";
 
 		const char * vertexsrc = vertex.c_str();
 		const char * fragmentsrc = fragment.c_str();

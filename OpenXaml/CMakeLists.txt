@@ -1,9 +1,7 @@
 add_subdirectory(Shaders)
 
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE_PRE)
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE_PRE)
-string(REPLACE "\n" "\\n" FRAGMENT_CODE ${FRAGMENT_CODE_PRE})
-string(REPLACE "\n" "\\n" VERTEX_CODE ${VERTEX_CODE_PRE})
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
 configure_file("GL/GLConfig.cpp.in" "GL/GLConfig.cpp")
 
 file(GLOB SOURCES "Parser/*.cpp" "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp") 
