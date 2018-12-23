@@ -10,32 +10,36 @@ namespace GL
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glClearColor(0.0, 0.0, 0.0, 0.0);
-		string fragment("${FRAGMENT_CODE}");
-		string vertex("${VERTEX_CODE}");
-		ifstream fragmentFile("Shaders/fragment.glsl");
-		string line;
-		while (getline(fragmentFile, line))
-		{
-			fragment += line + "\n";
-		}
-		fragmentFile.close();
-		ifstream vertexFile("Shaders/vertex.glsl");
-		while (getline(vertexFile, line))
-		{
-			vertex += line + "\n";
-		}
-		vertexFile.close();
+		string fragment("@FRAGMENT_CODE@");
+		string vertex("@VERTEX_CODE@");
 
 		const char * vertexsrc = vertex.c_str();
 		const char * fragmentsrc = fragment.c_str();
+		
+		int  success;
+		char infoLog[512];
 
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertexShader, 1, &vertexsrc, NULL);
 		glCompileShader(vertexShader);
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+
+		if(!success)
+		{
+    		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+    		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		}
 
 		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragmentShader, 1, &fragmentsrc, NULL);
 		glCompileShader(fragmentShader);
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+
+		if(!success)
+		{
+    		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+    		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		}
 
 		GLuint shaderProgram = glCreateProgram();
 		glAttachShader(shaderProgram, vertexShader);

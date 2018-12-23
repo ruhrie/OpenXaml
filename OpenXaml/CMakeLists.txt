@@ -1,10 +1,13 @@
 add_subdirectory(Shaders)
 
-file(GLOB SOURCES "Parser/*" "XamlObjects/*" "../Dependencies/glad/src/*" "GL/*" "*") 
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
-message("${VERTEX_CODE}")
-add_library(OpenXaml ${SOURCES})
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE_PRE)
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE_PRE)
+string(REPLACE "\n" "\\n" FRAGMENT_CODE ${FRAGMENT_CODE_PRE})
+string(REPLACE "\n" "\\n" VERTEX_CODE ${VERTEX_CODE_PRE})
+configure_file("GL/GLConfig.cpp.in" "GL/GLConfig.cpp")
+
+file(GLOB SOURCES "Parser/*.cpp" "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp") 
+add_library(OpenXaml ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp")
 set_target_properties(OpenXaml 
 	PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
