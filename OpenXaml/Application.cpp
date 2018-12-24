@@ -3,8 +3,10 @@
 #include <iostream>
 namespace OpenXaml
 {
+	Environment env;
 	Application::Application()
 	{
+		env = Environment();
 		FT_Init_FreeType(&(Application::fontLibrary));
 		GetFonts();
 

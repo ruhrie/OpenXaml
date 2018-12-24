@@ -9,6 +9,7 @@
 #include "XamlObjects/Frame.h"
 #include "Parser/Parser.h"
 #include "XamlObjects/Coordinate.h"
+#include "Environment.h"
 
 namespace OpenXaml
 {
@@ -27,6 +28,7 @@ namespace OpenXaml
 		GLFWwindow *window;
 		shared_ptr<OpenXaml::Frame> frame;
 		coordinate PixelScale;
+		map<string, Font> fontMap;
 	};
 }
 
