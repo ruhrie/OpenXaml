@@ -11,7 +11,7 @@ class Font
 {
 public:
 	Font();
-	Font(FT_Library lib, string file, int size);
+	Font(FT_Library lib, string file, float size);
 	Character& operator[](const char index);
 	int Height;
 	~Font();

@@ -12,6 +12,10 @@ Environment::Environment()
 
 Environment::~Environment()
 {
+	for (auto const&[key, val] : fontMap)
+	{
+		delete val;
+	}
     FT_Done_FreeType(Environment::fontLibrary);
 }
 
@@ -57,24 +61,29 @@ void Environment::LoadFonts()
         if (correct)
         {
             FT_Face face;
-            auto error = FT_New_Face(Environment::fontLibrary, file.c_str(), 0, &face);
+            auto error = FT_New_Face(fontLibrary, file.c_str(), 0, &face);
             if (error)
             {
                 std::cerr << "Failed to open " << file << "\n";
             }
-            fontFileMap[face->family_name].push_back(file);
+			fontFileMap[{
+				face->family_name,
+				(face->style_flags & FT_STYLE_FLAG_BOLD) == FT_STYLE_FLAG_BOLD,
+				(face->style_flags & FT_STYLE_FLAG_ITALIC) == FT_STYLE_FLAG_ITALIC
+			}].push_back(file);
+			
             FT_Done_Face(face);
         }
     }
 }
 
-void Environment::GetFont(string fontName, Font &font)
+Font* Environment::GetFont(FontProperties prop)
 {
-    auto local = fontMap.find(fontName);
-    if (local != fontMap.end())
-    {
-        font = fontMap[fontName];
-        return;
-    }
-    fontMap[fontName] = Font();
+	auto index = fontMap.find(prop);
+	if (index == fontMap.end())
+	{
+		vector<string> fontFiles = fontFileMap[{prop.name, prop.bold, prop.italic}];
+		fontMap[prop] = new Font(fontLibrary, fontFiles[0], prop.size);
+	}	
+	return fontMap[prop];
 }

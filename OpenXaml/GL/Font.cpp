@@ -10,7 +10,7 @@ Font::Font()
 
 }
 
-Font::Font(FT_Library lib, string file, int size)
+Font::Font(FT_Library lib, string file, float size)
 {
 	auto error = FT_New_Face(lib, file.c_str(), 0, &face);
 	if (error)
@@ -18,7 +18,7 @@ Font::Font(FT_Library lib, string file, int size)
 		std::cerr << "Failed to open " << file << "\n";
 		return;
 	}
-	FT_Set_Char_Size(face, 0, size * 64, 300, 300);
+	FT_Set_Char_Size(face, 0, (int)(size * 64), 300, 300);
 	Height = face->size->metrics.height;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }

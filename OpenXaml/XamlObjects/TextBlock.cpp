@@ -1,4 +1,5 @@
 #include "XamlObjects/TextBlock.h"
+#include "Environment.h"
 
 namespace OpenXaml {
 	void TextBlock::Draw()
@@ -98,6 +99,10 @@ namespace OpenXaml {
 			{
 				TextBlock::FontFamily = value;
 			}
+			else if (name == "FontSize")
+			{
+				TextBlock::FontSize = stof(value);
+			}
 		}
 
 		auto text = root->getTextContent();
@@ -111,7 +116,8 @@ namespace OpenXaml {
 
 	void TextBlock::Update()
 	{
-		Font fa;
+		Font *font = env.GetFont(FontProperties{ FontFamily, FontSize });
+		
 		glBindVertexArray(VAO);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{
@@ -120,7 +126,7 @@ namespace OpenXaml {
 		vertexBuffers.clear();
 		string text = Text;
 		float xbase = minCoord.x;
-		float ybase = maxCoord.y - (fa.Height >> 6) * PixelScale.y;
+		float ybase = maxCoord.y - (font->Height >> 6) * PixelScale.y;
 
 		vector<int> widths;
 		vector<int> seperators;
@@ -130,7 +136,7 @@ namespace OpenXaml {
 		{
 			if (find(begin(splitChars), end(splitChars), text[i]) == end(splitChars))
 			{
-				width += fa[text[i]].Width;
+				width += font->operator[](text[i]).Width;
 			}
 			else
 			{
@@ -157,7 +163,7 @@ namespace OpenXaml {
 
 			//render seperator
 			char sep = text[seperators[i]];
-			Character ch = fa[sep];
+			Character ch = font->operator[](sep);
 			if (!iscntrl(sep))
 			{
 				float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
@@ -185,7 +191,7 @@ namespace OpenXaml {
 			}
 			else if (sep == '\n')
 			{
-				ybase -= (fa.Height >> 6) * PixelScale.y;
+				ybase -= (font->Height >> 6) * PixelScale.y;
 				xbase = minCoord.x;
 			}
 			
@@ -196,7 +202,7 @@ namespace OpenXaml {
 			{
 				if (TextWrapping == TextWrapping::Wrap)
 				{
-					ybase -= (fa.Height >> 6) * PixelScale.y;
+					ybase -= (font->Height >> 6) * PixelScale.y;
 					xbase = minCoord.x;
 				}
 			}			
@@ -204,7 +210,7 @@ namespace OpenXaml {
 			//now render word
 			for(int j = 0; j < word.length(); j++)
 			{
-				Character ch = fa[word[j]];
+				Character ch = font->operator[](word[j]);
 				float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
 				x0 = xbase + ch.BearingX * PixelScale.x;
 				x1 = xbase + (ch.BearingX + ch.Width) * PixelScale.x;
@@ -227,7 +233,7 @@ namespace OpenXaml {
 				glBindBuffer(GL_ARRAY_BUFFER, characterBuffer);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 				vertexBuffers.push_back(characterBuffer);
-				textureMap[characterBuffer] = fa[word[j]].TextureID;
+				textureMap[characterBuffer] = font->operator[](word[j]).TextureID;
 				xbase += (ch.AdvanceX >> 6) * PixelScale.x;
 				ybase -= (ch.AdvanceY >> 6) * PixelScale.y;
 			}
