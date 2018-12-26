@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           targetNamespace="http://xamlstandard"
-           elementFormDefault="qualified"
-           xmlns="http://xamlstandard"
-           >
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://xamlstandard" elementFormDefault="qualified" 
+  xmlns="http://xamlstandard">
 
   <xs:element name="Frame">
     <xs:complexType>
@@ -39,6 +36,7 @@
           <xs:attributeGroup ref="HorizontalAlignment"/>
           <xs:attributeGroup ref="VerticalAlignment"/>
           <xs:attributeGroup ref="FontFamily"/>
+          <xs:attributeGroup ref="FontSize"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -123,6 +121,16 @@
     <xs:attribute name="Class" use="required">
       <xs:simpleType>
         <xs:restriction base="xs:string"/>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="FontSize">
+    <xs:attribute name="FontSize">
+      <xs:simpleType>
+        <xs:restriction base="xs:float">
+          <xs:minInclusive value="0"/>
+        </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
