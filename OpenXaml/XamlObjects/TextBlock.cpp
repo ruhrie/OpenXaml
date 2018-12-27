@@ -161,6 +161,44 @@ namespace OpenXaml {
 				width = 0;
 			}
 		}
+		vector<int> line;
+		vector<vector<int>> lines;
+		float fBounds = (maxCoord.x - minCoord.x)/PixelScale.x;
+		int fWidth = 0;
+		for (int i = 0; i < widths.size(); i++)
+		{
+			int width = widths[i];
+			char seperator = text[seperators[i]];
+			fWidth += widths[i];
+			if (fWidth > fBounds && TextWrapping == TextWrapping::Wrap)
+			{
+				lines.push_back(line);
+				line.clear();
+				fWidth = widths[i];
+			}
+			line.push_back(i);
+			if (seperator == '\n')
+			{
+				lines.push_back(line);
+				line.clear();
+				fWidth = 0;
+			}
+		}
+		lines.push_back(line);
+		//we now have our line seperation, so now we render each line.
+		for (int i = 0; i < lines.size(); i++)
+		{
+			line = lines[i];
+			int width = 0;
+			for (int j = 0; j < line.size(); j++)
+			{
+				int test2 = line[j];
+				int test = widths[line[j]];
+				width += test;
+			}
+			//we now have line width and can justify accordingly
+		}
+		//old implementation, very wrong
 		int priorSep;
 		for (int i = 0; i < widths.size(); i++)
 		{

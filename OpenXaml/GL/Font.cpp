@@ -18,7 +18,7 @@ Font::Font(FT_Library lib, string file, float size)
 		std::cerr << "Failed to open " << file << "\n";
 		return;
 	}
-	float dpi = OpenXaml::env.getDPI();
+	double dpi = OpenXaml::env.getDPI();
 	FT_Set_Char_Size(face, 0, (int)(size * 64), (int)dpi, (int)dpi);
 	Height = face->size->metrics.height;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
