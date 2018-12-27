@@ -4,8 +4,8 @@ namespace OpenXaml
 {
 	void Rectangle::Draw()
 	{		
-		glBindVertexArray(Rectangle::VAO);
-		glUseProgram(Rectangle::shaderProgram);
+		glBindVertexArray(VAO);
+		glUseProgram(shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(Rectangle::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(Rectangle::shaderProgram, "mode");
 		float a, r, g, b;
@@ -116,6 +116,7 @@ namespace OpenXaml
 
 	void Rectangle::Update()
 	{
+		glBindVertexArray(VAO);
 		float width = Width * PixelScale.x;
 		float height = Height * PixelScale.y;
 
@@ -226,5 +227,11 @@ namespace OpenXaml
 		//glDeleteBuffers(1, &vertexBuffer);
 		//glDeleteBuffers(1, &edgeBuffer);
 		//glDeleteVertexArrays(1, &(Rectangle::VAO));
+	}
+
+	void Rectangle::SetBoundingBox(coordinate min, coordinate max)
+	{
+		minCoord = min;
+		maxCoord = max;
 	}
 }

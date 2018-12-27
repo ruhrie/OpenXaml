@@ -16,6 +16,7 @@ namespace OpenXaml {
 		void LoadFromDOM(xercesc_3_2::DOMElement *root);
 		void Update();
 		~Frame();
+		void SetBoundingBox(coordinate min, coordinate max);
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;

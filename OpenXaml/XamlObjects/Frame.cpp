@@ -125,19 +125,25 @@ namespace OpenXaml
 	}
 
 	OpenXaml::Frame Frame::ParseFrame(DOMElement * obj)
-{
-	const XMLCh *xmlString = obj->getTagName();
-	string name = XMLString::transcode(xmlString);
-	Frame result;
-	if (name == "Frame")
 	{
-		result = OpenXaml::Frame();
+		const XMLCh *xmlString = obj->getTagName();
+		string name = XMLString::transcode(xmlString);
+		Frame result;
+		if (name == "Frame")
+		{
+			result = OpenXaml::Frame();
+		}
+		else
+		{
+			throw 2;
+		}
+		result.LoadFromDOM(obj);
+		return result;
 	}
-	else
+
+	void Frame::SetBoundingBox(coordinate min, coordinate max)
 	{
-		throw 2;
+		minCoord = min;
+		maxCoord = max;
 	}
-	result.LoadFromDOM(obj);
-	return result;
-}
 }

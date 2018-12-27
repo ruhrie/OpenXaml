@@ -16,7 +16,7 @@ namespace OpenXaml
             cerr << "Warning: XML Parsing warning on line " << linex << ", column " << colx << ".\n";
             const XMLCh *message = exc.getMessage();
             string test = XMLString::transcode(message);
-            cerr << test;
+			cerr << test << "\n";
         }
         void ErrorReader::error(const SAXParseException &exc)
         {
@@ -25,7 +25,7 @@ namespace OpenXaml
             cerr << "Error: XML Parsing exception on line " << linex << ", column " << colx << ".\n";
             const XMLCh *message = exc.getMessage();
             string test = XMLString::transcode(message);
-            cerr << test;
+			cerr << test << "\n";
         }
         void ErrorReader::fatalError(const SAXParseException &exc)
         {
@@ -34,7 +34,7 @@ namespace OpenXaml
             cerr << "Error: XML Parsing exception on line " << linex << ", column " << colx << ".\n";
             const XMLCh *message = exc.getMessage();
             string test = XMLString::transcode(message);
-            cerr << test;
+            cerr << test << "\n";
         }
         void ErrorReader::resetErrors()
         {

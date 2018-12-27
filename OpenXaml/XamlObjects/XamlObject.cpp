@@ -4,6 +4,7 @@
 #include <iostream>
 
 using namespace OpenXaml;
+using namespace std;
 
 void XamlObject::LoadChildrenFromDOM(DOMElement *root)
 {

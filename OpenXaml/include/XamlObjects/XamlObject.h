@@ -34,7 +34,7 @@ class XamlObject
 	virtual void LoadFromDOM(DOMElement *root) = 0;
 	GLuint VAO;
 	virtual void Update() = 0;
-	void SetBoundingBox(coordinate min, coordinate max);
+	virtual void SetBoundingBox(coordinate min, coordinate max) = 0;
 	XamlObject();
 	void setPixelScale(float x, float y);
 	void setPixelScale(coordinate scale);

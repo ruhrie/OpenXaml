@@ -15,6 +15,7 @@ namespace OpenXaml
 		void LoadFromDOM(DOMElement *root);
 		void Update();
 		~Rectangle();
+		void SetBoundingBox(coordinate min, coordinate max);
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;

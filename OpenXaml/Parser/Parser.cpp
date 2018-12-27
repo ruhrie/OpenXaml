@@ -38,8 +38,6 @@ namespace OpenXaml {
 			XercesDOMParser* parser = new XercesDOMParser();
 			parser->setErrorHandler(&handler);
 			parser->loadGrammar("../Schema/XamlStandard.xsd", Grammar::SchemaGrammarType);
-			//parser->setExternalSchemaLocation("../Schema/XamlStandard.xsd"); //using this causes an error, and I can't get the error handler to properly execute
-			//Will need fixing before release
 			parser->setDoSchema(true);
 			parser->setValidationScheme(XercesDOMParser::Val_Always);
 			parser->setDoNamespaces(true);			

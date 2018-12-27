@@ -1,5 +1,6 @@
 #include "XamlObjects/TextBlock.h"
 #include "Environment.h"
+#include <sstream>
 
 namespace OpenXaml {
 	void TextBlock::Draw()
@@ -103,6 +104,13 @@ namespace OpenXaml {
 			{
 				TextBlock::FontSize = stof(value);
 			}
+			else if (name == "Fill")
+			{
+				std::istringstream iss(value.substr(1, value.size()));
+				unsigned int fill;
+				iss >> std::hex >> fill;
+				TextBlock::Fill = fill;
+			}
 		}
 
 		auto text = root->getTextContent();
@@ -116,8 +124,7 @@ namespace OpenXaml {
 
 	void TextBlock::Update()
 	{
-		Font *font = env.GetFont(FontProperties{ FontFamily, FontSize });
-		
+		Font *font = env.GetFont(FontProperties{ FontFamily, FontSize });		
 		glBindVertexArray(VAO);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{
@@ -258,11 +265,19 @@ namespace OpenXaml {
 		Text.onPropertyChanged = std::bind(&TextBlock::Update, this);
 		TextWrapping.onPropertyChanged = std::bind(&TextBlock::Update, this);
 		FontFamily.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		FontSize.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		Fill.onPropertyChanged = std::bind(&TextBlock::Update, this);
 	}
 
 	TextBlock::~TextBlock()
 	{
 		glBindVertexArray(VAO);
 		glDeleteVertexArrays(1, &VAO);
+	}
+
+	void TextBlock::SetBoundingBox(coordinate min, coordinate max)
+	{
+		minCoord = min;
+		maxCoord = max;
 	}
 }

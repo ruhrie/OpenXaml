@@ -5,10 +5,10 @@
 
   <xs:element name="Frame">
     <xs:complexType>
-      <xs:all>
+      <xs:choice maxOccurs="unbounded">
         <xs:element minOccurs="0" ref="Rectangle"/>
         <xs:element minOccurs="0" ref="TextBlock"/>
-      </xs:all>
+      </xs:choice>
       <xs:attributeGroup ref="Width"/>
       <xs:attributeGroup ref="Height"/>
       <xs:attributeGroup ref="Fill"/>
@@ -37,10 +37,12 @@
           <xs:attributeGroup ref="VerticalAlignment"/>
           <xs:attributeGroup ref="FontFamily"/>
           <xs:attributeGroup ref="FontSize"/>
+          <xs:attributeGroup ref="Fill"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
+  
   <xs:attributeGroup name="Width">
     <xs:attribute name="Width">
       <xs:simpleType>
