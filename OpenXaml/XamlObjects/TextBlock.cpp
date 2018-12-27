@@ -115,6 +115,15 @@ namespace OpenXaml {
 
 		auto text = root->getTextContent();
 		TextBlock::Text = XMLString::transcode(text);
+
+		Width.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		Height.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		Text.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		TextWrapping.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		FontFamily.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		FontSize.onPropertyChanged = std::bind(&TextBlock::Update, this);
+		Fill.onPropertyChanged = std::bind(&TextBlock::Update, this);
+
 		LoadChildrenFromDOM(root);
 		for (int i = 0; i < Children.size(); i++)
 		{
@@ -260,13 +269,6 @@ namespace OpenXaml {
 		glGenBuffers(1, &edgeBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
-		Width.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		Height.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		Text.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		TextWrapping.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		FontFamily.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		FontSize.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		Fill.onPropertyChanged = std::bind(&TextBlock::Update, this);
 	}
 
 	TextBlock::~TextBlock()

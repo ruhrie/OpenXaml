@@ -24,9 +24,6 @@ namespace OpenXaml
 		glBindVertexArray(Rectangle::VAO);
 		glGenBuffers(1, &vertexBuffer);
 		glGenBuffers(1, &edgeBuffer);
-		Width.onPropertyChanged = std::bind(&Rectangle::Update, this);
-		Height.onPropertyChanged = std::bind(&Rectangle::Update, this);
-		Fill.onPropertyChanged = std::bind(&Rectangle::Update, this);
 	}
 
 	void Rectangle::Initialize(GLuint shader)
@@ -41,6 +38,10 @@ namespace OpenXaml
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		glBindVertexArray(0);
+
+		Width.onPropertyChanged = std::bind(&Rectangle::Update, this);
+		Height.onPropertyChanged = std::bind(&Rectangle::Update, this);
+		Fill.onPropertyChanged = std::bind(&Rectangle::Update, this);
 	}
 
 	void Rectangle::LoadFromDOM(DOMElement *root)

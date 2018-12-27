@@ -14,10 +14,6 @@ namespace OpenXaml
 		minCoord.y = -1;
 		maxCoord.x = 1;
 		maxCoord.y = 1;
-
-		Width.onPropertyChanged = std::bind(&Frame::Update, this);
-		Height.onPropertyChanged = std::bind(&Frame::Update, this);
-		Fill.onPropertyChanged = std::bind(&Frame::Update, this);
 	}
 
 	void Frame::Draw()
@@ -58,7 +54,6 @@ namespace OpenXaml
 			1,2,3
 		};
 
-		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -71,11 +66,16 @@ namespace OpenXaml
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+		
+		Width.onPropertyChanged = std::bind(&Frame::Update, this);
+		Height.onPropertyChanged = std::bind(&Frame::Update, this);
+		Fill.onPropertyChanged = std::bind(&Frame::Update, this);
 		Update();
+
 		for (unsigned int i = 0; i < Children.size(); i++)
 		{
 			Children[i]->Initialize(shader);
-		}
+		}		
 	}
 
 	void Frame::LoadFromDOM(DOMElement *root)
