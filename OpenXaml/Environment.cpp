@@ -2,12 +2,12 @@
 #include "GL/Font.h"
 #include <filesystem>
 #include <iostream>
+#include <GLFW/glfw3.h>
 using namespace OpenXaml;
 using namespace std;
 Environment::Environment()
 {
     FT_Init_FreeType(&(Environment::fontLibrary));
-    LoadFonts();
 }
 
 Environment::~Environment()
@@ -86,4 +86,20 @@ Font* Environment::GetFont(FontProperties prop)
 		fontMap[prop] = new Font(fontLibrary, fontFiles[0], prop.size);
 	}	
 	return fontMap[prop];
+}
+
+double Environment::getDPI()
+{
+	return DPI;
+}
+
+void Environment::Initialize()
+{
+	LoadFonts();
+
+	GLFWmonitor* primary = glfwGetPrimaryMonitor();
+	int widthMM, heightMM;
+	glfwGetMonitorPhysicalSize(primary, &widthMM, &heightMM);
+	const GLFWvidmode* mode = glfwGetVideoMode(primary);
+	DPI = mode->width / (widthMM / 25.4);
 }

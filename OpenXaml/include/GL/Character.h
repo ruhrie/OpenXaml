@@ -4,8 +4,8 @@
 struct Character
 {
 	GLuint TextureID;
-	int Width;
-	int Height;
+	unsigned int Width;
+	unsigned int Height;
 	int BearingX;
 	int BearingY;
 	long AdvanceX;

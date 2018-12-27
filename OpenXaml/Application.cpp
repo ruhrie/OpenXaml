@@ -24,6 +24,7 @@ namespace OpenXaml
 			glfwTerminate();
 			throw 2;
 		}
+		env.Initialize();
 	}
 	Application::~Application()
 	{
@@ -58,7 +59,7 @@ namespace OpenXaml
 	{
 		frame = make_shared<Frame>(OpenXaml::Parser::ReadFile(file));
 		glfwSetWindowSize(window, frame->Width, frame->Height);
-		frame->setPixelScale(1.0f / frame->Width, 1.0f / frame->Height);
+		frame->setPixelScale(2.0f / frame->Width, 2.0f / frame->Height);
 		GLuint shader = GL::LoadShaders();
 		frame->Initialize(shader);
 	}

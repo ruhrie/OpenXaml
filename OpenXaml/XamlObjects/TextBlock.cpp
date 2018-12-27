@@ -146,7 +146,7 @@ namespace OpenXaml {
 
 		vector<int> widths;
 		vector<int> seperators;
-		static char splitChars[] = { ' ', '-', '\t', '\n' };
+		static const char splitChars[] = { ' ', '-', '\t', '\n' };
 		int width = 0;
 		for (int i = 0; i < text.length(); i++)
 		{
@@ -186,7 +186,7 @@ namespace OpenXaml {
 				x0 = xbase + ch.BearingX * PixelScale.x;
 				x1 = xbase + (ch.BearingX + ch.Width) * PixelScale.x;
 				y0 = ybase + ch.BearingY * PixelScale.y;
-				y1 = ybase + (ch.BearingY - ch.Height) * PixelScale.y;
+				y1 = ybase + (ch.BearingY - (int)ch.Height) * PixelScale.y;
 				tx0 = 0;
 				tx1 = 1;
 				ty0 = 0;
@@ -231,7 +231,7 @@ namespace OpenXaml {
 				x0 = xbase + ch.BearingX * PixelScale.x;
 				x1 = xbase + (ch.BearingX + ch.Width) * PixelScale.x;
 				y0 = ybase + ch.BearingY * PixelScale.y;
-				y1 = ybase + (ch.BearingY - ch.Height) * PixelScale.y;
+				y1 = ybase + (ch.BearingY - (int)ch.Height) * PixelScale.y;
 
 				tx0 = 0;
 				tx1 = 1;
