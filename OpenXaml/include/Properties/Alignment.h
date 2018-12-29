@@ -15,4 +15,10 @@ enum class HorizontalAlignment {
 	Left
 };
 
+enum class TextAlignment {
+	Left,
+	Right,
+	Center
+};
+
 #endif

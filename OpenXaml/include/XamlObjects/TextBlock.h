@@ -20,6 +20,7 @@ namespace OpenXaml
 		XamlProperty<string> FontFamily = string("Arial");
 		XamlProperty<float> FontSize = 12;
 		XamlProperty<unsigned int> Fill = 0;
+		XamlProperty<TextAlignment> TextAlignment = TextAlignment::Left;
 		void Update();
 		TextBlock();
 		~TextBlock();

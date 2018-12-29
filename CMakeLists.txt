@@ -1,13 +1,4 @@
 cmake_minimum_required(VERSION 3.11)
-project("OpenXaml")
-
-set (CMAKE_CXX_STANDARD 17)
-
-find_package( OpenGL REQUIRED )
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    message("Compiling on GCC is not supported. Please use clang instead.")
-endif()
 
 add_subdirectory("Dependencies")
 

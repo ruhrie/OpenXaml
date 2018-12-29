@@ -1,3 +1,10 @@
+project("OpenXaml" 
+)
+
+set (CMAKE_CXX_STANDARD 17)
+
+find_package( OpenGL REQUIRED )
+
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
 configure_file("GL/GLConfig.cpp.in" "GL/GLConfig.cpp")
