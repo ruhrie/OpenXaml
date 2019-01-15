@@ -1,4 +1,4 @@
-#include <xercesc/sax/Errorhandler.hpp>
+#include <xercesc/sax/ErrorHandler.hpp>
 #include <xercesc/sax/SAXParseException.hpp> 
 
 namespace OpenXaml
