@@ -201,7 +201,7 @@ namespace OpenXaml {
 			}
 		}
 		lines.push_back(line);
-		int height = (int)lines.size() * (font->Height >> 6);
+		int height = (font->Height >> 6);
 		//we now have our line seperation, so now we render each line.
 		
 		int maxWidth = 0;
@@ -337,7 +337,54 @@ namespace OpenXaml {
 						float cHeight = ch.BearingY * PixelScale.y;
 						//check if we need to render it, otherwise continue to the next character
 						float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
-						//fill in values
+						float dx0, dx1, dy0, dy1;
+						dx0 = penX + ch.BearingX * PixelScale.x;
+						dx1 = penX + (ch.BearingX + ch.Width) * PixelScale.x;
+						dy0 = penY + ch.BearingY * PixelScale.y;
+						dy1 = penY + (ch.BearingY - (int)ch.Height) * PixelScale.y;
+
+						x0 = max(dx0, minCoord.x);
+						x1 = min(dx1, maxCoord.x);
+						y0 = max(dy0, minCoord.y);
+						y1 = min(dy1, maxCoord.y);
+
+						float dwidth = dx1 - dx0;
+						float dheight = dy1 - dy0;
+						float xRatio = (x1 - x0) / dwidth;
+						float yRatio = (y1 - y0) / dheight;
+						if (x0 != dx0)
+						{
+							tx0 = 1 - xRatio;
+						}
+						else
+						{
+							tx0 = 0;
+						}
+						if (x1 != dx1)
+						{
+							tx1 = xRatio;
+						}
+						else
+						{
+							tx1 = 1;
+						}
+						if (y0 != dy0)
+						{
+							ty0 = 1 - yRatio;
+						}
+						else
+						{
+							ty0 = 0;
+						}
+						if (y1 != dy1)
+						{
+							ty1 = yRatio;
+						}
+						else
+						{
+							ty1 = 1;
+						}
+
 						GLfloat vertices[16] = {
 						x0, y0, tx0,ty0,
 						x1, y0, tx1,ty0,
@@ -355,101 +402,6 @@ namespace OpenXaml {
 				}
 			}
 			penY -= fHeight;
-		}
-
-		//old implementation, very wrong
-		int priorSep;
-		for (int i = 0; i < widths.size(); i++)
-		{
-			//get the word
-			int width = widths[i];
-			string word;
-			if (i == 0)
-			{
-				word = text.substr(0, seperators[i]);
-			}
-			else
-			{
-				word = text.substr(priorSep + 1, seperators[i] - priorSep - 1);
-			}
-			priorSep = seperators[i];
-
-			//render seperator
-			char sep = text[seperators[i]];
-			Character ch = font->operator[](sep);
-			if (!iscntrl(sep))
-			{
-				float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
-				x0 = xbase + ch.BearingX * PixelScale.x;
-				x1 = xbase + (ch.BearingX + ch.Width) * PixelScale.x;
-				y0 = ybase + ch.BearingY * PixelScale.y;
-				y1 = ybase + (ch.BearingY - (int)ch.Height) * PixelScale.y;
-				tx0 = 0;
-				tx1 = 1;
-				ty0 = 0;
-				ty1 = 1;
-
-				GLfloat vertices[16] = {
-						x0, y0, tx0,ty0,
-						x1, y0, tx1,ty0,
-						x0, y1, tx0,ty1,
-						x1, y1, tx1,ty1
-				};
-				GLuint sepBuffer;
-				glGenBuffers(1, &sepBuffer);
-				glBindBuffer(GL_ARRAY_BUFFER, sepBuffer);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-				textureMap[sepBuffer] = ch.TextureID;
-				vertexBuffers.push_back(sepBuffer);
-			}
-			else if (sep == '\n')
-			{
-				ybase -= (font->Height >> 6) * PixelScale.y;
-				xbase = minCoord.x;
-			}
-			
-			xbase += (ch.AdvanceX >> 6) * PixelScale.x;
-			ybase -= (ch.AdvanceY >> 6) * PixelScale.y;
-
-			if (xbase + (width * PixelScale.x) > maxCoord.x) //word is to long to display on line
-			{
-				if (TextWrapping == TextWrapping::Wrap)
-				{
-					ybase -= (font->Height >> 6) * PixelScale.y;
-					xbase = minCoord.x;
-				}
-			}			
-
-			//now render word
-			for(int j = 0; j < word.length(); j++)
-			{
-				Character ch = font->operator[](word[j]);
-				float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
-				x0 = xbase + ch.BearingX * PixelScale.x;
-				x1 = xbase + (ch.BearingX + ch.Width) * PixelScale.x;
-				y0 = ybase + ch.BearingY * PixelScale.y;
-				y1 = ybase + (ch.BearingY - (int)ch.Height) * PixelScale.y;
-
-				tx0 = 0;
-				tx1 = 1;
-				ty0 = 0;
-				ty1 = 1;
-
-				GLfloat vertices[16] = {
-						x0, y0, tx0,ty0,
-						x1, y0, tx1,ty0,
-						x0, y1, tx0,ty1,
-						x1, y1, tx1,ty1
-				};
-				GLuint characterBuffer;
-				glGenBuffers(1, &characterBuffer);
-				glBindBuffer(GL_ARRAY_BUFFER, characterBuffer);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-				vertexBuffers.push_back(characterBuffer);
-				textureMap[characterBuffer] = font->operator[](word[j]).TextureID;
-				xbase += (ch.AdvanceX >> 6) * PixelScale.x;
-				ybase -= (ch.AdvanceY >> 6) * PixelScale.y;
-			}
 		}
 	}
 
