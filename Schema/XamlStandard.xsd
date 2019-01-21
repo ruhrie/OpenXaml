@@ -8,6 +8,7 @@
       <xs:choice maxOccurs="unbounded">
         <xs:element minOccurs="0" ref="Rectangle"/>
         <xs:element minOccurs="0" ref="TextBlock"/>
+        <xs:element minOccurs="0" ref="Button"/>
       </xs:choice>
       <xs:attributeGroup ref="Width"/>
       <xs:attributeGroup ref="Height"/>
@@ -38,6 +39,20 @@
           <xs:attributeGroup ref="FontFamily"/>
           <xs:attributeGroup ref="FontSize"/>
           <xs:attributeGroup ref="Fill"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Button" id="Button">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attributeGroup ref="Width"/>
+          <xs:attributeGroup ref="Height"/>
+          <xs:attributeGroup ref="HorizontalAlignment"/>
+          <xs:attributeGroup ref="VerticalAlignment"/>
+          <xs:attributeGroup ref="Content"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -145,6 +160,14 @@
           <xs:enumeration value="Right"/>
           <xs:enumeration value="Center"/>
         </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="Content">
+    <xs:attribute name="Content">
+      <xs:simpleType>
+        <xs:restriction base="xs:string"/>
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>

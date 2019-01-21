@@ -1,6 +1,7 @@
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Rectangle.h"
 #include "XamlObjects/TextBlock.h"
+#include "XamlObjects/Button.h"
 #include <iostream>
 
 using namespace OpenXaml;
@@ -24,6 +25,12 @@ void XamlObject::LoadChildrenFromDOM(DOMElement *root)
 		else if (type == "TextBlock")
 		{
 			shared_ptr<OpenXaml::TextBlock> res = make_shared<OpenXaml::TextBlock>();
+			res->LoadFromDOM((DOMElement*)child);
+			Children.push_back(res);
+		}
+		else if (type == "Button")
+		{
+			shared_ptr<OpenXaml::Button> res = make_shared<OpenXaml::Button>();
 			res->LoadFromDOM((DOMElement*)child);
 			Children.push_back(res);
 		}
