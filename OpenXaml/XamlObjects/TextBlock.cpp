@@ -166,11 +166,8 @@ namespace OpenXaml {
 		int width = 0;
 		for (int i = 0; i < text.length(); i++)
 		{
-			if (find(begin(splitChars), end(splitChars), text[i]) == end(splitChars))
-			{
-				width += font->operator[](text[i]).Width;
-			}
-			else
+			width += font->operator[](text[i]).AdvanceX >> 6;
+			if (find(begin(splitChars), end(splitChars), text[i]) != end(splitChars))
 			{
 				widths.push_back(width);
 				seperators.push_back(i);
