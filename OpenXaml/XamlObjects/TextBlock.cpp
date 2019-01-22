@@ -156,6 +156,10 @@ namespace OpenXaml {
 			glDeleteBuffers(1, &(vertexBuffers[i]));
 		}
 		vertexBuffers.clear();
+		if (font == NULL)
+		{
+			return;
+		}
 		string text = Text;
 		float xbase = minCoord.x;
 		float ybase = maxCoord.y - (font->Height >> 6) * PixelScale.y;

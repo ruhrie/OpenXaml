@@ -91,6 +91,12 @@ Font* Environment::GetFont(FontProperties prop)
 	auto index = fontMap.find(prop);
 	if (index == fontMap.end())
 	{
+		auto fileIndex = fontFileMap.find({ prop.name, prop.bold, prop.italic });
+		if (fileIndex == fontFileMap.end())
+		{
+			cerr << "Failed to find font " << prop.name << " Bold:" << prop.bold << " Italic:" << prop.italic << "\n";
+			return NULL;
+		}
 		vector<string> fontFiles = fontFileMap[{prop.name, prop.bold, prop.italic}];
 		fontMap[prop] = new Font(fontLibrary, fontFiles[0], prop.size);
 	}	
