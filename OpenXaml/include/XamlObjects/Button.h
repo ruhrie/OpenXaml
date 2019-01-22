@@ -16,8 +16,8 @@ namespace OpenXaml
 		void LoadFromDOM(DOMElement *root);
 		XamlProperty<int> Height = 0;
 		XamlProperty<int> Width = 0;
-		XamlProperty<unsigned int> Fill = 0;
-		XamlProperty<string> Content = "";
+		XamlProperty<unsigned int> Fill = 0x33FFFFFF;
+		XamlProperty<string> Content = "Click";
 		void Update();
 		Button();
 		~Button();

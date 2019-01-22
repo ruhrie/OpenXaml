@@ -23,10 +23,14 @@ namespace OpenXaml
 		TextBlock();
 		~TextBlock();
 		void SetBoundingBox(coordinate min, coordinate max);
+		unsigned int GetWidth();
+		unsigned int GetHeight();
 	private:
 		GLuint edgeBuffer;
 		vector<GLuint> vertexBuffers;
 		map<GLuint, GLuint> textureMap;
+		unsigned int boxWidth;
+		unsigned int boxHeight;
 	};
 }
 #endif

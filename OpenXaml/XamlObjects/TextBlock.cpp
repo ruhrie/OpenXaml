@@ -174,6 +174,12 @@ namespace OpenXaml {
 				width = 0;
 			}
 		}
+		if (width != 0)
+		{
+			widths.push_back(width);
+			seperators.push_back(0);
+		}
+		
 		vector<int> line;
 		vector<vector<int>> lines;
 		float fBounds = (maxCoord.x - minCoord.x)/PixelScale.x;
@@ -215,7 +221,8 @@ namespace OpenXaml {
 			maxWidth = std::max(width, maxWidth);
 			//we now have line width and can justify accordingly
 		}
-
+		boxWidth = maxWidth;
+		boxHeight = height * (int)lines.size();
 		//but first we get the framing rectangle's coordinates
 
 		coordinate frameMax, frameMin;
@@ -427,5 +434,29 @@ namespace OpenXaml {
 	{
 		minCoord = min;
 		maxCoord = max;
+	}
+
+	unsigned int TextBlock::GetWidth()
+	{
+		if (Width == 0)
+		{
+			return boxWidth;
+		}
+		else
+		{
+			return Width;
+		}		
+	}
+
+	unsigned int TextBlock::GetHeight()
+	{
+		if (Height == 0)
+		{
+			return boxHeight;
+		}
+		else
+		{
+			return Height;
+		}
 	}
 }

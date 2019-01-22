@@ -97,7 +97,14 @@ namespace OpenXaml {
 	}
 	void Button::Update()
 	{
-
+		Frame.setPixelScale(PixelScale);
+		Label.setPixelScale(PixelScale);
+		Label.Text = Content;
+		Label.Update();
+		Frame.Width = Label.GetWidth();
+		Frame.Height = Label.GetHeight();
+		Frame.Fill = Fill;
+		Frame.Update();
 	}
 	Button::Button()
 	{
