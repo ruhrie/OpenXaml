@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <iostream>
 #include <GLFW/glfw3.h>
+#include <algorithm>
 using namespace OpenXaml;
 using namespace std;
 Environment::Environment()
@@ -23,6 +24,7 @@ void Environment::LoadFonts()
 {
     vector<string> fontDirectories;
     vector<string> fontFiles;
+    fontFiles.clear();
 #if _WIN32
     fontDirectories.push_back("C:\\Windows\\Fonts");
 #elif __linux__
@@ -31,20 +33,27 @@ void Environment::LoadFonts()
 #else
     cerr << "Unrecognized platform. Loading no system fonts.\n";
 #endif
-
-    for (int i = 0; i < fontDirectories.size(); i++)
-    {
-        for (const auto &entry : std::filesystem::directory_iterator(fontDirectories[i]))
-        {
-            fontFiles.push_back(entry.path().string());
-        }
-    }
-    fontFileMap.clear();
     vector<string> validExtensions;
     validExtensions.push_back(".ttf");
     validExtensions.push_back(".TTF");
     validExtensions.push_back(".ttc");
     validExtensions.push_back(".otf");
+
+    for (int i = 0; i < fontDirectories.size(); i++)
+    {
+        for (auto &entry : std::filesystem::recursive_directory_iterator(fontDirectories[i]))
+        {
+            if(std::filesystem::is_regular_file(entry))
+            {
+                if(find(validExtensions.begin(), validExtensions.end(), entry.path().extension().string()) != validExtensions.end())
+                {
+                    fontFiles.push_back(entry.path().string());
+                }
+            }            
+        }
+    }
+    fontFileMap.clear();
+    
     for (int i = 0; i < fontFiles.size(); i++)
     {
         string file = fontFiles[i];

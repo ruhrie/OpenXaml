@@ -17,7 +17,7 @@ namespace OpenXaml
 		XamlProperty<int> Height = 0;
 		XamlProperty<int> Width = 0;
 		XamlProperty<unsigned int> Fill = 0x33FFFFFF;
-		XamlProperty<string> Content = "Click";
+		XamlProperty<string> Content = string("Click");
 		void Update();
 		Button();
 		~Button();
