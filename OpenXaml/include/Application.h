@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <memory>
+#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 #include "XamlObjects/Frame.h"
 #include "Parser/Parser.h"

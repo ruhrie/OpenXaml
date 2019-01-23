@@ -1,7 +1,7 @@
 include(FetchContent)
 
 FetchContent_Declare(glfw
-    URL https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
 )
 
 FetchContent_GetProperties(glfw)
