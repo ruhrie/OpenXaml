@@ -11,6 +11,9 @@ namespace OpenXaml
 		if (!glfwInit())
 			throw 2;
 		glfwWindowHint(GLFW_VISIBLE, 0);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 		window = glfwCreateWindow(640, 480, "My Window", NULL, NULL);
 
 		if (!window)
