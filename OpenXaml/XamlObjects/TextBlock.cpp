@@ -10,7 +10,7 @@ namespace OpenXaml {
 		glUseProgram(TextBlock::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(TextBlock::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(TextBlock::shaderProgram, "mode");
-		glUniform4f(vertexColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+		glUniform4f(vertexColorLocation, 0.0f, 0.0f, 0.0f, 1.0f);
 		glUniform1i(modeLoc, 2);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
@@ -181,7 +181,7 @@ namespace OpenXaml {
 		if (width != 0)
 		{
 			widths.push_back(width);
-			seperators.push_back(0);
+			seperators.push_back((int)text.length());
 		}
 		
 		vector<int> line;
