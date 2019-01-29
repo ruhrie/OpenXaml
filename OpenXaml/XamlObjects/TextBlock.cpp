@@ -6,7 +6,7 @@
 namespace OpenXaml {
 	void TextBlock::Draw()
 	{
-		glBindVertexArray(VAO);
+		glBindVertexArray(TextBlock::VAO);
 		glUseProgram(TextBlock::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(TextBlock::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(TextBlock::shaderProgram, "mode");
@@ -150,7 +150,7 @@ namespace OpenXaml {
 	void TextBlock::Update()
 	{
 		Font *font = env.GetFont(FontProperties{ FontFamily, FontSize });		
-		glBindVertexArray(VAO);
+		glBindVertexArray(TextBlock::VAO);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{
 			glDeleteBuffers(1, &(vertexBuffers[i]));
@@ -430,8 +430,8 @@ namespace OpenXaml {
 
 	TextBlock::~TextBlock()
 	{
-		glBindVertexArray(VAO);
-		glDeleteVertexArrays(1, &VAO);
+		//glBindVertexArray(TextBlock::VAO);
+		//glDeleteVertexArrays(1, &TextBlock::VAO);
 	}
 
 	void TextBlock::SetBoundingBox(coordinate min, coordinate max)
