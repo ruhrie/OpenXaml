@@ -26,7 +26,7 @@ class XamlObject
 {
   public:
 	virtual void Draw() = 0;
-	std::vector<std::shared_ptr<XamlObject>> Children;
+	vector<shared_ptr<XamlObject>> Children;
 	virtual void Initialize(GLuint shader) = 0;
 	GLuint shaderProgram;
 	XamlProperty<HorizontalAlignment> HorizontalAlignment = HorizontalAlignment::Stretch;

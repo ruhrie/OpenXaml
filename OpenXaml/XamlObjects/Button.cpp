@@ -100,9 +100,14 @@ namespace OpenXaml {
 		Frame.setPixelScale(PixelScale);
 		Label.setPixelScale(PixelScale);
 		Label.Text = Content;
-		Label.Update();
+		Label.VerticalAlignment = VerticalAlignment;
+		Label.HorizontalAlignment = HorizontalAlignment;
+		Label.TextAlignment = TextAlignment::Center;
+		Label.Update();		
 		Frame.Width = Label.GetWidth();
 		Frame.Height = Label.GetHeight();
+		Frame.HorizontalAlignment = HorizontalAlignment;
+		Frame.VerticalAlignment = VerticalAlignment;
 		Frame.Fill = Fill;
 		Frame.Update();
 	}

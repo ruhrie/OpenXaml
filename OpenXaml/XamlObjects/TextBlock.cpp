@@ -161,8 +161,6 @@ namespace OpenXaml {
 			return;
 		}
 		string text = Text;
-		float xbase = minCoord.x;
-		float ybase = maxCoord.y - (font->Height >> 6) * PixelScale.y;
 
 		vector<int> widths;
 		vector<int> seperators;
@@ -190,7 +188,6 @@ namespace OpenXaml {
 		int Width = 0;
 		for (int i = 0; i < widths.size(); i++)
 		{
-			int width = widths[i];
 			char seperator = text[seperators[i]];
 			Width += widths[i];
 			if (Width > fBounds && TextWrapping == TextWrapping::Wrap)
@@ -341,9 +338,6 @@ namespace OpenXaml {
 					Character ch = font->operator[](toRender);
 					if (!iscntrl(toRender))
 					{
-						float cWidth = ch.BearingX * PixelScale.x;
-						float cHeight = ch.BearingY * PixelScale.y;
-						//check if we need to render it, otherwise continue to the next character
 						float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
 						float dx0, dx1, dy0, dy1;
 						dx0 = penX + ch.BearingX * PixelScale.x;
