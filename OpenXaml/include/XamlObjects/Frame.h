@@ -11,7 +11,7 @@ namespace OpenXaml {
 		XamlProperty<int> Height = 480;
 		XamlProperty<unsigned int> Fill = 0xFF000000;
 		Frame();
-		static Frame ParseFrame(DOMElement *obj);
+		static Frame* ParseFrame(DOMElement *obj);
 		void Initialize(GLuint shader);
 		void LoadFromDOM(xercesc_3_2::DOMElement *root);
 		void Update();

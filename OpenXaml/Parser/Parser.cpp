@@ -20,7 +20,7 @@ namespace OpenXaml {
 	namespace Parser {
 		using namespace OpenXaml;
 
-		Frame ReadFile(string input)
+		Frame* ReadFile(string input)
 		{
 			//http://www.yolinux.com/TUTORIALS/XML-Xerces-C.html
 			string fileText;
@@ -59,8 +59,8 @@ namespace OpenXaml {
 				throw 2;
 			}
 
-			Frame frame = Frame();			
-			frame.LoadFromDOM(elementRoot);
+			Frame *frame = new Frame();			
+			frame->LoadFromDOM(elementRoot);
 			XMLPlatformUtils::Terminate();
 			return frame;
 		}		

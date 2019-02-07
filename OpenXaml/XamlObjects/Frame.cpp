@@ -124,20 +124,20 @@ namespace OpenXaml
 		//glDeleteVertexArrays(1, &VAO);
 	}
 
-	OpenXaml::Frame Frame::ParseFrame(DOMElement * obj)
+	OpenXaml::Frame* Frame::ParseFrame(DOMElement * obj)
 	{
 		const XMLCh *xmlString = obj->getTagName();
 		string name = XMLString::transcode(xmlString);
-		Frame result;
+		Frame *result;
 		if (name == "Frame")
 		{
-			result = OpenXaml::Frame();
+			result = new OpenXaml::Frame();
 		}
 		else
 		{
 			throw 2;
 		}
-		result.LoadFromDOM(obj);
+		result->LoadFromDOM(obj);
 		return result;
 	}
 

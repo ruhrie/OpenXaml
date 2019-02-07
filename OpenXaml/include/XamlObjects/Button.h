@@ -23,8 +23,8 @@ namespace OpenXaml
 		~Button();
 		void SetBoundingBox(coordinate min, coordinate max);
 	private:
-		TextBlock Label;
-		Rectangle Frame;
+		TextBlock *Label;
+		Rectangle *Frame;
 	};
 }
 #endif

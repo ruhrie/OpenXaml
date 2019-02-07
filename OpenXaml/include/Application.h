@@ -26,7 +26,7 @@ namespace OpenXaml
 		void GetFonts();
 		map<string, vector<string>> fontFileMap;
 		GLFWwindow *window;
-		shared_ptr<OpenXaml::Frame> frame;
+		Frame* frame;
 		coordinate PixelScale;
 		map<string, Font> fontMap;
 	};
