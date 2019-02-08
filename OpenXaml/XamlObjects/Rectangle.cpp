@@ -4,7 +4,7 @@ namespace OpenXaml
 {
 	void Rectangle::Draw()
 	{		
-		glBindVertexArray(VAO);
+		glBindVertexArray(Rectangle::VAO);
 		glUseProgram(shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(Rectangle::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(Rectangle::shaderProgram, "mode");
@@ -117,7 +117,7 @@ namespace OpenXaml
 
 	void Rectangle::Update()
 	{
-		glBindVertexArray(VAO);
+		glBindVertexArray(Rectangle::VAO);
 		float width = Width * PixelScale.x;
 		float height = Height * PixelScale.y;
 

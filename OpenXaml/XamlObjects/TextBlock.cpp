@@ -6,11 +6,11 @@
 namespace OpenXaml {
 	void TextBlock::Draw()
 	{
-		glBindVertexArray(VAO);
+		glBindVertexArray(TextBlock::VAO);
 		glUseProgram(TextBlock::shaderProgram);
 		int vertexColorLocation = glGetUniformLocation(TextBlock::shaderProgram, "thecolor");
 		int modeLoc = glGetUniformLocation(TextBlock::shaderProgram, "mode");
-		glUniform4f(vertexColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+		glUniform4f(vertexColorLocation, 0.0f, 0.0f, 0.0f, 1.0f);
 		glUniform1i(modeLoc, 2);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
@@ -150,7 +150,7 @@ namespace OpenXaml {
 	void TextBlock::Update()
 	{
 		Font *font = env.GetFont(FontProperties{ FontFamily, FontSize });		
-		glBindVertexArray(VAO);
+		glBindVertexArray(TextBlock::VAO);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{
 			glDeleteBuffers(1, &(vertexBuffers[i]));
@@ -161,8 +161,6 @@ namespace OpenXaml {
 			return;
 		}
 		string text = Text;
-		float xbase = minCoord.x;
-		float ybase = maxCoord.y - (font->Height >> 6) * PixelScale.y;
 
 		vector<int> widths;
 		vector<int> seperators;
@@ -181,7 +179,7 @@ namespace OpenXaml {
 		if (width != 0)
 		{
 			widths.push_back(width);
-			seperators.push_back(0);
+			seperators.push_back((int)text.length());
 		}
 		
 		vector<int> line;
@@ -190,7 +188,6 @@ namespace OpenXaml {
 		int Width = 0;
 		for (int i = 0; i < widths.size(); i++)
 		{
-			int width = widths[i];
 			char seperator = text[seperators[i]];
 			Width += widths[i];
 			if (Width > fBounds && TextWrapping == TextWrapping::Wrap)
@@ -341,9 +338,6 @@ namespace OpenXaml {
 					Character ch = font->operator[](toRender);
 					if (!iscntrl(toRender))
 					{
-						float cWidth = ch.BearingX * PixelScale.x;
-						float cHeight = ch.BearingY * PixelScale.y;
-						//check if we need to render it, otherwise continue to the next character
 						float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
 						float dx0, dx1, dy0, dy1;
 						dx0 = penX + ch.BearingX * PixelScale.x;
@@ -430,8 +424,8 @@ namespace OpenXaml {
 
 	TextBlock::~TextBlock()
 	{
-		glBindVertexArray(VAO);
-		glDeleteVertexArrays(1, &VAO);
+		//glBindVertexArray(TextBlock::VAO);
+		//glDeleteVertexArrays(1, &TextBlock::VAO);
 	}
 
 	void TextBlock::SetBoundingBox(coordinate min, coordinate max)

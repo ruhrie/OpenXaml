@@ -53,6 +53,7 @@
           <xs:attributeGroup ref="HorizontalAlignment"/>
           <xs:attributeGroup ref="VerticalAlignment"/>
           <xs:attributeGroup ref="Content"/>
+          <xs:attributeGroup ref="Fill"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
