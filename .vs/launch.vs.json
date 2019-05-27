@@ -1,0 +1,16 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "TestApplication.exe (bin\\TestApplication.exe)",
+      "name": "TestApplication.exe Test.xaml",
+      "args": [
+        "-i",
+        "../Sample/Test.xaml"
+      ]
+    }
+  ]
+}

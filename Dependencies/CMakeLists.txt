@@ -45,7 +45,7 @@ if(NOT signals_POPULATED)
 	FetchContent_Populate(signals)
 	message("${signals_SOURCE_DIR}")
 	add_subdirectory(${signals_SOURCE_DIR} ${signals_BINARY_DIR})
-	set(SIGNALS_INC ${signals_SOURCE_DIR}/src)
+	set(SIGNALS_INC ${signals_SOURCE_DIR}/src PARENT_SCOPE)
 endif()
 
 set(GLAD_INC ${CMAKE_CURRENT_SOURCE_DIR}/glad/include PARENT_SCOPE)
