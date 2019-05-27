@@ -20,12 +20,12 @@ set_target_properties(OpenXaml
 set (OPENXAML_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/" PARENT_SCOPE)
 set (LOCAL_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 
-target_include_directories(OpenXaml PRIVATE ${XERCES_INC} ${LOCAL_INC} ${FREETYPE_INC} ${GLAD_INC} ${GLFW_INC})
+target_include_directories(OpenXaml PRIVATE ${XERCES_INC} ${LOCAL_INC} ${FREETYPE_INC} ${GLAD_INC} ${GLFW_INC} ${SIGNALS_INC})
 
 if (UNIX)
-target_link_libraries(OpenXaml xerces-c glfw freetype "-lstdc++fs")
+	target_link_libraries(OpenXaml xerces-c glfw freetype signals "-lstdc++fs")
 else()
-    target_link_libraries(OpenXaml xerces-c glfw freetype)
+    target_link_libraries(OpenXaml xerces-c glfw freetype signals)
 endif(UNIX)
 
 if(OPENGL_FOUND)

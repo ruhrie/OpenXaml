@@ -37,4 +37,15 @@ if(NOT freetype_POPULATED)
   add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
 endif()
 
+FetchContent_Declare(signals
+	GIT_REPOSITORY https://github.com/ruhrie/signals.git
+)
+
+if(NOT signals_POPULATED)
+	FetchContent_Populate(signals)
+	message("${signals_SOURCE_DIR}")
+	add_subdirectory(${signals_SOURCE_DIR} ${signals_BINARY_DIR})
+	set(SIGNALS_INC ${signals_SOURCE_DIR}/src)
+endif()
+
 set(GLAD_INC ${CMAKE_CURRENT_SOURCE_DIR}/glad/include PARENT_SCOPE)
