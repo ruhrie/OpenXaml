@@ -6,7 +6,7 @@
 
 namespace OpenXaml {
 	namespace Parser {
-		Frame ReadFile(std::string inputFile);
+		Frame *ReadFile(std::string inputFile);
 		shared_ptr<XamlObject> ParseObject(DOMElement* obj);
 	}
 }

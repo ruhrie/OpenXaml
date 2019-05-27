@@ -3,7 +3,8 @@ project("OpenXaml"
 
 set (CMAKE_CXX_STANDARD 17)
 
-find_package( OpenGL REQUIRED )
+find_package(OpenGL REQUIRED)
+find_package(Vulkan)
 
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
@@ -31,7 +32,10 @@ endif(UNIX)
 if(OPENGL_FOUND)
 	target_link_libraries(OpenXaml ${OPENGL_gl_LIBRARY})
 	target_include_directories(OpenXaml PRIVATE ${OPENGL_INCLUDE_DIR})
-    if(OPENGL_GLU_FOUND)
-		target_link_libraries(OpenXaml ${OPENGL_glu_LIBRARY})
-    endif(OPENGL_GLU_FOUND)
 endif(OPENGL_FOUND)
+
+if(Vulkan_FOUND)
+    target_link_libraries(OpenXaml ${Vulkan_LIBRARIES})
+    target_include_directories(OpenXaml ${Vulkan_INCLUDE_DIRS})
+    add_compile_definitions("VULKAN")
+endif(Vulkan_FOUND)

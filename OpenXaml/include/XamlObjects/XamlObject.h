@@ -38,11 +38,14 @@ class XamlObject
 	XamlObject();
 	void setPixelScale(float x, float y);
 	void setPixelScale(coordinate scale);
+	virtual ~XamlObject() {};
   protected:
 	void LoadChildrenFromDOM(DOMElement *root);
 	coordinate minCoord;
 	coordinate maxCoord;
 	coordinate PixelScale;
+  private:
+  	XamlObject& operator=(const XamlObject&);
 };
 } // namespace OpenXaml
 

@@ -5,6 +5,9 @@
 #include <map>
 #include <string>
 #include <memory>
+#ifdef VULKAN
+#define GLFW_INCLUDE_VULKAN
+#endif
 #include <GLFW/glfw3.h>
 #include "XamlObjects/Frame.h"
 #include "Parser/Parser.h"
@@ -26,7 +29,7 @@ namespace OpenXaml
 		void GetFonts();
 		map<string, vector<string>> fontFileMap;
 		GLFWwindow *window;
-		shared_ptr<OpenXaml::Frame> frame;
+		Frame* frame;
 		coordinate PixelScale;
 		map<string, Font> fontMap;
 	};

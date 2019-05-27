@@ -4,13 +4,13 @@
 namespace OpenXaml {
 	void Button::Draw()
 	{
-		Frame.Draw();
-		Label.Draw();
+		Frame->Draw();
+		Label->Draw();
 	}
 	void Button::Initialize(GLuint shader)
 	{
-		Frame.Initialize(shader);
-		Label.Initialize(shader);
+		Frame->Initialize(shader);
+		Label->Initialize(shader);
 	}
 	void Button::LoadFromDOM(DOMElement *root)
 	{
@@ -97,34 +97,35 @@ namespace OpenXaml {
 	}
 	void Button::Update()
 	{
-		Frame.setPixelScale(PixelScale);
-		Label.setPixelScale(PixelScale);
-		Label.Text = Content;
-		Label.VerticalAlignment = VerticalAlignment;
-		Label.HorizontalAlignment = HorizontalAlignment;
-		Label.TextAlignment = TextAlignment::Center;
-		Label.Update();		
-		Frame.Width = Label.GetWidth();
-		Frame.Height = Label.GetHeight();
-		Frame.HorizontalAlignment = HorizontalAlignment;
-		Frame.VerticalAlignment = VerticalAlignment;
-		Frame.Fill = Fill;
-		Frame.Update();
+		Frame->setPixelScale(PixelScale);
+		Label->setPixelScale(PixelScale);
+		Label->Text = Content;
+		Label->VerticalAlignment = VerticalAlignment;
+		Label->HorizontalAlignment = HorizontalAlignment;
+		Label->TextAlignment = TextAlignment::Center;
+		Label->Update();		
+		Frame->Width = Label->GetWidth();
+		Frame->Height = Label->GetHeight();
+		Frame->HorizontalAlignment = HorizontalAlignment;
+		Frame->VerticalAlignment = VerticalAlignment;
+		Frame->Fill = Fill;
+		Frame->Update();
 	}
 	Button::Button()
 	{
-		Label = TextBlock();
-		Frame = Rectangle();
+		Label = new TextBlock();
+		Frame = new Rectangle();
 	}
 	Button::~Button()
 	{
-
+		delete Label;
+		delete Frame;
 	}
 	void Button::SetBoundingBox(coordinate min, coordinate max)
 	{
 		minCoord = min;
 		maxCoord = max;
-		Frame.SetBoundingBox(min, max);
-		Label.SetBoundingBox(min, max);
+		Frame->SetBoundingBox(min, max);
+		Label->SetBoundingBox(min, max);
 	}
 }

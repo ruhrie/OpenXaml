@@ -31,6 +31,7 @@ namespace OpenXaml
 	}
 	Application::~Application()
 	{
+		delete frame;
 		FT_Done_FreeType(Application::fontLibrary);
 		glfwTerminate();
 	}
@@ -60,7 +61,7 @@ namespace OpenXaml
 
 	void Application::InitializeComponent(string file)
 	{
-		frame = make_shared<Frame>(OpenXaml::Parser::ReadFile(file));
+		frame = OpenXaml::Parser::ReadFile(file);
 		glfwSetWindowSize(window, frame->Width, frame->Height);
 		frame->setPixelScale(2.0f / frame->Width, 2.0f / frame->Height);
 		GLuint shader = GL::LoadShaders();
