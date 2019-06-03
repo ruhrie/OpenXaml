@@ -10,7 +10,7 @@ file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
 configure_file("GL/GLConfig.cpp.in" "GL/GLConfig.cpp")
 
-file(GLOB SOURCES "Parser/*.cpp" "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp")
+file(GLOB SOURCES "Parser/*.cpp" "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp" "XamlEvents/*.cpp")
 add_library(OpenXaml ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp")
 set_target_properties(OpenXaml 
 	PROPERTIES

@@ -1,2 +1,0 @@
-#include "XamlEvents/ClickEvent.h"
-

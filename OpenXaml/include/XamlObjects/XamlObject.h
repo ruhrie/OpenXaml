@@ -17,6 +17,7 @@
 #include "Properties/TextWrapping.h"
 #include "XamlObjects/XamlProperty.h"
 #include "XamlObjects/Coordinate.h"
+
 using namespace xercesc;
 using namespace std;
 

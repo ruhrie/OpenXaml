@@ -1,5 +1,6 @@
 #include "XamlObjects/Button.h"
 #include "Environment.h"
+#include "XamlEvents/EventHandler.h"
 #include <sstream>
 namespace OpenXaml {
 	void Button::Draw()
