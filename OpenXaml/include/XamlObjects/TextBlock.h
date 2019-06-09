@@ -27,6 +27,8 @@ namespace OpenXaml
 		unsigned int getFill();
 		void setTextAlignment(TextAlignment alignment);
 		TextAlignment getTextAlignment();
+		int getWidth();
+		int getHeight();
 	private:
 		GLuint edgeBuffer;
 		vector<GLuint> vertexBuffers;

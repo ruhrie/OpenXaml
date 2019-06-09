@@ -484,4 +484,12 @@ namespace OpenXaml {
 	{
 		return this->TextAlignment;
 	}
+	int TextBlock::getWidth()
+	{
+		return max(this->Width, (int)this->boxWidth);
+	}
+	int TextBlock::getHeight()
+	{
+		return max(this->Height, (int)this->boxHeight);
+	}
 }
