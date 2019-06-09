@@ -14,6 +14,9 @@ namespace OpenXaml
 		minCoord.y = -1;
 		maxCoord.x = 1;
 		maxCoord.y = 1;
+		Width = 640;
+		Height = 480;
+		Fill = 0xFF000000;
 	}
 
 	void Frame::Draw()
@@ -115,9 +118,6 @@ namespace OpenXaml
 
 	Frame::~Frame()
 	{
-		Width = 640;
-		Height = 480;
-		Fill = 0xFF000000;
 		//glBindVertexArray(Frame::VAO);
 		//glDeleteBuffers(1, &vertexBuffer);
 		//glDeleteBuffers(1, &edgeBuffer);

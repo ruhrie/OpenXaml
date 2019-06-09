@@ -114,6 +114,10 @@ namespace OpenXaml {
 	}
 	Button::~Button()
 	{
+		if (OnClick == NULL)
+		{
+			//remove event here
+		}
 		delete Label;
 		delete Frame;
 	}
@@ -143,6 +147,15 @@ namespace OpenXaml {
 	string Button::getContent()
 	{
 		return this->Content;
+	}
+
+	void Button::setOnClick(function<void(XamlObject*)> func)
+	{
+		if (OnClick == NULL)
+		{
+			Events[EventType::ClickEvent].push_back(this);
+		}
+		OnClick = func;
 	}
 
 }

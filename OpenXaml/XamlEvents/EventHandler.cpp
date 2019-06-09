@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <stdlib.h>
+#include "XamlObjects/Button.h"
 namespace OpenXaml
 {
 	void AddEvent(XamlObject* target, EventType type)
@@ -22,6 +23,25 @@ namespace OpenXaml
 		else
 		{
 			std::cerr << "Xaml object not found\n";
+		}
+	}
+
+	void CheckEvent(EventType type, coordinate coord)
+	{
+		switch (type)
+		{
+		case EventType::ClickEvent:
+		{
+			for (auto target : Events[type])
+			{
+				if (target->IsContained(coord))
+				{
+					function click = ((Button*)target)->getOnClick();
+					click(target);
+				}
+			}
+			break;
+		}
 		}
 	}
 }

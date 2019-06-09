@@ -14,7 +14,7 @@ namespace OpenXaml {
 		int modeLoc = glGetUniformLocation(TextBlock::shaderProgram, "mode");
 		glUniform4f(vertexColorLocation, 0.0f, 0.0f, 0.0f, 1.0f);
 		glUniform1i(modeLoc, 2);
-		
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{
@@ -23,7 +23,7 @@ namespace OpenXaml {
 			glEnableVertexAttribArray(0);
 			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 			glEnableVertexAttribArray(1);
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 		}
 	}
@@ -32,7 +32,7 @@ namespace OpenXaml {
 		Update();
 	}
 
-	void TextBlock::LoadFromDOM(DOMElement *root)
+	void TextBlock::LoadFromDOM(DOMElement* root)
 	{
 		DOMNamedNodeMap* attributes = root->getAttributes();
 		for (int i = 0; i < attributes->getLength(); i++)
@@ -143,7 +143,7 @@ namespace OpenXaml {
 
 	void TextBlock::Update()
 	{
-		Font *font = env.GetFont(FontProperties{ FontFamily, FontSize });		
+		Font* font = env.GetFont(FontProperties{ FontFamily, FontSize });
 		glBindVertexArray(TextBlock::VAO);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{
@@ -175,10 +175,10 @@ namespace OpenXaml {
 			widths.push_back(width);
 			seperators.push_back((int)text.length());
 		}
-		
+
 		vector<int> line;
 		vector<vector<int>> lines;
-		float fBounds = (maxCoord.x - minCoord.x)/PixelScale.x;
+		float fBounds = (maxCoord.x - minCoord.x) / PixelScale.x;
 		width = 0;
 		for (int i = 0; i < widths.size(); i++)
 		{
@@ -201,7 +201,7 @@ namespace OpenXaml {
 		lines.push_back(line);
 		int height = (font->Height >> 6);
 		//we now have our line seperation, so now we render each line.
-		
+
 		int maxWidth = 0;
 		vector<int> lineWidths;
 		for (int i = 0; i < lines.size(); i++)
@@ -220,7 +220,8 @@ namespace OpenXaml {
 		boxHeight = height * (int)lines.size();
 		//but first we get the framing rectangle's coordinates
 
-		coordinate frameMax, frameMin;
+		coordinate frameMax = { 0,0 };
+		coordinate frameMin = { 0,0 };
 
 		float fHeight = height * PixelScale.y;
 		float fWidth = maxWidth * PixelScale.x;
@@ -253,7 +254,7 @@ namespace OpenXaml {
 			break;
 		}
 		}
-		
+
 		switch (HorizontalAlignment)
 		{
 		case HorizontalAlignment::Left:
@@ -285,7 +286,8 @@ namespace OpenXaml {
 
 		//we now have the external rectangle dimensions, so we can actually position the text
 		//start by setting the pen location
-		float penX, penY;
+		float penX = 0;
+		float penY = 0;
 		penY = frameMax.y - fHeight;
 		for (int i = 0; i < lineWidths.size(); i++)
 		{
@@ -322,7 +324,7 @@ namespace OpenXaml {
 				}
 				else
 				{
-					startIndex = seperators[wordIndex - 1] + 1;
+					startIndex = seperators[(long)wordIndex - 1] + 1;
 					length = seperators[wordIndex] - startIndex + 1;
 				}
 				string word = text.substr(startIndex, length);

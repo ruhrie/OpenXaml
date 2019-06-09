@@ -54,6 +54,7 @@
           <xs:attributeGroup ref="VerticalAlignment"/>
           <xs:attributeGroup ref="Content"/>
           <xs:attributeGroup ref="Fill"/>
+          <xs:attributeGroup ref="OnClick"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -172,4 +173,13 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
+
+  <xs:attributeGroup name="OnClick">
+    <xs:attribute name="OnClick">
+      <xs:simpleType>
+        <xs:restriction base="xs:string"/>
+      </xs:simpleType>      
+    </xs:attribute>
+  </xs:attributeGroup>
+  
 </xs:schema>

@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://xamlstandard ../Schema/XamlStandard.xsd"
   Width ="1024" Height="768" Fill="#CCFFFFFF"
   Class="Test">
-  <Button Content="asdf" Fill="#FFFF00FF" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+  <Button Content="asdf" Fill="#FFFF00FF" HorizontalAlignment="Left" VerticalAlignment="Top" OnClick="test"/>
   <Rectangle Fill="#440000AA" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="200"/>
   <Rectangle HorizontalAlignment="Left" Fill="#AA000000" Width="1000"/>
   <TextBlock TextWrapping="Wrap" FontFamily="Arial" FontSize="12" Width="1000" Fill="#FFFFFFFF">

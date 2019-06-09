@@ -1,9 +1,9 @@
-#ifndef EVENTHANDLER_H
-#define EVENTHANDLER_H
+#pragma once
 
 #include <vector>
 #include <map>
 #include "XamlObjects/XamlObject.h"
+#include <functional>
 namespace OpenXaml
 {
 	enum class EventType
@@ -17,7 +17,6 @@ namespace OpenXaml
 	void AddEvent(XamlObject* target, EventType type);
 
 	void RemoveEvent(XamlObject* target, EventType type);
+
+	std::map<std::string, std::function<void(XamlObject*)>> functionMap;
 }
-
-
-#endif

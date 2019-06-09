@@ -33,6 +33,7 @@ class XamlObject
 	GLuint VAO;
 	virtual void Update() = 0;
 	virtual void SetBoundingBox(coordinate min, coordinate max) = 0;
+	bool IsContained(coordinate input);
 	XamlObject();
 	void setPixelScale(float x, float y);
 	void setPixelScale(coordinate scale);

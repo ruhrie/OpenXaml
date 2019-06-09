@@ -49,6 +49,18 @@ void XamlObject::SetBoundingBox(coordinate min, coordinate max)
 	maxCoord = max;
 }
 
+bool XamlObject::IsContained(coordinate input)
+{
+	if (input.x > minCoord.x && input.x < maxCoord.x)
+	{
+		if (input.y > minCoord.y && input.y < maxCoord.y)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 XamlObject::XamlObject()
 {
 	this->Height = 0;

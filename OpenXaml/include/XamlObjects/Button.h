@@ -5,6 +5,7 @@
 #include "XamlObjects/Rectangle.h"
 #include <map>
 #include <GL/Font.h>
+#include <functional>
 namespace OpenXaml
 {
 	class Button : public XamlObject
@@ -21,6 +22,8 @@ namespace OpenXaml
 		unsigned int getFill();
 		void setContent(string content);
 		string getContent();
+		void setOnClick(function<void(XamlObject*)> func);
+		function<void(XamlObject*)> getOnClick();
 	private:
 		TextBlock *Label;
 		Rectangle *Frame;
@@ -28,6 +31,7 @@ namespace OpenXaml
 		string Text;
 		unsigned int Fill = 0x33FFFFFF;
 		string Content = "Click";
+		function<void(XamlObject*)> OnClick;
 	};
 }
 #endif
