@@ -9,28 +9,37 @@ namespace OpenXaml
 	{
 	public:
 		void Draw();
-		XamlProperty<string> Text;
 		void Initialize(GLuint shader);
 		void LoadFromDOM(DOMElement *root);
-		XamlProperty<int> Height = 0;
-		XamlProperty<int> Width = 0;
-		XamlProperty<TextWrapping> TextWrapping = TextWrapping::None;
-		XamlProperty<string> FontFamily = string("Arial");
-		XamlProperty<float> FontSize = 12;
-		XamlProperty<unsigned int> Fill = 0;
-		XamlProperty<TextAlignment> TextAlignment = TextAlignment::Left;
 		void Update();
 		TextBlock();
 		~TextBlock();
 		void SetBoundingBox(coordinate min, coordinate max);
-		unsigned int GetWidth();
-		unsigned int GetHeight();
+		void setText(string text);
+		string getText();
+		void setTextWrapping(TextWrapping textWrapping);
+		TextWrapping getTextWrapping();
+		void setFontFamily(string family);
+		string getFontFamily();
+		void setFontSize(float size);
+		float getFontSize();
+		void setFill(unsigned int fill);
+		unsigned int getFill();
+		void setTextAlignment(TextAlignment alignment);
+		TextAlignment getTextAlignment();
 	private:
 		GLuint edgeBuffer;
 		vector<GLuint> vertexBuffers;
 		map<GLuint, GLuint> textureMap;
 		unsigned int boxWidth;
 		unsigned int boxHeight;
+	protected:
+		string Text;
+		TextWrapping TextWrapping = TextWrapping::None;
+		string FontFamily = "Arial";
+		float FontSize = 12.0;
+		unsigned int Fill = 0;
+		TextAlignment TextAlignment = TextAlignment::Left;
 	};
 }
 #endif

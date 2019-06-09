@@ -66,10 +66,7 @@ namespace OpenXaml
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
-		
-		Width.onPropertyChanged = std::bind(&Frame::Update, this);
-		Height.onPropertyChanged = std::bind(&Frame::Update, this);
-		Fill.onPropertyChanged = std::bind(&Frame::Update, this);
+
 		Update();
 
 		for (unsigned int i = 0; i < Children.size(); i++)
@@ -118,6 +115,9 @@ namespace OpenXaml
 
 	Frame::~Frame()
 	{
+		Width = 640;
+		Height = 480;
+		Fill = 0xFF000000;
 		//glBindVertexArray(Frame::VAO);
 		//glDeleteBuffers(1, &vertexBuffer);
 		//glDeleteBuffers(1, &edgeBuffer);
@@ -145,5 +145,15 @@ namespace OpenXaml
 	{
 		minCoord = min;
 		maxCoord = max;
+	}
+
+	void Frame::setFill(unsigned int fill)
+	{
+		this->Fill = fill;
+		this->Update();
+	}
+	unsigned int Frame::getFill()
+	{
+		return this->Fill;
 	}
 }

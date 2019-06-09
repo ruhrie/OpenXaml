@@ -7,7 +7,8 @@ namespace OpenXaml
 	Application::Application()
 	{
 		FT_Init_FreeType(&(Application::fontLibrary));
-
+		PixelScale = coordinate{ 0,0 };
+		frame = NULL;
 		if (!glfwInit())
 			throw 2;
 		glfwWindowHint(GLFW_VISIBLE, 0);
@@ -62,8 +63,8 @@ namespace OpenXaml
 	void Application::InitializeComponent(string file)
 	{
 		frame = OpenXaml::Parser::ReadFile(file);
-		glfwSetWindowSize(window, frame->Width, frame->Height);
-		frame->setPixelScale(2.0f / frame->Width, 2.0f / frame->Height);
+		glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
+		frame->setPixelScale(2.0f / frame->getWidth(), 2.0f / frame->getHeight());
 		GLuint shader = GL::LoadShaders();
 		frame->Initialize(shader);
 	}

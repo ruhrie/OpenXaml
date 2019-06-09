@@ -15,7 +15,6 @@
 #include "GL/GLConfig.h"
 #include "Properties/Alignment.h"
 #include "Properties/TextWrapping.h"
-#include "XamlObjects/XamlProperty.h"
 #include "XamlObjects/Coordinate.h"
 
 using namespace xercesc;
@@ -30,8 +29,6 @@ class XamlObject
 	vector<shared_ptr<XamlObject>> Children;
 	virtual void Initialize(GLuint shader) = 0;
 	GLuint shaderProgram;
-	XamlProperty<HorizontalAlignment> HorizontalAlignment = HorizontalAlignment::Stretch;
-	XamlProperty<VerticalAlignment> VerticalAlignment = VerticalAlignment::Stretch;
 	virtual void LoadFromDOM(DOMElement *root) = 0;
 	GLuint VAO;
 	virtual void Update() = 0;
@@ -40,13 +37,26 @@ class XamlObject
 	void setPixelScale(float x, float y);
 	void setPixelScale(coordinate scale);
 	virtual ~XamlObject() {};
+	void setHorizontalAlignment(HorizontalAlignment alignment);
+	void setVerticalAlignment(VerticalAlignment alignment);
+	HorizontalAlignment getHorizontalAlignment();
+	VerticalAlignment getVerticalAlignment();
+	void setHeight(int height);
+	int getHeight();
+	void setWidth(int width);
+	int getWidth();
   protected:
 	void LoadChildrenFromDOM(DOMElement *root);
 	coordinate minCoord;
 	coordinate maxCoord;
 	coordinate PixelScale;
+	int Height;
+	int Width;
+	HorizontalAlignment HorizontalAlignment = HorizontalAlignment::Stretch;
+	VerticalAlignment VerticalAlignment = VerticalAlignment::Stretch;
   private:
   	XamlObject& operator=(const XamlObject&);
+	
 };
 } // namespace OpenXaml
 

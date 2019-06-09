@@ -38,10 +38,6 @@ namespace OpenXaml
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		glBindVertexArray(0);
-
-		Width.onPropertyChanged = std::bind(&Rectangle::Update, this);
-		Height.onPropertyChanged = std::bind(&Rectangle::Update, this);
-		Fill.onPropertyChanged = std::bind(&Rectangle::Update, this);
 	}
 
 	void Rectangle::LoadFromDOM(DOMElement *root)
@@ -234,5 +230,15 @@ namespace OpenXaml
 	{
 		minCoord = min;
 		maxCoord = max;
+	}
+
+	void Rectangle::setFill(unsigned int fill)
+	{
+		this->Fill = fill;
+		this->Update();
+	}
+	unsigned int Rectangle::getFill()
+	{
+		return this->Fill;
 	}
 }

@@ -1,4 +1,6 @@
 #include "XamlObjects/TextBlock.h"
+#include "Properties/Alignment.h"
+#include "Properties/TextWrapping.h"
 #include "Environment.h"
 #include <sstream>
 #include <algorithm>
@@ -132,14 +134,6 @@ namespace OpenXaml {
 		auto text = root->getTextContent();
 		TextBlock::Text = XMLString::transcode(text);
 
-		Width.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		Height.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		Text.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		TextWrapping.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		FontFamily.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		FontSize.onPropertyChanged = std::bind(&TextBlock::Update, this);
-		Fill.onPropertyChanged = std::bind(&TextBlock::Update, this);
-
 		LoadChildrenFromDOM(root);
 		for (int i = 0; i < Children.size(); i++)
 		{
@@ -185,23 +179,23 @@ namespace OpenXaml {
 		vector<int> line;
 		vector<vector<int>> lines;
 		float fBounds = (maxCoord.x - minCoord.x)/PixelScale.x;
-		int Width = 0;
+		width = 0;
 		for (int i = 0; i < widths.size(); i++)
 		{
 			char seperator = text[seperators[i]];
-			Width += widths[i];
-			if (Width > fBounds && TextWrapping == TextWrapping::Wrap)
+			width += widths[i];
+			if (width > fBounds && TextWrapping == TextWrapping::Wrap)
 			{
 				lines.push_back(line);
 				line.clear();
-				Width = widths[i];
+				width = widths[i];
 			}
 			line.push_back(i);
 			if (seperator == '\n')
 			{
 				lines.push_back(line);
 				line.clear();
-				Width = 0;
+				width = 0;
 			}
 		}
 		lines.push_back(line);
@@ -213,7 +207,7 @@ namespace OpenXaml {
 		for (int i = 0; i < lines.size(); i++)
 		{
 			line = lines[i];
-			int width = 0;
+			width = 0;
 			for (int j = 0; j < line.size(); j++)
 			{
 				width += widths[line[j]];
@@ -315,7 +309,7 @@ namespace OpenXaml {
 			}
 			}
 			//we now start rendering words
-			vector<int> line = lines[i];
+			line = lines[i];
 			for (int j = 0; j < line.size(); j++)
 			{
 				int wordIndex = line[j];
@@ -420,6 +414,8 @@ namespace OpenXaml {
 		glGenBuffers(1, &edgeBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
+		boxHeight = 0;
+		boxWidth = 0;
 	}
 
 	TextBlock::~TextBlock()
@@ -434,27 +430,58 @@ namespace OpenXaml {
 		maxCoord = max;
 	}
 
-	unsigned int TextBlock::GetWidth()
+	void TextBlock::setText(string text)
 	{
-		if (Width == 0)
-		{
-			return boxWidth;
-		}
-		else
-		{
-			return Width;
-		}		
+		this->Text = text;
+		this->Update();
 	}
-
-	unsigned int TextBlock::GetHeight()
+	string TextBlock::getText()
 	{
-		if (Height == 0)
-		{
-			return boxHeight;
-		}
-		else
-		{
-			return Height;
-		}
+		return this->Text;
+	}
+	void TextBlock::setTextWrapping(OpenXaml::TextWrapping textWrapping)
+	{
+		this->TextWrapping = textWrapping;
+		this->Update();
+	}
+	TextWrapping TextBlock::getTextWrapping()
+	{
+		return this->TextWrapping;
+	}
+	void TextBlock::setFontFamily(string family)
+	{
+		this->FontFamily = family;
+		this->Update();
+	}
+	string TextBlock::getFontFamily()
+	{
+		return this->FontFamily;
+	}
+	void TextBlock::setFontSize(float size)
+	{
+		this->FontSize = size;
+		this->Update();
+	}
+	float TextBlock::getFontSize()
+	{
+		return this->FontSize;
+	}
+	void TextBlock::setFill(unsigned int fill)
+	{
+		this->Fill = fill;
+		this->Update();
+	}
+	unsigned int TextBlock::getFill()
+	{
+		return this->Fill;
+	}
+	void TextBlock::setTextAlignment(OpenXaml::TextAlignment alignment)
+	{
+		this->TextAlignment = alignment;
+		this->Update();
+	}
+	TextAlignment TextBlock::getTextAlignment()
+	{
+		return this->TextAlignment;
 	}
 }

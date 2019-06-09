@@ -7,9 +7,6 @@ namespace OpenXaml {
 	{
 	public:
 		void Draw();
-		XamlProperty<int> Width = 640;
-		XamlProperty<int> Height = 480;
-		XamlProperty<unsigned int> Fill = 0xFF000000;
 		Frame();
 		static Frame* ParseFrame(DOMElement *obj);
 		void Initialize(GLuint shader);
@@ -17,9 +14,13 @@ namespace OpenXaml {
 		void Update();
 		~Frame();
 		void SetBoundingBox(coordinate min, coordinate max);
+		void setFill(unsigned int fill);
+		unsigned int getFill();
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;
+	protected:
+		unsigned int Fill = 0xFF000000;
 	};
 }
 

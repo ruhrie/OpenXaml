@@ -11,20 +11,23 @@ namespace OpenXaml
 	{
 	public:
 		void Draw();
-		XamlProperty<string> Text;
 		void Initialize(GLuint shader);
 		void LoadFromDOM(DOMElement *root);
-		XamlProperty<int> Height = 0;
-		XamlProperty<int> Width = 0;
-		XamlProperty<unsigned int> Fill = 0x33FFFFFF;
-		XamlProperty<string> Content = string("Click");
 		void Update();
 		Button();
 		~Button();
 		void SetBoundingBox(coordinate min, coordinate max);
+		void setFill(unsigned int fill);
+		unsigned int getFill();
+		void setContent(string content);
+		string getContent();
 	private:
 		TextBlock *Label;
 		Rectangle *Frame;
+	protected:
+		string Text;
+		unsigned int Fill = 0x33FFFFFF;
+		string Content = "Click";
 	};
 }
 #endif

@@ -13,7 +13,7 @@ namespace OpenXaml {
 		Frame->Initialize(shader);
 		Label->Initialize(shader);
 	}
-	void Button::LoadFromDOM(DOMElement *root)
+	void Button::LoadFromDOM(DOMElement* root)
 	{
 		DOMNamedNodeMap* attributes = root->getAttributes();
 		for (int i = 0; i < attributes->getLength(); i++)
@@ -85,11 +85,6 @@ namespace OpenXaml {
 		auto text = root->getTextContent();
 		Button::Text = XMLString::transcode(text);
 
-		Width.onPropertyChanged = std::bind(&Button::Update, this);
-		Height.onPropertyChanged = std::bind(&Button::Update, this);
-		Text.onPropertyChanged = std::bind(&Button::Update, this);
-		Fill.onPropertyChanged = std::bind(&Button::Update, this);
-
 		LoadChildrenFromDOM(root);
 		for (int i = 0; i < Children.size(); i++)
 		{
@@ -100,16 +95,16 @@ namespace OpenXaml {
 	{
 		Frame->setPixelScale(PixelScale);
 		Label->setPixelScale(PixelScale);
-		Label->Text = Content;
-		Label->VerticalAlignment = VerticalAlignment;
-		Label->HorizontalAlignment = HorizontalAlignment;
-		Label->TextAlignment = TextAlignment::Center;
-		Label->Update();		
-		Frame->Width = Label->GetWidth();
-		Frame->Height = Label->GetHeight();
-		Frame->HorizontalAlignment = HorizontalAlignment;
-		Frame->VerticalAlignment = VerticalAlignment;
-		Frame->Fill = Fill;
+		Label->setText(Content);
+		Label->setVerticalAlignment(VerticalAlignment);
+		Label->setHorizontalAlignment(HorizontalAlignment);
+		Label->setTextAlignment(TextAlignment::Center);
+		Label->Update();
+		Frame->setWidth(Label->getWidth());
+		Frame->setHeight(Label->getHeight());
+		Frame->setHorizontalAlignment(HorizontalAlignment);
+		Frame->setVerticalAlignment(VerticalAlignment);
+		Frame->setFill(Fill);
 		Frame->Update();
 	}
 	Button::Button()
@@ -129,4 +124,25 @@ namespace OpenXaml {
 		Frame->SetBoundingBox(min, max);
 		Label->SetBoundingBox(min, max);
 	}
+
+
+	void Button::setFill(unsigned int fill)
+	{
+		this->Fill = fill;
+		this->Update();
+	}
+	unsigned int Button::getFill()
+	{
+		return this->Fill;
+	}
+	void Button::setContent(string content)
+	{
+		this->Content = content;
+		this->Update();
+	}
+	string Button::getContent()
+	{
+		return this->Content;
+	}
+
 }

@@ -6,19 +6,20 @@ namespace OpenXaml
 	class Rectangle : public XamlObject
 	{
 	public:
-		XamlProperty<int> Width = 0;
-		XamlProperty<int> Height = 0;
 		Rectangle();
 		void Draw();
 		void Initialize(GLuint shader);
-		XamlProperty<unsigned int> Fill = 0xFF000000;
 		void LoadFromDOM(DOMElement *root);
 		void Update();
 		~Rectangle();
 		void SetBoundingBox(coordinate min, coordinate max);
+		void setFill(unsigned int fill);
+		unsigned int getFill();
 	private:
 		GLuint vertexBuffer;
 		GLuint edgeBuffer;
+	protected:
+		unsigned int Fill = 0xFF000000;
 	};
 }
 #endif

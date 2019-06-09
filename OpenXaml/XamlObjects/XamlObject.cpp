@@ -2,6 +2,7 @@
 #include "XamlObjects/Rectangle.h"
 #include "XamlObjects/TextBlock.h"
 #include "XamlObjects/Button.h"
+#include "Properties/Alignment.h"
 #include <iostream>
 
 using namespace OpenXaml;
@@ -50,8 +51,13 @@ void XamlObject::SetBoundingBox(coordinate min, coordinate max)
 
 XamlObject::XamlObject()
 {
-	HorizontalAlignment.onPropertyChanged = std::bind(&XamlObject::Update, this);
-	VerticalAlignment.onPropertyChanged = std::bind(&XamlObject::Update, this);
+	this->Height = 0;
+	this->Width = 0;
+	this->VAO = 0;
+	this->PixelScale = coordinate{ 0,0 };
+	this->minCoord = coordinate{ 0,0 };
+	this->maxCoord = coordinate{ 0,0 };
+	this->shaderProgram = 0;
 }
 
 void XamlObject::setPixelScale(float x, float y)
@@ -71,4 +77,45 @@ void XamlObject::setPixelScale(coordinate scale)
 		Children[i]->setPixelScale(PixelScale);
 	}
 	Update();
+}
+
+void XamlObject::setHorizontalAlignment(OpenXaml::HorizontalAlignment alignment)
+{
+	this->HorizontalAlignment = alignment;
+	this->Update();
+}
+
+void XamlObject::setVerticalAlignment(OpenXaml::VerticalAlignment alignment)
+{
+	this->VerticalAlignment = alignment;
+	this->Update();
+}
+
+HorizontalAlignment XamlObject::getHorizontalAlignment()
+{
+	return this->HorizontalAlignment;
+}
+
+VerticalAlignment XamlObject::getVerticalAlignment()
+{
+	return this->VerticalAlignment;
+}
+
+void XamlObject::setHeight(int height)
+{
+	this->Height = height;
+	this->Update();
+}
+int XamlObject::getHeight()
+{
+	return this->Height;
+}
+void XamlObject::setWidth(int width)
+{
+	this->Width = width;
+	this->Update();
+}
+int XamlObject::getWidth()
+{
+	return this->Width;
 }
