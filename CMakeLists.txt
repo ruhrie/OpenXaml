@@ -12,6 +12,8 @@ endif(BUILD_SAMPLE_APPLICATION)
 
 add_subdirectory("Schema")
 
+add_subdirectory("xut")
+
 if(BUILD_DOCUMENTATION)
 	#Generate the documentation if supported
 	find_package(Doxygen)

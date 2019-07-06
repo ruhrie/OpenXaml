@@ -49,3 +49,13 @@ if(NOT signals_POPULATED)
 endif()
 
 set(GLAD_INC ${CMAKE_CURRENT_SOURCE_DIR}/glad/include PARENT_SCOPE)
+
+FetchContent_Declare(cxxopts
+	GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git
+	GIT_TAG v2.1.2
+)
+
+if(NOT cxxopts_POPULATED)
+	FetchContent_Populate(cxxopts)
+	set(CXXOPTS_INC ${cxxopts_SOURCE_DIR}/include PARENT_SCOPE)
+endif()
