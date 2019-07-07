@@ -1,10 +1,8 @@
-#ifndef BUTTON_H
-#define BUTTON_H
+#pragma once
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/TextBlock.h"
 #include "XamlObjects/Rectangle.h"
 #include <map>
-#include <GL/Font.h>
 #include <functional>
 namespace OpenXaml
 {
@@ -12,7 +10,7 @@ namespace OpenXaml
 	{
 	public:
 		void Draw();
-		void Initialize(GLuint shader);
+		void Initialize();
 		void LoadFromDOM(DOMElement *root);
 		void Update();
 		Button();
@@ -34,4 +32,3 @@ namespace OpenXaml
 		function<void(XamlObject*)> OnClick;
 	};
 }
-#endif

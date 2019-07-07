@@ -11,6 +11,15 @@
         "-i",
         "../Sample/Test.xaml"
       ]
+    },
+    {
+      "type": "default",
+      "project": "xut\\xut.cpp",
+      "name": "xut.exe Test.xaml",
+      "args": [
+        "-i",
+        "../Sample/Test.xaml"
+      ]
     }
   ]
 }

@@ -19,19 +19,19 @@ void XamlObject::LoadChildrenFromDOM(DOMElement *root)
 		string type = XMLString::transcode(typeC);
 		if (type == "Rectangle")
 		{
-			shared_ptr<OpenXaml::Rectangle> res = make_shared<OpenXaml::Rectangle>();
+			OpenXaml::Rectangle* res = new Rectangle();
 			res->LoadFromDOM((DOMElement*)child);
 			Children.push_back(res);
 		}
 		else if (type == "TextBlock")
 		{
-			shared_ptr<OpenXaml::TextBlock> res = make_shared<OpenXaml::TextBlock>();
+			OpenXaml::TextBlock* res = new TextBlock();
 			res->LoadFromDOM((DOMElement*)child);
 			Children.push_back(res);
 		}
 		else if (type == "Button")
 		{
-			shared_ptr<OpenXaml::Button> res = make_shared<OpenXaml::Button>();
+			OpenXaml::Button* res = new Button();
 			res->LoadFromDOM((DOMElement*)child);
 			Children.push_back(res);
 		}
@@ -69,7 +69,6 @@ XamlObject::XamlObject()
 	this->PixelScale = coordinate{ 0,0 };
 	this->minCoord = coordinate{ 0,0 };
 	this->maxCoord = coordinate{ 0,0 };
-	this->shaderProgram = 0;
 }
 
 void XamlObject::setPixelScale(float x, float y)
@@ -79,7 +78,6 @@ void XamlObject::setPixelScale(float x, float y)
 	{
 		Children[i]->setPixelScale(PixelScale);
 	}
-	Update();
 }
 void XamlObject::setPixelScale(coordinate scale)
 {
@@ -88,19 +86,16 @@ void XamlObject::setPixelScale(coordinate scale)
 	{
 		Children[i]->setPixelScale(PixelScale);
 	}
-	Update();
 }
 
 void XamlObject::setHorizontalAlignment(OpenXaml::HorizontalAlignment alignment)
 {
 	this->HorizontalAlignment = alignment;
-	this->Update();
 }
 
 void XamlObject::setVerticalAlignment(OpenXaml::VerticalAlignment alignment)
 {
 	this->VerticalAlignment = alignment;
-	this->Update();
 }
 
 HorizontalAlignment XamlObject::getHorizontalAlignment()
@@ -116,7 +111,6 @@ VerticalAlignment XamlObject::getVerticalAlignment()
 void XamlObject::setHeight(int height)
 {
 	this->Height = height;
-	this->Update();
 }
 int XamlObject::getHeight()
 {
@@ -125,7 +119,6 @@ int XamlObject::getHeight()
 void XamlObject::setWidth(int width)
 {
 	this->Width = width;
-	this->Update();
 }
 int XamlObject::getWidth()
 {

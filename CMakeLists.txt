@@ -6,13 +6,13 @@ add_subdirectory("Dependencies")
 
 add_subdirectory("OpenXaml")
 
-if(BUILD_SAMPLE_APPLICATION)
-	add_subdirectory("Sample")
-endif(BUILD_SAMPLE_APPLICATION)
-
 add_subdirectory("Schema")
 
 add_subdirectory("xut")
+
+if(BUILD_SAMPLE_APPLICATION)
+	add_subdirectory("Sample")
+endif(BUILD_SAMPLE_APPLICATION)
 
 if(BUILD_DOCUMENTATION)
 	#Generate the documentation if supported

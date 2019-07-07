@@ -1,15 +1,13 @@
 #include "XamlObjects/XamlObject.h"
 #include "XamlObjects/Frame.h"
 #include <sstream>
+#include <glad/glad.h>
+#include <GL/GLConfig.h>
 
 namespace OpenXaml
 {
 	Frame::Frame()
 	{
-		glGenVertexArrays(1, &(Frame::VAO));
-		glBindVertexArray(Frame::VAO);
-		glGenBuffers(1, &vertexBuffer);
-		glGenBuffers(1, &edgeBuffer);
 		minCoord.x = -1;
 		minCoord.y = -1;
 		maxCoord.x = 1;
@@ -21,10 +19,11 @@ namespace OpenXaml
 
 	void Frame::Draw()
 	{
+		this->Update();
 		glBindVertexArray(Frame::VAO);
-		glUseProgram(Frame::shaderProgram);
-		int vertexColorLocation = glGetUniformLocation(Frame::shaderProgram, "thecolor");
-		int modeLoc = glGetUniformLocation(Frame::shaderProgram, "mode");
+		glUseProgram(GL::xamlShader);
+		int vertexColorLocation = glGetUniformLocation(GL::xamlShader, "thecolor");
+		int modeLoc = glGetUniformLocation(GL::xamlShader, "mode");
 		float a, r, g, b;
 		a = ((Fill & 0xFF000000) >> 24) / 255.0f;
 		r = ((Fill & 0x00FF0000) >> 16) / 255.0f;
@@ -40,10 +39,13 @@ namespace OpenXaml
 		}
 	}
 
-	void Frame::Initialize(GLuint shader)
+	void Frame::Initialize()
 	{
+		glGenVertexArrays(1, &(Frame::VAO));
 		glBindVertexArray(Frame::VAO);
-		Frame::shaderProgram = shader;
+		glGenBuffers(1, &vertexBuffer);
+		glGenBuffers(1, &edgeBuffer);
+		glBindVertexArray(Frame::VAO);
 		float vertices[] = {
 					-1, 1, 0, 1,
 					1, 1, 1, 1,
@@ -74,7 +76,7 @@ namespace OpenXaml
 
 		for (unsigned int i = 0; i < Children.size(); i++)
 		{
-			Children[i]->Initialize(shader);
+			Children[i]->Initialize();
 		}		
 	}
 

@@ -2,10 +2,12 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <glad/glad.h>
 using namespace std;
 namespace GL
 {
-	GLuint LoadShaders()
+	unsigned int xamlShader;
+	void LoadShaders()
 	{
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
@@ -47,6 +49,7 @@ namespace GL
 		glBindFragDataLocation(shaderProgram, 0, "outColor");
 		glLinkProgram(shaderProgram);
 
-		return shaderProgram;
+		xamlShader = shaderProgram;
+		//return shaderProgram;
 	}
 }

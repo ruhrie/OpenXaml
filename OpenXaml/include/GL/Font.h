@@ -1,5 +1,4 @@
-#ifndef Font_h
-#define Font_h
+#pragma once
 #include <string>
 #include <map>
 #include <ft2build.h>
@@ -19,5 +18,3 @@ private:
 	FT_Face face;
 	map<char, Character> characterMap;
 };
-
-#endif

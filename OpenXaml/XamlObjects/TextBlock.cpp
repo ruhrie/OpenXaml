@@ -4,14 +4,17 @@
 #include "Environment.h"
 #include <sstream>
 #include <algorithm>
+#include <glad/glad.h>
+#include <gl/GLConfig.h>
 
 namespace OpenXaml {
 	void TextBlock::Draw()
 	{
+		this->Update();
 		glBindVertexArray(TextBlock::VAO);
-		glUseProgram(TextBlock::shaderProgram);
-		int vertexColorLocation = glGetUniformLocation(TextBlock::shaderProgram, "thecolor");
-		int modeLoc = glGetUniformLocation(TextBlock::shaderProgram, "mode");
+		glUseProgram(GL::xamlShader);
+		int vertexColorLocation = glGetUniformLocation(GL::xamlShader, "thecolor");
+		int modeLoc = glGetUniformLocation(GL::xamlShader, "mode");
 		glUniform4f(vertexColorLocation, 0.0f, 0.0f, 0.0f, 1.0f);
 		glUniform1i(modeLoc, 2);
 
@@ -27,9 +30,18 @@ namespace OpenXaml {
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 		}
 	}
-	void TextBlock::Initialize(GLuint shader)
+	void TextBlock::Initialize()
 	{
-		Update();
+		glGenVertexArrays(1, &(TextBlock::VAO));
+		glBindVertexArray(TextBlock::VAO);
+		unsigned short indeces[] =
+		{
+			0,1,2,
+			1,2,3
+		};
+		glGenBuffers(1, &edgeBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 	}
 
 	void TextBlock::LoadFromDOM(DOMElement* root)
@@ -405,17 +417,6 @@ namespace OpenXaml {
 
 	TextBlock::TextBlock()
 	{
-		glGenVertexArrays(1, &(TextBlock::VAO));
-		glBindVertexArray(TextBlock::VAO);
-		unsigned short indeces[] =
-		{
-			0,1,2,
-			1,2,3
-		};
-		TextBlock::shaderProgram = GL::LoadShaders();
-		glGenBuffers(1, &edgeBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		boxHeight = 0;
 		boxWidth = 0;
 	}
@@ -435,7 +436,6 @@ namespace OpenXaml {
 	void TextBlock::setText(string text)
 	{
 		this->Text = text;
-		this->Update();
 	}
 	string TextBlock::getText()
 	{
@@ -444,7 +444,6 @@ namespace OpenXaml {
 	void TextBlock::setTextWrapping(OpenXaml::TextWrapping textWrapping)
 	{
 		this->TextWrapping = textWrapping;
-		this->Update();
 	}
 	TextWrapping TextBlock::getTextWrapping()
 	{
@@ -453,7 +452,6 @@ namespace OpenXaml {
 	void TextBlock::setFontFamily(string family)
 	{
 		this->FontFamily = family;
-		this->Update();
 	}
 	string TextBlock::getFontFamily()
 	{
@@ -462,7 +460,6 @@ namespace OpenXaml {
 	void TextBlock::setFontSize(float size)
 	{
 		this->FontSize = size;
-		this->Update();
 	}
 	float TextBlock::getFontSize()
 	{
@@ -471,7 +468,6 @@ namespace OpenXaml {
 	void TextBlock::setFill(unsigned int fill)
 	{
 		this->Fill = fill;
-		this->Update();
 	}
 	unsigned int TextBlock::getFill()
 	{
@@ -480,7 +476,6 @@ namespace OpenXaml {
 	void TextBlock::setTextAlignment(OpenXaml::TextAlignment alignment)
 	{
 		this->TextAlignment = alignment;
-		this->Update();
 	}
 	TextAlignment TextBlock::getTextAlignment()
 	{

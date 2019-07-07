@@ -5,13 +5,14 @@
 namespace OpenXaml {
 	void Button::Draw()
 	{
+		this->Update();
 		Frame->Draw();
 		Label->Draw();
 	}
-	void Button::Initialize(GLuint shader)
+	void Button::Initialize()
 	{
-		Frame->Initialize(shader);
-		Label->Initialize(shader);
+		Frame->Initialize();
+		Label->Initialize();
 	}
 	void Button::LoadFromDOM(DOMElement* root)
 	{
@@ -133,7 +134,6 @@ namespace OpenXaml {
 	void Button::setFill(unsigned int fill)
 	{
 		this->Fill = fill;
-		this->Update();
 	}
 	unsigned int Button::getFill()
 	{
@@ -142,7 +142,6 @@ namespace OpenXaml {
 	void Button::setContent(string content)
 	{
 		this->Content = content;
-		this->Update();
 	}
 	string Button::getContent()
 	{

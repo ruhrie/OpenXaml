@@ -9,7 +9,7 @@ namespace OpenXaml {
 		void Draw();
 		Frame();
 		static Frame* ParseFrame(DOMElement *obj);
-		void Initialize(GLuint shader);
+		void Initialize();
 		void LoadFromDOM(xercesc_3_2::DOMElement *root);
 		void Update();
 		~Frame();
@@ -17,8 +17,8 @@ namespace OpenXaml {
 		void setFill(unsigned int fill);
 		unsigned int getFill();
 	private:
-		GLuint vertexBuffer;
-		GLuint edgeBuffer;
+		unsigned int vertexBuffer;
+		unsigned int edgeBuffer;
 	protected:
 		unsigned int Fill = 0xFF000000;
 	};

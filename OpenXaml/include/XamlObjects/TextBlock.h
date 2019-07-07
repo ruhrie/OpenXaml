@@ -2,14 +2,13 @@
 #define TEXTBLOCK_H
 #include "XamlObjects/XamlObject.h"
 #include <map>
-#include <GL/Font.h>
 namespace OpenXaml 
 {
 	class TextBlock : public XamlObject
 	{
 	public:
 		void Draw();
-		void Initialize(GLuint shader);
+		void Initialize();
 		void LoadFromDOM(DOMElement *root);
 		void Update();
 		TextBlock();
@@ -30,9 +29,9 @@ namespace OpenXaml
 		int getWidth();
 		int getHeight();
 	private:
-		GLuint edgeBuffer;
-		vector<GLuint> vertexBuffers;
-		map<GLuint, GLuint> textureMap;
+		unsigned int edgeBuffer;
+		vector<unsigned int> vertexBuffers;
+		map<unsigned int, unsigned int> textureMap;
 		unsigned int boxWidth;
 		unsigned int boxHeight;
 	protected:

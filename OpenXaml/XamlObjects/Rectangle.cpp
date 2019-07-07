@@ -1,13 +1,16 @@
 #include "XamlObjects/Rectangle.h"
+#include <glad/glad.h>
+#include <GL/GLConfig.h>
 #include <sstream>
 namespace OpenXaml
 {
 	void Rectangle::Draw()
 	{		
+		this->Update();
 		glBindVertexArray(Rectangle::VAO);
-		glUseProgram(shaderProgram);
-		int vertexColorLocation = glGetUniformLocation(Rectangle::shaderProgram, "thecolor");
-		int modeLoc = glGetUniformLocation(Rectangle::shaderProgram, "mode");
+		glUseProgram(GL::xamlShader);
+		int vertexColorLocation = glGetUniformLocation(GL::xamlShader, "thecolor");
+		int modeLoc = glGetUniformLocation(GL::xamlShader, "mode");
 		float a, r, g, b;
 		a = ((Fill & 0xFF000000) >> 24) / 255.0f;
 		r = ((Fill & 0x00FF0000) >> 16) / 255.0f;
@@ -20,21 +23,20 @@ namespace OpenXaml
 
 	Rectangle::Rectangle()
 	{
+	}
+
+	void Rectangle::Initialize()
+	{
 		glGenVertexArrays(1, &(Rectangle::VAO));
 		glBindVertexArray(Rectangle::VAO);
 		glGenBuffers(1, &vertexBuffer);
 		glGenBuffers(1, &edgeBuffer);
-	}
-
-	void Rectangle::Initialize(GLuint shader)
-	{
 		unsigned short indeces[] =
 		{
 			0,1,2,
 			1,2,3
 		};
 		glBindVertexArray(Rectangle::VAO);
-		Rectangle::shaderProgram = shader;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		glBindVertexArray(0);
@@ -235,7 +237,6 @@ namespace OpenXaml
 	void Rectangle::setFill(unsigned int fill)
 	{
 		this->Fill = fill;
-		this->Update();
 	}
 	unsigned int Rectangle::getFill()
 	{

@@ -1,8 +1,6 @@
 #ifndef XAMLOBJECT_H
 #define XAMLOBJECT_H
 #include <vector>
-#include <memory>
-#include <glad/glad.h>
 #include <functional>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMText.hpp>
@@ -12,11 +10,9 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <string>
-#include "GL/GLConfig.h"
 #include "Properties/Alignment.h"
 #include "Properties/TextWrapping.h"
 #include "XamlObjects/Coordinate.h"
-
 using namespace xercesc;
 using namespace std;
 
@@ -26,11 +22,9 @@ class XamlObject
 {
   public:
 	virtual void Draw() = 0;
-	vector<shared_ptr<XamlObject>> Children;
-	virtual void Initialize(GLuint shader) = 0;
-	GLuint shaderProgram;
+	vector<XamlObject *> Children;
+	virtual void Initialize() = 0;
 	virtual void LoadFromDOM(DOMElement *root) = 0;
-	GLuint VAO;
 	virtual void Update() = 0;
 	virtual void SetBoundingBox(coordinate min, coordinate max) = 0;
 	bool IsContained(coordinate input);
@@ -45,7 +39,7 @@ class XamlObject
 	void setHeight(int height);
 	int getHeight();
 	void setWidth(int width);
-	int getWidth();
+	int getWidth(); 
   protected:
 	void LoadChildrenFromDOM(DOMElement *root);
 	coordinate minCoord;
@@ -55,9 +49,9 @@ class XamlObject
 	int Width;
 	HorizontalAlignment HorizontalAlignment = HorizontalAlignment::Stretch;
 	VerticalAlignment VerticalAlignment = VerticalAlignment::Stretch;
+	unsigned int VAO;
   private:
-  	XamlObject& operator=(const XamlObject&);
-	
+  	XamlObject& operator=(const XamlObject&);	
 };
 } // namespace OpenXaml
 

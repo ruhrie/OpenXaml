@@ -1,9 +1,6 @@
-#ifndef GLC
-#define GLC
-#include <glad/glad.h>
+#pragma once
 namespace GL
 {
-	GLuint LoadShaders();
+	void LoadShaders();
+	extern unsigned int xamlShader;
 }
-
-#endif

@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "GL/GLConfig.h"
 #include <filesystem>
 #include <iostream>
 namespace OpenXaml
@@ -65,7 +66,7 @@ namespace OpenXaml
 		frame = OpenXaml::Parser::ReadFile(file);
 		glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
 		frame->setPixelScale(2.0f / frame->getWidth(), 2.0f / frame->getHeight());
-		GLuint shader = GL::LoadShaders();
-		frame->Initialize(shader);
+		GL::LoadShaders();
+		frame->Initialize();
 	}
 }

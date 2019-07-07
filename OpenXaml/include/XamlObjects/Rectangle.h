@@ -8,7 +8,7 @@ namespace OpenXaml
 	public:
 		Rectangle();
 		void Draw();
-		void Initialize(GLuint shader);
+		void Initialize();
 		void LoadFromDOM(DOMElement *root);
 		void Update();
 		~Rectangle();
@@ -16,8 +16,8 @@ namespace OpenXaml
 		void setFill(unsigned int fill);
 		unsigned int getFill();
 	private:
-		GLuint vertexBuffer;
-		GLuint edgeBuffer;
+		unsigned int vertexBuffer;
+		unsigned int edgeBuffer;
 	protected:
 		unsigned int Fill = 0xFF000000;
 	};
