@@ -43,6 +43,11 @@ int main(int argc, char* argv[])
 	DOMElement* elementRoot = xmlDoc->getDocumentElement();
 	const XMLCh* xmlString = elementRoot->getTagName();
 	string test = XMLString::transcode(xmlString);
+
+	string fileContents = "";
+
+	XamlToString(fileContents, elementRoot);
+
 	XamlObject* root = LoadXaml(elementRoot);
 
 	return 0;

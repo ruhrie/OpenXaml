@@ -1,7 +1,7 @@
 project("xut")
 
 set (CMAKE_CXX_STANDARD 17)
-set(SOURCES "xut.cpp" "xml/ErrorReader.cpp" "xml/DomLoader.cpp")
+set(SOURCES "xut.cpp" "xml/ErrorReader.cpp" "xml/DomLoader.cpp" "xml/UID.cpp")
 
 add_executable(xut ${SOURCES})
 
