@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "GL/GLConfig.h"
+#include <GL/GLConfig.h>
 #include <filesystem>
 #include <iostream>
 namespace OpenXaml

@@ -1,9 +1,8 @@
-#ifndef Character_h
-#define Character_h
 #include <glad/glad.h>
+#pragma once
 struct Character
 {
-	GLuint TextureID;
+	unsigned int TextureID;
 	unsigned int Width;
 	unsigned int Height;
 	int BearingX;
@@ -11,5 +10,3 @@ struct Character
 	long AdvanceX;
 	long AdvanceY;
 };
-
-#endif
