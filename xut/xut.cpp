@@ -7,6 +7,7 @@
 #include <xercesc/dom/DOMText.hpp>
 #include "xml/ErrorReader.h"
 #include "xml/DomLoader.h"
+#include <internal\XamlElement.h>
 using namespace std;
 using namespace xercesc;
 using namespace OpenXaml;
@@ -45,7 +46,7 @@ int main(int argc, char* argv[])
 	string test = XMLString::transcode(xmlString);
 
 	string fileContents = "";
-
+	XamlElement *n = new XamlElement(elementRoot);
 	XamlToString(fileContents, elementRoot);
 
 	XamlObject* root = LoadXaml(elementRoot);
