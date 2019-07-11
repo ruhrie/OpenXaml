@@ -10,11 +10,11 @@ public:
 	std::string Name = "";
 	XamlElement(xercesc::DOMElement* element);
 	~XamlElement();
-private:
 	bool Public = false;
 	std::string Initializer = "";
 	std::string Body;
 	std::string Terminator;
+private:
 	void GetFrameContent(xercesc::DOMElement* element);
 	void GetButtonContent(xercesc::DOMElement* element);
 	void GetRectangleContent(xercesc::DOMElement* element);

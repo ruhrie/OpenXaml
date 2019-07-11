@@ -7,7 +7,8 @@
 #include <xercesc/dom/DOMText.hpp>
 #include "xml/ErrorReader.h"
 #include "xml/DomLoader.h"
-#include <internal\XamlElement.h>
+#include "internal\XamlElement.h"
+#include "internal/XamlClass.h"
 using namespace std;
 using namespace xercesc;
 using namespace OpenXaml;
@@ -15,9 +16,10 @@ using namespace OpenXaml;
 int main(int argc, char* argv[])
 {
 	std::string inputFile;
+	std::string outputFile;
 	cxxopts::Options options("xut", "xut compiles xaml files into intermediate cpp/h files");
 	options.add_options()
-		("o,output", "output cpp")
+		("o,output", "output hpp", cxxopts::value<std::string>(outputFile))
 		("i,input", "input xaml", cxxopts::value<std::string>(inputFile))
 		("h,header", "header file");
 
@@ -47,9 +49,7 @@ int main(int argc, char* argv[])
 
 	string fileContents = "";
 	XamlElement *n = new XamlElement(elementRoot);
-	XamlToString(fileContents, elementRoot);
-
-	XamlObject* root = LoadXaml(elementRoot);
-
+	XamlClass* c = new XamlClass("hi", n);
+	c->WriteToFile(outputFile);
 	return 0;
 }

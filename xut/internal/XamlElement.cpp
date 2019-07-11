@@ -9,6 +9,64 @@
 using namespace std;
 using namespace xercesc;
 
+std::string FormatString(std::string input)
+{
+	std::string result = "";
+	for (auto ch : input)
+	{
+		switch (ch)
+		{
+		case '\'':
+			result += "\\'";
+			break;
+
+		case '\"':
+			result += "\\\"";
+			break;
+
+		case '\?':
+			result += "\\?";
+			break;
+
+		case '\\':
+			result += "\\\\";
+			break;
+
+		case '\a':
+			result += "\\a";
+			break;
+
+		case '\b':
+			result += "\\b";
+			break;
+
+		case '\f':
+			result += "\\f";
+			break;
+
+		case '\n':
+			result += "\\n";
+			break;
+
+		case '\r':
+			result += "\\r";
+			break;
+
+		case '\t':
+			result += "\\t";
+			break;
+
+		case '\v':
+			result += "\\v";
+			break;
+
+		default:
+			result += ch;
+		}
+	}
+	return result;
+}
+
 XamlElement::XamlElement(xercesc::DOMElement* element)
 {
 	const XMLCh* xmlString = element->getTagName();
@@ -48,7 +106,7 @@ void XamlElement::GetFrameContent(DOMElement* element)
 	string term = "delete %name%;\n";
 	string body = "";
 	string name = "";
-	body += "OpenXaml::Frame %name% = new OpenXaml::Frame();\n";
+	body += "%name% = new OpenXaml::Frame();\n";
 
 	DOMNamedNodeMap* attributes = element->getAttributes();
 	for (int i = 0; i < attributes->getLength(); i++)
@@ -125,7 +183,7 @@ string GetHorizontalAlignment(string input)
 {
 	if (input == "Right")
 	{
-		return "$name%->setHorizontalAlignment(HorizontalAlignment::Right);\n";
+		return "%name%->setHorizontalAlignment(HorizontalAlignment::Right);\n";
 	}
 	else if (input == "Left")
 	{
@@ -224,10 +282,10 @@ string GetContent(string input)
 void XamlElement::GetRectangleContent(xercesc::DOMElement* element)
 {
 	string init = "OpenXaml::Rectangle* %name%;\n";
-	string term = "delete %name;\n";
+	string term = "delete %name%;\n";
 	string body = "";
 	string name = "";
-	body += "OpenXaml::Rectangle %name% = new OpenXaml::Rectangle();\n";
+	body += "%name% = new OpenXaml::Rectangle();\n";
 	DOMNamedNodeMap* attributes = element->getAttributes();
 	for (int i = 0; i < attributes->getLength(); i++)
 	{
@@ -264,7 +322,7 @@ void XamlElement::GetRectangleContent(xercesc::DOMElement* element)
 void XamlElement::GetTextBlockContent(xercesc::DOMElement* element)
 {
 	string init = "OpenXaml::TextBlock* %name%;\n";
-	string term = "delete %name;\n";
+	string term = "delete %name%;\n";
 	string body = "";
 	string name = "";
 
@@ -316,7 +374,7 @@ void XamlElement::GetTextBlockContent(xercesc::DOMElement* element)
 	}
 
 	auto text = element->getTextContent();
-	body += GetText(XMLString::transcode(text));
+	body += GetText("\"" + FormatString(XMLString::transcode(text)) + "\"");
 
 	SetContent(init, body, term, name);
 }
