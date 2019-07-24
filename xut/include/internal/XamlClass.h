@@ -12,7 +12,9 @@ public:
 	std::string Terminator = "";
 	std::string ToString();
 	XamlClass(std::string name, XamlElement* element);
+	XamlClass(std::string fileName);
 	void WriteToFile(std::string fileName);
 private:
 	void AddXamlElement(XamlElement* element);
+	std::string RootType;
 };

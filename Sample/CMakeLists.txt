@@ -7,3 +7,5 @@ set_target_properties(TestApplication
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" 
 )
+
+AddXamlSources(TestApplication MainPage.xaml)

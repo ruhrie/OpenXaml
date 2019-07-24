@@ -2,6 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include <Application.h>
+#include <xml\ErrorReader.h>
 
 std::string TabOver(std::string input, int number)
 {
@@ -36,6 +38,43 @@ XamlClass::XamlClass(std::string name, XamlElement* element)
 	AddXamlElement(element);
 }
 
+XamlClass::XamlClass(std::string fileName)
+{
+	XMLPlatformUtils::Initialize();
+	xut::xml::ErrorReader handler;
+	XercesDOMParser* parser = new XercesDOMParser();
+	parser->setErrorHandler(&handler);
+	parser->loadGrammar("../Schema/XamlStandard.xsd", Grammar::SchemaGrammarType);
+	parser->setDoSchema(true);
+	parser->setValidationScheme(XercesDOMParser::Val_Always);
+	parser->setDoNamespaces(true);
+	parser->setIncludeIgnorableWhitespace(false);
+	parser->parse(fileName.c_str());
+
+	size_t error = parser->getErrorCount();
+	if (error > 0)
+	{
+		throw 1;
+	}
+
+	DOMDocument* xmlDoc = parser->getDocument();
+	DOMElement* elementRoot = xmlDoc->getDocumentElement();
+	const XMLCh* xmlString = elementRoot->getTagName();
+	string raw = XMLString::transcode(xmlString);
+	if (raw == "Frame")
+	{
+		XamlElement* n = new XamlElement(elementRoot);
+		AddXamlElement(n);
+		
+	}
+	else
+	{
+		throw 2;
+	}
+	RootType = raw;
+	Name = XMLString::transcode(elementRoot->getAttribute(XMLString::transcode("Class")));
+}
+
 void XamlClass::AddXamlElement(XamlElement* element)
 {
 	if (element->Public)
@@ -64,9 +103,9 @@ void XamlClass::WriteToFile(std::string name)
 
 std::string XamlClass::ToString()
 {
-	std::string result = "#include <OpenXaml/XamlObjects/XamlObjects.h>\n";
+	std::string result = "#include <XamlObjects/XamlObjects.h>\n";
 
-	result += "class " + Name + "\n";
+	result += "class " + Name + " : public OpenXaml::" + RootType +  "\n";
 	result += "{\n";
 	
 	if (PrivateInterfaces.length() != 0)

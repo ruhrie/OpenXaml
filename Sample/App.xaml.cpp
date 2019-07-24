@@ -9,13 +9,14 @@
 #include "GL/GLConfig.h"
 #include "GL/Font.h"
 #include "Application.h"
+#include "MainPage.xaml.h"
 
 using namespace std;
 using namespace OpenXaml;
 
 int main(int argc, char *argv[], char *envp[])
 {
-		std::string inputFile;
+	std::string inputFile;
 	for (int i = 1; i < argc; i++)
 	{
 		string parameter(argv[i]);
@@ -39,7 +40,7 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		return EXIT_FAILURE;
 	}
-
+	MainPageInstance* inst = new MainPageInstance();
 	Application app = Application();
 	app.InitializeComponent(inputFile);
 	app.Run();

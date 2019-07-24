@@ -114,17 +114,17 @@ void XamlElement::GetFrameContent(DOMElement* element)
 		DOMNode* item = attributes->item(i);
 		const XMLCh* nameXML = item->getNodeName();
 		const XMLCh* valXML = item->getNodeValue();
-		string name = XMLString::transcode(nameXML);
+		string propertyName = XMLString::transcode(nameXML);
 		string value = XMLString::transcode(valXML);
-		if (name == "Fill")
+		if (propertyName == "Fill")
 		{
 			body += GetFill(value);
 		}
-		else if (name == "Height")
+		else if (propertyName == "Height")
 		{
 			body += GetHeight(value);
 		}
-		else if (name == "Width")
+		else if (propertyName == "Width")
 		{
 			body += GetWidth(value);
 		}
@@ -183,19 +183,19 @@ string GetHorizontalAlignment(string input)
 {
 	if (input == "Right")
 	{
-		return "%name%->setHorizontalAlignment(HorizontalAlignment::Right);\n";
+		return "%name%->setHorizontalAlignment(OpenXaml::HorizontalAlignment::Right);\n";
 	}
 	else if (input == "Left")
 	{
-		return "%name%->setHorizontalAlignment(HorizontalAlignment::Left);\n";
+		return "%name%->setHorizontalAlignment(OpenXaml::HorizontalAlignment::Left);\n";
 	}
 	else if (input == "Center")
 	{
-		return "%name%->setHorizontalAlignment(HorizontalAlignment::Center);\n";
+		return "%name%->setHorizontalAlignment(OpenXaml::HorizontalAlignment::Center);\n";
 	}
 	else if (input == "Stretch")
 	{
-		return "%name%->setHorizontalAlignment(HorizontalAlignment::Stretch);\n";
+		return "%name%->setHorizontalAlignment(OpenXaml::HorizontalAlignment::Stretch);\n";
 	}
 	else
 	{
@@ -207,19 +207,19 @@ string GetVerticalAlignment(string input)
 {
 	if (input == "Top")
 	{
-		return "%name%->setVerticalAlignment(VerticalAlignment::Top);\n";
+		return "%name%->setVerticalAlignment(OpenXaml::VerticalAlignment::Top);\n";
 	}
 	else if (input == "Bottom")
 	{
-		return "%name%->setVerticalAlignment(VerticalAlignment::Bottom);\n";
+		return "%name%->setVerticalAlignment(OpenXaml::VerticalAlignment::Bottom);\n";
 	}
 	else if (input == "Center")
 	{
-		return "%name%->setVerticalAlignment(VerticalAlignment::Center);\n";
+		return "%name%->setVerticalAlignment(OpenXaml::VerticalAlignment::Center);\n";
 	}
 	else if (input == "Stretch")
 	{
-		return "%name%->setVerticalAlignment(VerticalAlignment::Stretch);\n";
+		return "%name%->setVerticalAlignment(OpenXaml::VerticalAlignment::Stretch);\n";
 	}
 	else
 	{
@@ -240,29 +240,29 @@ void XamlElement::GetButtonContent(xercesc::DOMElement* element)
 		DOMNode* item = attributes->item(i);
 		const XMLCh* nameXML = item->getNodeName();
 		const XMLCh* valXML = item->getNodeValue();
-		string name = XMLString::transcode(nameXML);
+		string propertyName = XMLString::transcode(nameXML);
 		string value = XMLString::transcode(valXML);
-		if (name == "Height")
+		if (propertyName == "Height")
 		{
 			body += GetHeight(value);
 		}
-		else if (name == "Width")
+		else if (propertyName == "Width")
 		{
 			body += GetWidth(value);
 		}
-		else if (name == "HorizontalAlignment")
+		else if (propertyName == "HorizontalAlignment")
 		{
 			body += GetHorizontalAlignment(value);
 		}
-		else if (name == "VerticalAlignment")
+		else if (propertyName == "VerticalAlignment")
 		{
 			body += GetVerticalAlignment(value);
 		}
-		else if (name == "Fill")
+		else if (propertyName == "Fill")
 		{
 			body += GetFill(value);
 		}
-		else if (name == "Content")
+		else if (propertyName == "Content")
 		{
 			body += GetContent(value);
 		}
@@ -292,25 +292,25 @@ void XamlElement::GetRectangleContent(xercesc::DOMElement* element)
 		DOMNode* item = attributes->item(i);
 		const XMLCh* nameXML = item->getNodeName();
 		const XMLCh* valXML = item->getNodeValue();
-		string name = XMLString::transcode(nameXML);
+		string propertyName = XMLString::transcode(nameXML);
 		string value = XMLString::transcode(valXML);
-		if (name == "Fill")
+		if (propertyName == "Fill")
 		{
 			body += GetFill(value);
 		}
-		else if (name == "Height")
+		else if (propertyName == "Height")
 		{
 			body += GetHeight(value);
 		}
-		else if (name == "Width")
+		else if (propertyName == "Width")
 		{
 			body += GetWidth(value);
 		}
-		else if (name == "HorizontalAlignment")
+		else if (propertyName == "HorizontalAlignment")
 		{
 			body += GetHorizontalAlignment(value);
 		}
-		else if (name == "VerticalAlignment")
+		else if (propertyName == "VerticalAlignment")
 		{
 			body += GetVerticalAlignment(value);
 		}
@@ -332,42 +332,42 @@ void XamlElement::GetTextBlockContent(xercesc::DOMElement* element)
 		DOMNode* item = attributes->item(i);
 		const XMLCh* nameXML = item->getNodeName();
 		const XMLCh* valXML = item->getNodeValue();
-		string name = XMLString::transcode(nameXML);
+		string propertyName = XMLString::transcode(nameXML);
 		string value = XMLString::transcode(valXML);
 
-		if (name == "Height")
+		if (propertyName == "Height")
 		{
 			body += GetHeight(value);
 		}
-		else if (name == "Width")
+		else if (propertyName == "Width")
 		{
 			body += GetWidth(value);
 		}
-		else if (name == "HorizontalAlignment")
+		else if (propertyName == "HorizontalAlignment")
 		{
 			body += GetHorizontalAlignment(value);
 		}
-		else if (name == "VerticalAlignment")
+		else if (propertyName == "VerticalAlignment")
 		{
 			body += GetVerticalAlignment(value);
 		}
-		else if (name == "TextWrapping")
+		else if (propertyName == "TextWrapping")
 		{
 			body += GetTextWrapping(value);
 		}
-		else if (name == "FontFamily")
+		else if (propertyName == "FontFamily")
 		{
 			body += GetFontFamily(value);
 		}
-		else if (name == "FontSize")
+		else if (propertyName == "FontSize")
 		{
 			body += GetFontSize(value);
 		}
-		else if (name == "Fill")
+		else if (propertyName == "Fill")
 		{
 			body += GetFill(value);
 		}
-		else if (name == "TextAlignment")
+		else if (propertyName == "TextAlignment")
 		{
 			body += GetTextAlignment(value);
 		}

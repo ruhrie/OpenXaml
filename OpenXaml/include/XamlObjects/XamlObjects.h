@@ -1,5 +1,8 @@
-#include <OpenXaml/XamlObjects/Frame.h>
-#include <OpenXaml/XamlObjects/Rectangle.h>
-#include <OpenXaml/XamlObjects/Button.h>
-#include <OpenXaml/XamlObjects/TextBlock.h>
-#include <OpenXaml/XamlObjects/XamlObject.h>
+#include <XamlObjects/Frame.h>
+#include <XamlObjects/Rectangle.h>
+#include <XamlObjects/Button.h>
+#include <XamlObjects/TextBlock.h>
+#include <XamlObjects/XamlObject.h>
+
+#include <Properties/Alignment.h>
+#include <Properties/TextWrapping.h>

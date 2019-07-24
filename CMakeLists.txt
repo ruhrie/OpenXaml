@@ -10,6 +10,8 @@ add_subdirectory("Schema")
 
 add_subdirectory("xut")
 
+include(cmake/OpenXaml.cmake)
+
 if(BUILD_SAMPLE_APPLICATION)
 	add_subdirectory("Sample")
 endif(BUILD_SAMPLE_APPLICATION)
