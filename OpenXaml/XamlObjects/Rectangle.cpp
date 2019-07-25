@@ -151,10 +151,10 @@ namespace OpenXaml
 
 	Rectangle::~Rectangle()
 	{
-		//glBindVertexArray(Rectangle::VAO);
-		//glDeleteBuffers(1, &vertexBuffer);
-		//glDeleteBuffers(1, &edgeBuffer);
-		//glDeleteVertexArrays(1, &(Rectangle::VAO));
+		glBindVertexArray(Rectangle::VAO);
+		glDeleteBuffers(1, &vertexBuffer);
+		glDeleteBuffers(1, &edgeBuffer);
+		glDeleteVertexArrays(1, &(Rectangle::VAO));
 	}
 
 	void Rectangle::SetBoundingBox(coordinate min, coordinate max)

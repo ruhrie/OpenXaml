@@ -149,7 +149,7 @@ void XamlElement::GetFrameContent(DOMElement* element)
 	SetContent(init, body, term, name);
 }
 
-void XamlElement::SetContent(std::string init, std::string body, std::string term, std::string name)
+void XamlElement::SetContent(std::string init, std::string body, std::string term, std::string name, std::string ext)
 {
 	if (name == "")
 	{
@@ -176,6 +176,7 @@ void XamlElement::SetContent(std::string init, std::string body, std::string ter
 	Body = body;
 	Terminator = term;
 	Name = name;
+	ExternalFunctions = ext;
 }
 
 std::string GetFill(string input, bool root)
@@ -274,8 +275,10 @@ void XamlElement::GetButtonContent(xercesc::DOMElement* element)
 	string term = "delete %name%;\n";
 	string body = "";
 	string name = "";
+	string ext = "";
 	body += "%name% = new OpenXaml::Button();\n";
 	DOMNamedNodeMap* attributes = element->getAttributes();
+	bool contentDone = false;
 	for (int i = 0; i < attributes->getLength(); i++)
 	{
 		DOMNode* item = attributes->item(i);
@@ -306,18 +309,27 @@ void XamlElement::GetButtonContent(xercesc::DOMElement* element)
 		else if (propertyName == "Content")
 		{
 			body += GetContent(value);
+			contentDone = true;
+		}
+		else if (propertyName == "OnClick")
+		{
+			ext += GetClickSigniture(value);
+			body += GetClickCall(value);
 		}
 	}
 
 	auto text = element->getTextContent();
-	body += GetContent(XMLString::transcode(text));
+	if (!contentDone)
+	{
+		body += GetContent(XMLString::transcode(text));
+	}	
 
-	SetContent(init, body, term, name);
+	SetContent(init, body, term, name, ext);
 }
 
 string GetContent(string input)
 {
-	return "%name%->setContent(" + input + ");\n";
+	return "%name%->setContent(\"" + input + "\");\n";
 }
 
 void XamlElement::GetRectangleContent(xercesc::DOMElement* element)
@@ -476,4 +488,18 @@ XamlElement::~XamlElement()
 	{
 		delete element;
 	}
+}
+
+std::string GetClickSigniture(std::string input)
+{
+	std::string result = "";
+	result += "void " + input + "(OpenXaml::XamlObject* sender);\n";
+	return result;
+}
+
+std::string GetClickCall(std::string input)
+{
+	std::string result = "";
+	result += "%name%->setOnClick(" + input + ");\n";
+	return result;
 }

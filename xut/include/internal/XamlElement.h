@@ -15,12 +15,13 @@ public:
 	std::string Body;
 	std::string Terminator;
 	std::string ChildEnumerator;
+	std::string ExternalFunctions;
 private:
 	void GetFrameContent(xercesc::DOMElement* element);
 	void GetButtonContent(xercesc::DOMElement* element);
 	void GetRectangleContent(xercesc::DOMElement* element);
 	void GetTextBlockContent(xercesc::DOMElement* element);
-	void SetContent(std::string init, std::string body, std::string term, std::string name);
+	void SetContent(std::string init, std::string body, std::string term, std::string name, std::string ext = "");
 	bool Root = false;
 };
 
@@ -35,3 +36,5 @@ std::string GetTextAlignment(std::string input);
 std::string GetFontFamily(std::string input);
 std::string GetFontSize(std::string input);
 std::string GetText(std::string input);
+std::string GetClickSigniture(std::string input);
+std::string GetClickCall(std::string input);

@@ -102,6 +102,7 @@ void XamlClass::AddXamlElement(XamlElement* element)
 		AddXamlElement(child);
 	}
 	Initializer += element->ChildEnumerator;
+	FunctionSignitures += element->ExternalFunctions;
 }
 
 void XamlClass::WriteToFile(std::string name)
@@ -114,7 +115,7 @@ void XamlClass::WriteToFile(std::string name)
 
 std::string XamlClass::ToString()
 {
-	std::string result = "#include <XamlObjects/XamlObjects.h>\n";
+	std::string result = "#include <XamlObjects/XamlObjects.h>\n#include <functional>\n";
 
 	result += "class " + Name + " : public OpenXaml::" + RootType +  "\n";
 	result += "{\n";
@@ -126,6 +127,7 @@ std::string XamlClass::ToString()
 	}
 
 	result += "public:\n";
+	result += TabOver(FunctionSignitures, 1);
 	if (PublicInterfaces.length() != 0)
 	{
 		result += TabOver(PublicInterfaces,1);

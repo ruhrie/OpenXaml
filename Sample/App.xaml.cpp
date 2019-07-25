@@ -13,7 +13,7 @@
 using namespace std;
 using namespace OpenXaml;
 
-int main(int argc, char *argv[], char *envp[])
+int main()
 {
 	MainPageInstance* inst = new MainPageInstance();
 	Application app = Application();

@@ -5,6 +5,7 @@
 class XamlClass
 {
 public:
+	std::string FunctionSignitures;
 	std::string Name;
 	std::string PublicInterfaces = "";
 	std::string PrivateInterfaces = "";

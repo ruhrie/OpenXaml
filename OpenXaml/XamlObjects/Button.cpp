@@ -73,11 +73,11 @@ namespace OpenXaml {
 
 	void Button::setOnClick(function<void(XamlObject*)> func)
 	{
-		if (OnClick == NULL)
-		{
-			Events[EventType::ClickEvent].push_back(this);
-		}
 		OnClick = func;
 	}
 
+	function<void(XamlObject*)> Button::getOnClick()
+	{
+		return OnClick;
+	}
 }
