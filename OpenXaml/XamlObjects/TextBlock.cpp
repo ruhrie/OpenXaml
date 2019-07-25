@@ -227,7 +227,7 @@ namespace OpenXaml {
 				}
 				else
 				{
-					startIndex = seperators[(long)wordIndex - 1] + 1;
+					startIndex = seperators[((long)wordIndex) - 1] + 1;
 					length = seperators[wordIndex] - startIndex + 1;
 				}
 				string word = text.substr(startIndex, length);
@@ -310,7 +310,7 @@ namespace OpenXaml {
 	{
 		boxHeight = 0;
 		boxWidth = 0;
-		edgeBuffer = -1;
+		edgeBuffer = 0;
 	}
 
 	TextBlock::~TextBlock()
