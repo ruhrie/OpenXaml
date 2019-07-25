@@ -9,6 +9,7 @@ function(AddXamlSources baseTarget xamlSources)
 		message(STATUS ${outputName})
 		add_custom_command(OUTPUT ${outputName}
 			COMMAND ${xutLocation} -i ${fileName} -o ${outputName}
+			MAIN_DEPENDENCY ${fileName}
 		)
 		add_custom_target(${targetName}
 			DEPENDS ${outputName}

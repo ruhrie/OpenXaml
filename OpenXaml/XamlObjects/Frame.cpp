@@ -41,6 +41,7 @@ namespace OpenXaml
 
 	void Frame::Initialize()
 	{
+		SetBoundingBox({ -1.0f, -1.0f }, { 1.0f, 1.0f });
 		glGenVertexArrays(1, &(Frame::VAO));
 		glBindVertexArray(Frame::VAO);
 		glGenBuffers(1, &vertexBuffer);
@@ -97,6 +98,10 @@ namespace OpenXaml
 	{
 		minCoord = min;
 		maxCoord = max;
+		for (auto child : Children)
+		{
+			child->SetBoundingBox(min, max);
+		}
 	}
 
 	void Frame::setFill(unsigned int fill)
