@@ -9,7 +9,6 @@ namespace OpenXaml
 		Rectangle();
 		void Draw();
 		void Initialize();
-		void LoadFromDOM(DOMElement *root);
 		void Update();
 		~Rectangle();
 		void SetBoundingBox(coordinate min, coordinate max);

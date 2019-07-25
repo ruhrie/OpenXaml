@@ -8,41 +8,6 @@
 using namespace OpenXaml;
 using namespace std;
 
-void XamlObject::LoadChildrenFromDOM(DOMElement *root)
-{
-	size_t childCount = root->getChildElementCount();
-	auto children = root->getChildNodes();
-	for (int i = 0; i < childCount; i++)
-	{
-		auto child = children->item(i);
-		auto typeC = child->getNodeName();
-		string type = XMLString::transcode(typeC);
-		if (type == "Rectangle")
-		{
-			OpenXaml::Rectangle* res = new Rectangle();
-			res->LoadFromDOM((DOMElement*)child);
-			Children.push_back(res);
-		}
-		else if (type == "TextBlock")
-		{
-			OpenXaml::TextBlock* res = new TextBlock();
-			res->LoadFromDOM((DOMElement*)child);
-			Children.push_back(res);
-		}
-		else if (type == "Button")
-		{
-			OpenXaml::Button* res = new Button();
-			res->LoadFromDOM((DOMElement*)child);
-			Children.push_back(res);
-		}
-		else
-		{
-			std::cerr << "Unrecognized type: " << type << "\n";	
-		}
-		
-	}
-}
-
 void XamlObject::SetBoundingBox(coordinate min, coordinate max)
 {
 	minCoord = min;

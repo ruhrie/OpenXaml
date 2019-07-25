@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "Parser/Parser.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "XamlObjects/Frame.h"
@@ -42,7 +41,6 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	MainPageInstance* inst = new MainPageInstance();
 	Application app = Application();
-	//app.InitializeComponent(inputFile);
 	app.InitializeComponent(inst);
 	app.Run();
 }

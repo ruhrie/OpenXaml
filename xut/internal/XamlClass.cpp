@@ -4,6 +4,16 @@
 #include <fstream>
 #include <Application.h>
 #include <xml\ErrorReader.h>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOMElement.hpp>
+#include <xercesc/dom/DOMText.hpp>
+#include <xercesc/util/XMLUni.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
+
+using namespace xercesc;
 
 std::string TabOver(std::string input, int number)
 {

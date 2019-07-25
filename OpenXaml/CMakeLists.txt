@@ -10,13 +10,13 @@ file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
 configure_file("GL/GLConfig.cpp.in" "GL/GLConfig.cpp")
 
-file(GLOB SOURCES "Parser/*.cpp" "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp" "XamlEvents/*.cpp")
+file(GLOB SOURCES "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp" "XamlEvents/*.cpp")
 
 set (OPENXAML_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/" PARENT_SCOPE)
 set (LOCAL_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 set (OPENGL_INC "")
 set (VULKAN_INC "")
-set (LIBRARIES xerces-c glfw freetype signals)
+set (LIBRARIES glfw freetype signals)
 if (UNIX)
 	set(LIBRARIES ${LIBRARIES} "-lstdc++fs")
 endif(UNIX)
@@ -38,7 +38,7 @@ set_target_properties(OpenXaml
 	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
-target_include_directories(OpenXaml PRIVATE ${XERCES_INC} ${LOCAL_INC} ${FREETYPE_INC} ${GLAD_INC} ${GLFW_INC} ${SIGNALS_INC} ${OPENGL_INC})
+target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INC} ${GLAD_INC} ${GLFW_INC} ${SIGNALS_INC} ${OPENGL_INC})
 target_link_libraries(OpenXaml ${LIBRARIES})
 
 

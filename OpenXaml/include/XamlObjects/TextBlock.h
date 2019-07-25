@@ -9,7 +9,6 @@ namespace OpenXaml
 	public:
 		void Draw();
 		void Initialize();
-		void LoadFromDOM(DOMElement *root);
 		void Update();
 		TextBlock();
 		~TextBlock();

@@ -8,9 +8,7 @@ namespace OpenXaml {
 	public:
 		void Draw();
 		Frame();
-		static Frame* ParseFrame(DOMElement *obj);
 		void Initialize();
-		void LoadFromDOM(xercesc_3_2::DOMElement *root);
 		void Update();
 		~Frame();
 		void SetBoundingBox(coordinate min, coordinate max);

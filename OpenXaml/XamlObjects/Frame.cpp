@@ -80,39 +80,6 @@ namespace OpenXaml
 		}		
 	}
 
-	void Frame::LoadFromDOM(DOMElement *root)
-	{
-		DOMNamedNodeMap* attributes = root->getAttributes();
-		for (int i = 0; i < attributes->getLength(); i++)
-		{
-			DOMNode* item = attributes->item(i);
-			const XMLCh* nameXML = item->getNodeName();
-			const XMLCh* valXML = item->getNodeValue();
-			string name = XMLString::transcode(nameXML);
-			string value = XMLString::transcode(valXML);
-			if (name == "Fill")
-			{
-				std::istringstream iss(value.substr(1, value.size()));
-				unsigned int val;
-				iss >> std::hex >> val;
-				Frame::Fill = val;
-			}
-			else if (name == "Height")
-			{
-				Frame::Height = stoi(value);
-			}
-			else if (name == "Width")
-			{
-				Frame::Width = stoi(value);
-			}
-		}
-		LoadChildrenFromDOM(root);
-		for (int i = 0; i < Children.size(); i++)
-		{
-			Children[i]->SetBoundingBox(minCoord, maxCoord);
-		}
-	}
-
 	void Frame::Update()
 	{
 
@@ -124,23 +91,6 @@ namespace OpenXaml
 		//glDeleteBuffers(1, &vertexBuffer);
 		//glDeleteBuffers(1, &edgeBuffer);
 		//glDeleteVertexArrays(1, &VAO);
-	}
-
-	OpenXaml::Frame* Frame::ParseFrame(DOMElement * obj)
-	{
-		const XMLCh *xmlString = obj->getTagName();
-		string name = XMLString::transcode(xmlString);
-		Frame *result;
-		if (name == "Frame")
-		{
-			result = new OpenXaml::Frame();
-		}
-		else
-		{
-			throw 2;
-		}
-		result->LoadFromDOM(obj);
-		return result;
 	}
 
 	void Frame::SetBoundingBox(coordinate min, coordinate max)

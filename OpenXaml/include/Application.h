@@ -10,7 +10,6 @@
 #endif
 #include <GLFW/glfw3.h>
 #include "XamlObjects/Frame.h"
-#include "Parser/Parser.h"
 #include "XamlObjects/Coordinate.h"
 #include "Environment.h"
 
@@ -23,7 +22,6 @@ namespace OpenXaml
 		~Application();
 		void Run();
 		void InitializeComponent();
-		void InitializeComponent(string file);
 		void InitializeComponent(Frame* frame);
 	private:
 		FT_Library fontLibrary;
