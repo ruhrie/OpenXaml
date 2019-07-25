@@ -366,7 +366,7 @@ void XamlElement::GetTextBlockContent(xercesc::DOMElement* element)
 	string term = "delete %name%;\n";
 	string body = "";
 	string name = "";
-
+	body += "%name% = new OpenXaml::TextBlock();\n";
 	DOMNamedNodeMap* attributes = element->getAttributes();
 	for (int i = 0; i < attributes->getLength(); i++)
 	{
@@ -458,11 +458,11 @@ std::string GetTextWrapping(std::string input)
 {
 	if (input == "None")
 	{
-		return "%name%->setTextWrapping(TextWrapping::None);\n";
+		return "%name%->setTextWrapping(OpenXaml::TextWrapping::None);\n";
 	}
 	else if (input == "Wrap")
 	{
-		return "%name%->setTextWrapping(TextWrapping::Wrap);\n";
+		return "%name%->setTextWrapping(OpenXaml::TextWrapping::Wrap);\n";
 	}
 	else
 	{
