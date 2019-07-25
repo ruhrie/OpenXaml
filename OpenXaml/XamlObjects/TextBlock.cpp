@@ -310,6 +310,7 @@ namespace OpenXaml {
 	{
 		boxHeight = 0;
 		boxWidth = 0;
+		edgeBuffer = -1;
 	}
 
 	TextBlock::~TextBlock()

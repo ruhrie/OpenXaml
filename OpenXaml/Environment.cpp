@@ -9,6 +9,7 @@ using namespace std;
 Environment::Environment()
 {
     FT_Init_FreeType(&(Environment::fontLibrary));
+	DPI = 0;
 }
 
 Environment::~Environment()
