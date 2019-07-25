@@ -24,6 +24,7 @@ namespace OpenXaml
 		void Run();
 		void InitializeComponent();
 		void InitializeComponent(string file);
+		void InitializeComponent(Frame* frame);
 	private:
 		FT_Library fontLibrary;
 		void GetFonts();

@@ -67,8 +67,9 @@ std::string FormatString(std::string input)
 	return result;
 }
 
-XamlElement::XamlElement(xercesc::DOMElement* element)
+XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 {
+	Root = root;
 	const XMLCh* xmlString = element->getTagName();
 	string name = xercesc::XMLString::transcode(xmlString);
 	if (name == "Frame")
@@ -96,17 +97,32 @@ XamlElement::XamlElement(xercesc::DOMElement* element)
 	for (int i = 0; i < childCount; i++)
 	{
 		auto child = children->item(i);
-		Children.push_back(new XamlElement((DOMElement*)child));
+		XamlElement* childElement = new XamlElement((DOMElement*)child);
+		if (root)
+		{
+			ChildEnumerator += "Children.push_back(" + childElement->Name + ");\n";
+		}
+		else
+		{
+			ChildEnumerator += Name + "->Children.push_back(" + childElement->Name + ");\n";
+		}
+		
+		Children.push_back(childElement);
 	}
 }
 
 void XamlElement::GetFrameContent(DOMElement* element)
 {
-	string init = "OpenXaml::Frame* %name%;\n";
-	string term = "delete %name%;\n";
+	string init = "";
+	string term = "";
 	string body = "";
 	string name = "";
-	body += "%name% = new OpenXaml::Frame();\n";
+	if (!Root)
+	{
+		init += "OpenXaml::Frame* %name%;\n";
+		term += "delete %name%;\n";
+		body += "%name% = new OpenXaml::Frame();\n";
+	}
 
 	DOMNamedNodeMap* attributes = element->getAttributes();
 	for (int i = 0; i < attributes->getLength(); i++)
@@ -118,15 +134,15 @@ void XamlElement::GetFrameContent(DOMElement* element)
 		string value = XMLString::transcode(valXML);
 		if (propertyName == "Fill")
 		{
-			body += GetFill(value);
+			body += GetFill(value, Root);
 		}
 		else if (propertyName == "Height")
 		{
-			body += GetHeight(value);
+			body += GetHeight(value, Root);
 		}
 		else if (propertyName == "Width")
 		{
-			body += GetWidth(value);
+			body += GetWidth(value, Root);
 		}
 	}
 
@@ -159,24 +175,49 @@ void XamlElement::SetContent(std::string init, std::string body, std::string ter
 	Initializer = init;
 	Body = body;
 	Terminator = term;
+	Name = name;
 }
 
-std::string GetFill(string input)
+std::string GetFill(string input, bool root)
 {
 	std::istringstream iss(input.substr(1, input.size()));
 	unsigned int val;
 	iss >> std::hex >> val;
-	return "%name%->setFill(" + to_string(val) + ");\n";
+	string result = "";
+	if (root)
+	{
+		result += "setFill(" + to_string(val) + ");\n";
+	}
+	else
+	{
+		result += "%name%->setFill(" + to_string(val) + ");\n";
+	}
+	return result;
 }
 
-string GetHeight(string input)
+string GetHeight(string input, bool root)
 {
-	return "%name%->setHeight(" + to_string(stoi(input)) + ");\n";
+	if (root)
+	{
+		return "setHeight(" + to_string(stoi(input)) + ");\n";
+	}
+	else
+	{
+		return "%name%->setHeight(" + to_string(stoi(input)) + ");\n";
+	}
+	
 }
 
-string GetWidth(string input)
+string GetWidth(string input, bool root)
 {
-	return "%name%->setWidth(" + to_string(stoi(input)) + ");\n";
+	if (root)
+	{
+		return "setWidth(" + to_string(stoi(input)) + ");\n";
+	}
+	else
+	{
+		return "%name%->setWidth(" + to_string(stoi(input)) + ");\n";
+	}	
 }
 
 string GetHorizontalAlignment(string input)

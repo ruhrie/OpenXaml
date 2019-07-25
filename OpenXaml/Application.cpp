@@ -69,4 +69,13 @@ namespace OpenXaml
 		GL::LoadShaders();
 		frame->Initialize();
 	}
+
+	void Application::InitializeComponent(Frame* input)
+	{
+		frame = input;
+		glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
+		frame->setPixelScale(2.0f / frame->getWidth(), 2.0f / frame->getHeight());
+		GL::LoadShaders();
+		frame->Initialize();
+	}
 }

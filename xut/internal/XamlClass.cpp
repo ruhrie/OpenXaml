@@ -63,7 +63,7 @@ XamlClass::XamlClass(std::string fileName)
 	string raw = XMLString::transcode(xmlString);
 	if (raw == "Frame")
 	{
-		XamlElement* n = new XamlElement(elementRoot);
+		XamlElement* n = new XamlElement(elementRoot, true);
 		AddXamlElement(n);
 		
 	}
@@ -91,6 +91,7 @@ void XamlClass::AddXamlElement(XamlElement* element)
 	{
 		AddXamlElement(child);
 	}
+	Initializer += element->ChildEnumerator;
 }
 
 void XamlClass::WriteToFile(std::string name)

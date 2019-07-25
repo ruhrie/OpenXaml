@@ -38,10 +38,11 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	if (error)
 	{
-		return EXIT_FAILURE;
+		//return EXIT_FAILURE;
 	}
 	MainPageInstance* inst = new MainPageInstance();
 	Application app = Application();
-	app.InitializeComponent(inputFile);
+	//app.InitializeComponent(inputFile);
+	app.InitializeComponent(inst);
 	app.Run();
 }
