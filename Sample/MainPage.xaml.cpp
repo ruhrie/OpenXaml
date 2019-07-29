@@ -8,7 +8,7 @@
 
 
 
-void MainPageInstance::Test(OpenXaml::XamlObject* source)
+void MainPageInstance::Test(OpenXaml::XamlObject* sender)
 {
 	std::cout << "Pushed\n";
 }

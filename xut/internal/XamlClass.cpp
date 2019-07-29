@@ -71,38 +71,69 @@ XamlClass::XamlClass(std::string fileName)
 	DOMElement* elementRoot = xmlDoc->getDocumentElement();
 	const XMLCh* xmlString = elementRoot->getTagName();
 	string raw = XMLString::transcode(xmlString);
+	Name = XMLString::transcode(elementRoot->getAttribute(XMLString::transcode("Class")));
 	if (raw == "Frame")
 	{
 		XamlElement* n = new XamlElement(elementRoot, true);
-		AddXamlElement(n);
-		
+		AddXamlElement(n);		
 	}
 	else
 	{
 		throw 2;
 	}
-	RootType = raw;
-	Name = XMLString::transcode(elementRoot->getAttribute(XMLString::transcode("Class")));
+	RootType = raw;	
 }
 
 void XamlClass::AddXamlElement(XamlElement* element)
 {
+	size_t pos = 0;
+	string temp;
 	if (element->Public)
 	{
-		PublicInterfaces += element->Initializer;
+		temp = element->Initializer;
+		while ((pos = temp.find("%master%", 0)) != std::string::npos)
+		{
+			temp.replace(pos, 8, Name);
+		}
+		PublicInterfaces += temp;
 	}
 	else
 	{
-		PrivateInterfaces += element->Initializer;
+		temp = element->Initializer;
+		while ((pos = temp.find("%master%", 0)) != std::string::npos)
+		{
+			temp.replace(pos, 8, Name);
+		}
+		PrivateInterfaces += temp;
 	}
-	Initializer += element->Body;
-	Terminator += element->Terminator;
+	temp = element->Body;
+	while ((pos = temp.find("%master%", 0)) != std::string::npos)
+	{
+		temp.replace(pos, 8, Name);
+	}
+	Initializer += temp;
+	temp = element->Terminator;
+	while ((pos = temp.find("%master%", 0)) != std::string::npos)
+	{
+		temp.replace(pos, 8, Name);
+	}
+	Terminator += temp;
 	for (XamlElement* child : element->Children)
 	{
 		AddXamlElement(child);
 	}
-	Initializer += element->ChildEnumerator;
-	FunctionSignitures += element->ExternalFunctions;
+	temp = element->ChildEnumerator;
+	while ((pos = temp.find("%master%", 0)) != std::string::npos)
+	{
+		temp.replace(pos, 8, Name);
+	}
+	Initializer += temp;
+	temp = element->ExternalFunctions;
+	while ((pos = temp.find("%master%", 0)) != std::string::npos)
+	{
+		temp.replace(pos, 8, Name);
+	}
+	FunctionSignitures += temp;
 }
 
 void XamlClass::WriteToFile(std::string name)

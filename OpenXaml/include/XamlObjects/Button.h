@@ -19,7 +19,7 @@ namespace OpenXaml
 		unsigned int getFill();
 		void setContent(string content);
 		string getContent();
-		void setOnClick(function<void(XamlObject*)> func);
+		void setOnClick(std::function<void(XamlObject*)> func);
 		function<void(XamlObject*)> getOnClick();
 	private:
 		TextBlock *Label;

@@ -71,7 +71,7 @@ namespace OpenXaml {
 		return this->Content;
 	}
 
-	void Button::setOnClick(function<void(XamlObject*)> func)
+	void Button::setOnClick(std::function<void(XamlObject*)> func)
 	{
 		OnClick = func;
 	}

@@ -493,13 +493,13 @@ XamlElement::~XamlElement()
 std::string GetClickSigniture(std::string input)
 {
 	std::string result = "";
-	result += "void " + input + "(OpenXaml::XamlObject* sender);\n";
+	result += "virtual void " + input + "(OpenXaml::XamlObject* sender) = 0;\n";
 	return result;
 }
 
 std::string GetClickCall(std::string input)
 {
 	std::string result = "";
-	result += "%name%->setOnClick(" + input + ");\n";
+	result += "%name%->setOnClick(std::bind(&%master%::" + input + ", this, %name%));\n";
 	return result;
 }
