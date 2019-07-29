@@ -1,6 +1,6 @@
 #include "XamlObjects/Button.h"
 #include "Environment.h"
-#include "XamlEvents/EventHandler.h"
+#include "XamlEvents/XamlEvent.h"
 #include <sstream>
 namespace OpenXaml {
 	void Button::Draw()
@@ -35,12 +35,13 @@ namespace OpenXaml {
 	{
 		Label = new TextBlock();
 		Frame = new Rectangle();
+		AddEvent(XamlEvent::ClickEvent, this);
 	}
 	Button::~Button()
 	{
 		if (OnClick == NULL)
 		{
-			//remove event here
+			RemoveEvent(XamlEvent::ClickEvent, this);
 		}
 		delete Label;
 		delete Frame;
@@ -73,11 +74,42 @@ namespace OpenXaml {
 
 	void Button::setOnClick(std::function<void(XamlObject*)> func)
 	{
+		
+		if (OnClick != NULL && func == NULL)
+		{
+			RemoveEvent(XamlEvent::ClickEvent, this);
+		}
+		else if(OnClick == NULL && func != NULL)
+		{
+			AddEvent(XamlEvent::ClickEvent, this);
+		}
 		OnClick = func;
 	}
 
 	function<void(XamlObject*)> Button::getOnClick()
 	{
 		return OnClick;
+	}
+
+	void Button::Click()
+	{
+		if (OnClick != NULL)
+		{
+			OnClick(this);
+		}
+	}
+	void Button::Click(double x, double y)
+	{
+		float width = getWidth() * PixelScale.x;
+		float height = getHeight() * PixelScale.y;
+		float xc = x * PixelScale.x - 0.5f;
+		float yc = y * PixelScale.y - 0.5f;
+		if (xc > minCoord.x && xc < maxCoord.x)
+		{
+			if (yc < maxCoord.y && yc > minCoord.y)
+			{
+				Click();
+			}
+		}
 	}
 }

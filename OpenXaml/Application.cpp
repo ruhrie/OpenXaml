@@ -1,9 +1,24 @@
 #include "Application.h"
+#include "XamlEvents/XamlEvent.h"
+#include "XamlEvents/XamlEvents.h"
 #include <GL/GLConfig.h>
 #include <filesystem>
 #include <iostream>
 namespace OpenXaml
 {
+	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+	{
+		if (button == GLFW_MOUSE_BUTTON_LEFT)
+		{
+			if (action == GLFW_PRESS)
+			{
+				double x, y;
+				glfwGetCursorPos(window, &x, &y);
+				ClickEvent* e = new ClickEvent(x, y);
+				EventQueue.push_back(e);
+			}
+		}
+	}
 	Environment env = Environment();
 	Application::Application()
 	{
@@ -52,20 +67,18 @@ namespace OpenXaml
 
 			glViewport(0, 0, width, height);
 			glfwPollEvents();
+			HandleEvents();
 		}
 		glfwHideWindow(window);
 	}
 
-	void Application::InitializeComponent()
-	{
-		throw 2;
-	}
 	void Application::InitializeComponent(Frame* input)
 	{
 		frame = input;
 		glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
 		frame->setPixelScale(2.0f / frame->getWidth(), 2.0f / frame->getHeight());
 		GL::LoadShaders();
+		glfwSetMouseButtonCallback(window, mouseButtonCallback);
 		frame->Initialize();
 	}
 }

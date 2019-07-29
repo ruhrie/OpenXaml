@@ -21,6 +21,8 @@ namespace OpenXaml
 		string getContent();
 		void setOnClick(std::function<void(XamlObject*)> func);
 		function<void(XamlObject*)> getOnClick();
+		void Click();
+		void Click(double x, double y);
 	private:
 		TextBlock *Label;
 		Rectangle *Frame;
