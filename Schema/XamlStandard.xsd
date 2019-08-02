@@ -21,10 +21,40 @@
   <xs:element name="Grid" id="Grid">
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" ref="Grid.RowDefinitions"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="Grid.ColumnDefinitions"/>
         <xs:element minOccurs="0" ref="Rectangle"/>
         <xs:element minOccurs="0" ref="TextBlock"/>
         <xs:element minOccurs="0" ref="Button"/>
         <xs:element minOccurs="0" ref="Grid"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RowDefinition" id="RowDefinition">
+    <xs:complexType>
+      <xs:attributeGroup ref="Height"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ColumnDefinition" id="ColumnDefinition">
+    <xs:complexType>
+      <xs:attributeGroup ref="Width"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Grid.RowDefinitions" id="Grid.RowDefinitions">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element minOccurs="0" ref="RowDefinition"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Grid.ColumnDefinitions" id="Grid.ColumnDefinitions">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element minOccurs="0" ref="ColumnDefinition"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>

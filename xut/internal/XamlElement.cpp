@@ -530,3 +530,20 @@ void XamlElement::GetGridContent(xercesc::DOMElement* element)
 	}
 	SetContent(init, body, term, name);
 }
+
+void XamlElement::GetGridRowDefinitions(xercesc::DOMElement* element)
+{
+
+}
+void XamlElement::GetGridColumnDefinitions(xercesc::DOMElement* element)
+{
+
+}
+void XamlElement::GetGridRowDefinition(xercesc::DOMElement* element)
+{
+
+}
+void XamlElement::GetGridColumnDefinition(xercesc::DOMElement* element)
+{
+
+}
