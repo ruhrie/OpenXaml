@@ -45,6 +45,18 @@ XamlObject::XamlObject()
 	this->maxCoord = coordinate{ 0,0 };
 }
 
+XamlObject::~XamlObject()
+{
+	for (auto child : Children)
+	{
+		delete child;
+	}
+	for (auto der : DerivedElements)
+	{
+		delete der;
+	}
+}
+
 void XamlObject::setPixelScale(float x, float y)
 {
 	PixelScale = coordinate{x,y};

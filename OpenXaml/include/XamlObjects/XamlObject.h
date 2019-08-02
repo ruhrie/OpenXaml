@@ -21,7 +21,7 @@ class XamlObject
 	XamlObject();
 	void setPixelScale(float x, float y);
 	void setPixelScale(coordinate scale);
-	virtual ~XamlObject() {};
+	~XamlObject();
 	void setHorizontalAlignment(HorizontalAlignment alignment);
 	void setVerticalAlignment(VerticalAlignment alignment);
 	HorizontalAlignment getHorizontalAlignment();

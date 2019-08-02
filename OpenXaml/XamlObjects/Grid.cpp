@@ -1,9 +1,12 @@
 #include "XamlObjects/Grid.h"
 
 namespace OpenXaml {
-	Grid::Draw()
+	void Grid::Draw()
 	{
-
+		for (auto child : Children)
+		{
+			child->Draw();
+		}
 	}
 	Grid::Grid()
 	{
@@ -13,12 +16,18 @@ namespace OpenXaml {
 	{
 
 	}
-	Grid::Initialize()
+	void Grid::Initialize()
 	{
-
+		for (auto child : Children)
+		{
+			child->Initialize();
+		}
 	}
-	Grid::Update()
+	void Grid::Update()
 	{
-
+		for (auto child : Children)
+		{
+			child->Update();
+		}
 	}
 }
