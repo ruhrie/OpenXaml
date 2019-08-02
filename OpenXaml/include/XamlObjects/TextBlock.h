@@ -12,7 +12,6 @@ namespace OpenXaml
 		void Update();
 		TextBlock();
 		~TextBlock();
-		void SetBoundingBox(coordinate min, coordinate max);
 		void setText(string text);
 		string getText();
 		void setTextWrapping(TextWrapping textWrapping);

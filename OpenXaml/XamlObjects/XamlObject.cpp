@@ -12,6 +12,14 @@ void XamlObject::SetBoundingBox(coordinate min, coordinate max)
 {
 	minCoord = min;
 	maxCoord = max;
+	for (auto child : Children)
+	{
+		child->SetBoundingBox(min, max);
+	}
+	for (auto der : DerivedElements)
+	{
+		der->SetBoundingBox(min, max);
+	}
 }
 
 bool XamlObject::IsContained(coordinate input)

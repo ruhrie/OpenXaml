@@ -157,12 +157,6 @@ namespace OpenXaml
 		glDeleteVertexArrays(1, &(Rectangle::VAO));
 	}
 
-	void Rectangle::SetBoundingBox(coordinate min, coordinate max)
-	{
-		minCoord = min;
-		maxCoord = max;
-	}
-
 	void Rectangle::setFill(unsigned int fill)
 	{
 		this->Fill = fill;

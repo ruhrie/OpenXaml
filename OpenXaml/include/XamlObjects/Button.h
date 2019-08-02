@@ -14,7 +14,6 @@ namespace OpenXaml
 		void Update();
 		Button();
 		~Button();
-		void SetBoundingBox(coordinate min, coordinate max);
 		void setFill(unsigned int fill);
 		unsigned int getFill();
 		void setContent(string content);

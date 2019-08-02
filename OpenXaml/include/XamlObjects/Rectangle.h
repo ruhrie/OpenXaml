@@ -11,7 +11,6 @@ namespace OpenXaml
 		void Initialize();
 		void Update();
 		~Rectangle();
-		void SetBoundingBox(coordinate min, coordinate max);
 		void setFill(unsigned int fill);
 		unsigned int getFill();
 	private:

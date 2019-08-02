@@ -94,16 +94,6 @@ namespace OpenXaml
 		glDeleteVertexArrays(1, &VAO);
 	}
 
-	void Frame::SetBoundingBox(coordinate min, coordinate max)
-	{
-		minCoord = min;
-		maxCoord = max;
-		for (auto child : Children)
-		{
-			child->SetBoundingBox(min, max);
-		}
-	}
-
 	void Frame::setFill(unsigned int fill)
 	{
 		this->Fill = fill;

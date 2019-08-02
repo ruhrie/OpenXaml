@@ -35,7 +35,10 @@ namespace OpenXaml {
 	{
 		Label = new TextBlock();
 		Frame = new Rectangle();
+		DerivedElements.push_back(Label);
+		DerivedElements.push_back(Frame);
 		AddEvent(XamlEvent::ClickEvent, this);
+		
 	}
 	Button::~Button()
 	{
@@ -45,13 +48,6 @@ namespace OpenXaml {
 		}
 		delete Label;
 		delete Frame;
-	}
-	void Button::SetBoundingBox(coordinate min, coordinate max)
-	{
-		minCoord = min;
-		maxCoord = max;
-		Frame->SetBoundingBox(min, max);
-		Label->SetBoundingBox(min, max);
 	}
 
 

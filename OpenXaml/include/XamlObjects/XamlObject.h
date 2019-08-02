@@ -17,7 +17,6 @@ class XamlObject
 	vector<XamlObject *> Children;
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;
-	virtual void SetBoundingBox(coordinate min, coordinate max) = 0;
 	bool IsContained(coordinate input);
 	XamlObject();
 	void setPixelScale(float x, float y);
@@ -32,6 +31,7 @@ class XamlObject
 	void setWidth(int width);
 	int getWidth(); 
   protected:
+	void SetBoundingBox(coordinate min, coordinate max);
 	coordinate minCoord;
 	coordinate maxCoord;
 	coordinate PixelScale;
@@ -40,8 +40,9 @@ class XamlObject
 	HorizontalAlignment HorizontalAlignment = HorizontalAlignment::Stretch;
 	VerticalAlignment VerticalAlignment = VerticalAlignment::Stretch;
 	unsigned int VAO;
+	std::vector<XamlObject*> DerivedElements;
   private:
-  	XamlObject& operator=(const XamlObject&);	
+  	XamlObject& operator=(const XamlObject&);		
 };
 } // namespace OpenXaml
 

@@ -319,12 +319,6 @@ namespace OpenXaml {
 		//glDeleteVertexArrays(1, &TextBlock::VAO);
 	}
 
-	void TextBlock::SetBoundingBox(coordinate min, coordinate max)
-	{
-		minCoord = min;
-		maxCoord = max;
-	}
-
 	void TextBlock::setText(string text)
 	{
 		this->Text = text;
