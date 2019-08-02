@@ -1,5 +1,4 @@
-#ifndef ALIGNMENT_H
-#define ALIGNMENT_H
+#pragma once
 
 namespace OpenXaml
 {
@@ -18,10 +17,8 @@ namespace OpenXaml
 	};
 
 	enum class TextAlignment {
-		Left,
-		Right,
-		Center
+		Center,
+		End,
+		Start
 	};
 }
-
-#endif

@@ -88,6 +88,10 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 	{
 		GetTextBlockContent(element);
 	}
+	else if (name == "Grid")
+	{
+		GetGridContent(element);
+	}
 	else
 	{
 		throw 2;
@@ -476,6 +480,10 @@ std::string GetTextWrapping(std::string input)
 	{
 		return "%name%->setTextWrapping(OpenXaml::TextWrapping::Wrap);\n";
 	}
+	else if (input == "WrapWholeWords")
+	{
+		return "%name%->setTextWrapping(OpenXaml::TextWrapping::WrapWholeWords);\n";
+	}
 	else
 	{
 		throw 2;
@@ -502,4 +510,23 @@ std::string GetClickCall(std::string input)
 	std::string result = "";
 	result += "%name%->setOnClick(std::bind(&%master%::" + input + ", this, %name%));\n";
 	return result;
+}
+
+void XamlElement::GetGridContent(xercesc::DOMElement* element)
+{
+	string init = "OpenXaml::Grid* %name%;\n";
+	string term = "delete %name%;\n";
+	string body = "";
+	string name = "";
+	body += "%name% = new OpenXaml::Grid();\n";
+	DOMNamedNodeMap* attributes = element->getAttributes();
+	for (int i = 0; i < attributes->getLength(); i++)
+	{
+		DOMNode* item = attributes->item(i);
+		const XMLCh* nameXML = item->getNodeName();
+		const XMLCh* valXML = item->getNodeValue();
+		string propertyName = XMLString::transcode(nameXML);
+		string value = XMLString::transcode(valXML);
+	}
+	SetContent(init, body, term, name);
 }

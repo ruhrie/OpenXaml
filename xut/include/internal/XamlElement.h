@@ -22,6 +22,7 @@ private:
 	void GetRectangleContent(xercesc::DOMElement* element);
 	void GetTextBlockContent(xercesc::DOMElement* element);
 	void SetContent(std::string init, std::string body, std::string term, std::string name, std::string ext = "");
+	void GetGridContent(xercesc::DOMElement* element);
 	bool Root = false;
 };
 

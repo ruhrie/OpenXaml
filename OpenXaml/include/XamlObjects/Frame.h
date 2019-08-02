@@ -1,5 +1,4 @@
-#ifndef FRAME_H
-#define FRAME_H
+#pragma once
 #include "XamlObjects/XamlObject.h"
 
 namespace OpenXaml {
@@ -20,5 +19,3 @@ namespace OpenXaml {
 		unsigned int Fill = 0xFF000000;
 	};
 }
-
-#endif

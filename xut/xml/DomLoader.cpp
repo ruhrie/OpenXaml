@@ -319,13 +319,13 @@ OpenXaml::TextBlock* DomToTextBlock(xercesc::DOMElement* element)
 		}
 		else if (name == "TextAlignment")
 		{
-			if (value == "Left")
+			if (value == "Start")
 			{
-				result->setTextAlignment(TextAlignment::Left);
+				result->setTextAlignment(TextAlignment::Start);
 			}
-			else if (value == "Right")
+			else if (value == "End")
 			{
-				result->setTextAlignment(TextAlignment::Right);
+				result->setTextAlignment(TextAlignment::End);
 			}
 			else if (value == "Center")
 			{

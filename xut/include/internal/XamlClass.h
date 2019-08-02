@@ -12,7 +12,6 @@ public:
 	std::string Initializer = "";
 	std::string Terminator = "";
 	std::string ToString();
-	XamlClass(std::string name, XamlElement* element);
 	XamlClass(std::string fileName);
 	void WriteToFile(std::string fileName);
 private:

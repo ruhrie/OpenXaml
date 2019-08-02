@@ -38,7 +38,7 @@ namespace OpenXaml
 		string FontFamily = "Arial";
 		float FontSize = 12.0;
 		unsigned int Fill = 0;
-		TextAlignment TextAlignment = TextAlignment::Left;
+		TextAlignment TextAlignment = TextAlignment::Start;
 	};
 }
 #endif

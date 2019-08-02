@@ -42,12 +42,6 @@ std::string TabOver(std::string input, int number)
 	return result + input;
 }
 
-XamlClass::XamlClass(std::string name, XamlElement* element)
-{
-	Name = name;
-	AddXamlElement(element);
-}
-
 XamlClass::XamlClass(std::string fileName)
 {
 	XMLPlatformUtils::Initialize();
@@ -174,6 +168,4 @@ std::string XamlClass::ToString()
 
 	return result;
 }
-
-
 

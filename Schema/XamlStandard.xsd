@@ -5,15 +5,27 @@
 
   <xs:element name="Frame">
     <xs:complexType>
-      <xs:choice maxOccurs="unbounded">
-        <xs:element minOccurs="0" ref="Rectangle"/>
-        <xs:element minOccurs="0" ref="TextBlock"/>
-        <xs:element minOccurs="0" ref="Button"/>
+      <xs:choice maxOccurs="1">
+        <xs:element ref="Rectangle"/>
+        <xs:element ref="TextBlock"/>
+        <xs:element ref="Button"/>
+        <xs:element ref="Grid"/>
       </xs:choice>
       <xs:attributeGroup ref="Width"/>
       <xs:attributeGroup ref="Height"/>
       <xs:attributeGroup ref="Fill"/>
       <xs:attributeGroup ref="Class"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Grid" id="Grid">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element minOccurs="0" ref="Rectangle"/>
+        <xs:element minOccurs="0" ref="TextBlock"/>
+        <xs:element minOccurs="0" ref="Button"/>
+        <xs:element minOccurs="0" ref="Grid"/>
+      </xs:choice>
     </xs:complexType>
   </xs:element>
 
@@ -86,6 +98,7 @@
         <xs:restriction base="xs:string">
           <xs:enumeration value="Wrap"/>
           <xs:enumeration value="NoWrap"/>
+          <xs:enumeration value="WrapWholeWords"/>
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
@@ -158,8 +171,8 @@
     <xs:attribute name="TextAlignment">
       <xs:simpleType>
         <xs:restriction base="xs:string">
-          <xs:enumeration value="Left"/>
-          <xs:enumeration value="Right"/>
+          <xs:enumeration value="Start"/>
+          <xs:enumeration value="End"/>
           <xs:enumeration value="Center"/>
         </xs:restriction>
       </xs:simpleType>

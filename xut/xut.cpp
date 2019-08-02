@@ -15,7 +15,16 @@ int main(int argc, char* argv[])
 		("h,header", "header file");
 
 	auto result = options.parse(argc, argv);
-	XamlClass* c = new XamlClass(inputFile);
-	c->WriteToFile(outputFile);
+	try
+	{
+		XamlClass* c = new XamlClass(inputFile);
+		c->WriteToFile(outputFile);
+	}
+	catch (int error)
+	{
+		std::cerr << "Failed\n";
+		return -1;
+	}
+	
 	return 0;
 }

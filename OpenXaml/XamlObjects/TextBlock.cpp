@@ -199,12 +199,12 @@ namespace OpenXaml {
 				penX = (minRendered.x + maxRendered.x) * 0.5f - lineWidth * 0.5f;
 				break;
 			}
-			case TextAlignment::Right:
+			case TextAlignment::End:
 			{
 				penX = (maxRendered.x) - lineWidth;
 				break;
 			}
-			case TextAlignment::Left:
+			case TextAlignment::Start:
 			{
 				penX = minRendered.x;
 				break;
