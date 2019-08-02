@@ -123,9 +123,6 @@ namespace OpenXaml {
 		boxHeight = height * (int)lines.size();
 		//but first we get the framing rectangle's coordinates
 
-		coordinate frameMax = { 0,0 };
-		coordinate frameMin = { 0,0 };
-
 		float fHeight = height * PixelScale.y;
 		float fWidth = maxWidth * PixelScale.x;
 
@@ -133,27 +130,27 @@ namespace OpenXaml {
 		{
 		case VerticalAlignment::Bottom:
 		{
-			frameMin.y = minCoord.y;
-			frameMax.y = min(maxCoord.y, minCoord.y + fHeight);
+			minRendered.y = minCoord.y;
+			maxRendered.y = min(maxCoord.y, minCoord.y + fHeight);
 			break;
 		}
 		case VerticalAlignment::Top:
 		{
-			frameMax.y = maxCoord.y;
-			frameMin.y = max(minCoord.y, maxCoord.y - fHeight);
+			maxRendered.y = maxCoord.y;
+			minRendered.y = max(minCoord.y, maxCoord.y - fHeight);
 			break;
 		}
 		case VerticalAlignment::Center:
 		{
 			float mean = 0.5f * (maxCoord.y + minCoord.y);
-			frameMax.y = min(maxCoord.y, mean + fHeight / 2);
-			frameMin.y = max(minCoord.y, mean - fHeight / 2);
+			maxRendered.y = min(maxCoord.y, mean + fHeight / 2);
+			minRendered.y = max(minCoord.y, mean - fHeight / 2);
 			break;
 		}
 		case VerticalAlignment::Stretch:
 		{
-			frameMax.y = maxCoord.y;
-			frameMin.y = minCoord.y;
+			maxRendered.y = maxCoord.y;
+			minRendered.y = minCoord.y;
 			break;
 		}
 		}
@@ -162,27 +159,27 @@ namespace OpenXaml {
 		{
 		case HorizontalAlignment::Left:
 		{
-			frameMin.x = minCoord.x;
-			frameMax.x = min(maxCoord.x, minCoord.x + fWidth);
+			minRendered.x = minCoord.x;
+			maxRendered.x = min(maxCoord.x, minCoord.x + fWidth);
 			break;
 		}
 		case HorizontalAlignment::Right:
 		{
-			frameMax.x = maxCoord.x;
-			frameMin.x = max(minCoord.x, maxCoord.x - fWidth);
+			maxRendered.x = maxCoord.x;
+			minRendered.x = max(minCoord.x, maxCoord.x - fWidth);
 			break;
 		}
 		case HorizontalAlignment::Center:
 		{
 			float mean = 0.5f * (maxCoord.x + minCoord.x);
-			frameMax.x = min(maxCoord.x, mean + fWidth / 2);
-			frameMin.x = max(minCoord.x, mean - fWidth / 2);
+			maxRendered.x = min(maxCoord.x, mean + fWidth / 2);
+			minRendered.x = max(minCoord.x, mean - fWidth / 2);
 			break;
 		}
 		case HorizontalAlignment::Stretch:
 		{
-			frameMax.x = maxCoord.x;
-			frameMin.x = minCoord.x;
+			maxRendered.x = maxCoord.x;
+			minRendered.x = minCoord.x;
 			break;
 		}
 		}
@@ -191,7 +188,7 @@ namespace OpenXaml {
 		//start by setting the pen location
 		float penX = 0;
 		float penY = 0;
-		penY = frameMax.y - fHeight;
+		penY = maxRendered.y - fHeight;
 		for (int i = 0; i < lineWidths.size(); i++)
 		{
 			float lineWidth = lineWidths[i] * PixelScale.x;
@@ -199,17 +196,17 @@ namespace OpenXaml {
 			{
 			case TextAlignment::Center:
 			{
-				penX = (frameMin.x + frameMax.x) * 0.5f - lineWidth * 0.5f;
+				penX = (minRendered.x + maxRendered.x) * 0.5f - lineWidth * 0.5f;
 				break;
 			}
 			case TextAlignment::Right:
 			{
-				penX = (frameMax.x) - lineWidth;
+				penX = (maxRendered.x) - lineWidth;
 				break;
 			}
 			case TextAlignment::Left:
 			{
-				penX = frameMin.x;
+				penX = minRendered.x;
 				break;
 			}
 			}

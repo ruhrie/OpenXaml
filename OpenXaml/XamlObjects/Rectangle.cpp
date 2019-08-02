@@ -5,7 +5,7 @@
 namespace OpenXaml
 {
 	void Rectangle::Draw()
-	{		
+	{
 		this->Update();
 		glBindVertexArray(Rectangle::VAO);
 		glUseProgram(GL::xamlShader);
@@ -139,6 +139,8 @@ namespace OpenXaml
 		vertices[11] = 0.0f;
 		vertices[14] = 1.0f;
 		vertices[15] = 0.0f;
+		minRendered = { vertices[0] ,vertices[9] };
+		maxRendered = { vertices[4],vertices[1] };
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);

@@ -3,6 +3,7 @@
 #include "XamlObjects/TextBlock.h"
 #include "XamlObjects/Button.h"
 #include "Properties/Alignment.h"
+#include <algorithm>
 #include <iostream>
 
 using namespace OpenXaml;
@@ -96,4 +97,26 @@ void XamlObject::setWidth(int width)
 int XamlObject::getWidth()
 {
 	return this->Width;
+}
+
+coordinate XamlObject::GetMaxRendered()
+{
+	coordinate result = { -1.0f, -1.0f };
+	for (auto der : DerivedElements)
+	{
+		result.x = std::max(result.x, der->maxRendered.x);
+		result.y = std::max(result.y, der->maxRendered.y);
+	}
+	return result;
+}
+
+coordinate XamlObject::GetMinRendered()
+{
+	coordinate result = { 1.0f, 1.0f };
+	for (auto der : DerivedElements)
+	{
+		result.x = std::min(result.x, der->minRendered.x);
+		result.y = std::min(result.y, der->minRendered.y);
+	}
+	return result;
 }

@@ -30,6 +30,8 @@ namespace OpenXaml {
 		Frame->setVerticalAlignment(VerticalAlignment);
 		Frame->setFill(Fill);
 		Frame->Update();
+		maxRendered = GetMaxRendered();
+		minRendered = GetMinRendered();
 	}
 	Button::Button()
 	{
@@ -37,8 +39,7 @@ namespace OpenXaml {
 		Frame = new Rectangle();
 		DerivedElements.push_back(Label);
 		DerivedElements.push_back(Frame);
-		AddEvent(XamlEvent::ClickEvent, this);
-		
+		AddEvent(XamlEvent::ClickEvent, this);		
 	}
 	Button::~Button()
 	{
@@ -96,13 +97,11 @@ namespace OpenXaml {
 	}
 	void Button::Click(double x, double y)
 	{
-		float width = getWidth() * PixelScale.x;
-		float height = getHeight() * PixelScale.y;
-		float xc = x * PixelScale.x - 0.5f;
-		float yc = y * PixelScale.y - 0.5f;
-		if (xc > minCoord.x && xc < maxCoord.x)
+		float xc = x * PixelScale.x - 1.0f;
+		float yc = 1.0f - y * PixelScale.y;
+		if (xc > minRendered.x && xc < maxRendered.x)
 		{
-			if (yc < maxCoord.y && yc > minCoord.y)
+			if (yc < maxRendered.y && yc > minRendered.y)
 			{
 				Click();
 			}

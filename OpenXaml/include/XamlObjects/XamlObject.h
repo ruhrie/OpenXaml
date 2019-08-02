@@ -34,6 +34,8 @@ class XamlObject
 	void SetBoundingBox(coordinate min, coordinate max);
 	coordinate minCoord;
 	coordinate maxCoord;
+	coordinate minRendered;
+	coordinate maxRendered;
 	coordinate PixelScale;
 	int Height;
 	int Width;
@@ -41,6 +43,8 @@ class XamlObject
 	VerticalAlignment VerticalAlignment = VerticalAlignment::Stretch;
 	unsigned int VAO;
 	std::vector<XamlObject*> DerivedElements;
+	coordinate GetMaxRendered();
+	coordinate GetMinRendered();
   private:
   	XamlObject& operator=(const XamlObject&);		
 };

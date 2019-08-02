@@ -15,6 +15,8 @@ namespace OpenXaml
 		Width = 640;
 		Height = 480;
 		Fill = 0xFF000000;
+		maxRendered = { 1.0f, 1.0f };
+		minRendered = { -1.0f, -1.0f };
 	}
 
 	void Frame::Draw()
