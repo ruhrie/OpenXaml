@@ -33,6 +33,7 @@ XamlObject* LoadXaml(DOMElement* element)
 	{
 		throw 2;
 	}
+	return result;
 }
 
 Frame* DomToFrame(DOMElement* element)

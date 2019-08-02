@@ -5,8 +5,8 @@ namespace OpenXaml
 	ClickEvent::ClickEvent(double x, double y)
 	{
 		eventType = XamlEvent::ClickEvent;
-		xCoord = x;
-		yCoord = y;
+		xCoord = (float)x;
+		yCoord = (float)y;
 	}
 
 	coordinate ClickEvent::GetLocation()

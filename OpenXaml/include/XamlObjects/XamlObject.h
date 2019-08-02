@@ -17,7 +17,6 @@ class XamlObject
 	vector<XamlObject *> Children;
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;
-	bool IsContained(coordinate input);
 	XamlObject();
 	void setPixelScale(float x, float y);
 	void setPixelScale(coordinate scale);

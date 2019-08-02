@@ -14,7 +14,14 @@ namespace OpenXaml {
 	}
 	Grid::~Grid()
 	{
-
+		for (auto row : RowDefinitions)
+		{
+			delete row;
+		}
+		for (auto col : ColumnDefinitions)
+		{
+			delete col;
+		}
 	}
 	void Grid::Initialize()
 	{

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "internal/ElementTypes.h"
 #include <xercesc/dom/DOMElement.hpp>
 
 class XamlElement 
@@ -16,6 +17,7 @@ public:
 	std::string Terminator;
 	std::string ChildEnumerator;
 	std::string ExternalFunctions;
+	ElementType Type;
 private:
 	void GetFrameContent(xercesc::DOMElement* element);
 	void GetButtonContent(xercesc::DOMElement* element);

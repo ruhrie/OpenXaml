@@ -92,9 +92,13 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 	{
 		GetGridContent(element);
 	}
-	else
+	else if (name == "RowDefinition")
 	{
-		throw 2;
+		GetGridRowDefinition(element);
+	}
+	else if (name == "ColumnDefinition")
+	{
+		GetGridColumnDefinition(element);
 	}
 	size_t childCount = element->getChildElementCount();
 	auto children = element->getChildNodes();
@@ -110,13 +114,14 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 		{
 			ChildEnumerator += Name + "->Children.push_back(" + childElement->Name + ");\n";
 		}
-		
+
 		Children.push_back(childElement);
 	}
 }
 
 void XamlElement::GetFrameContent(DOMElement* element)
 {
+	Type = ElementType::Frame;
 	string init = "";
 	string term = "";
 	string body = "";
@@ -210,7 +215,7 @@ string GetHeight(string input, bool root)
 	{
 		return "%name%->setHeight(" + to_string(stoi(input)) + ");\n";
 	}
-	
+
 }
 
 string GetWidth(string input, bool root)
@@ -222,7 +227,7 @@ string GetWidth(string input, bool root)
 	else
 	{
 		return "%name%->setWidth(" + to_string(stoi(input)) + ");\n";
-	}	
+	}
 }
 
 string GetHorizontalAlignment(string input)
@@ -275,6 +280,7 @@ string GetVerticalAlignment(string input)
 
 void XamlElement::GetButtonContent(xercesc::DOMElement* element)
 {
+	Type = ElementType::Button;
 	string init = "OpenXaml::Button* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -326,7 +332,7 @@ void XamlElement::GetButtonContent(xercesc::DOMElement* element)
 	if (!contentDone)
 	{
 		body += GetContent(XMLString::transcode(text));
-	}	
+	}
 
 	SetContent(init, body, term, name, ext);
 }
@@ -338,6 +344,7 @@ string GetContent(string input)
 
 void XamlElement::GetRectangleContent(xercesc::DOMElement* element)
 {
+	Type = ElementType::Rectangle;
 	string init = "OpenXaml::Rectangle* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -378,6 +385,7 @@ void XamlElement::GetRectangleContent(xercesc::DOMElement* element)
 
 void XamlElement::GetTextBlockContent(xercesc::DOMElement* element)
 {
+	Type = ElementType::TextBlock;
 	string init = "OpenXaml::TextBlock* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -462,7 +470,7 @@ std::string GetTextAlignment(std::string input)
 	else
 	{
 		throw 2;
-	}	
+	}
 }
 
 std::string GetText(std::string input)
@@ -514,6 +522,7 @@ std::string GetClickCall(std::string input)
 
 void XamlElement::GetGridContent(xercesc::DOMElement* element)
 {
+	Type = ElementType::Grid;
 	string init = "OpenXaml::Grid* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -528,22 +537,61 @@ void XamlElement::GetGridContent(xercesc::DOMElement* element)
 		string propertyName = XMLString::transcode(nameXML);
 		string value = XMLString::transcode(valXML);
 	}
+
+	size_t childCount = element->getChildElementCount();
+	auto children = element->getChildNodes();
+	for (int i = 0; i < childCount; i++)
+	{
+		DOMElement* child = (DOMElement*)children->item(i);
+		const XMLCh* xmlString = child->getTagName();
+		string name = xercesc::XMLString::transcode(xmlString);
+		if (name == "Grid.RowDefinitions")
+		{
+			XamlElement* childElement = new XamlElement(child);
+		}
+		else if (name == "Grid.ColumnDefinitions")
+		{
+			XamlElement* childElement = new XamlElement(child);
+		}
+	}
+
 	SetContent(init, body, term, name);
-}
-
-void XamlElement::GetGridRowDefinitions(xercesc::DOMElement* element)
-{
-
-}
-void XamlElement::GetGridColumnDefinitions(xercesc::DOMElement* element)
-{
-
 }
 void XamlElement::GetGridRowDefinition(xercesc::DOMElement* element)
 {
-
+	Type = ElementType::RowDefinition;
+	string init = "OpenXaml::RowDefinition* %name%;\n";
+	string term = "delete %name%;\n";
+	string body = "";
+	string name = "";
+	body += "%name% = new OpenXaml::RowDefinition();\n";
+	DOMNamedNodeMap* attributes = element->getAttributes();
+	for (int i = 0; i < attributes->getLength(); i++)
+	{
+		DOMNode* item = attributes->item(i);
+		const XMLCh* nameXML = item->getNodeName();
+		const XMLCh* valXML = item->getNodeValue();
+		string propertyName = XMLString::transcode(nameXML);
+		string value = XMLString::transcode(valXML);
+	}
+	SetContent(init, body, term, name);
 }
 void XamlElement::GetGridColumnDefinition(xercesc::DOMElement* element)
 {
-
+	Type = ElementType::ColumnDefinition;
+	string init = "OpenXaml::ColumnDefinition* %name%;\n";
+	string term = "delete %name%;\n";
+	string body = "";
+	string name = "";
+	body += "%name% = new OpenXaml::ColumnDefinition();\n";
+	DOMNamedNodeMap* attributes = element->getAttributes();
+	for (int i = 0; i < attributes->getLength(); i++)
+	{
+		DOMNode* item = attributes->item(i);
+		const XMLCh* nameXML = item->getNodeName();
+		const XMLCh* valXML = item->getNodeValue();
+		string propertyName = XMLString::transcode(nameXML);
+		string value = XMLString::transcode(valXML);
+	}
+	SetContent(init, body, term, name);
 }

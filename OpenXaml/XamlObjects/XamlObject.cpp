@@ -23,18 +23,6 @@ void XamlObject::SetBoundingBox(coordinate min, coordinate max)
 	}
 }
 
-bool XamlObject::IsContained(coordinate input)
-{
-	if (input.x > minCoord.x && input.x < maxCoord.x)
-	{
-		if (input.y > minCoord.y && input.y < maxCoord.y)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
 XamlObject::XamlObject()
 {
 	this->Height = 0;
@@ -43,6 +31,8 @@ XamlObject::XamlObject()
 	this->PixelScale = coordinate{ 0,0 };
 	this->minCoord = coordinate{ 0,0 };
 	this->maxCoord = coordinate{ 0,0 };
+	maxRendered = { 0.0f, 0.0f };
+	minRendered = { 0.0f, 0.0f };
 }
 
 XamlObject::~XamlObject()
