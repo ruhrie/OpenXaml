@@ -13,4 +13,16 @@ namespace OpenXaml
 			delete child;
 		}
 	}
+	void RowDefinitionCollection::Draw()
+	{
+
+	}
+	void RowDefinitionCollection::Initialize()
+	{
+
+	}
+	void RowDefinitionCollection::Update()
+	{
+
+	}
 }

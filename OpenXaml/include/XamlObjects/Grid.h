@@ -14,5 +14,7 @@ namespace OpenXaml {
 		~Grid();
 		ColumnDefinitionCollection* ColumnDefinitions;
 		RowDefinitionCollection* RowDefinitions;
+	protected:
+		void SetBoundingBox(coordinate min, coordinate max);
 	};
 }

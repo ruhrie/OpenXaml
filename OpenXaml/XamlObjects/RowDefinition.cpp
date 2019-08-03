@@ -11,11 +11,11 @@ namespace OpenXaml
 	{
 
 	}
-	void RowDefinition::SetHeight(int height)
+	void RowDefinition::setHeight(int height)
 	{
 		Height = height;
 	}
-	int RowDefinition::GetHeight()
+	int RowDefinition::getHeight()
 	{
 		return Height;
 	}

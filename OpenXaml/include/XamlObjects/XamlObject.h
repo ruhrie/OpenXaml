@@ -29,6 +29,8 @@ class XamlObject
 	int getHeight();
 	void setWidth(int width);
 	int getWidth(); 
+	int getColumn();
+	int getRow();
   protected:
 	void SetBoundingBox(coordinate min, coordinate max);
 	coordinate minCoord;
@@ -46,6 +48,8 @@ class XamlObject
 	coordinate GetMinRendered();
   private:
   	XamlObject& operator=(const XamlObject&);		
+	int Column = 0;
+	int Row = 0;
 };
 } // namespace OpenXaml
 
