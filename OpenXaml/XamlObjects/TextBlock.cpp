@@ -65,8 +65,9 @@ namespace OpenXaml {
 		int width = 0;
 		for (int i = 0; i < text.length(); i++)
 		{
-			width += font->operator[](text[i]).AdvanceX >> 6;
-			if (find(begin(splitChars), end(splitChars), text[i]) != end(splitChars))
+			char in = text.at(i);
+			width += font->operator[](in).AdvanceX >> 6;
+			if (find(begin(splitChars), end(splitChars), in) != end(splitChars))
 			{
 				widths.push_back(width);
 				seperators.push_back(i);
@@ -85,7 +86,6 @@ namespace OpenXaml {
 		width = 0;
 		for (int i = 0; i < widths.size(); i++)
 		{
-			char seperator = text[seperators[i]];
 			width += widths[i];
 			if (width > fBounds && TextWrapping == TextWrapping::Wrap)
 			{
@@ -94,7 +94,7 @@ namespace OpenXaml {
 				width = widths[i];
 			}
 			line.push_back(i);
-			if (seperator == '\n')
+			if (seperators[i] < text.length() && text.at(seperators[i]) == '\n')
 			{
 				lines.push_back(line);
 				line.clear();
@@ -230,7 +230,7 @@ namespace OpenXaml {
 				string word = text.substr(startIndex, length);
 				for (int k = 0; k < word.length(); k++)
 				{
-					char toRender = word[k];
+					char toRender = word.at(k);
 					Character ch = font->operator[](toRender);
 					if (!iscntrl(toRender))
 					{

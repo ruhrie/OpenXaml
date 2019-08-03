@@ -22,6 +22,11 @@ std::string TabOver(std::string input, int number)
 	{
 		result += "\t";
 	}
+
+	if (input == "")
+	{
+		return result;
+	}
 	
 	std::string tabbed = "\n";
 	for (int i = 0; i < number; i++)
@@ -35,7 +40,7 @@ std::string TabOver(std::string input, int number)
 		input.replace(pos, 1, tabbed);
 		pos = input.find("\n", pos + tabbed.size());
 	}
-	while (input[input.size() - 1] == '\t')
+	while (input.back() == '\t')
 	{
 		input.pop_back();
 	}
