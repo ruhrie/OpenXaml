@@ -3,12 +3,26 @@
 #include <vector>
 #include <xercesc/dom/DOMElement.hpp>
 
+enum class ElementType
+{
+	None,
+	Frame,
+	Button,
+	Rectangle,
+	TextBlock,
+	Grid, 
+	RowDefinition,
+	ColumnDefinition,
+	RowDefinitionCollection,
+	ColumnDefinitionCollection
+};
+
 class XamlElement 
 {
 public:
 	std::vector<XamlElement*> Children;
 	std::string Name = "";
-	XamlElement(xercesc::DOMElement* element, bool root = false);
+	XamlElement(xercesc::DOMElement* element, bool root = false, std::string parent = "");
 	~XamlElement();
 	bool Public = false;
 	std::string Initializer;
@@ -16,6 +30,7 @@ public:
 	std::string Terminator;
 	std::string ChildEnumerator;
 	std::string ExternalFunctions;
+	ElementType Type = ElementType::None;
 private:
 	void GetFrameContent(xercesc::DOMElement* element);
 	void GetButtonContent(xercesc::DOMElement* element);

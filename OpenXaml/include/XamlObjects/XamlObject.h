@@ -31,8 +31,8 @@ class XamlObject
 	int getWidth(); 
 	int getColumn();
 	int getRow();
-  protected:
-	void SetBoundingBox(coordinate min, coordinate max);
+	virtual void SetBoundingBox(coordinate min, coordinate max);
+  protected:	
 	coordinate minCoord;
 	coordinate maxCoord;
 	coordinate minRendered;

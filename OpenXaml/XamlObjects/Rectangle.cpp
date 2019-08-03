@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <GL/GLConfig.h>
 #include <sstream>
+#include <algorithm>
 namespace OpenXaml
 {
 	void Rectangle::Draw()
@@ -52,25 +53,25 @@ namespace OpenXaml
 
 		if (Rectangle::HorizontalAlignment == HorizontalAlignment::Right)
 		{
-			vertices[0] = maxCoord.x - width;
+			vertices[0] = std::max(maxCoord.x - width, minCoord.x);
 			vertices[4] = maxCoord.x;
-			vertices[8] = maxCoord.x - width;
+			vertices[8] = std::max(maxCoord.x - width, minCoord.x);
 			vertices[12] = maxCoord.x;
 		}
 		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Left)
 		{
 			vertices[0] = minCoord.x;
-			vertices[4] = minCoord.x + width;
+			vertices[4] = std::min(minCoord.x + width, maxCoord.x);
 			vertices[8] = minCoord.x;
-			vertices[12] = minCoord.x + width;
+			vertices[12] = std::min(minCoord.x + width, maxCoord.x);
 		}
 		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Center)
 		{
 			float mid = (minCoord.x + maxCoord.x) / 2;
-			vertices[0] = mid - width / 2;
-			vertices[4] = mid + width / 2;
-			vertices[8] = mid - width / 2;
-			vertices[12] = mid + width / 2;
+			vertices[0] = std::min(mid - width / 2, minCoord.x);
+			vertices[4] = std::max(mid + width / 2, maxCoord.x);
+			vertices[8] = std::min(mid - width / 2, minCoord.x);
+			vertices[12] = std::max(mid + width / 2, maxCoord.x);
 		}
 		else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Stretch)
 		{
@@ -84,10 +85,10 @@ namespace OpenXaml
 			else
 			{
 				float mid = (minCoord.x + maxCoord.x) / 2;
-				vertices[0] = mid - width / 2;
-				vertices[4] = mid + width / 2;
-				vertices[8] = mid - width / 2;
-				vertices[12] = mid + width / 2;
+				vertices[0] = std::min(mid - width / 2, minCoord.x);
+				vertices[4] = std::max(mid + width / 2, maxCoord.x);
+				vertices[8] = std::min(mid - width / 2, minCoord.x);
+				vertices[12] = std::max(mid + width / 2, maxCoord.x);
 			}
 		}
 
@@ -95,13 +96,13 @@ namespace OpenXaml
 		{
 			vertices[1] = maxCoord.y;
 			vertices[5] = maxCoord.y;
-			vertices[9] = maxCoord.y - height;
-			vertices[13] = maxCoord.y - height;
+			vertices[9] = std::max(maxCoord.y - height, minCoord.y);
+			vertices[13] = std::max(maxCoord.y - height, minCoord.y);
 		}
 		else if (Rectangle::VerticalAlignment == VerticalAlignment::Bottom)
 		{
-			vertices[1] = minCoord.y + height;
-			vertices[5] = minCoord.y + height;
+			vertices[1] = std::min(minCoord.y + height, maxCoord.y);
+			vertices[5] = std::min(minCoord.y + height, maxCoord.y);
 			vertices[9] = minCoord.y;
 			vertices[13] = minCoord.y;
 		}
@@ -125,10 +126,10 @@ namespace OpenXaml
 			else
 			{
 				float mid = (minCoord.y + maxCoord.y) / 2;
-				vertices[1] = mid + height / 2;
-				vertices[5] = mid + height / 2;
-				vertices[9] = mid - height / 2;
-				vertices[13] = mid - height / 2;
+				vertices[1] = std::min(mid + height / 2, minCoord.y);
+				vertices[5] = std::min(mid + height / 2, minCoord.y);
+				vertices[9] = std::max(mid - height / 2, maxCoord.y);
+				vertices[13] = std::max(mid - height / 2, maxCoord.y);
 			}
 		}
 		vertices[2] = 0.0f;

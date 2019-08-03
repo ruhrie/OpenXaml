@@ -33,23 +33,50 @@ namespace OpenXaml {
 	}
 	void Grid::SetBoundingBox(coordinate min, coordinate max)
 	{
-		std::vector<int> rowHeights;
-		int position = 0;
-		for (auto row : RowDefinitions->Children)
+		std::vector<float> rowHeights;
+		std::vector<float> rowStarts;
+		if (RowDefinitions != NULL)
 		{
-			rowHeights.push_back(row->getHeight());
+			float position = max.y;
+			float yScale = PixelScale.y;
+			for (auto row : RowDefinitions->Children)
+			{
+				float height = row->getHeight() * yScale;
+				rowHeights.push_back(height);
+				position -= height;
+				rowStarts.push_back(position);				
+			}
 		}
-		std::vector<int> columnWidths;
-		for (auto col : ColumnDefinitions->Children)
+		
+		std::vector<float> columnWidths;
+		std::vector<float> columnStarts;
+		if (ColumnDefinitions != NULL)
 		{
-			columnWidths.push_back(col->getWidth());
+			float position = min.x;
+			float xScale = PixelScale.x;
+			for (auto col : ColumnDefinitions->Children)
+			{
+				float width = col->getWidth() * xScale;
+				columnWidths.push_back(width);
+				columnStarts.push_back(position);
+				position += width;
+			}
 		}
+		
 
 		for (auto child : Children)
 		{
 			int row = child->getRow();
 			int col = child->getColumn();
-
+			coordinate min = {
+				columnStarts[col],
+				rowStarts[row]
+			};
+			coordinate max = {
+				min.x + columnWidths[col],
+				min.y + rowHeights[row]
+			};
+			child->SetBoundingBox(min, max);
 		}
 	}
 }

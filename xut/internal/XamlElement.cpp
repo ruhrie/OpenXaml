@@ -67,7 +67,7 @@ std::string FormatString(std::string input)
 	return result;
 }
 
-XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
+XamlElement::XamlElement(xercesc::DOMElement* element, bool root, std::string parent)
 {
 	Root = root;
 	const XMLCh* xmlString = element->getTagName();
@@ -75,38 +75,47 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 	if (name == "Frame")
 	{
 		GetFrameContent(element);
+		Type = ElementType::Frame;
 	}
 	else if (name == "Button")
 	{
 		GetButtonContent(element);
+		Type = ElementType::Button;
 	}
 	else if (name == "Rectangle")
 	{
 		GetRectangleContent(element);
+		Type = ElementType::Rectangle;
 	}
 	else if (name == "TextBlock")
 	{
 		GetTextBlockContent(element);
+		Type = ElementType::TextBlock;
 	}
 	else if (name == "Grid")
 	{
 		GetGridContent(element);
+		Type = ElementType::Grid;
 	}
 	else if (name == "RowDefinition")
 	{
 		GetGridRowDefinition(element);
+		Type = ElementType::RowDefinition;
 	}
 	else if (name == "ColumnDefinition")
 	{
 		GetGridColumnDefinition(element);
+		Type = ElementType::ColumnDefinition;
 	}
 	else if (name == "RowDefinitionCollection")
 	{
 		GetRowDefinitionCollectionContent(element);
+		Type = ElementType::RowDefinitionCollection;
 	}
 	else if (name == "ColumnDefinitionCollection")
 	{
 		GetColumnDefinitionCollectionContent(element);
+		Type = ElementType::ColumnDefinitionCollection;
 	}
 	else
 	{
@@ -124,7 +133,25 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 		}
 		else
 		{
-			ChildEnumerator += Name + "->Children.push_back(" + childElement->Name + ");\n";
+			if (Type == ElementType::Grid)
+			{
+				if (childElement->Type == ElementType::ColumnDefinitionCollection)
+				{
+					ChildEnumerator += Name + "->ColumnDefinitions = " + childElement->Name + ";\n";
+				}
+				else if (childElement->Type == ElementType::RowDefinitionCollection)
+				{
+					ChildEnumerator += Name + "->RowDefinitions = " + childElement->Name + ";\n";
+				}
+				else
+				{
+					ChildEnumerator += Name + "->Children.push_back(" + childElement->Name + ");\n";
+				}
+			}
+			else
+			{
+				ChildEnumerator += Name + "->Children.push_back(" + childElement->Name + ");\n";
+			}			
 		}
 
 		Children.push_back(childElement);
