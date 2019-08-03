@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "internal/ElementTypes.h"
 #include <xercesc/dom/DOMElement.hpp>
 
 class XamlElement 
@@ -17,7 +16,6 @@ public:
 	std::string Terminator;
 	std::string ChildEnumerator;
 	std::string ExternalFunctions;
-	ElementType Type;
 private:
 	void GetFrameContent(xercesc::DOMElement* element);
 	void GetButtonContent(xercesc::DOMElement* element);
@@ -25,8 +23,8 @@ private:
 	void GetTextBlockContent(xercesc::DOMElement* element);
 	void SetContent(std::string init, std::string body, std::string term, std::string name, std::string ext = "");
 	void GetGridContent(xercesc::DOMElement* element);
-	void GetGridRowDefinitions(xercesc::DOMElement* element);
-	void GetGridColumnDefinitions(xercesc::DOMElement* element);
+	void GetRowDefinitionCollectionContent(xercesc::DOMElement* element);
+	void GetColumnDefinitionCollectionContent(xercesc::DOMElement* element);
 	void GetGridRowDefinition(xercesc::DOMElement* element);
 	void GetGridColumnDefinition(xercesc::DOMElement* element);
 	bool Root = false;

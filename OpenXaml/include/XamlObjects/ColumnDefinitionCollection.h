@@ -6,6 +6,8 @@ namespace OpenXaml
 	class ColumnDefinitionCollection
 	{
 	public:
+		ColumnDefinitionCollection();
+		~ColumnDefinitionCollection();
 		std::vector<ColumnDefinition*> Children;
 	};
 }

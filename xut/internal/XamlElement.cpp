@@ -102,11 +102,15 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 	}
 	else if (name == "RowDefinitionCollection")
 	{
-
+		GetRowDefinitionCollectionContent(element);
 	}
 	else if (name == "ColumnDefinitionCollection")
 	{
-
+		GetColumnDefinitionCollectionContent(element);
+	}
+	else
+	{
+		throw 2;
 	}
 	size_t childCount = element->getChildElementCount();
 	auto children = element->getChildNodes();
@@ -129,7 +133,6 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 
 void XamlElement::GetFrameContent(DOMElement* element)
 {
-	Type = ElementType::Frame;
 	string init = "";
 	string term = "";
 	string body = "";
@@ -288,7 +291,6 @@ string GetVerticalAlignment(string input)
 
 void XamlElement::GetButtonContent(xercesc::DOMElement* element)
 {
-	Type = ElementType::Button;
 	string init = "OpenXaml::Button* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -352,7 +354,6 @@ string GetContent(string input)
 
 void XamlElement::GetRectangleContent(xercesc::DOMElement* element)
 {
-	Type = ElementType::Rectangle;
 	string init = "OpenXaml::Rectangle* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -393,7 +394,6 @@ void XamlElement::GetRectangleContent(xercesc::DOMElement* element)
 
 void XamlElement::GetTextBlockContent(xercesc::DOMElement* element)
 {
-	Type = ElementType::TextBlock;
 	string init = "OpenXaml::TextBlock* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -530,7 +530,6 @@ std::string GetClickCall(std::string input)
 
 void XamlElement::GetGridContent(xercesc::DOMElement* element)
 {
-	Type = ElementType::Grid;
 	string init = "OpenXaml::Grid* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -550,7 +549,6 @@ void XamlElement::GetGridContent(xercesc::DOMElement* element)
 }
 void XamlElement::GetGridRowDefinition(xercesc::DOMElement* element)
 {
-	Type = ElementType::RowDefinition;
 	string init = "OpenXaml::RowDefinition* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
@@ -564,17 +562,62 @@ void XamlElement::GetGridRowDefinition(xercesc::DOMElement* element)
 		const XMLCh* valXML = item->getNodeValue();
 		string propertyName = XMLString::transcode(nameXML);
 		string value = XMLString::transcode(valXML);
+		if (propertyName == "Height")
+		{
+			body += GetHeight(value);
+		}
 	}
 	SetContent(init, body, term, name);
 }
 void XamlElement::GetGridColumnDefinition(xercesc::DOMElement* element)
 {
-	Type = ElementType::ColumnDefinition;
 	string init = "OpenXaml::ColumnDefinition* %name%;\n";
 	string term = "delete %name%;\n";
 	string body = "";
 	string name = "";
 	body += "%name% = new OpenXaml::ColumnDefinition();\n";
+	DOMNamedNodeMap* attributes = element->getAttributes();
+	for (int i = 0; i < attributes->getLength(); i++)
+	{
+		DOMNode* item = attributes->item(i);
+		const XMLCh* nameXML = item->getNodeName();
+		const XMLCh* valXML = item->getNodeValue();
+		string propertyName = XMLString::transcode(nameXML);
+		string value = XMLString::transcode(valXML);
+		if (propertyName == "Width")
+		{
+			body += GetWidth(value);
+		}
+	}
+	SetContent(init, body, term, name);
+}
+
+void XamlElement::GetColumnDefinitionCollectionContent(xercesc::DOMElement* element)
+{
+	string init = "OpenXaml::ColumnDefinitionCollection* %name%;\n";
+	string term = "delete %name%;\n";
+	string body = "";
+	string name = "";
+	body += "%name% = new OpenXaml::ColumnDefinitionCollection();\n";
+	DOMNamedNodeMap* attributes = element->getAttributes();
+	for (int i = 0; i < attributes->getLength(); i++)
+	{
+		DOMNode* item = attributes->item(i);
+		const XMLCh* nameXML = item->getNodeName();
+		const XMLCh* valXML = item->getNodeValue();
+		string propertyName = XMLString::transcode(nameXML);
+		string value = XMLString::transcode(valXML);
+	}
+	SetContent(init, body, term, name);
+}
+
+void XamlElement::GetRowDefinitionCollectionContent(xercesc::DOMElement* element)
+{
+	string init = "OpenXaml::RowDefinitionCollection* %name%;\n";
+	string term = "delete %name%;\n";
+	string body = "";
+	string name = "";
+	body += "%name% = new OpenXaml::RowDefinitionCollection();\n";
 	DOMNamedNodeMap* attributes = element->getAttributes();
 	for (int i = 0; i < attributes->getLength(); i++)
 	{

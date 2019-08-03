@@ -6,6 +6,8 @@ namespace OpenXaml {
 	public:
 		RowDefinition();
 		~RowDefinition();
+		int GetHeight();
+		void SetHeight(int height);
 	private:
 		int Height;
 	};

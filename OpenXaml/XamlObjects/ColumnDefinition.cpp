@@ -11,4 +11,12 @@ namespace OpenXaml
 	{
 
 	}
+	int ColumnDefinition::GetWidth()
+	{
+		return Width;
+	}
+	void ColumnDefinition::SetWidth(int width)
+	{
+		Width = width;
+	}
 }

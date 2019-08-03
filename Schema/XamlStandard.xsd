@@ -43,7 +43,7 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="Grid.RowDefinitions" id="Grid.RowDefinitions">
+  <xs:element name="RowDefinitionCollection" id="RowDefinitionCollection">
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
         <xs:element minOccurs="0" ref="RowDefinition"/>
@@ -51,7 +51,7 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="Grid.ColumnDefinitions" id="Grid.ColumnDefinitions">
+  <xs:element name="ColumnDefinitionCollection" id="ColumnDefinitionCollection">
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
         <xs:element minOccurs="0" ref="ColumnDefinition"/>

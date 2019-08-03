@@ -6,6 +6,8 @@ namespace OpenXaml
 	class RowDefinitionCollection
 	{
 	public:
+		RowDefinitionCollection();
+		~RowDefinitionCollection();
 		std::vector<RowDefinition*> Children;
 	};
 }
