@@ -100,6 +100,14 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root)
 	{
 		GetGridColumnDefinition(element);
 	}
+	else if (name == "RowDefinitionCollection")
+	{
+
+	}
+	else if (name == "ColumnDefinitionCollection")
+	{
+
+	}
 	size_t childCount = element->getChildElementCount();
 	auto children = element->getChildNodes();
 	for (int i = 0; i < childCount; i++)
@@ -536,23 +544,6 @@ void XamlElement::GetGridContent(xercesc::DOMElement* element)
 		const XMLCh* valXML = item->getNodeValue();
 		string propertyName = XMLString::transcode(nameXML);
 		string value = XMLString::transcode(valXML);
-	}
-
-	size_t childCount = element->getChildElementCount();
-	auto children = element->getChildNodes();
-	for (int i = 0; i < childCount; i++)
-	{
-		DOMElement* child = (DOMElement*)children->item(i);
-		const XMLCh* xmlString = child->getTagName();
-		string name = xercesc::XMLString::transcode(xmlString);
-		if (name == "Grid.RowDefinitions")
-		{
-			XamlElement* childElement = new XamlElement(child);
-		}
-		else if (name == "Grid.ColumnDefinitions")
-		{
-			XamlElement* childElement = new XamlElement(child);
-		}
 	}
 
 	SetContent(init, body, term, name);

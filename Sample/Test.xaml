@@ -5,14 +5,14 @@
   Width ="1024" Height="768" Fill="#CCFFFFFF"
   Class="Test">
   <Grid>
-    <Grid.RowDefinitions>
+    <RowDefinitionCollection>
       <RowDefinition/>
       <RowDefinition/>
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
+    </RowDefinitionCollection>
+    <ColumnDefinitionCollection>
       <ColumnDefinition/>
       <ColumnDefinition/>
-    </Grid.ColumnDefinitions>
+    </ColumnDefinitionCollection>
     <Button Content="asdf" Fill="#FFFF00FF" HorizontalAlignment="Left" VerticalAlignment="Top" OnClick="test"/>
     <Rectangle Fill="#440000AA" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="200"/>
     <Rectangle HorizontalAlignment="Left" Fill="#AA000000" Width="1000"/>
