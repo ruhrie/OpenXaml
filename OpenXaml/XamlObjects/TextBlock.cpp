@@ -229,7 +229,7 @@ namespace OpenXaml {
 						}
 						RenderCharacter(toRender, penX, penY);
 					}
-					priorIndex = ppIndex;
+					priorIndex = ppIndex + 1;
 					penY -= height * PixelScale.y;
 					if (penY < minCoord.y - height * PixelScale.y)
 					{
