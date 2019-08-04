@@ -2,7 +2,6 @@
   Class="MainPage"
   xmlns="http://xamlstandard"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://xamlstandard ../Schema/XamlStandard.xsd"
   Width ="1024" Height="768" Fill="#FF1FF111">
   <Grid>
     <RowDefinitionCollection>

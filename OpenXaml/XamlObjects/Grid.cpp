@@ -47,6 +47,11 @@ namespace OpenXaml {
 				rowStarts.push_back(position);				
 			}
 		}
+		else
+		{
+			rowHeights.push_back(max.y - min.y);
+			rowStarts.push_back(min.y);
+		}
 		
 		std::vector<float> columnWidths;
 		std::vector<float> columnStarts;
@@ -61,6 +66,11 @@ namespace OpenXaml {
 				columnStarts.push_back(position);
 				position += width;
 			}
+		}
+		else
+		{
+			columnWidths.push_back(max.x - min.x);
+			columnStarts.push_back(max.x);
 		}
 		
 

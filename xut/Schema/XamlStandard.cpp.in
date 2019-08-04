@@ -1,0 +1,6 @@
+#include "Schema/XamlStandard.h"
+
+namespace OpenXaml
+{
+	std::string XamlStandardXSD = R"(@XAML_STANDARD_XSD@)";
+}

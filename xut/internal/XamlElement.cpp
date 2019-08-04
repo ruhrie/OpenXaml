@@ -485,7 +485,7 @@ std::string GetFontFamily(std::string input)
 }
 std::string GetFontSize(std::string input)
 {
-	return "%name%->setFontSize(" + to_string(stof(input)) + ");\n";
+	return "%name%->setFontSize(" + input + ");\n";
 }
 
 std::string GetTextAlignment(std::string input)

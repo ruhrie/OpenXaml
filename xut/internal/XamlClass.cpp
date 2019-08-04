@@ -1,4 +1,5 @@
 #include "internal/XamlClass.h"
+#include "Schema/XamlStandard.h"
 #include <iostream>
 #include <algorithm>
 #include <fstream>
@@ -12,6 +13,8 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
+#include <xercesc/framework/MemBufInputSource.hpp>
+#include <xercesc/framework/Wrapper4InputSource.hpp>
 
 using namespace xercesc;
 
@@ -53,11 +56,15 @@ XamlClass::XamlClass(std::string fileName)
 	xut::xml::ErrorReader handler;
 	XercesDOMParser* parser = new XercesDOMParser();
 	parser->setErrorHandler(&handler);
-	parser->loadGrammar("../Schema/XamlStandard.xsd", Grammar::SchemaGrammarType);
-	parser->setDoSchema(true);
 	parser->setValidationScheme(XercesDOMParser::Val_Always);
 	parser->setDoNamespaces(true);
+	parser->setDoSchema(true);
 	parser->setIncludeIgnorableWhitespace(false);
+	parser->cacheGrammarFromParse(true);
+	MemBufInputSource schema = xercesc::MemBufInputSource((const XMLByte*)(OpenXaml::XamlStandardXSD.c_str()), OpenXaml::XamlStandardXSD.size(), "XamlStandard");
+	parser->loadGrammar(schema, Grammar::SchemaGrammarType, true);
+	parser->useCachedGrammarInParse(true);
+	parser->setExternalNoNamespaceSchemaLocation("file:///schema.xsd");
 	parser->parse(fileName.c_str());
 
 	size_t error = parser->getErrorCount();

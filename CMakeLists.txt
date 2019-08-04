@@ -6,8 +6,6 @@ add_subdirectory("Dependencies")
 
 add_subdirectory("OpenXaml")
 
-add_subdirectory("Schema")
-
 add_subdirectory("xut")
 
 include(cmake/OpenXaml.cmake)

@@ -5,7 +5,7 @@
 
   <xs:element name="Frame">
     <xs:complexType>
-      <xs:choice maxOccurs="1">
+      <xs:choice maxOccurs="1" minOccurs="0">
         <xs:element ref="Rectangle"/>
         <xs:element ref="TextBlock"/>
         <xs:element ref="Button"/>
@@ -20,7 +20,7 @@
 
   <xs:element name="Grid" id="Grid">
     <xs:complexType>
-      <xs:choice maxOccurs="unbounded">
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
         <xs:element minOccurs="0" maxOccurs="1" ref="RowDefinitionCollection"/>
         <xs:element minOccurs="0" maxOccurs="1" ref="ColumnDefinitionCollection"/>
         <xs:element minOccurs="0" ref="Rectangle"/>
@@ -217,6 +217,22 @@
     </xs:attribute>
   </xs:attributeGroup>
 
+  <xs:attributeGroup name="Grid.Row">
+    <xs:attribute name="Grid.Row">
+      <xs:simpleType>
+        <xs:restriction base="xs:nonNegativeInteger"/>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="Grid.Column">
+    <xs:attribute name="Grid.Column">
+      <xs:simpleType>
+        <xs:restriction base="xs:nonNegativeInteger"/>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  
   <xs:attributeGroup name="OnClick">
     <xs:attribute name="OnClick">
       <xs:simpleType>

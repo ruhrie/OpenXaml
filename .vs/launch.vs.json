@@ -4,16 +4,6 @@
   "configurations": [
     {
       "type": "default",
-      "project": "CMakeLists.txt",
-      "projectTarget": "TestApplication.exe (bin\\TestApplication.exe)",
-      "name": "TestApplication.exe Test.xaml",
-      "args": [
-        "-i",
-        "../Sample/Test.xaml"
-      ]
-    },
-    {
-      "type": "default",
       "project": "xut\\xut.cpp",
       "name": "xut.exe Test.xaml",
       "args": [
