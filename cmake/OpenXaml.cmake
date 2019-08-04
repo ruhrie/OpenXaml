@@ -16,6 +16,7 @@ function(AddXamlSources baseTarget xamlSources)
 		)
 		set_source_files_properties(${outputName} PROPERTIES GENERATED TRUE)
 		add_dependencies(${baseTarget} ${targetName})
+		add_dependencies( ${targetName} xut)
 		target_include_directories(${baseTarget} PRIVATE ${CMAKE_BINARY_DIR}/XamlSources/)
 	endforeach()
 
