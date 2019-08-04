@@ -294,9 +294,9 @@ OpenXaml::TextBlock* DomToTextBlock(xercesc::DOMElement* element)
 		}
 		else if (name == "TextWrapping")
 		{
-			if (value == "None")
+			if (value == "NoWrap")
 			{
-				result->setTextWrapping(TextWrapping::None);
+				result->setTextWrapping(TextWrapping::NoWrap);
 			}
 			else if (value == "Wrap")
 			{

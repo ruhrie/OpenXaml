@@ -32,10 +32,10 @@ namespace OpenXaml
 		map<unsigned int, unsigned int> textureMap;
 		unsigned int boxWidth;
 		unsigned int boxHeight;
-		void RenderCharacter(char toRender);
+		void RenderCharacter(char toRender, float &penX, float &penY);
 	protected:
 		string Text;
-		TextWrapping TextWrapping = TextWrapping::None;
+		TextWrapping TextWrapping = TextWrapping::WrapWholeWords;
 		string FontFamily = "Arial";
 		float FontSize = 12.0;
 		unsigned int Fill = 0;

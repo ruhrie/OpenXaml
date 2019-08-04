@@ -45,8 +45,6 @@ namespace OpenXaml {
 	}
 
 	Font* font;
-	float penX;
-	float penY;
 	void TextBlock::Update()
 	{
 		font = env.GetFont(FontProperties{ FontFamily, FontSize });
@@ -65,6 +63,7 @@ namespace OpenXaml {
 		int wordWidth = 0;
 		int lineCount = 0;
 		int maxWidth = 0;
+		int wordCount = 0;
 		float fBounds = (maxCoord.x - minCoord.x) / PixelScale.x;
 		static const char splitChars[] = { ' ', '-', '\t', '\n' };
 		for (int i = 0; i < text.length(); i++)
@@ -74,19 +73,29 @@ namespace OpenXaml {
 			if (find(begin(splitChars), end(splitChars), sample) != end(splitChars))
 			{
 				//we hit the end of a word
-				if (width + wordWidth > fBounds || sample == '\n')
+				bool lineBreak = false;
+				if (sample == '\n')
 				{
-					//there isn't enough space for the word or we need to line wrap
+					lineBreak = true;
+				}
+				else if (TextWrapping != TextWrapping::NoWrap && width + wordWidth > fBounds)
+				{
+					//we need to wrap
+					lineBreak = true;
+				}
+				if (lineBreak)
+				{
 					lineCount++;
 					maxWidth = std::max(maxWidth, width);
 					width = wordWidth;
 					wordWidth = 0;
+					wordCount = 0;
 				}
 				else
 				{
-					//we are short enough to keep going
 					width += wordWidth;
 					wordWidth = 0;
+					wordCount++;
 				}
 			}
 			else if (i == text.length() - 1)
@@ -168,8 +177,8 @@ namespace OpenXaml {
 
 		int priorIndex = 0;
 		int ppIndex = 0;
-		penX = 0;
-		penY = maxRendered.y - height * PixelScale.y;
+		float penX = 0;
+		float penY = maxRendered.y - height * PixelScale.y;
 		for (int i = 0; i < text.length(); i++)
 		{
 			char sample = text.at(i);
@@ -177,7 +186,17 @@ namespace OpenXaml {
 			if (find(begin(splitChars), end(splitChars), sample) != end(splitChars))
 			{
 				//we hit the end of a word
-				if (width + wordWidth > fBounds || sample == '\n')
+				bool lineBreak = false;
+				if (sample == '\n')
+				{
+					lineBreak = true;
+				}
+				else if (TextWrapping != TextWrapping::NoWrap && width + wordWidth > fBounds)
+				{
+					//we need to wrap
+					lineBreak = true;
+				}
+				if(lineBreak)
 				{
 					//there isn't enough space for the word or we need to line wrap
 					//or there is a new line feed
@@ -208,8 +227,7 @@ namespace OpenXaml {
 						{
 							break;
 						}
-						RenderCharacter(toRender);
-						penX += (ch.AdvanceX >> 6) * PixelScale.x;
+						RenderCharacter(toRender, penX, penY);
 					}
 					priorIndex = ppIndex;
 					penY -= height * PixelScale.y;
@@ -258,8 +276,7 @@ namespace OpenXaml {
 					{
 						break;
 					}
-					RenderCharacter(toRender);
-					penX += (ch.AdvanceX >> 6) * PixelScale.x;
+					RenderCharacter(toRender, penX, penY);
 				}
 			}
 		}
@@ -267,7 +284,7 @@ namespace OpenXaml {
 		boxHeight = (maxRendered.y - minRendered.y) / PixelScale.y;
 	}
 
-	void TextBlock::RenderCharacter(char toRender)
+	void TextBlock::RenderCharacter(char toRender, float &penX, float &penY)
 	{
 		Character ch = font->operator[](toRender);
 		if (!iscntrl(toRender))
@@ -281,8 +298,25 @@ namespace OpenXaml {
 
 			x0 = max(dx0, minCoord.x);
 			x1 = min(dx1, maxCoord.x);
-			y0 = max(dy0, minCoord.y);
-			y1 = min(dy1, maxCoord.y);
+			y0 = min(dy0, maxCoord.y);
+			y1 = max(dy1, minCoord.y);
+
+			if (y1 < y0)
+			{
+				int a = 0;
+				a++;
+			}
+
+			if (y0 < minCoord.y)
+			{
+				int b = 0;
+				b++;
+			}
+			else if (y1 < minCoord.y)
+			{
+				int c = 0;
+				c++;
+			}
 
 			float dwidth = dx1 - dx0;
 			float dheight = dy1 - dy0;
@@ -337,6 +371,7 @@ namespace OpenXaml {
 			textureMap[sepBuffer] = ch.TextureID;
 			vertexBuffers.push_back(sepBuffer);
 		}
+		penX += (ch.AdvanceX >> 6) * PixelScale.x;
 	}
 
 	TextBlock::TextBlock()

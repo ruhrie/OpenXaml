@@ -4,7 +4,7 @@
 namespace OpenXaml
 {
 	enum class TextWrapping {
-		None,
+		NoWrap,
 		Wrap, 
 		WrapWholeWords
 	};
