@@ -32,6 +32,7 @@ namespace OpenXaml
 		map<unsigned int, unsigned int> textureMap;
 		unsigned int boxWidth;
 		unsigned int boxHeight;
+		void RenderCharacter(char toRender);
 	protected:
 		string Text;
 		TextWrapping TextWrapping = TextWrapping::None;

@@ -44,9 +44,12 @@ namespace OpenXaml {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 	}
 
+	Font* font;
+	float penX;
+	float penY;
 	void TextBlock::Update()
 	{
-		Font* font = env.GetFont(FontProperties{ FontFamily, FontSize });
+		font = env.GetFont(FontProperties{ FontFamily, FontSize });
 		glBindVertexArray(TextBlock::VAO);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{
@@ -58,74 +61,53 @@ namespace OpenXaml {
 			return;
 		}
 		string text = Text;
-
-		vector<int> widths;
-		vector<int> seperators;
-		static const char splitChars[] = { ' ', '-', '\t', '\n' };
 		int width = 0;
+		int wordWidth = 0;
+		int lineCount = 0;
+		int maxWidth = 0;
+		float fBounds = (maxCoord.x - minCoord.x) / PixelScale.x;
+		static const char splitChars[] = { ' ', '-', '\t', '\n' };
 		for (int i = 0; i < text.length(); i++)
 		{
-			char in = text.at(i);
-			width += font->operator[](in).AdvanceX >> 6;
-			if (find(begin(splitChars), end(splitChars), in) != end(splitChars))
+			char sample = text.at(i);
+			wordWidth += font->operator[](sample).AdvanceX >> 6;
+			if (find(begin(splitChars), end(splitChars), sample) != end(splitChars))
 			{
-				widths.push_back(width);
-				seperators.push_back(i);
-				width = 0;
+				//we hit the end of a word
+				if (width + wordWidth > fBounds || sample == '\n')
+				{
+					//there isn't enough space for the word or we need to line wrap
+					lineCount++;
+					maxWidth = std::max(maxWidth, width);
+					width = wordWidth;
+					wordWidth = 0;
+				}
+				else
+				{
+					//we are short enough to keep going
+					width += wordWidth;
+					wordWidth = 0;
+				}
+			}
+			else if (i == text.length() - 1)
+			{
+				//we need to increment once more at the end if it isn't a seperator
+				lineCount++;
+				width += wordWidth;
+				wordWidth = 0;
+				maxWidth = std::max(maxWidth, width);
 			}
 		}
-		if (width != 0)
-		{
-			widths.push_back(width);
-			seperators.push_back((int)text.length());
-		}
 
-		vector<int> line;
-		vector<vector<int>> lines;
-		float fBounds = (maxCoord.x - minCoord.x) / PixelScale.x;
 		width = 0;
-		for (int i = 0; i < widths.size(); i++)
-		{
-			width += widths[i];
-			if (width > fBounds && TextWrapping == TextWrapping::Wrap)
-			{
-				lines.push_back(line);
-				line.clear();
-				width = widths[i];
-			}
-			line.push_back(i);
-			if (seperators[i] < text.length() && text.at(seperators[i]) == '\n')
-			{
-				lines.push_back(line);
-				line.clear();
-				width = 0;
-			}
-		}
-		lines.push_back(line);
-		int height = (font->Height >> 6);
-		//we now have our line seperation, so now we render each line.
+		wordWidth = 0;
 
-		int maxWidth = 0;
-		vector<int> lineWidths;
-		for (int i = 0; i < lines.size(); i++)
-		{
-			line = lines[i];
-			width = 0;
-			for (int j = 0; j < line.size(); j++)
-			{
-				width += widths[line[j]];
-			}
-			lineWidths.push_back(width);
-			maxWidth = std::max(width, maxWidth);
-			//we now have line width and can justify accordingly
-		}
-		boxWidth = maxWidth;
-		boxHeight = height * (int)lines.size();
-		//but first we get the framing rectangle's coordinates
-
-		float fHeight = height * PixelScale.y;
+		// we now know the total number of lines
+		//so we do largely the same thing, except we can now render line by line
+		//word by word still breaks for center justified text
 		float fWidth = maxWidth * PixelScale.x;
-
+		int height = (font->Height >> 6);
+		float fHeight = height * PixelScale.y * lineCount;
 		switch (VerticalAlignment)
 		{
 		case VerticalAlignment::Bottom:
@@ -184,122 +166,176 @@ namespace OpenXaml {
 		}
 		}
 
-		//we now have the external rectangle dimensions, so we can actually position the text
-		//start by setting the pen location
-		float penX = 0;
-		float penY = 0;
-		penY = maxRendered.y - fHeight;
-		for (int i = 0; i < lineWidths.size(); i++)
+		int priorIndex = 0;
+		int ppIndex = 0;
+		penX = 0;
+		penY = maxRendered.y - height * PixelScale.y;
+		for (int i = 0; i < text.length(); i++)
 		{
-			float lineWidth = lineWidths[i] * PixelScale.x;
-			switch (TextAlignment)
+			char sample = text.at(i);
+			wordWidth += font->operator[](sample).AdvanceX >> 6;
+			if (find(begin(splitChars), end(splitChars), sample) != end(splitChars))
 			{
-			case TextAlignment::Center:
-			{
-				penX = (minRendered.x + maxRendered.x) * 0.5f - lineWidth * 0.5f;
-				break;
-			}
-			case TextAlignment::End:
-			{
-				penX = (maxRendered.x) - lineWidth;
-				break;
-			}
-			case TextAlignment::Start:
-			{
-				penX = minRendered.x;
-				break;
-			}
-			}
-			//we now start rendering words
-			line = lines[i];
-			for (int j = 0; j < line.size(); j++)
-			{
-				int wordIndex = line[j];
-				int length;
-				int startIndex;
-				if (wordIndex == 0)
+				//we hit the end of a word
+				if (width + wordWidth > fBounds || sample == '\n')
 				{
-					startIndex = 0;
-					length = seperators[wordIndex] - startIndex + 1;
+					//there isn't enough space for the word or we need to line wrap
+					//or there is a new line feed
+					//we can now render it
+					switch (TextAlignment)
+					{
+					case TextAlignment::Center:
+					{
+						penX = (minRendered.x + maxRendered.x) * 0.5f - width * 0.5f * PixelScale.x;
+						break;
+					}
+					case TextAlignment::End:
+					{
+						penX = (maxRendered.x) - width * PixelScale.x;
+						break;
+					}
+					case TextAlignment::Start:
+					{
+						penX = minRendered.x;
+						break;
+					}
+					}
+					for (int j = priorIndex; j < ppIndex; j++)
+					{
+						char toRender = text.at(j);
+						Character ch = font->operator[](toRender);
+						if (penX > maxCoord.x)
+						{
+							break;
+						}
+						RenderCharacter(toRender);
+						penX += (ch.AdvanceX >> 6) * PixelScale.x;
+					}
+					priorIndex = ppIndex;
+					penY -= height * PixelScale.y;
+					if (penY < minCoord.y - height * PixelScale.y)
+					{
+						break;
+					}
+					width = wordWidth;
 				}
 				else
 				{
-					startIndex = seperators[((long)wordIndex) - 1] + 1;
-					length = seperators[wordIndex] - startIndex + 1;
+					//we are short enough to keep going
+					width += wordWidth;
 				}
-				string word = text.substr(startIndex, length);
-				for (int k = 0; k < word.length(); k++)
+				wordWidth = 0;
+				ppIndex = i;
+			}
+			else if (i == text.length() - 1)
+			{
+				//render here too
+				width += wordWidth;
+				wordWidth = 0;
+				switch (TextAlignment)
 				{
-					char toRender = word.at(k);
+				case TextAlignment::Center:
+				{
+					penX = (minRendered.x + maxRendered.x) * 0.5f - width * 0.5f * PixelScale.x;
+					break;
+				}
+				case TextAlignment::End:
+				{
+					penX = (maxRendered.x) - width * PixelScale.x;
+					break;
+				}
+				case TextAlignment::Start:
+				{
+					penX = minRendered.x;
+					break;
+				}
+				}
+				for (int j = priorIndex; j <= i; j++)
+				{
+					char toRender = text.at(j);
 					Character ch = font->operator[](toRender);
-					if (!iscntrl(toRender))
+					if (penX > maxCoord.x)
 					{
-						float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
-						float dx0, dx1, dy0, dy1;
-						dx0 = penX + ch.BearingX * PixelScale.x;
-						dx1 = penX + (ch.BearingX + ch.Width) * PixelScale.x;
-						dy0 = penY + ch.BearingY * PixelScale.y;
-						dy1 = penY + (ch.BearingY - (int)ch.Height) * PixelScale.y;
-
-						x0 = max(dx0, minCoord.x);
-						x1 = min(dx1, maxCoord.x);
-						y0 = max(dy0, minCoord.y);
-						y1 = min(dy1, maxCoord.y);
-
-						float dwidth = dx1 - dx0;
-						float dheight = dy1 - dy0;
-						float xRatio = (x1 - x0) / dwidth;
-						float yRatio = (y1 - y0) / dheight;
-						if (x0 != dx0)
-						{
-							tx0 = 1 - xRatio;
-						}
-						else
-						{
-							tx0 = 0;
-						}
-						if (x1 != dx1)
-						{
-							tx1 = xRatio;
-						}
-						else
-						{
-							tx1 = 1;
-						}
-						if (y0 != dy0)
-						{
-							ty0 = 1 - yRatio;
-						}
-						else
-						{
-							ty0 = 0;
-						}
-						if (y1 != dy1)
-						{
-							ty1 = yRatio;
-						}
-						else
-						{
-							ty1 = 1;
-						}
-
-						GLfloat vertices[16] = {
-						x0, y0, tx0,ty0,
-						x1, y0, tx1,ty0,
-						x0, y1, tx0,ty1,
-						x1, y1, tx1,ty1
-						};
-						GLuint sepBuffer;
-						glGenBuffers(1, &sepBuffer);
-						glBindBuffer(GL_ARRAY_BUFFER, sepBuffer);
-						glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-						textureMap[sepBuffer] = ch.TextureID;
-						vertexBuffers.push_back(sepBuffer);
+						break;
 					}
+					RenderCharacter(toRender);
 					penX += (ch.AdvanceX >> 6) * PixelScale.x;
 				}
 			}
-			penY -= fHeight;
+		}
+		boxWidth = (maxRendered.x - minRendered.x) / PixelScale.x; 
+		boxHeight = (maxRendered.y - minRendered.y) / PixelScale.y;
+	}
+
+	void TextBlock::RenderCharacter(char toRender)
+	{
+		Character ch = font->operator[](toRender);
+		if (!iscntrl(toRender))
+		{
+			float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
+			float dx0, dx1, dy0, dy1;
+			dx0 = penX + ch.BearingX * PixelScale.x;
+			dx1 = penX + (ch.BearingX + ch.Width) * PixelScale.x;
+			dy0 = penY + ch.BearingY * PixelScale.y;
+			dy1 = penY + (ch.BearingY - (int)ch.Height) * PixelScale.y;
+
+			x0 = max(dx0, minCoord.x);
+			x1 = min(dx1, maxCoord.x);
+			y0 = max(dy0, minCoord.y);
+			y1 = min(dy1, maxCoord.y);
+
+			float dwidth = dx1 - dx0;
+			float dheight = dy1 - dy0;
+			if (x0 != dx0)
+			{
+				tx0 = 1 - (x1 - x0) / dwidth;
+			}
+			else
+			{
+				tx0 = 0;
+			}
+			if (x1 != dx1)
+			{
+				tx1 = (x1 - x0) / dwidth;
+			}
+			else
+			{
+				tx1 = 1;
+			}
+			if (y0 != dy0)
+			{
+				if (toRender != ' ')
+				{
+					int a = 0; 
+					a += 3;
+				}
+				ty0 = 1 - (y1 - y0) / dheight;
+			}
+			else
+			{
+				ty0 = 0;
+			}
+			if (y1 != dy1)
+			{
+				ty1 = (y1 - y0) / dheight;
+			}
+			else
+			{
+				ty1 = 1;
+			}
+
+			GLfloat vertices[16] = {
+			x0, y0, tx0,ty0,
+			x1, y0, tx1,ty0,
+			x0, y1, tx0,ty1,
+			x1, y1, tx1,ty1
+			};
+			GLuint sepBuffer;
+			glGenBuffers(1, &sepBuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, sepBuffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+			textureMap[sepBuffer] = ch.TextureID;
+			vertexBuffers.push_back(sepBuffer);
 		}
 	}
 
