@@ -2,7 +2,10 @@
 #include <string>
 #include <vector>
 #include <xercesc/dom/DOMElement.hpp>
-
+#include <xercesc/dom/DOMText.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 enum class ElementType
 {
 	None,
@@ -22,7 +25,6 @@ class XamlElement
 public:
 	std::vector<XamlElement*> Children;
 	std::string Name = "";
-	XamlElement(xercesc::DOMElement* element, bool root = false, std::string parent = "");
 	~XamlElement();
 	bool Public = false;
 	std::string Initializer;
@@ -30,31 +32,19 @@ public:
 	std::string Terminator;
 	std::string ChildEnumerator;
 	std::string ExternalFunctions;
+	std::string BodyInitializer;
 	ElementType Type = ElementType::None;
-private:
-	void GetFrameContent(xercesc::DOMElement* element);
-	void GetButtonContent(xercesc::DOMElement* element);
-	void GetRectangleContent(xercesc::DOMElement* element);
-	void GetTextBlockContent(xercesc::DOMElement* element);
-	void SetContent(std::string init, std::string body, std::string term, std::string name, std::string ext = "");
-	void GetGridContent(xercesc::DOMElement* element);
-	void GetRowDefinitionCollectionContent(xercesc::DOMElement* element);
-	void GetColumnDefinitionCollectionContent(xercesc::DOMElement* element);
-	void GetGridRowDefinition(xercesc::DOMElement* element);
-	void GetGridColumnDefinition(xercesc::DOMElement* element);
-	bool Root = false;
+	static XamlElement* GetXamlElement(xercesc::DOMElement* element, bool root = false);
+	void SetContent();
+	XamlElement(xercesc::DOMElement* element, bool root = false, ElementType type = ElementType::None);
+protected:
+	XamlElement();
+	bool Root = false;	
+	std::string init;
+	std::string term;
+	std::string body;
+	std::string ext;
+	std::string bodyInit;
 };
 
-std::string GetFill(std::string input, bool root = false);
-std::string GetHeight(std::string input, bool root = false);
-std::string GetWidth(std::string input, bool root = false);
-std::string GetHorizontalAlignment(std::string input);
-std::string GetVerticalAlignment(std::string input);
-std::string GetContent(std::string input);
-std::string GetTextWrapping(std::string input);
-std::string GetTextAlignment(std::string input);
-std::string GetFontFamily(std::string input);
-std::string GetFontSize(std::string input);
-std::string GetText(std::string input);
-std::string GetClickSigniture(std::string input);
-std::string GetClickCall(std::string input);
+

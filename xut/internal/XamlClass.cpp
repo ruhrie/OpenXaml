@@ -61,7 +61,7 @@ XamlClass::XamlClass(std::string fileName)
 	parser->setDoSchema(true);
 	parser->setIncludeIgnorableWhitespace(false);
 	parser->cacheGrammarFromParse(true);
-	MemBufInputSource schema = xercesc::MemBufInputSource((const XMLByte*)(OpenXaml::XamlStandardXSD.c_str()), OpenXaml::XamlStandardXSD.size(), "XamlStandard");
+	MemBufInputSource schema = xercesc::MemBufInputSource((const XMLByte*)(xut::XamlStandardXSD.c_str()), xut::XamlStandardXSD.size(), "XamlStandard");
 	parser->loadGrammar(schema, Grammar::SchemaGrammarType, true);
 	parser->useCachedGrammarInParse(true);
 	parser->setExternalNoNamespaceSchemaLocation("file:///schema.xsd");
@@ -78,15 +78,8 @@ XamlClass::XamlClass(std::string fileName)
 	const XMLCh* xmlString = elementRoot->getTagName();
 	string raw = XMLString::transcode(xmlString);
 	Name = XMLString::transcode(elementRoot->getAttribute(XMLString::transcode("Class")));
-	if (raw == "Frame")
-	{
-		XamlElement* n = new XamlElement(elementRoot, true);
-		AddXamlElement(n);		
-	}
-	else
-	{
-		throw 2;
-	}
+	XamlElement* test = XamlElement::GetXamlElement(elementRoot, true);
+	AddXamlElement(test);
 	RootType = raw;	
 }
 
@@ -112,6 +105,12 @@ void XamlClass::AddXamlElement(XamlElement* element)
 		}
 		PrivateInterfaces += temp;
 	}
+	temp = element->BodyInitializer;
+	while ((pos = temp.find("%master%", 0)) != std::string::npos)
+	{
+		temp.replace(pos, 8, Name);
+	}
+	Initializer += element->BodyInitializer;
 	temp = element->Body;
 	while ((pos = temp.find("%master%", 0)) != std::string::npos)
 	{

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace OpenXaml
+namespace xut
 {
 	extern std::string XamlStandardXSD;
 }

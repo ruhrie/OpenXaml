@@ -8,9 +8,9 @@
       "name": "xut.exe Test.xaml",
       "args": [
         "-i",
-        "../Sample/Test.xaml",
+        "${workspaceRoot}/Sample/Test.xaml",
         "-o",
-        "../Sample/Test.hpp"
+        "${workspaceRoot}/build/Test.hpp"
       ]
     }
   ]
