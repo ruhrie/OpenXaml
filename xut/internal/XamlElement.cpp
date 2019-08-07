@@ -83,6 +83,16 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root, ElementType ty
 	{
 		body += GetVerticalAlignment(verAlign, root);
 	}
+	DOMAttr* gridRow = element->getAttributeNode(XMLString::transcode("Grid.Row"));
+	if (gridRow != NULL)
+	{
+		body += GetGridRow(gridRow);
+	}
+	DOMAttr* gridColumn = element->getAttributeNode(XMLString::transcode("Grid.Column"));
+	if (gridColumn != NULL)
+	{
+		body += GetGridColumn(gridColumn);
+	}
 	string name = "";
 	if (name == "")
 	{

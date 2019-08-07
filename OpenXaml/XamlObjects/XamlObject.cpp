@@ -133,5 +133,15 @@ namespace OpenXaml
 	{
 		return Row;
 	}
+
+	void XamlObject::setRow(int row)
+	{
+		Row = row;
+	}
+
+	void XamlObject::setColumn(int column)
+	{
+		Column = column;
+	}
 }
 

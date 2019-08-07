@@ -8,6 +8,8 @@
     <xs:attributeGroup ref="Height"/>
     <xs:attributeGroup ref="HorizontalAlignment"/>
     <xs:attributeGroup ref="VerticalAlignment"/>
+    <xs:attributeGroup ref="Grid.Row"/>
+    <xs:attributeGroup ref="Grid.Column"/>
   </xs:complexType>
   
   

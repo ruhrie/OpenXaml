@@ -247,3 +247,15 @@ std::string FormatString(std::string input)
 	}
 	return result;
 }
+
+std::string GetGridRow(xercesc::DOMAttr* input)
+{
+	string value = XMLString::transcode(input->getNodeValue());
+	return "%name%->setRow(" + value + ");\n";
+}
+
+std::string GetGridColumn(xercesc::DOMAttr* input)
+{
+	string value = XMLString::transcode(input->getNodeValue());
+	return "%name%->setColumn(" + value + ");\n";
+}
