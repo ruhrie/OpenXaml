@@ -3,31 +3,45 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://xamlstandard" elementFormDefault="qualified" 
   xmlns="http://xamlstandard">
 
+  <xs:complexType name="XamlObject" id="XamlObject">
+    <xs:attributeGroup ref="Width"/>
+    <xs:attributeGroup ref="Height"/>
+    <xs:attributeGroup ref="HorizontalAlignment"/>
+    <xs:attributeGroup ref="VerticalAlignment"/>
+  </xs:complexType>
+  
+  
   <xs:element name="Frame">
     <xs:complexType>
-      <xs:choice maxOccurs="1" minOccurs="0">
-        <xs:element ref="Rectangle"/>
-        <xs:element ref="TextBlock"/>
-        <xs:element ref="Button"/>
-        <xs:element ref="Grid"/>
-      </xs:choice>
-      <xs:attributeGroup ref="Width"/>
-      <xs:attributeGroup ref="Height"/>
-      <xs:attributeGroup ref="Fill"/>
-      <xs:attributeGroup ref="Class"/>
+      <xs:complexContent>
+        <xs:extension base="XamlObject">
+          <xs:choice maxOccurs="1" minOccurs="0">
+            <xs:element ref="Rectangle"/>
+            <xs:element ref="TextBlock"/>
+            <xs:element ref="Button"/>
+            <xs:element ref="Grid"/>
+          </xs:choice>
+          <xs:attributeGroup ref="Fill"/>
+          <xs:attributeGroup ref="Class"/>    
+        </xs:extension>
+      </xs:complexContent>      
     </xs:complexType>
   </xs:element>
 
   <xs:element name="Grid" id="Grid">
     <xs:complexType>
-      <xs:choice maxOccurs="unbounded" minOccurs="0">
-        <xs:element minOccurs="0" maxOccurs="1" ref="RowDefinitionCollection"/>
-        <xs:element minOccurs="0" maxOccurs="1" ref="ColumnDefinitionCollection"/>
-        <xs:element minOccurs="0" ref="Rectangle"/>
-        <xs:element minOccurs="0" ref="TextBlock"/>
-        <xs:element minOccurs="0" ref="Button"/>
-        <xs:element minOccurs="0" ref="Grid"/>
-      </xs:choice>
+      <xs:complexContent>
+        <xs:extension base="XamlObject">
+          <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element minOccurs="0" maxOccurs="1" ref="RowDefinitionCollection"/>
+            <xs:element minOccurs="0" maxOccurs="1" ref="ColumnDefinitionCollection"/>
+            <xs:element minOccurs="0" ref="Rectangle"/>
+            <xs:element minOccurs="0" ref="TextBlock"/>
+            <xs:element minOccurs="0" ref="Button"/>
+            <xs:element minOccurs="0" ref="Grid"/>
+          </xs:choice>
+        </xs:extension>
+      </xs:complexContent>
     </xs:complexType>
   </xs:element>
 
@@ -61,44 +75,36 @@
 
   <xs:element name="Rectangle" id="Rectangle">
     <xs:complexType>
-      <xs:attributeGroup ref="Width"/>
-      <xs:attributeGroup ref="Height"/>
-      <xs:attributeGroup ref="Fill"/>
-      <xs:attributeGroup ref="HorizontalAlignment"/>
-      <xs:attributeGroup ref="VerticalAlignment"/>
+      <xs:complexContent>
+        <xs:extension base="XamlObject">
+          <xs:attributeGroup ref="Fill"/>
+        </xs:extension>
+      </xs:complexContent>
     </xs:complexType>
   </xs:element>
 
   <xs:element name="TextBlock" id="TextBlock">
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="xs:string">
-          <xs:attributeGroup ref="Width"/>
-          <xs:attributeGroup ref="Height"/>
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="XamlObject">
           <xs:attributeGroup ref="TextWrapping"/>
-          <xs:attributeGroup ref="HorizontalAlignment"/>
-          <xs:attributeGroup ref="VerticalAlignment"/>
           <xs:attributeGroup ref="FontFamily"/>
           <xs:attributeGroup ref="FontSize"/>
           <xs:attributeGroup ref="Fill"/>
         </xs:extension>
-      </xs:simpleContent>
+      </xs:complexContent>
     </xs:complexType>
   </xs:element>
 
   <xs:element name="Button" id="Button">
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="xs:string">
-          <xs:attributeGroup ref="Width"/>
-          <xs:attributeGroup ref="Height"/>
-          <xs:attributeGroup ref="HorizontalAlignment"/>
-          <xs:attributeGroup ref="VerticalAlignment"/>
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="XamlObject">          
           <xs:attributeGroup ref="Content"/>
           <xs:attributeGroup ref="Fill"/>
           <xs:attributeGroup ref="OnClick"/>
         </xs:extension>
-      </xs:simpleContent>
+      </xs:complexContent>
     </xs:complexType>
   </xs:element>
   
