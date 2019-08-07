@@ -4,6 +4,8 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <algorithm>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 using namespace OpenXaml;
 using namespace std;
 
@@ -113,7 +115,7 @@ namespace OpenXaml
 					return NULL;
 				}
 				vector<string> fontFiles = fontFileMap[{prop.name, prop.bold, prop.italic}];
-				fontMap[prop] = new Font(fontLibrary, fontFiles[0], prop.size);
+				fontMap[prop] = new Font(fontFiles[0], prop.size);
 			}
 			return fontMap[prop];
 		}

@@ -5,25 +5,39 @@
 #include <filesystem>
 #include "OpenXaml/Environment.h"
 #include <glad/glad.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 using namespace std;
+
+std::map<Font*, FT_Face> faceMap;
+
+namespace OpenXaml
+{
+	namespace Environment
+	{
+		extern FT_Library fontLibrary;
+	}
+}
 
 Font::Font()
 {
 
 }
 
-Font::Font(FT_Library lib, string file, float size)
+Font::Font(string file, float size)
 {
-	auto error = FT_New_Face(lib, file.c_str(), 0, &face);
+	FT_Face newFace;
+	auto error = FT_New_Face(OpenXaml::Environment::fontLibrary, file.c_str(), 0, &newFace);
 	if (error)
 	{
 		std::cerr << "Failed to open " << file << "\n";
 		return;
 	}
 	double dpi = OpenXaml::Environment::DPI;
-	FT_Set_Char_Size(face, 0, (int)(size * 64), (int)dpi, (int)dpi);
-	Height = face->size->metrics.height;
+	FT_Set_Char_Size(newFace, 0, (int)(size * 64), (int)dpi, (int)dpi);
+	Height = newFace->size->metrics.height;
+	faceMap[this] = newFace;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }
 Character& Font::operator[](const char index)
@@ -34,13 +48,13 @@ Character& Font::operator[](const char index)
 	}
 	else
 	{
-		int glyph_index = FT_Get_Char_Index(face, index);
-		auto error = FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
+		int glyph_index = FT_Get_Char_Index(faceMap[this], index);
+		auto error = FT_Load_Glyph(faceMap[this], glyph_index, FT_LOAD_DEFAULT);
 		if (error)
 		{
 			std::cerr << "Failed to load " << index << "\n";
 		}
-		error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+		error = FT_Render_Glyph(faceMap[this]->glyph, FT_RENDER_MODE_NORMAL);
 		if (error)
 		{
 			std::cerr << "Failed to render " << index << "\n";
@@ -52,12 +66,12 @@ Character& Font::operator[](const char index)
 			GL_TEXTURE_2D,
 			0,
 			GL_RED,
-			face->glyph->bitmap.width,
-			face->glyph->bitmap.rows,
+			faceMap[this]->glyph->bitmap.width,
+			faceMap[this]->glyph->bitmap.rows,
 			0,
 			GL_RED,
 			GL_UNSIGNED_BYTE,
-			face->glyph->bitmap.buffer
+			faceMap[this]->glyph->bitmap.buffer
 		);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -65,12 +79,12 @@ Character& Font::operator[](const char index)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		Character character = {
 			texture,
-			face->glyph->bitmap.width,
-			face->glyph->bitmap.rows,
-			face->glyph->bitmap_left,
-			face->glyph->bitmap_top,
-			face->glyph->advance.x,
-			face->glyph->advance.y
+			faceMap[this]->glyph->bitmap.width,
+			faceMap[this]->glyph->bitmap.rows,
+			faceMap[this]->glyph->bitmap_left,
+			faceMap[this]->glyph->bitmap_top,
+			faceMap[this]->glyph->advance.x,
+			faceMap[this]->glyph->advance.y
 		};
 		characterMap[index] = character;
 		return characterMap[index];
@@ -79,6 +93,7 @@ Character& Font::operator[](const char index)
 
 Font::~Font()
 {
-	FT_Done_Face(face);
+	FT_Done_Face(faceMap[this]);
+	faceMap[this] = NULL;
 }
 
