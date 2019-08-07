@@ -2,7 +2,7 @@
 #include <map>
 #include <set>
 #include <vector>
-#include <XamlObjects/XamlObject.h>
+#include "OpenXaml/XamlObjects/XamlObject.h"
 namespace OpenXaml
 {
 	enum class XamlEvent
@@ -18,5 +18,5 @@ namespace OpenXaml
 	extern std::vector<EventBase*> EventQueue;
 	void RemoveEvent(XamlEvent event, XamlObject* target);
 	void AddEvent(XamlEvent event, XamlObject* target);
-	void HandleEvents();	
+	void HandleEvents();
 }

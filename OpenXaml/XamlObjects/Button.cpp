@@ -1,7 +1,10 @@
-#include "XamlObjects/Button.h"
-#include "Environment.h"
-#include "XamlEvents/XamlEvent.h"
+#include "OpenXaml/XamlObjects/Button.h"
+#include "OpenXaml/Environment.h"
+#include "OpenXaml/XamlEvents/XamlEvent.h"
 #include <sstream>
+
+using namespace std;
+
 namespace OpenXaml {
 	void Button::Draw()
 	{
@@ -60,11 +63,11 @@ namespace OpenXaml {
 	{
 		return this->Fill;
 	}
-	void Button::setContent(string content)
+	void Button::setContent(std::string content)
 	{
 		this->Content = content;
 	}
-	string Button::getContent()
+	std::string Button::getContent()
 	{
 		return this->Content;
 	}

@@ -7,6 +7,7 @@
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 using namespace xercesc;
 using namespace OpenXaml;
+using namespace std;
 
 XamlObject* LoadXaml(DOMElement* element)
 {

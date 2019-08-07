@@ -4,10 +4,8 @@
 #include <fstream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "XamlObjects/Frame.h"
-#include "GL/GLConfig.h"
-#include "GL/Font.h"
-#include "Application.h"
+#include "OpenXaml/XamlObjects/Frame.h"
+#include "OpenXaml/Application.h"
 #include "MainPage.xaml.h"
 
 using namespace std;

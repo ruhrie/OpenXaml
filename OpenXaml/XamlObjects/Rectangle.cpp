@@ -1,6 +1,6 @@
-#include "XamlObjects/Rectangle.h"
+#include "OpenXaml/XamlObjects/Rectangle.h"
 #include <glad/glad.h>
-#include <GL/GLConfig.h>
+#include "OpenXaml/GL/GLConfig.h"
 #include <sstream>
 #include <algorithm>
 namespace OpenXaml

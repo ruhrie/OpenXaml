@@ -1,6 +1,4 @@
-#ifndef TEXTWRAPPING_H
-#define TEXTWRAPPING_H
-
+#pragma once
 namespace OpenXaml
 {
 	enum class TextWrapping {
@@ -9,5 +7,3 @@ namespace OpenXaml
 		WrapWholeWords
 	};
 }
-
-#endif

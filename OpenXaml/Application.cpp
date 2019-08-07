@@ -1,11 +1,18 @@
-#include "Application.h"
-#include "XamlEvents/XamlEvent.h"
-#include "XamlEvents/XamlEvents.h"
-#include <GL/GLConfig.h>
+#include "OpenXaml/Application.h"
+#include "OpenXaml/XamlEvents/XamlEvent.h"
+#include "OpenXaml/XamlEvents/XamlEvents.h"
+#include "OpenXaml/GL/GLConfig.h"
+#include "OpenXaml/Environment.h"
+#include <glad/glad.h>
 #include <filesystem>
 #include <iostream>
+#ifdef VULKAN
+#define GLFW_INCLUDE_VULKAN
+#endif
+#include <GLFW/glfw3.h>
 namespace OpenXaml
 {
+	GLFWwindow* window;
 	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 	{
 		if (button == GLFW_MOUSE_BUTTON_LEFT)
@@ -19,10 +26,9 @@ namespace OpenXaml
 			}
 		}
 	}
-	Environment env = Environment();
 	Application::Application()
 	{
-		FT_Init_FreeType(&(Application::fontLibrary));
+		
 		PixelScale = coordinate{ 0,0 };
 		frame = NULL;
 		if (!glfwInit())
@@ -44,13 +50,13 @@ namespace OpenXaml
 			glfwTerminate();
 			throw 2;
 		}
-		env.Initialize();
+		Environment::LoadEnvironment();
 	}
 	Application::~Application()
 	{
 		delete frame;
-		FT_Done_FreeType(Application::fontLibrary);
 		glfwTerminate();
+		Environment::ClearEnvironment();
 	}
 
 	void Application::Run()

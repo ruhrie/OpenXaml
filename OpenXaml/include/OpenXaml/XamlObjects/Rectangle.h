@@ -1,6 +1,5 @@
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
-#include "XamlObjects/XamlObject.h"
+#pragma once
+#include "OpenXaml/XamlObjects/XamlObject.h"
 namespace OpenXaml
 {
 	class Rectangle : public XamlObject
@@ -20,4 +19,3 @@ namespace OpenXaml
 		unsigned int Fill = 0xFF000000;
 	};
 }
-#endif

@@ -13,6 +13,8 @@ add_subdirectory("OpenXaml")
 
 add_subdirectory("xut")
 
+install(EXPORT OpenXaml DESTINATION "lib")
+
 include(cmake/OpenXaml.cmake)
 
 if(BUILD_SAMPLE_APPLICATION)

@@ -1,10 +1,9 @@
-#include "XamlObjects/XamlObject.h"
-#include "XamlObjects/Rectangle.h"
-#include "XamlObjects/TextBlock.h"
-#include "XamlObjects/Button.h"
-#include "Properties/Alignment.h"
+#include "OpenXaml/XamlObjects/XamlObject.h"
+#include "OpenXaml/XamlObjects/Rectangle.h"
+#include "OpenXaml/XamlObjects/TextBlock.h"
+#include "OpenXaml/XamlObjects/Button.h"
+#include "OpenXaml/Properties/Alignment.h"
 #include <algorithm>
-#include <iostream>
 
 using namespace std;
 

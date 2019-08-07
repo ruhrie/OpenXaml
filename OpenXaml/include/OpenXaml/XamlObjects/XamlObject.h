@@ -1,20 +1,17 @@
-#ifndef XAMLOBJECT_H
-#define XAMLOBJECT_H
+#pragma once
 #include <vector>
 #include <functional>
 #include <string>
-#include "Properties/Alignment.h"
-#include "Properties/TextWrapping.h"
-#include "XamlObjects/Coordinate.h"
-using namespace std;
-
+#include "OpenXaml/Properties/Alignment.h"
+#include "OpenXaml/Properties/TextWrapping.h"
+#include "OpenXaml/XamlObjects/Coordinate.h"
 namespace OpenXaml
 {
 	class XamlObject
 	{
 	public:
 		virtual void Draw() = 0;
-		vector<XamlObject*> Children;
+		std::vector<XamlObject*> Children;
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;
 		XamlObject();
@@ -54,5 +51,3 @@ namespace OpenXaml
 		int Row = 0;
 	};
 } // namespace OpenXaml
-
-#endif

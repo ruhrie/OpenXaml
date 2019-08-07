@@ -1,6 +1,5 @@
-#ifndef TEXTBLOCK_H
-#define TEXTBLOCK_H
-#include "XamlObjects/XamlObject.h"
+#pragma once
+#include "OpenXaml/XamlObjects/XamlObject.h"
 #include <map>
 namespace OpenXaml 
 {
@@ -12,12 +11,12 @@ namespace OpenXaml
 		void Update();
 		TextBlock();
 		~TextBlock();
-		void setText(string text);
-		string getText();
+		void setText(std::string text);
+		std::string getText();
 		void setTextWrapping(TextWrapping textWrapping);
 		TextWrapping getTextWrapping();
-		void setFontFamily(string family);
-		string getFontFamily();
+		void setFontFamily(std::string family);
+		std::string getFontFamily();
 		void setFontSize(float size);
 		float getFontSize();
 		void setFill(unsigned int fill);
@@ -28,18 +27,17 @@ namespace OpenXaml
 		int getHeight();
 	private:
 		unsigned int edgeBuffer;
-		vector<unsigned int> vertexBuffers;
-		map<unsigned int, unsigned int> textureMap;
+		std::vector<unsigned int> vertexBuffers;
+		std::map<unsigned int, unsigned int> textureMap;
 		unsigned int boxWidth;
 		unsigned int boxHeight;
 		void RenderCharacter(char toRender, float &penX, float &penY);
 	protected:
-		string Text;
+		std::string Text;
 		TextWrapping TextWrapping = TextWrapping::WrapWholeWords;
-		string FontFamily = "Arial";
+		std::string FontFamily = "Arial";
 		float FontSize = 12.0;
 		unsigned int Fill = 0;
 		TextAlignment TextAlignment = TextAlignment::Start;
 	};
 }
-#endif

@@ -1,9 +1,12 @@
-#include "GL/Font.h"
+#include "OpenXaml/GL/Font.h"
 #include <iostream>
 #include <string>
 #include <vector>
 #include <filesystem>
-#include "Environment.h"
+#include "OpenXaml/Environment.h"
+#include <glad/glad.h>
+
+using namespace std;
 
 Font::Font()
 {
@@ -18,7 +21,7 @@ Font::Font(FT_Library lib, string file, float size)
 		std::cerr << "Failed to open " << file << "\n";
 		return;
 	}
-	double dpi = OpenXaml::env.getDPI();
+	double dpi = OpenXaml::Environment::DPI;
 	FT_Set_Char_Size(face, 0, (int)(size * 64), (int)dpi, (int)dpi);
 	Height = face->size->metrics.height;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

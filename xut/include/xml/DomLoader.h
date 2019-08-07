@@ -1,11 +1,11 @@
 #pragma once
 #include <string>
 #include <xercesc/dom/DOMElement.hpp>
-#include <XamlObjects/XamlObject.h>
-#include <XamlObjects/Frame.h>
-#include <XamlObjects/Button.h>
-#include <XamlObjects/Rectangle.h>
-#include <XamlObjects/TextBlock.h>
+#include "OpenXaml/XamlObjects/XamlObject.h"
+#include "OpenXaml/XamlObjects/Frame.h"
+#include "OpenXaml/XamlObjects/Button.h"
+#include "OpenXaml/XamlObjects/Rectangle.h"
+#include "OpenXaml/XamlObjects/TextBlock.h""
 
 void XamlToString(std::string &result, xercesc::DOMElement* element);
 

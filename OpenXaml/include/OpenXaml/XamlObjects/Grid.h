@@ -1,8 +1,7 @@
 #pragma once
-#include "XamlObjects/XamlObject.h"
-#include "XamlObjects/RowDefinitionCollection.h"
-#include "XamlObjects/ColumnDefinitionCollection.h"
-#include <vector>
+#include "OpenXaml/XamlObjects/XamlObject.h"
+#include "OpenXaml/XamlObjects/RowDefinitionCollection.h"
+#include "OpenXaml/XamlObjects/ColumnDefinitionCollection.h"
 namespace OpenXaml {
 	class Grid : public XamlObject
 	{

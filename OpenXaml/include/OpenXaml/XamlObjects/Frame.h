@@ -1,5 +1,5 @@
 #pragma once
-#include "XamlObjects/XamlObject.h"
+#include "OpenXaml/XamlObjects/XamlObject.h"
 
 namespace OpenXaml {
 	class Frame : public XamlObject

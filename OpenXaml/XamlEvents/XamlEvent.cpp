@@ -1,8 +1,8 @@
-#include "XamlEvents/XamlEvent.h"
-#include "XamlEvents/XamlEvents.h"
+#include "OpenXaml/XamlEvents/XamlEvent.h"
+#include "OpenXaml/XamlEvents/XamlEvents.h"
 #include <algorithm>
 #include <iostream>
-#include <XamlObjects/Button.h>
+#include "OpenXaml/XamlObjects/Button.h"
 namespace OpenXaml
 {
 	std::map<XamlEvent, std::set<XamlObject*>> EventMap;

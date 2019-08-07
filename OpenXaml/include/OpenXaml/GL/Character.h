@@ -1,4 +1,3 @@
-#include <glad/glad.h>
 #pragma once
 struct Character
 {

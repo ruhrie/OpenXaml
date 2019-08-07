@@ -1,8 +1,8 @@
-#include "XamlObjects/XamlObject.h"
-#include "XamlObjects/Frame.h"
+#include "OpenXaml/XamlObjects/XamlObject.h"
+#include "OpenXaml/XamlObjects/Frame.h"
 #include <sstream>
 #include <glad/glad.h>
-#include <GL/GLConfig.h>
+#include "OpenXaml/GL/GLConfig.h"
 
 namespace OpenXaml
 {

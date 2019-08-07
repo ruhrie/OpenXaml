@@ -40,6 +40,11 @@ target_link_libraries(OpenXaml ${LIBRARIES})
 
 #add_library(OpenXamlStatic STATIC ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp")
 
+file(GLOB HEADERS "include/OpenXaml")
+
+install(TARGETS OpenXaml EXPORT OpenXaml DESTINATION "lib")
+install(DIRECTORY ${HEADERS} DESTINATION "include")
+
 
 
 

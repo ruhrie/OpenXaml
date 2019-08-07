@@ -1,12 +1,12 @@
-#include "XamlObjects/TextBlock.h"
-#include "Properties/Alignment.h"
-#include "Properties/TextWrapping.h"
-#include "Environment.h"
+#include "OpenXaml/XamlObjects/TextBlock.h"
+#include "OpenXaml/Properties/Alignment.h"
+#include "OpenXaml/Properties/TextWrapping.h"
+#include "OpenXaml/Environment.h"
 #include <sstream>
 #include <algorithm>
 #include <glad/glad.h>
-#include <gl/GLConfig.h>
-
+#include "OpenXaml/GL/GLConfig.h"
+using namespace std;
 namespace OpenXaml {
 	void TextBlock::Draw()
 	{
@@ -47,7 +47,7 @@ namespace OpenXaml {
 	Font* font;
 	void TextBlock::Update()
 	{
-		font = env.GetFont(FontProperties{ FontFamily, FontSize });
+		font = Environment::GetFont(FontProperties{ FontFamily, FontSize });
 		glBindVertexArray(TextBlock::VAO);
 		for (int i = 0; i < vertexBuffers.size(); i++)
 		{

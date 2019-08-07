@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
-#include <Application.h>
+#include "OpenXaml/Application.h"
 #include <xml\ErrorReader.h>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMElement.hpp>
@@ -17,7 +17,7 @@
 #include <xercesc/framework/Wrapper4InputSource.hpp>
 
 using namespace xercesc;
-
+using namespace std;
 std::string TabOver(std::string input, int number)
 {
 	std::string result = "";
@@ -151,7 +151,7 @@ void XamlClass::WriteToFile(std::string name)
 
 std::string XamlClass::ToString()
 {
-	std::string result = "#include <XamlObjects/XamlObjects.h>\n#include <functional>\n";
+	std::string result = "#include <OpenXaml/XamlObjects/XamlObjects.h>\n#include <functional>\n";
 
 	result += "class " + Name + " : public OpenXaml::" + RootType +  "\n";
 	result += "{\n";

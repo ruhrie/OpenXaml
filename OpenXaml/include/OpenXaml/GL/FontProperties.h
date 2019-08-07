@@ -1,5 +1,4 @@
-#ifndef FONTPROPERTIES_H
-#define FONTPROPERTIES_H
+#pragma once
 #include <string>
 struct FontProperties
 {
@@ -29,5 +28,3 @@ struct FontProperties
 		return false;
 	}
 };
-
-#endif
