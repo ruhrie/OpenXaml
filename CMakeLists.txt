@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.11)
-Project(OpenXaml )
+Project(OpenXaml VERSION 0.1.0)
+
 option(BUILD_SAMPLE_APPLICATION "Build a sample application" ON)
 option(BUILD_DOCUMENTATION "Build the documentation" OFF)
+option(DOWNLOAD_MISSING_DEPENDENCIES "Download missing dependencies" ON)
 
 set (CMAKE_CXX_STANDARD 17)
 
@@ -18,7 +20,7 @@ if(BUILD_SAMPLE_APPLICATION)
 endif(BUILD_SAMPLE_APPLICATION)
 
 if(BUILD_DOCUMENTATION)
-	#Generate the documentation if supported
+	#Generate the documentation
 	find_package(Doxygen REQUIRED)
 	if(DOXYGEN_FOUND)
 		if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
