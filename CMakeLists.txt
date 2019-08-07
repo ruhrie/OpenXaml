@@ -7,7 +7,7 @@ option(DOWNLOAD_MISSING_DEPENDENCIES "Download missing dependencies" ON)
 
 set (CMAKE_CXX_STANDARD 17)
 
-add_subdirectory("Dependencies")
+add_subdirectory("Dependencies" EXCLUDE_FROM_ALL)
 
 add_subdirectory("OpenXaml")
 
