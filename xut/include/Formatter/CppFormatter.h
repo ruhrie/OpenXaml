@@ -19,3 +19,4 @@ std::string GetClickCall(xercesc::DOMAttr* input);
 std::string FormatString(std::string input);
 std::string GetGridRow(xercesc::DOMAttr* input);
 std::string GetGridColumn(xercesc::DOMAttr* input);
+std::string GetVisibility(xercesc::DOMAttr* input);

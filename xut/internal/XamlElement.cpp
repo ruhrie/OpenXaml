@@ -93,6 +93,11 @@ XamlElement::XamlElement(xercesc::DOMElement* element, bool root, ElementType ty
 	{
 		body += GetGridColumn(gridColumn);
 	}
+	DOMAttr* vis = element->getAttributeNode(XMLString::transcode("Visibility"));
+	if (vis != NULL)
+	{
+		body += GetVisibility(vis);
+	}
 	string name = "";
 	if (name == "")
 	{

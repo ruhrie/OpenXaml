@@ -259,3 +259,9 @@ std::string GetGridColumn(xercesc::DOMAttr* input)
 	string value = XMLString::transcode(input->getNodeValue());
 	return "%name%->setColumn(" + value + ");\n";
 }
+
+std::string GetVisibility(xercesc::DOMAttr* input)
+{
+	string value = XMLString::transcode(input->getNodeValue());
+	return "%name%->setVisibility(OpenXaml::Visibility::" + value + ");\n";
+}

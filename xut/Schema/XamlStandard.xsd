@@ -248,5 +248,16 @@
       </xs:simpleType>      
     </xs:attribute>
   </xs:attributeGroup>
+
+  <xs:attributeGroup name="Visibility">
+    <xs:attribute name="Visibility">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Visible"/>
+          <xs:enumeration value="Collapsed"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
   
 </xs:schema>

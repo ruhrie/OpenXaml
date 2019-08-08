@@ -3,6 +3,7 @@
 #include "OpenXaml/XamlObjects/TextBlock.h"
 #include "OpenXaml/XamlObjects/Button.h"
 #include "OpenXaml/Properties/Alignment.h"
+#include "OpenXaml/Properties/Visibility.h"
 #include <algorithm>
 
 using namespace std;
@@ -33,6 +34,7 @@ namespace OpenXaml
 		this->maxCoord = coordinate{ 0,0 };
 		maxRendered = { 0.0f, 0.0f };
 		minRendered = { 0.0f, 0.0f };
+		this->Visibility = OpenXaml::Visibliity::Visible;
 	}
 
 	XamlObject::~XamlObject()
@@ -141,6 +143,16 @@ namespace OpenXaml
 	void XamlObject::setColumn(int column)
 	{
 		Column = column;
+	}
+
+	void XamlObject::setVisibility(OpenXaml::Visibliity vis)
+	{
+		Visibility = vis;
+	}
+
+	OpenXaml::Visibliity XamlObject::getVisibility()
+	{
+		return XamlObject::Visibility;
 	}
 }
 

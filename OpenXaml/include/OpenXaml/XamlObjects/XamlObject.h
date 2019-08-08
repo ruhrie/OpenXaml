@@ -4,6 +4,7 @@
 #include <string>
 #include "OpenXaml/Properties/Alignment.h"
 #include "OpenXaml/Properties/TextWrapping.h"
+#include "OpenXaml/Properties/Visibility.h"
 #include "OpenXaml/XamlObjects/Coordinate.h"
 namespace OpenXaml
 {
@@ -30,6 +31,8 @@ namespace OpenXaml
 		int getRow();
 		void setRow(int row);
 		void setColumn(int column);
+		void setVisibility(OpenXaml::Visibliity visibility);
+		OpenXaml::Visibliity getVisibility();
 		virtual void SetBoundingBox(coordinate min, coordinate max);
 	protected:
 		coordinate minCoord;
@@ -39,6 +42,7 @@ namespace OpenXaml
 		coordinate PixelScale;
 		int Height;
 		int Width;
+		OpenXaml::Visibliity Visibility;
 		HorizontalAlignment HorizontalAlignment = HorizontalAlignment::Stretch;
 		VerticalAlignment VerticalAlignment = VerticalAlignment::Stretch;
 		unsigned int VAO;
