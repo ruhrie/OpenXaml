@@ -25,12 +25,11 @@ if(BUILD_DOCUMENTATION)
 	#Generate the documentation
 	find_package(Doxygen REQUIRED)
 	if(DOXYGEN_FOUND)
-		if(CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
-		configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+		set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+		configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
 		add_custom_target(doc ALL
 			COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile   
 			COMMENT "Generating API documentation with Doxygen"     
 			VERBATIM)
-		endif()
 	endif(DOXYGEN_FOUND)
 endif(BUILD_DOCUMENTATION)
