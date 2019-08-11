@@ -1,17 +1,18 @@
 # OpenXaml
 
-## Dependencies
+OpenXaml is a cross platform GUI renderer that takes xml as input. It utilized OpenGL for rendering and is targeting the [Xaml Standard](https://github.com/Microsoft/xaml-standard) spec. Currently the project only supports basic rectangles, text blocks, buttons, and grids.
 
-OpenXaml relies upon the following dependencies:
+## Building
+
+Building OpenXaml requires the cmake build tool. Libraries it utilizes are downloaded to build with the project. These include
 
 * GLFW
 * GLAD
-* cmake 3.11
 * xerces-c
 * Freetype
 
-These are built within the project for each path, but they adds the following dependencies:
+GLFW adds a dependency on Visual C++ (Windows), xcode (OSX), or xorg-dev (Linux).
 
-* Visual C++ (Windows)
-* xcode (Mac)
-* xorg-dev (Linux)
+## Building applications
+
+Currently the project is very early in development. Cmake files are provided by the installation that should allow for the building of your own xaml files through the AddXamlSources cmake function. Note, you have to include the OpenXaml.cmake file. The installer is still a work in progress, so I advise building as part of the source for the moment. The Sample directory contains a barebones example project.
