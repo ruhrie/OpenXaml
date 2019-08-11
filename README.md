@@ -15,4 +15,4 @@ GLFW adds a dependency on Visual C++ (Windows), xcode (OSX), or xorg-dev (Linux)
 
 ## Building applications
 
-Currently the project is very early in development. Cmake files are provided by the installation that should allow for the building of your own xaml files through the AddXamlSources cmake function. Note, you have to include the OpenXaml.cmake file. The installer is still a work in progress, so I advise building as part of the source for the moment. The Sample directory contains a barebones example project.
+Currently the project is very early in development. Cmake files are provided by the installation that should allow for the building of your own xaml files through the AddXamlSources cmake function. Note, you have to include the OpenXaml.cmake file. The installer is still a work in progress and untested, so I advise building as part of the source for the moment. The Sample directory contains a barebones example project.
