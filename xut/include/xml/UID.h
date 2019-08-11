@@ -1,3 +1,6 @@
 #pragma once
 
-unsigned int GetUID();
+namespace xut
+{
+	unsigned int GetUID();
+}

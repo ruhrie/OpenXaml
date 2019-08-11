@@ -2,27 +2,30 @@
 
 namespace OpenXaml
 {
-	RowDefinitionCollection::RowDefinitionCollection()
+	namespace Objects
 	{
-
-	}
-	RowDefinitionCollection::~RowDefinitionCollection()
-	{
-		for (auto child : Children)
+		RowDefinitionCollection::RowDefinitionCollection()
 		{
-			delete child;
+
 		}
-	}
-	void RowDefinitionCollection::Draw()
-	{
+		RowDefinitionCollection::~RowDefinitionCollection()
+		{
+			for (auto child : Children)
+			{
+				delete child;
+			}
+		}
+		void RowDefinitionCollection::Draw()
+		{
 
-	}
-	void RowDefinitionCollection::Initialize()
-	{
+		}
+		void RowDefinitionCollection::Initialize()
+		{
 
-	}
-	void RowDefinitionCollection::Update()
-	{
+		}
+		void RowDefinitionCollection::Update()
+		{
 
+		}
 	}
 }

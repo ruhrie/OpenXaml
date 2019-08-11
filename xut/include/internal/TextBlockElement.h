@@ -2,8 +2,15 @@
 #include "internal/XamlElement.h"
 #include "Formatter/CppFormatter.h"
 #include <xercesc/dom/DOMElement.hpp>
-class TextBlockElement : public XamlElement
+namespace xut
 {
-public:
-	TextBlockElement(xercesc::DOMElement* element, bool root = false);
-};
+	namespace elements
+	{
+		/// A text block element
+		class TextBlockElement : public XamlElement
+		{
+		public:
+			TextBlockElement(xercesc::DOMElement* element, bool root = false);
+		};
+	}
+}

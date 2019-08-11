@@ -4,15 +4,16 @@
 
 namespace OpenXaml
 {
+	///A singleton responsible for handling the OpenGL scope
 	class Application
 	{
 	public:
 		Application();
 		~Application();
 		void Run();
-		void InitializeComponent(Frame* frame);
+		void InitializeComponent(Objects::Frame* frame);
 	private:
-		Frame* frame;
+		Objects::Frame* frame;
 		coordinate PixelScale;
 	};
 }

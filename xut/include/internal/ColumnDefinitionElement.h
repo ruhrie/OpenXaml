@@ -2,8 +2,15 @@
 #include "internal/XamlElement.h"
 #include "Formatter/CppFormatter.h"
 #include <xercesc/dom/DOMElement.hpp>
-class ColumnDefinitionElement : public XamlElement
+namespace xut
 {
-public:
-	ColumnDefinitionElement(xercesc::DOMElement* element, bool root = false);
-};
+	namespace elements
+	{
+		/// A column definition element
+		class ColumnDefinitionElement : public XamlElement
+		{
+		public:
+			ColumnDefinitionElement(xercesc::DOMElement* element, bool root = false);
+		};
+	}
+}

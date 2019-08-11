@@ -21,8 +21,8 @@ namespace OpenXaml
 			{
 				double x, y;
 				glfwGetCursorPos(window, &x, &y);
-				ClickEvent* e = new ClickEvent(x, y);
-				EventQueue.push_back(e);
+				Events::ClickEvent* e = new Events::ClickEvent(x, y);
+				Events::EventQueue.push_back(e);
 			}
 		}
 	}
@@ -73,12 +73,12 @@ namespace OpenXaml
 
 			glViewport(0, 0, width, height);
 			glfwPollEvents();
-			HandleEvents();
+			Events::HandleEvents();
 		}
 		glfwHideWindow(window);
 	}
 
-	void Application::InitializeComponent(Frame* input)
+	void Application::InitializeComponent(Objects::Frame* input)
 	{
 		frame = input;
 		glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());

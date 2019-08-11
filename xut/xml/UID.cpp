@@ -1,8 +1,11 @@
 #include "xml/UID.h"
 
-unsigned int UID = 0;
-
-unsigned int GetUID()
+namespace xut
 {
-	return UID++;
+	unsigned int UID = 0; /// A counter to gurarantee unique variable names
+
+	unsigned int GetUID()
+	{
+		return UID++;
+	}
 }

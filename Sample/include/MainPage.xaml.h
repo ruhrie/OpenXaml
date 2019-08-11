@@ -3,5 +3,5 @@
 class MainPageInstance : public MainPage
 {
 public:
-	void Test(OpenXaml::XamlObject* source);
+	void Test(OpenXaml::Objects::XamlObject* source);
 };

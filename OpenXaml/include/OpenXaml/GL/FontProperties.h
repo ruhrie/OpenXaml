@@ -1,30 +1,34 @@
 #pragma once
 #include <string>
-struct FontProperties
+namespace OpenXaml
 {
-	std::string name;
-	float size = 0;
-	bool bold = false;
-	bool italic = false;
-
-	bool operator<(const FontProperties& A) const
+	///A struct containing the name, bold status, and italicized status of a font
+	struct FontProperties
 	{
-		if (name < A.name)
+		std::string name;
+		float size = 0;
+		bool bold = false;
+		bool italic = false;
+
+		bool operator<(const FontProperties& A) const
 		{
-			return true;
+			if (name < A.name)
+			{
+				return true;
+			}
+			else if (size < A.size)
+			{
+				return true;
+			}
+			else if (bold < A.bold)
+			{
+				return true;
+			}
+			else if (italic < A.italic)
+			{
+				return true;
+			}
+			return false;
 		}
-		else if (size < A.size)
-		{
-			return true;
-		}
-		else if (bold < A.bold)
-		{
-			return true;
-		}
-		else if (italic < A.italic)
-		{
-			return true;
-		}
-		return false;
-	}
-};
+	};
+}

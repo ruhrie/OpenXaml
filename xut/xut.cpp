@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 {
 	std::string inputFile;
 	std::string outputFile;
-	cxxopts::Options options("xut", "xut compiles xaml files into intermediate cpp/h files");
+	cxxopts::Options options("xut", "xut compiles xaml files into intermediate hpp files");
 	options.add_options()
 		("o,output", "output hpp", cxxopts::value<std::string>(outputFile))
 		("i,input", "input xaml", cxxopts::value<std::string>(inputFile))
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 	auto result = options.parse(argc, argv);
 	try
 	{
-		XamlClass* c = new XamlClass(inputFile);
+		xut::elements::XamlClass* c = new xut::elements::XamlClass(inputFile);
 		c->WriteToFile(outputFile);
 	}
 	catch (int error)

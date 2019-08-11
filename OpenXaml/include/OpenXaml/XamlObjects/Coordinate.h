@@ -1,6 +1,10 @@
 #pragma once
 
-struct coordinate {
-	float x;
-	float y;
-};
+namespace OpenXaml
+{
+	///A generic float tuple mainly for coordinate storage
+	struct coordinate {
+		float x;
+		float y;
+	};
+}

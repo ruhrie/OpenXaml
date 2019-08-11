@@ -2,9 +2,15 @@
 
 using namespace std;
 using namespace xercesc;
-GridElement::GridElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::Grid)
+namespace xut
 {
-	init += "OpenXaml::Grid* %name%;\n";
-	term += "delete %name%;\n";
-	bodyInit += "%name% = new OpenXaml::Grid();\n";
+	namespace elements
+	{
+		GridElement::GridElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::Grid)
+		{
+			init += "OpenXaml::Objects::Grid* %name%;\n";
+			term += "delete %name%;\n";
+			bodyInit += "%name% = new OpenXaml::Objects::Grid();\n";
+		}
+	}
 }

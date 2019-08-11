@@ -3,20 +3,25 @@
 
 namespace OpenXaml
 {
-	ColumnDefinition::ColumnDefinition()
+	namespace Objects
 	{
 
-	}
-	ColumnDefinition::~ColumnDefinition()
-	{
 
-	}
-	int ColumnDefinition::getWidth()
-	{
-		return Width;
-	}
-	void ColumnDefinition::setWidth(int width)
-	{
-		Width = width;
+		ColumnDefinition::ColumnDefinition()
+		{
+
+		}
+		ColumnDefinition::~ColumnDefinition()
+		{
+
+		}
+		int ColumnDefinition::getWidth()
+		{
+			return Width;
+		}
+		void ColumnDefinition::setWidth(int width)
+		{
+			Width = width;
+		}
 	}
 }

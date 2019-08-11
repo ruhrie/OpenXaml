@@ -1,14 +1,18 @@
 #pragma once
 
 namespace OpenXaml {
-	class RowDefinition
+	namespace Objects
 	{
-	public:
-		RowDefinition();
-		~RowDefinition();
-		int getHeight();
-		void setHeight(int height);
-	private:
-		int Height;
-	};
+		///A row definition for a row definition collection
+		class RowDefinition
+		{
+		public:
+			RowDefinition();
+			~RowDefinition();
+			int getHeight();
+			void setHeight(int height);
+		private:
+			int Height;
+		};
+	}
 }

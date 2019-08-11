@@ -1,5 +1,5 @@
 #version 330 core
-
+//This is a mega shader with configuration modes depending on what it is doing
 out vec4 outColor;
 in vec2 texCoord;
 

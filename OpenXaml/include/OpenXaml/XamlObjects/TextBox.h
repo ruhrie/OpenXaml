@@ -4,13 +4,17 @@
 #include "OpenXaml/XamlObjects/TextBlock.h"
 namespace OpenXaml
 {
-	class TextBox : public XamlObject
+	namespace Objects
 	{
-	public:
-		TextBox();
-	private:
-		Rectangle* Frame;
-		TextBlock* Placeholder;
-		TextBlock* Content;
-	};
+		///A TextBox object. Incomplete
+		class TextBox : public XamlObject
+		{
+		public:
+			TextBox();
+		private:
+			Rectangle* Frame;
+			TextBlock* Placeholder;
+			TextBlock* Content;
+		};
+	}
 }

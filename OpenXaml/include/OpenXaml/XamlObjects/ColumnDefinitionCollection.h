@@ -4,14 +4,18 @@
 #include "OpenXaml/XamlObjects/XamlObject.h"
 namespace OpenXaml
 {
-	class ColumnDefinitionCollection : public XamlObject
+	namespace Objects
 	{
-	public:
-		ColumnDefinitionCollection();
-		~ColumnDefinitionCollection();
-		std::vector<ColumnDefinition*> Children;
-		void Draw();
-		void Initialize();
-		void Update();
-	};
+		///A renderable wrapper for column definitions
+		class ColumnDefinitionCollection : public XamlObject
+		{
+		public:
+			ColumnDefinitionCollection();
+			~ColumnDefinitionCollection();
+			std::vector<ColumnDefinition*> Children;
+			void Draw();
+			void Initialize();
+			void Update();
+		};
+	}
 }

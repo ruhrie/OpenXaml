@@ -2,8 +2,11 @@
 
 namespace OpenXaml
 {
-	TextBox::TextBox()
+	namespace Objects
 	{
+		TextBox::TextBox()
+		{
 
+		}
 	}
 }

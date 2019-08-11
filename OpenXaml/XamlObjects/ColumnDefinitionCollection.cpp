@@ -2,28 +2,32 @@
 
 namespace OpenXaml
 {
-	ColumnDefinitionCollection::ColumnDefinitionCollection()
+	namespace Objects
 	{
 
-	}
-	ColumnDefinitionCollection::~ColumnDefinitionCollection()
-	{
-		for (auto child : Children)
+		ColumnDefinitionCollection::ColumnDefinitionCollection()
 		{
-			delete child;
+
 		}
-	}
+		ColumnDefinitionCollection::~ColumnDefinitionCollection()
+		{
+			for (auto child : Children)
+			{
+				delete child;
+			}
+		}
 
-	void ColumnDefinitionCollection::Draw()
-	{
+		void ColumnDefinitionCollection::Draw()
+		{
 
-	}
-	void ColumnDefinitionCollection::Initialize()
-	{
+		}
+		void ColumnDefinitionCollection::Initialize()
+		{
 
-	}
-	void ColumnDefinitionCollection::Update()
-	{
+		}
+		void ColumnDefinitionCollection::Update()
+		{
 
+		}
 	}
 }

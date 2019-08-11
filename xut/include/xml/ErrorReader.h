@@ -5,6 +5,7 @@ namespace xut
 {
 	namespace xml
 	{
+		/// A class for handling xerces xml errors and warnings
 		class ErrorReader : public xercesc::ErrorHandler
 		{
 		public:

@@ -2,8 +2,15 @@
 #include "internal/XamlElement.h"
 #include "Formatter/CppFormatter.h"
 #include <xercesc/dom/DOMElement.hpp>
-class RowDefinitionElement : public XamlElement
+namespace xut
 {
-public:
-	RowDefinitionElement(xercesc::DOMElement* element, bool root = false);
-};
+	namespace elements
+	{
+		/// A row element
+		class RowDefinitionElement : public XamlElement
+		{
+		public:
+			RowDefinitionElement(xercesc::DOMElement* element, bool root = false);
+		};
+	}
+}
