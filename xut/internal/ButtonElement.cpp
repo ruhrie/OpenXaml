@@ -22,14 +22,14 @@ namespace xut
 				ext += GetClickSigniture(onClick);
 				body += GetClickCall(onClick);
 			}
-			DOMAttr* content = element->getAttributeNode(XMLString::transcode("Content"));
+			DOMAttr* content = element->getAttributeNode(XMLString::transcode("Text"));
 			if (content != NULL)
 			{
-				body += GetContent(content);
+				body += GetText(content);
 			}
 			else
 			{
-				body += GetContent(XMLString::transcode(element->getTextContent()));
+				body += GetText(XMLString::transcode(element->getTextContent()));
 			}
 		}
 	}

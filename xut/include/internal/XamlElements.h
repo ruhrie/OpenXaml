@@ -7,3 +7,4 @@
 #include "internal/ButtonElement.h"
 #include "internal/RectangleElement.h"
 #include "internal/TextBlockElement.h"
+#include "internal/TextBoxElement.h"

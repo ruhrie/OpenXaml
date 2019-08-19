@@ -56,6 +56,10 @@ namespace xut
 			{
 				result = new TextBlockElement(element, root);
 			}
+			else if (name == "TextBox")
+			{
+				result = new TextBoxElement(element, root);
+			}
 			else
 			{
 				throw 2;

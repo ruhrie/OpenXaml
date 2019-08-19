@@ -39,6 +39,7 @@
             <xs:element minOccurs="0" maxOccurs="1" ref="ColumnDefinitionCollection"/>
             <xs:element minOccurs="0" ref="Rectangle"/>
             <xs:element minOccurs="0" ref="TextBlock"/>
+            <xs:element minOccurs="0" ref="TextBox"/>
             <xs:element minOccurs="0" ref="Button"/>
             <xs:element minOccurs="0" ref="Grid"/>
           </xs:choice>
@@ -98,11 +99,22 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="TextBox" id="TextBox">
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="XamlObject">
+          <xs:attributeGroup ref="Text"/>
+          <xs:attributeGroup ref="PlaceholderText"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="Button" id="Button">
     <xs:complexType mixed="true">
       <xs:complexContent>
         <xs:extension base="XamlObject">          
-          <xs:attributeGroup ref="Content"/>
+          <xs:attributeGroup ref="Text"/>
           <xs:attributeGroup ref="Fill"/>
           <xs:attributeGroup ref="OnClick"/>
         </xs:extension>
@@ -217,8 +229,16 @@
     </xs:attribute>
   </xs:attributeGroup>
 
-  <xs:attributeGroup name="Content">
-    <xs:attribute name="Content">
+  <xs:attributeGroup name="Text">
+    <xs:attribute name="Text">
+      <xs:simpleType>
+        <xs:restriction base="xs:string"/>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="PlaceholderText">
+    <xs:attribute name="PlaceholderText">
       <xs:simpleType>
         <xs:restriction base="xs:string"/>
       </xs:simpleType>

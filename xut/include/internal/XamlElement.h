@@ -22,7 +22,8 @@ namespace xut
 			RowDefinition,
 			ColumnDefinition,
 			RowDefinitionCollection,
-			ColumnDefinitionCollection
+			ColumnDefinitionCollection,
+			TextBox
 		};
 
 		///The base class of all xut xaml elements

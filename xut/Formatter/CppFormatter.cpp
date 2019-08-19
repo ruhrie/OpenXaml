@@ -101,21 +101,20 @@ string GetVerticalAlignment(xercesc::DOMAttr* input, bool root)
 	}
 }
 
-string GetContent(xercesc::DOMAttr* input)
+std::string GetText(std::string input)
 {
-	string value = XMLString::transcode(input->getNodeValue());
-	return GetContent(value);
+	return "%name%->setText(\"" + FormatString(input) + "\");\n";
 }
 
-std::string GetContent(std::string input)
+std::string GetPlaceholderText(std::string input)
 {
-	return "%name%->setContent(\"" + FormatString(input) + "\");\n";
+	return "%name%->setPlaceholderText(\"" + FormatString(input) + "\");\n";
 }
 
 std::string GetClickSigniture(xercesc::DOMAttr* input)
 {
 	string value = XMLString::transcode(input->getNodeValue());
-	std::string result = "virtual void " + value + "(OpenXaml::XamlObject* sender) = 0;\n";
+	std::string result = "virtual void " + value + "(OpenXaml::Objects::XamlObject* sender) = 0;\n";
 	return result;
 }
 
@@ -158,15 +157,16 @@ std::string GetTextAlignment(xercesc::DOMAttr* input)
 	}
 }
 
-std::string GetText(std::string input)
-{
-	return "%name%->setText(\"" + FormatString(input) + "\");\n";
-}
-
 std::string GetText(xercesc::DOMAttr* input)
 {
 	string value = XMLString::transcode(input->getNodeValue());
 	return GetText(value);
+}
+
+std::string GetPlaceholderText(xercesc::DOMAttr* input)
+{
+	string value = XMLString::transcode(input->getNodeValue());
+	return GetPlaceholderText(value);
 }
 
 std::string GetTextWrapping(xercesc::DOMAttr* input)

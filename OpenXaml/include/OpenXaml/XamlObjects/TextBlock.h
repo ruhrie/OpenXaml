@@ -28,6 +28,7 @@ namespace OpenXaml
 			TextAlignment getTextAlignment();
 			int getWidth();
 			int getHeight();
+			coordinate getDesiredDimensions();
 		private:
 			unsigned int edgeBuffer;
 			std::vector<unsigned int> vertexBuffers;

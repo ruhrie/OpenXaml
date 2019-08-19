@@ -25,7 +25,7 @@ namespace OpenXaml
 		{
 			Frame->setPixelScale(PixelScale);
 			Label->setPixelScale(PixelScale);
-			Label->setText(Content);
+			Label->setText(Text);
 			Label->setVerticalAlignment(VerticalAlignment);
 			Label->setHorizontalAlignment(HorizontalAlignment);
 			Label->setTextAlignment(TextAlignment::Center);
@@ -66,13 +66,13 @@ namespace OpenXaml
 		{
 			return this->Fill;
 		}
-		void Button::setContent(std::string content)
+		void Button::setText(std::string content)
 		{
-			this->Content = content;
+			this->Text = content;
 		}
-		std::string Button::getContent()
+		std::string Button::getText()
 		{
-			return this->Content;
+			return this->Text;
 		}
 
 		void Button::setOnClick(std::function<void(XamlObject*)> func)

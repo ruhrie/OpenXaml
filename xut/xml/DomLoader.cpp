@@ -142,14 +142,14 @@ namespace xut
 				iss >> std::hex >> fill;
 				result->setFill(fill);
 			}
-			else if (name == "Content")
+			else if (name == "Text")
 			{
-				result->setContent(value);
+				result->setText(value);
 			}
 		}
 
 		auto text = element->getTextContent();
-		result->setContent(XMLString::transcode(text));
+		result->setText(XMLString::transcode(text));
 		size_t childCount = element->getChildElementCount();
 		auto children = element->getChildNodes();
 		for (int i = 0; i < childCount; i++)

@@ -12,7 +12,7 @@
       <ColumnDefinition Width="200"/>
       <ColumnDefinition Width="824"/>
     </ColumnDefinitionCollection>
-    <Button Content="asdf" Fill="#FFFF00FF" HorizontalAlignment="Left" VerticalAlignment="Top" OnClick="Test" Grid.Row="1"/>
+    <Button Text="asdf" Fill="#FFFF00FF" HorizontalAlignment="Left" VerticalAlignment="Top" OnClick="Test" Grid.Row="1"/>
     <Rectangle Fill="#440000AA" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="100"/>
     <Rectangle HorizontalAlignment="Left" Fill="#AA000000" Width="1000"/>
     <TextBlock TextWrapping="Wrap" Grid.Row="1" Grid.Column="1">
@@ -22,5 +22,6 @@
       Aliquam nunc magna, consequat non dictum eget, commodo a neque. Nulla pharetra dapibus enim at ultricies. Praesent et pharetra nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent turpis diam, vulputate sed ante sit amet, efficitur maximus nunc. Nam lorem lacus, interdum id vulputate vitae, congue ac leo. Praesent vel nunc sapien. Nulla vitae odio nisl. Vestibulum finibus ex et neque dignissim sodales sodales a nisl. Donec ligula risus, fermentum ac tempus aliquet, mollis a ex.
       Phasellus varius dui eu quam commodo molestie. Donec nec ultrices tortor. Cras dictum orci sit amet orci rutrum vestibulum. Morbi quis urna sed ipsum congue hendrerit. Vivamus pretium feugiat augue, in rutrum metus. Phasellus in mollis odio, sed porta metus. Integer consectetur sem eu lacus luctus porta. Nam lacus risus, venenatis eu metus non, ornare posuere lacus.
     </TextBlock>
+    <TextBox Grid.Row="0" Grid.Column="1"/>
   </Grid>
 </Frame>

@@ -19,8 +19,8 @@ namespace OpenXaml
 			~Button();
 			void setFill(unsigned int fill);
 			unsigned int getFill();
-			void setContent(std::string content);
-			std::string getContent();
+			void setText(std::string content);
+			std::string getText();
 			void setOnClick(std::function<void(XamlObject*)> func);
 			std::function<void(XamlObject*)> getOnClick();
 			void Click();
@@ -30,7 +30,7 @@ namespace OpenXaml
 			Rectangle* Frame;
 		protected:
 			unsigned int Fill = 0x33FFFFFF;
-			std::string Content = "Click";
+			std::string Text = "Click";
 			std::function<void(XamlObject*)> OnClick;
 		};
 	}	

@@ -11,10 +11,20 @@ namespace OpenXaml
 		{
 		public:
 			TextBox();
+			~TextBox();
+			void Initialize();
+			void Draw();
+			void Update();
+			void setPlaceholderText(std::string placeholderText);
+			std::string getPlaceholderText();
+			void setText(std::string text);
+			std::string getText();
 		private:
+			std::string Text = "";
+			std::string PlaceholderText = "Placeholder";
 			Rectangle* Frame;
-			TextBlock* Placeholder;
-			TextBlock* Content;
+			TextBlock* PlaceholderTextTextBlock;
+			TextBlock* TextTextBlock;
 		};
 	}
 }

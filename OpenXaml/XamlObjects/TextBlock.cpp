@@ -445,5 +445,31 @@ namespace OpenXaml {
 		{
 			return max(this->Height, (int)this->boxHeight);
 		}
+		coordinate TextBlock::getDesiredDimensions()
+		{
+			coordinate result = { 0,0 };
+			int width = 0;
+			int maxWidth = 0;
+			int lines = 0;
+			for (int i = 0; i < Text.length(); i++)
+			{
+				char sample = Text.at(i);
+				width += font->operator[](sample).AdvanceX >> 6;
+				if (sample == '\n')
+				{
+					maxWidth = std::max(maxWidth, width);
+					width = 0;
+					lines++;
+				}
+			}
+			if (Text.back() != '\n')
+			{
+				lines++;
+			}
+			maxWidth = std::max(maxWidth, width);
+			result.x = maxWidth * PixelScale.x;
+			result.y = lines * PixelScale.y * font->Height;
+			return result;
+		}
 	}
 }
