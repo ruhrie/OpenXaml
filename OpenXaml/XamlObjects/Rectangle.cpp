@@ -1,4 +1,5 @@
 #include "OpenXaml/XamlObjects/Rectangle.h"
+#include "OpenXaml/Environment/Window.h"
 #include <glad/glad.h>
 #include "OpenXaml/GL/GLConfig.h"
 #include <sstream>
@@ -48,8 +49,8 @@ namespace OpenXaml
 		void Rectangle::Update()
 		{
 			glBindVertexArray(Rectangle::VAO);
-			float width = Width * PixelScale.x;
-			float height = Height * PixelScale.y;
+			float width = Width * OpenXaml::Environment::window->xScale;
+			float height = Height * OpenXaml::Environment::window->yScale;
 
 			GLfloat vertices[16];
 

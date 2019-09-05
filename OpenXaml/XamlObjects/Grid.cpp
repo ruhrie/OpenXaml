@@ -1,5 +1,6 @@
 #include "OpenXaml/XamlObjects/Grid.h"
 #include <vector>
+#include "OpenXaml/Environment/Window.h"
 namespace OpenXaml
 {
 	namespace Objects
@@ -42,7 +43,7 @@ namespace OpenXaml
 			if (RowDefinitions != NULL)
 			{
 				float position = max.y;
-				float yScale = PixelScale.y;
+				float yScale = OpenXaml::Environment::window->yScale;
 				for (auto row : RowDefinitions->Children)
 				{
 					float height = row->getHeight() * yScale;
@@ -62,7 +63,7 @@ namespace OpenXaml
 			if (ColumnDefinitions != NULL)
 			{
 				float position = min.x;
-				float xScale = PixelScale.x;
+				float xScale = OpenXaml::Environment::window->xScale;
 				for (auto col : ColumnDefinitions->Children)
 				{
 					float width = col->getWidth() * xScale;

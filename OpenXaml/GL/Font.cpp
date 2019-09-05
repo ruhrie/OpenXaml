@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <filesystem>
-#include "OpenXaml/Environment.h"
+#include "OpenXaml/Environment/Environment.h"
 #include <glad/glad.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H

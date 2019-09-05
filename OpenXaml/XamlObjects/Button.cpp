@@ -1,5 +1,6 @@
 #include "OpenXaml/XamlObjects/Button.h"
-#include "OpenXaml/Environment.h"
+#include "OpenXaml/Environment/Environment.h"
+#include "OpenXaml/Environment/Window.h"
 #include "OpenXaml/XamlEvents/XamlEvent.h"
 #include <sstream>
 
@@ -23,8 +24,6 @@ namespace OpenXaml
 
 		void Button::Update()
 		{
-			Frame->setPixelScale(PixelScale);
-			Label->setPixelScale(PixelScale);
 			Label->setText(Text);
 			Label->setVerticalAlignment(VerticalAlignment);
 			Label->setHorizontalAlignment(HorizontalAlignment);
@@ -103,8 +102,8 @@ namespace OpenXaml
 		}
 		void Button::Click(double x, double y)
 		{
-			float xc = (float)x * PixelScale.x - 1.0f;
-			float yc = 1.0f - (float)y * PixelScale.y;
+			float xc = (float)x * OpenXaml::Environment::window->xScale - 1.0f;
+			float yc = 1.0f - (float)y * OpenXaml::Environment::window->yScale;
 			if (xc > minRendered.x && xc < maxRendered.x)
 			{
 				if (yc < maxRendered.y && yc > minRendered.y)

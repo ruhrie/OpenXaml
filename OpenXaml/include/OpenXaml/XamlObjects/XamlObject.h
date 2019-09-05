@@ -20,8 +20,6 @@ namespace OpenXaml
 			virtual void Initialize() = 0; ///Currently responsible for initializing the OpenGL attributes. Due to be removed soon.
 			virtual void Update() = 0;
 			XamlObject();
-			void setPixelScale(float x, float y); ///Sets the DPI for the current xaml object. Due to be moved to environment (global/per monitor)
-			void setPixelScale(coordinate scale); ///Get the DPI for the current xaml object.
 			~XamlObject();
 			void setHorizontalAlignment(HorizontalAlignment alignment);
 			void setVerticalAlignment(VerticalAlignment alignment);
@@ -43,7 +41,6 @@ namespace OpenXaml
 			coordinate maxCoord;
 			coordinate minRendered;
 			coordinate maxRendered;
-			coordinate PixelScale; ///The DPI for the xaml object
 			int Height;
 			int Width;
 			OpenXaml::Visibliity Visibility;

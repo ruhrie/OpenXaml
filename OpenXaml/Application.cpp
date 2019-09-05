@@ -2,7 +2,8 @@
 #include "OpenXaml/XamlEvents/XamlEvent.h"
 #include "OpenXaml/XamlEvents/XamlEvents.h"
 #include "OpenXaml/GL/GLConfig.h"
-#include "OpenXaml/Environment.h"
+#include "OpenXaml/Environment/Environment.h"
+#include "OpenXaml/Environment/Window.h"
 #include <glad/glad.h>
 #include <filesystem>
 #include <iostream>
@@ -28,8 +29,7 @@ namespace OpenXaml
 	}
 	Application::Application()
 	{
-		
-		PixelScale = coordinate{ 0,0 };
+		Environment::window = new Environment::Window();
 		frame = NULL;
 		if (!glfwInit())
 			throw 2;
@@ -38,7 +38,7 @@ namespace OpenXaml
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 		window = glfwCreateWindow(640, 480, "My Window", NULL, NULL);
-
+		
 		if (!window)
 		{
 			glfwTerminate();
@@ -82,7 +82,8 @@ namespace OpenXaml
 	{
 		frame = input;
 		glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
-		frame->setPixelScale(2.0f / frame->getWidth(), 2.0f / frame->getHeight());
+		Environment::window->xScale = 2.0f / frame->getWidth();
+		Environment::window->yScale = 2.0f / frame->getHeight();
 		GL::LoadShaders();
 		glfwSetMouseButtonCallback(window, mouseButtonCallback);
 		frame->Initialize();
