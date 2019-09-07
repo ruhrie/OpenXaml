@@ -1,5 +1,6 @@
 #include "OpenXaml/XamlObjects/TextBox.h"
-
+#include "OpenXaml/Environment/Environment.h"
+#include <OpenXaml\Environment\Window.h>
 namespace OpenXaml
 {
 	namespace Objects
@@ -11,6 +12,9 @@ namespace OpenXaml
 			TextTextBlock = new TextBlock();
 			TextTextBlock->setText(Text);
 			PlaceholderTextTextBlock->setText(PlaceholderText);
+			DerivedElements.push_back(PlaceholderTextTextBlock);
+			DerivedElements.push_back(TextTextBlock);
+			DerivedElements.push_back(Frame);
 		}
 		TextBox::~TextBox()
 		{
@@ -39,14 +43,32 @@ namespace OpenXaml
 		}
 		void TextBox::Update()
 		{
+			auto desiredDimensions = PlaceholderTextTextBlock->getDesiredDimensions();
 			if (Width == 0)
 			{
-				
+				int w = desiredDimensions.x / OpenXaml::Environment::window->xScale;
+				Frame->setWidth(w);
+				PlaceholderTextTextBlock->setWidth(w);
+				TextTextBlock->setWidth(w);
 			}
+			if (Height == 0)
+			{
+				int h = desiredDimensions.y / OpenXaml::Environment::window->yScale;
+				Frame->setHeight(h);
+				PlaceholderTextTextBlock->setHeight(h);
+				TextTextBlock->setHeight(h);
+			}
+			Frame->setFill(0xFFFFFFFF);
+			Frame->setHorizontalAlignment(HorizontalAlignment);
+			Frame->setVerticalAlignment(VerticalAlignment);
 			Frame->Update();
+			PlaceholderTextTextBlock->setHorizontalAlignment(HorizontalAlignment);
+			PlaceholderTextTextBlock->setVerticalAlignment(VerticalAlignment);
 			PlaceholderTextTextBlock->Update();
-			auto test = PlaceholderTextTextBlock->getDesiredDimensions();
+			TextTextBlock->setHorizontalAlignment(HorizontalAlignment);
+			TextTextBlock->setVerticalAlignment(VerticalAlignment);
 			TextTextBlock->Update();
+			XamlObject::Update();
 		}
 		void TextBox::setPlaceholderText(std::string placeholderText)
 		{

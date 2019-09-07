@@ -138,6 +138,12 @@ namespace OpenXaml
 		{
 			return XamlObject::Visibility;
 		}
+
+		void XamlObject::Update()
+		{
+			maxRendered = GetMaxRendered();
+			minRendered = GetMinRendered();
+		}
 	}
 }
 

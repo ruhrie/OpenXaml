@@ -46,8 +46,6 @@ namespace OpenXaml {
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 		}
-
-		Font* font;
 		void TextBlock::Update()
 		{
 			font = Environment::GetFont(FontProperties{ FontFamily, FontSize });
@@ -382,6 +380,7 @@ namespace OpenXaml {
 			boxHeight = 0;
 			boxWidth = 0;
 			edgeBuffer = 0;
+			font = NULL;
 		}
 
 		TextBlock::~TextBlock()
@@ -448,6 +447,10 @@ namespace OpenXaml {
 		}
 		coordinate TextBlock::getDesiredDimensions()
 		{
+			if (font == NULL)
+			{
+				font = Environment::GetFont(FontProperties{ FontFamily, FontSize });
+			}
 			coordinate result = { 0,0 };
 			int width = 0;
 			int maxWidth = 0;
@@ -469,7 +472,7 @@ namespace OpenXaml {
 			}
 			maxWidth = std::max(maxWidth, width);
 			result.x = maxWidth * OpenXaml::Environment::window->xScale;
-			result.y = lines * OpenXaml::Environment::window->yScale * font->Height;
+			result.y = lines * OpenXaml::Environment::window->yScale * (font->Height >> 6);
 			return result;
 		}
 	}

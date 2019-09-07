@@ -18,7 +18,7 @@ namespace OpenXaml
 			virtual void Draw() = 0; ///The draw call which actually renders the object.
 			std::vector<XamlObject*> Children; ///The child objects to the current xaml element.
 			virtual void Initialize() = 0; ///Currently responsible for initializing the OpenGL attributes. Due to be removed soon.
-			virtual void Update() = 0;
+			virtual void Update();
 			XamlObject();
 			~XamlObject();
 			void setHorizontalAlignment(HorizontalAlignment alignment);

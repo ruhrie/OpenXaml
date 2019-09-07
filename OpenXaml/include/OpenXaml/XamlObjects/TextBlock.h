@@ -1,6 +1,7 @@
 #pragma once
 #include "OpenXaml/XamlObjects/XamlObject.h"
 #include <map>
+#include <OpenXaml\GL\Font.h>
 namespace OpenXaml 
 {
 	namespace Objects
@@ -36,6 +37,7 @@ namespace OpenXaml
 			unsigned int boxWidth;
 			unsigned int boxHeight;
 			void RenderCharacter(char toRender, float& penX, float& penY);
+			Font* font;
 		protected:
 			std::string Text;
 			TextWrapping TextWrapping = TextWrapping::WrapWholeWords;

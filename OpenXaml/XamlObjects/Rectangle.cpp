@@ -71,10 +71,10 @@ namespace OpenXaml
 			else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Center)
 			{
 				float mid = (minCoord.x + maxCoord.x) / 2;
-				vertices[0] = std::min(mid - width / 2, minCoord.x);
-				vertices[4] = std::max(mid + width / 2, maxCoord.x);
-				vertices[8] = std::min(mid - width / 2, minCoord.x);
-				vertices[12] = std::max(mid + width / 2, maxCoord.x);
+				vertices[0] = std::max(mid - width / 2, minCoord.x);
+				vertices[4] = std::min(mid + width / 2, maxCoord.x);
+				vertices[8] = std::max(mid - width / 2, minCoord.x);
+				vertices[12] = std::min(mid + width / 2, maxCoord.x);
 			}
 			else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Stretch)
 			{
