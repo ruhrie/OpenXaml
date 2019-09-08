@@ -106,6 +106,12 @@ namespace xut
 			{
 				body += GetVisibility(vis);
 			}
+			DOMAttr* onClick = element->getAttributeNode(XMLString::transcode("OnClick"));
+			if (onClick != NULL)
+			{
+				ext += GetClickSigniture(onClick);
+				body += GetClickCall(onClick);
+			}
 			string name = "";
 			if (name == "")
 			{

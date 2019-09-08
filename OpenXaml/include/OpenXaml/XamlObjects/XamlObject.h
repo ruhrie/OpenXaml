@@ -36,6 +36,10 @@ namespace OpenXaml
 			void setVisibility(OpenXaml::Visibliity visibility);
 			OpenXaml::Visibliity getVisibility();
 			virtual void SetBoundingBox(coordinate min, coordinate max); ///Sets the bounding box for rendering the object (not where it actually renders).
+			void Click();
+			void Click(double x, double y);
+			void setOnClick(std::function<void(XamlObject*)> func);
+			std::function<void(XamlObject*)> getOnClick();
 		protected:
 			coordinate minCoord;
 			coordinate maxCoord;
@@ -50,6 +54,7 @@ namespace OpenXaml
 			std::vector<XamlObject*> DerivedElements;
 			coordinate GetMaxRendered(); ///Gets the upper right corner of the actually rendered object
 			coordinate GetMinRendered(); ///Gets the lower left corner of the actually rendered object
+			std::function<void(XamlObject*)> OnClick;
 		private:
 			XamlObject& operator=(const XamlObject&);
 			int Column = 0;

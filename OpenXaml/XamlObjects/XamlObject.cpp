@@ -5,6 +5,9 @@
 #include "OpenXaml/Properties/Alignment.h"
 #include "OpenXaml/Properties/Visibility.h"
 #include <algorithm>
+#include <functional>
+#include <OpenXaml\XamlEvents\XamlEvent.h>
+#include <OpenXaml\Environment\Window.h>
 
 using namespace std;
 
@@ -143,6 +146,45 @@ namespace OpenXaml
 		{
 			maxRendered = GetMaxRendered();
 			minRendered = GetMinRendered();
+		}
+
+		void XamlObject::setOnClick(std::function<void(XamlObject*)> func)
+		{
+
+			if (OnClick != NULL && func == NULL)
+			{
+				Events::RemoveEvent(Events::XamlEvent::ClickEvent, this);
+			}
+			else if (OnClick == NULL && func != NULL)
+			{
+				Events::AddEvent(Events::XamlEvent::ClickEvent, this);
+			}
+			OnClick = func;
+		}
+
+		function<void(XamlObject*)> XamlObject::getOnClick()
+		{
+			return OnClick;
+		}
+
+		void XamlObject::Click()
+		{
+			if (OnClick != NULL)
+			{
+				OnClick(this);
+			}
+		}
+		void XamlObject::Click(double x, double y)
+		{
+			float xc = (float)x * OpenXaml::Environment::window->xScale - 1.0f;
+			float yc = 1.0f - (float)y * OpenXaml::Environment::window->yScale;
+			if (xc > minRendered.x && xc < maxRendered.x)
+			{
+				if (yc < maxRendered.y && yc > minRendered.y)
+				{
+					Click();
+				}
+			}
 		}
 	}
 }

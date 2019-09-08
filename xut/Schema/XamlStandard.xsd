@@ -43,6 +43,7 @@
             <xs:element minOccurs="0" ref="Button"/>
             <xs:element minOccurs="0" ref="Grid"/>
           </xs:choice>
+          <xs:attributeGroup ref="OnClick"/>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -116,7 +117,6 @@
         <xs:extension base="XamlObject">          
           <xs:attributeGroup ref="Text"/>
           <xs:attributeGroup ref="Fill"/>
-          <xs:attributeGroup ref="OnClick"/>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>

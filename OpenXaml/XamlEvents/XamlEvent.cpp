@@ -41,8 +41,7 @@ namespace OpenXaml
 
 				for (XamlObject* target : targets)
 				{
-					Button* b = (Button*)target;
-					b->Click(location.x, location.y);
+					target->Click(location.x, location.y);
 				}
 				delete e;
 				EventQueue.pop_back(); //and remove the processed event

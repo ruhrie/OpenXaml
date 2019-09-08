@@ -16,12 +16,6 @@ namespace xut
 			{
 				body += GetFill(fill, root);
 			}
-			DOMAttr* onClick = element->getAttributeNode(XMLString::transcode("OnClick"));
-			if (onClick != NULL)
-			{
-				ext += GetClickSigniture(onClick);
-				body += GetClickCall(onClick);
-			}
 			DOMAttr* content = element->getAttributeNode(XMLString::transcode("Text"));
 			if (content != NULL)
 			{
