@@ -19,6 +19,8 @@ namespace OpenXaml
 			std::string getPlaceholderText();
 			void setText(std::string text);
 			std::string getText();
+			void TextUpdate(std::string text);
+			void setOnClick(std::function<void(XamlObject*)> func);
 		private:
 			std::string Text = "";
 			std::string PlaceholderText = "Placeholder";

@@ -8,6 +8,7 @@
 #include <functional>
 #include <OpenXaml\XamlEvents\XamlEvent.h>
 #include <OpenXaml\Environment\Window.h>
+#include <OpenXaml/Environment/Environment.h>
 
 using namespace std;
 
@@ -182,6 +183,7 @@ namespace OpenXaml
 			{
 				if (yc < maxRendered.y && yc > minRendered.y)
 				{
+					Environment::ActiveElement = this;
 					Click();
 				}
 			}

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include "OpenXaml/XamlObjects/Button.h"
+#include "OpenXaml/XamlObjects/TextBox.h"
 namespace OpenXaml
 {
 	namespace Events
@@ -35,13 +36,25 @@ namespace OpenXaml
 					ClickEvent* c = (ClickEvent*)e;
 					targets = EventMap[XamlEvent::ClickEvent];
 					location = c->GetLocation();
+
+					for (XamlObject* target : targets)
+					{
+						target->Click(location.x, location.y);
+					}
 					break;
 				}
-				}
-
-				for (XamlObject* target : targets)
+				case XamlEvent::TextEvent:
 				{
-					target->Click(location.x, location.y);
+					TextEvent* c = (TextEvent*)e;
+					targets = EventMap[XamlEvent::TextEvent];
+					std::string text = c->Text;
+					for (XamlObject* target : targets)
+					{
+						TextBox* box = (TextBox*)target;
+						box->TextUpdate(text);
+					}
+					break;
+				}
 				}
 				delete e;
 				EventQueue.pop_back(); //and remove the processed event

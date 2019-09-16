@@ -37,7 +37,7 @@ namespace OpenXaml
 		faceMap[this] = newFace;
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	}
-	Character& Font::operator[](const char index)
+	Character& Font::operator[](const wchar_t index)
 	{
 		// if the character is available return it
 		if (characterMap.find(index) != characterMap.end())

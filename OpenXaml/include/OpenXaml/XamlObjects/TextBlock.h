@@ -36,7 +36,7 @@ namespace OpenXaml
 			std::map<unsigned int, unsigned int> textureMap;
 			unsigned int boxWidth;
 			unsigned int boxHeight;
-			void RenderCharacter(char toRender, float& penX, float& penY);
+			void RenderCharacter(wchar_t toRender, float& penX, float& penY);
 			Font* font;
 		protected:
 			std::string Text;

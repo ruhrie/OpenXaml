@@ -10,7 +10,9 @@ namespace OpenXaml
 		///An enumeration of valid xaml events
 		enum class XamlEvent
 		{
-			ClickEvent
+			ClickEvent,
+			KeyDownEvent,
+			TextEvent
 		};
 		///A class that allows for determining the type of event
 		class EventBase

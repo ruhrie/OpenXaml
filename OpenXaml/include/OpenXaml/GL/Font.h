@@ -9,10 +9,10 @@ namespace OpenXaml
 	{
 	public:
 		Font(std::string file, float size);
-		Character& operator[](const char index);
+		Character& operator[](const wchar_t index);
 		int Height;
 		~Font();
 	private:
-		std::map<char, Character> characterMap;
+		std::map<wchar_t, Character> characterMap;
 	};
 }

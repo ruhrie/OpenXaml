@@ -13,6 +13,7 @@ namespace OpenXaml
 {
 	namespace Environment
 	{
+		Objects::XamlObject* ActiveElement;
 		std::map < std::tuple<std::string, bool, bool>, std::vector<std::string> > fontFileMap;
 		double DPI;
 		std::map<FontProperties, Font*> fontMap;

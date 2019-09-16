@@ -1,6 +1,7 @@
 #include "OpenXaml/XamlObjects/TextBox.h"
 #include "OpenXaml/Environment/Environment.h"
-#include <OpenXaml\Environment\Window.h>
+#include "OpenXaml\Environment\Window.h"
+#include "OpenXaml/XamlEvents/XamlEvents.h"
 namespace OpenXaml
 {
 	namespace Objects
@@ -15,13 +16,23 @@ namespace OpenXaml
 			DerivedElements.push_back(PlaceholderTextTextBlock);
 			DerivedElements.push_back(TextTextBlock);
 			DerivedElements.push_back(Frame);
+			Events::AddEvent(Events::XamlEvent::TextEvent, this);
+			Events::AddEvent(Events::XamlEvent::ClickEvent, this);
 		}
 		TextBox::~TextBox()
 		{
+			Events::RemoveEvent(Events::XamlEvent::TextEvent, this);
+			Events::RemoveEvent(Events::XamlEvent::ClickEvent, this);
 			delete Frame;
 			delete PlaceholderTextTextBlock;
 			delete TextTextBlock;
 		}
+
+		void TextBox::setOnClick(std::function<void(XamlObject*)> func)
+		{
+			OnClick = func;
+		}
+
 		void TextBox::Initialize()
 		{
 			Frame->Initialize();
@@ -32,12 +43,13 @@ namespace OpenXaml
 		void TextBox::Draw()
 		{
 			Frame->Draw();
-			if (Text == "")
+			if (Text.empty())
 			{
 				PlaceholderTextTextBlock->Draw();
 			}
 			else
 			{
+				TextTextBlock->setText(Text);
 				TextTextBlock->Draw();
 			}
 		}
@@ -87,6 +99,14 @@ namespace OpenXaml
 		std::string TextBox::getText()
 		{
 			return Text;
+		}
+
+		void TextBox::TextUpdate(std::string text)
+		{
+			if (Environment::ActiveElement == this)
+			{
+				Text += text;
+			}
 		}
 	}
 }

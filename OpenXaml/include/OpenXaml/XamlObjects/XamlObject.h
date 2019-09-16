@@ -38,7 +38,7 @@ namespace OpenXaml
 			virtual void SetBoundingBox(coordinate min, coordinate max); ///Sets the bounding box for rendering the object (not where it actually renders).
 			void Click();
 			void Click(double x, double y);
-			void setOnClick(std::function<void(XamlObject*)> func);
+			virtual void setOnClick(std::function<void(XamlObject*)> func);
 			std::function<void(XamlObject*)> getOnClick();
 		protected:
 			coordinate minCoord;

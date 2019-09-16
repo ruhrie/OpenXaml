@@ -27,8 +27,24 @@ namespace OpenXaml
 			}
 		}
 	}
+
+	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		
+	}
+
+	void textCallback(GLFWwindow* window, unsigned int codepoint)
+	{
+		char32_t unicodeInput = (char32_t)codepoint;
+		std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> converter;
+		std::string text = converter.to_bytes(unicodeInput);
+		Events::TextEvent* e = new Events::TextEvent(text);
+		Events::EventQueue.push_back(e);
+	}
+
 	Application::Application()
 	{
+		PixelScale = { 0.0f, 0.0f };
 		Environment::window = new Environment::Window();
 		frame = NULL;
 		if (!glfwInit())
@@ -86,6 +102,8 @@ namespace OpenXaml
 		Environment::window->yScale = 2.0f / frame->getHeight();
 		GL::LoadShaders();
 		glfwSetMouseButtonCallback(window, mouseButtonCallback);
+		glfwSetKeyCallback(window, keyCallback);
+		glfwSetCharCallback(window, textCallback);
 		frame->Initialize();
 	}
 }

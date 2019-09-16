@@ -285,7 +285,7 @@ namespace OpenXaml {
 			boxHeight = (maxRendered.y - minRendered.y) / OpenXaml::Environment::window->yScale;
 		}
 
-		void TextBlock::RenderCharacter(char toRender, float& penX, float& penY)
+		void TextBlock::RenderCharacter(wchar_t toRender, float& penX, float& penY)
 		{
 			Character ch = font->operator[](toRender);
 			if (!iscntrl(toRender))

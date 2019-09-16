@@ -4,6 +4,7 @@
 #include <string>
 #include "OpenXaml/GL/Font.h"
 #include "OpenXaml/GL/FontProperties.h"
+#include <OpenXaml\XamlObjects\XamlObject.h>
 namespace OpenXaml
 {
 	namespace Environment
@@ -14,5 +15,6 @@ namespace OpenXaml
 		Font* GetFont(FontProperties prop); //Gets a font object from the desired properties
 		void LoadEnvironment(); ///Initializes environment variables
 		void ClearEnvironment(); ///Releases environment resources
+		extern Objects::XamlObject* ActiveElement;
 	}
 }
