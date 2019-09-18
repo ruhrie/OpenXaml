@@ -36,6 +36,27 @@ namespace OpenXaml
 		Height = newFace->size->metrics.height;
 		faceMap[this] = newFace;
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+
+		/* testing here */
+		int numChars = newFace->num_glyphs;
+		FT_UInt gindex;
+		FT_ULong charcode;
+		charcode = FT_Get_First_Char(newFace, &gindex);
+		while (gindex != 0)
+		{
+			charcode = FT_Get_Next_Char(newFace, charcode, &gindex);
+			auto error = FT_Load_Glyph(newFace, gindex, FT_LOAD_DEFAULT);
+			if (error)
+			{
+				std::cerr << "Failed to load " << gindex << "\n";
+			}
+			error = FT_Render_Glyph(newFace->glyph, FT_RENDER_MODE_NORMAL);
+			if (error)
+			{
+				std::cerr << "Failed to render " << gindex << "\n";
+			}
+		}
 	}
 	Character& Font::operator[](const wchar_t index)
 	{
