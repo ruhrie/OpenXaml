@@ -10,6 +10,7 @@
     <xs:attributeGroup ref="VerticalAlignment"/>
     <xs:attributeGroup ref="Grid.Row"/>
     <xs:attributeGroup ref="Grid.Column"/>
+    <xs:attributeGroup ref="OnClick"/>
   </xs:complexType>
   
   
@@ -24,7 +25,7 @@
             <xs:element ref="Grid"/>
           </xs:choice>
           <xs:attributeGroup ref="Fill"/>
-          <xs:attributeGroup ref="Class"/>    
+          <xs:attributeGroup ref="Class"/>
         </xs:extension>
       </xs:complexContent>      
     </xs:complexType>
@@ -43,7 +44,6 @@
             <xs:element minOccurs="0" ref="Button"/>
             <xs:element minOccurs="0" ref="Grid"/>
           </xs:choice>
-          <xs:attributeGroup ref="OnClick"/>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
