@@ -14,5 +14,6 @@ namespace OpenXaml
 		~Font();
 	private:
 		std::map<wchar_t, Character> characterMap;
+		unsigned int fontAtlasTexture;
 	};
 }
