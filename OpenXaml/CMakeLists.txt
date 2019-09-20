@@ -34,8 +34,9 @@ set_target_properties(OpenXaml
 	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
-target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INC} ${GLAD_INC} ${GLFW_INC} ${OPENGL_INC})
-target_link_libraries(OpenXaml ${LIBRARIES})
+
+target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INCLUDE_DIR_freetype2} ${GLAD_INC} ${GLFW3_INCCLUDE_DIR} ${OPENGL_INC})
+target_link_libraries(OpenXaml PRIVATE ${LIBRARIES})
 
 
 #add_library(OpenXamlStatic STATIC ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp")
