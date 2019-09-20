@@ -66,7 +66,7 @@ Font::Font(string file, float size)
 	float sides = ceil(sqrt(numChars));
 	int width = sides * maxWidth;
 	int height = ceil(numChars / sides) * maxHeight;
-	uint8_t *fontAtlas = (uint8_t *)malloc(sizeof(uint8_t) * width * height);
+	uint8_t *fontAtlas = (uint8_t *)calloc(width * height, sizeof(uint8_t));
 	int x = 0;
 	int y = 0;
 	while (gindex != 0)

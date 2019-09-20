@@ -32,7 +32,9 @@ namespace OpenXaml
 			coordinate getDesiredDimensions();
 		private:
 			unsigned int edgeBuffer;
-			std::vector<unsigned int> vertexBuffers;
+			std::vector<unsigned int> vertexBuffers; //to be removed
+			unsigned int vertexBuffer;
+			unsigned int edgeBuffer2;
 			std::map<unsigned int, unsigned int> textureMap;
 			unsigned int boxWidth;
 			unsigned int boxHeight;

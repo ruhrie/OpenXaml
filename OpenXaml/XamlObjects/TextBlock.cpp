@@ -45,11 +45,16 @@ namespace OpenXaml {
 			glGenBuffers(1, &edgeBuffer);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
+			glGenBuffers(1, &edgeBuffer2);
+			glGenBuffers(1, &vertexBuffer);
 		}
 		void TextBlock::Update()
 		{
 			font = Environment::GetFont(FontProperties{ FontFamily, FontSize });
 			glBindVertexArray(TextBlock::VAO);
+
+			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer2);
+
 			for (int i = 0; i < vertexBuffers.size(); i++)
 			{
 				glDeleteBuffers(1, &(vertexBuffers[i]));

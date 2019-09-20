@@ -67,6 +67,27 @@ else()
 	endif()
 endif()
 
+find_package(Harfbuzz QUIET)
+if(harfbuzz_FOUND)
+	message(STATUS "Harfbuzz found")
+else()
+	if(DOWNLOAD_MISSING_DEPENDENCIES)
+		message(STATUS "Harfbuzz not found, downloading sources")
+		FetchContent_Declare(Harfbuzz
+			GIT_REPOSITORY https://github.com/harfbuzz/harfbuzz.git
+			GIT_TAG 2.6.1
+		)
+
+		FetchContent_GetProperties(Harfbuzz)
+		if(NOT Harfbuzz_POPULATED)
+			FetchContent_Populate(Harfbuzz)
+		endif()		
+		#set(FREETYPE_INC ${freetype_SOURCE_DIR}/include ${freetype_BINARY_DIR}/include PARENT_SCOPE)
+		add_subdirectory(${harfbuzz_SOURCE_DIR} ${harfbuzz_BINARY_DIR})
+	else()
+		message(FATAL_ERROR "Harfbuzz not found and downloading sources is disabled")
+	endif()
+endif()
 
 set(GLAD_INC ${CMAKE_CURRENT_SOURCE_DIR}/glad/include PARENT_SCOPE)
 
