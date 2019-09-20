@@ -3,7 +3,6 @@ Project(OpenXaml VERSION 0.1.0)
 
 option(BUILD_SAMPLE_APPLICATION "Build a sample application" ON)
 option(BUILD_DOCUMENTATION "Build the documentation" OFF)
-option(DOWNLOAD_MISSING_DEPENDENCIES "Download missing dependencies" ON)
 
 set (CMAKE_CXX_STANDARD 17)
 
