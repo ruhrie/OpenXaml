@@ -71,7 +71,6 @@ Font::Font(string file, float size)
 	int y = 0;
 	while (gindex != 0)
 	{
-		charcode = FT_Get_Next_Char(newFace, charcode, &gindex);
 		auto error = FT_Load_Glyph(newFace, gindex, FT_LOAD_DEFAULT);
 		if (error)
 		{
@@ -88,11 +87,20 @@ Font::Font(string file, float size)
 		{
 			memcpy(fontAtlas + j * width + x * maxWidth + y * width * maxHeight, newFace->glyph->bitmap.buffer + j * bx, bx);
 		}
+
+		auto bound = GlyphBound{
+			2.0f * (float)(x * maxWidth) / (float)width - 1.0f,
+			2.0f * (float)((x * maxWidth) + bx) / (float)width - 1.0f,
+			2.0f * (float)(y * maxHeight) / (float)height - 1.0f,
+			2.0f * (float)(y * maxHeight + by) / (float)height - 1.0f
+		};
+		GlyphTextureMap[newFace->glyph->glyph_index] = bound;
 		if (++x > width / maxWidth)
 		{
 			x = 0;
 			y++;
 		}
+		charcode = FT_Get_Next_Char(newFace, charcode, &gindex);
 	}
 
 	glGenTextures(1, &fontAtlasTexture);
@@ -114,7 +122,7 @@ Font::Font(string file, float size)
 
 	free(fontAtlas);
 }
-Character &Font::operator[](const wchar_t index)
+Character &Font::operator[](const char32_t index)
 {
 	// if the character is available return it
 	if (characterMap.find(index) != characterMap.end())
