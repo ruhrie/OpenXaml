@@ -7,6 +7,8 @@
 #include <glad/glad.h>
 #include <ft2build.h>
 #include <algorithm>
+#include <hb.h>
+#include <hb-ft.h>
 #include FT_FREETYPE_H
 
 using namespace std;
@@ -92,8 +94,7 @@ Font::Font(string file, float size)
 			2.0f * (float)(x * maxWidth) / (float)width - 1.0f,
 			2.0f * (float)((x * maxWidth) + bx) / (float)width - 1.0f,
 			2.0f * (float)(y * maxHeight) / (float)height - 1.0f,
-			2.0f * (float)(y * maxHeight + by) / (float)height - 1.0f
-		};
+			2.0f * (float)(y * maxHeight + by) / (float)height - 1.0f};
 		GlyphTextureMap[newFace->glyph->glyph_index] = bound;
 		if (++x > width / maxWidth)
 		{
@@ -121,6 +122,8 @@ Font::Font(string file, float size)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	free(fontAtlas);
+
+	hbFont = hb_ft_font_create_referenced(newFace);
 }
 Character &Font::operator[](const char32_t index)
 {
@@ -175,7 +178,31 @@ Character &Font::operator[](const char32_t index)
 
 Font::~Font()
 {
+	hb_font_destroy((hb_font_t *)hbFont);
 	FT_Done_Face(faceMap[this]);
 	faceMap[this] = NULL;
+}
+
+u32string Font::FormatText(u32string input)
+{
+	hb_buffer_t *buf = hb_buffer_create();
+	hb_buffer_add_utf32(buf, (const uint32_t *)input.c_str(), input.length(), 0, input.length());
+	hb_buffer_set_direction(buf, HB_DIRECTION_LTR);
+	hb_buffer_set_script(buf, HB_SCRIPT_LATIN);
+	hb_buffer_set_language(buf, hb_language_from_string("en", -1));
+	hb_shape((hb_font_t *)hbFont, buf, NULL, 0);
+	unsigned int glyphCount;
+	hb_glyph_info_t *glyph_info = hb_buffer_get_glyph_infos(buf, &glyphCount);
+	hb_glyph_position_t *glyph_pos = hb_buffer_get_glyph_positions(buf, &glyphCount);
+	for (int i = 0; i < glyphCount; ++i)
+	{
+		char32_t glyphid = glyph_info[i].codepoint;
+		float x_offset = glyph_pos[i].x_offset / 64.0;
+		float y_offset = glyph_pos[i].y_offset / 64.0;
+		float x_advance = glyph_pos[i].x_advance / 64.0;
+		float y_advance = glyph_pos[i].y_advance / 64.0;
+	}
+	hb_buffer_destroy(buf);
+	return input;
 }
 } // namespace OpenXaml

@@ -15,8 +15,9 @@ namespace OpenXaml
 			void Update();
 			TextBlock();
 			~TextBlock();
+			void setText(std::u32string text);
 			void setText(std::string text);
-			std::string getText();
+			std::u32string getText();
 			void setTextWrapping(TextWrapping textWrapping);
 			TextWrapping getTextWrapping();
 			void setFontFamily(std::string family);
@@ -41,7 +42,7 @@ namespace OpenXaml
 			void RenderCharacter(wchar_t toRender, float& penX, float& penY);
 			Font* font;
 		protected:
-			std::string Text;
+			std::u32string Text;
 			TextWrapping TextWrapping = TextWrapping::WrapWholeWords;
 			std::string FontFamily = "Arial";
 			float FontSize = 12.0f;
