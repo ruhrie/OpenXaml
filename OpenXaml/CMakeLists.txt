@@ -12,7 +12,7 @@ set (OPENXAML_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/" PARENT_SCOPE)
 set (LOCAL_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 set (OPENGL_INC "")
 set (VULKAN_INC "")
-set (LIBRARIES glfw freetype)
+set (LIBRARIES glfw freetype harfbuzz)
 if (UNIX)
 	set(LIBRARIES ${LIBRARIES} "-lstdc++fs")
 endif(UNIX)
@@ -35,11 +35,8 @@ set_target_properties(OpenXaml
 	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
-target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INCLUDE_DIR_freetype2} ${GLAD_INC} ${GLFW3_INCCLUDE_DIR} ${OPENGL_INC})
+target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INCLUDE_DIRS} ${GLAD_INC} ${GLFW_INCCLUDE_DIR} ${OPENGL_INC} ${HARFBUZZ_INC})
 target_link_libraries(OpenXaml PRIVATE ${LIBRARIES})
-
-
-#add_library(OpenXamlStatic STATIC ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp")
 
 file(GLOB HEADERS "include/OpenXaml")
 

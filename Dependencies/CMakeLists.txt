@@ -35,8 +35,25 @@ FetchContent_GetProperties(freetype)
 if(NOT freetype_POPULATED)
     FetchContent_Populate(freetype)
 endif()		
-set(FREETYPE_INC ${freetype_SOURCE_DIR}/include ${freetype_BINARY_DIR}/include PARENT_SCOPE)
 add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
+set(FREETYPE_INCLUDE_DIR_ft2build ${freetype_BINARY_DIR}/include)
+set(FREETYPE_INCLUDE_DIR_freetype2 ${freetype_SOURCE_DIR}/include)
+set(FREETYPE_INCLUDE_DIRS ${FREETYPE_INCLUDE_DIR_ft2build} ${FREETYPE_INCLUDE_DIR_freetype2}  PARENT_SCOPE)
+set(FREETYPE_LIBRARY "freetype")
+
+FetchContent_Declare(harfbuzz
+    URL https://github.com/harfbuzz/harfbuzz/archive/2.6.1.tar.gz
+)
+
+set(HB_HAVE_FREETYPE ON CACHE STRING "" FORCE)
+FetchContent_GetProperties(harfbuzz)
+if(NOT harfbuzz_POPULATED)
+    FetchContent_Populate(harfbuzz)
+endif()		
+add_subdirectory(${harfbuzz_SOURCE_DIR} ${harfbuzz_BINARY_DIR})
+set(HARFBUZZ_INC ${harfbuzz_SOURCE_DIR}/src PARENT_SCOPE)
+
+message(STATUS ${HARFBUZZ_INC})
 
 set(GLAD_INC ${CMAKE_CURRENT_SOURCE_DIR}/glad/include PARENT_SCOPE)
 
