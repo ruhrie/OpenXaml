@@ -43,8 +43,8 @@ Font::Font(string file, float size)
 	FT_UInt gindex;
 	FT_ULong charcode;
 	charcode = FT_Get_First_Char(newFace, &gindex);
-	unsigned int maxHeight = 0;
-	unsigned int maxWidth = 0;
+	uint64_t maxHeight = 0;
+	uint64_t maxWidth = 0;
 	unsigned int numChars = 0;
 
 	while (gindex != 0)
@@ -56,8 +56,8 @@ Font::Font(string file, float size)
 		}
 		else
 		{
-			maxHeight = std::max(maxHeight, newFace->glyph->bitmap.rows);
-			maxWidth = std::max(maxWidth, newFace->glyph->bitmap.width);
+			maxHeight = std::max(maxHeight, (uint64_t)newFace->glyph->bitmap.rows);
+			maxWidth = std::max(maxWidth, (uint64_t)newFace->glyph->bitmap.width);
 			numChars++;
 		}
 		charcode = FT_Get_Next_Char(newFace, charcode, &gindex);
@@ -65,9 +65,9 @@ Font::Font(string file, float size)
 
 	charcode = FT_Get_First_Char(newFace, &gindex);
 
-	float sides = ceil(sqrt(numChars));
-	int width = sides * maxWidth;
-	int height = ceil(numChars / sides) * maxHeight;
+	double sides = ceil(sqrt(numChars));
+	uint32_t width = (uint32_t)(sides * maxWidth);
+	uint32_t height = (uint32_t)(ceil(numChars / sides) * maxHeight);
 	uint8_t *fontAtlas = (uint8_t *)calloc(width * height, sizeof(uint8_t));
 	int x = 0;
 	int y = 0;
@@ -110,8 +110,8 @@ Font::Font(string file, float size)
 		GL_TEXTURE_2D,
 		0,
 		GL_RED,
-		width,
-		height,
+		(uint32_t)width,
+		(uint32_t)height,
 		0,
 		GL_RED,
 		GL_UNSIGNED_BYTE,
@@ -124,6 +124,11 @@ Font::Font(string file, float size)
 	free(fontAtlas);
 
 	hbFont = hb_ft_font_create_referenced(newFace);
+
+	seperators[0] = FT_Get_Char_Index(newFace, U'\n');
+	seperators[1] = FT_Get_Char_Index(newFace, U'\t');
+	seperators[2] = FT_Get_Char_Index(newFace, U' ');
+	seperators[3] = FT_Get_Char_Index(newFace, U'-');
 }
 Character &Font::operator[](const char32_t index)
 {
@@ -183,26 +188,43 @@ Font::~Font()
 	faceMap[this] = NULL;
 }
 
-u32string Font::FormatText(u32string input)
+vector<UChar> Font::FormatText(u32string input)
 {
 	hb_buffer_t *buf = hb_buffer_create();
-	hb_buffer_add_utf32(buf, (const uint32_t *)input.c_str(), input.length(), 0, input.length());
+	hb_buffer_add_utf32(buf, (const uint32_t *)input.c_str(), -1, 0, -1);
 	hb_buffer_set_direction(buf, HB_DIRECTION_LTR);
 	hb_buffer_set_script(buf, HB_SCRIPT_LATIN);
+	hb_buffer_set_cluster_level(buf, HB_BUFFER_CLUSTER_LEVEL_MONOTONE_CHARACTERS);
 	hb_buffer_set_language(buf, hb_language_from_string("en", -1));
 	hb_shape((hb_font_t *)hbFont, buf, NULL, 0);
 	unsigned int glyphCount;
 	hb_glyph_info_t *glyph_info = hb_buffer_get_glyph_infos(buf, &glyphCount);
 	hb_glyph_position_t *glyph_pos = hb_buffer_get_glyph_positions(buf, &glyphCount);
-	for (int i = 0; i < glyphCount; ++i)
+	vector<UChar> result;
+	for (uint32_t i = 0; i < glyphCount; ++i)
 	{
-		char32_t glyphid = glyph_info[i].codepoint;
-		float x_offset = glyph_pos[i].x_offset / 64.0;
-		float y_offset = glyph_pos[i].y_offset / 64.0;
-		float x_advance = glyph_pos[i].x_advance / 64.0;
-		float y_advance = glyph_pos[i].y_advance / 64.0;
+		result.push_back(
+			{glyph_info[i].codepoint,
+			 glyph_pos[i].x_offset / 64.0,
+			 glyph_pos[i].y_offset / 64.0,
+			 glyph_pos[i].x_advance / 64.0,
+			 glyph_pos[i].y_advance / 64.0,
+			 glyph_info[i].cluster});
 	}
 	hb_buffer_destroy(buf);
-	return input;
+	return result;
+}
+
+bool Font::IsSeperator(unsigned int charcode)
+{
+	return (charcode == seperators[0]) ||
+		   (charcode == seperators[1]) ||
+		   (charcode == seperators[2]) ||
+		   (charcode == seperators[3]);
+}
+
+bool Font::IsNewLine(unsigned int charcode)
+{
+	return charcode == seperators[0];
 }
 } // namespace OpenXaml

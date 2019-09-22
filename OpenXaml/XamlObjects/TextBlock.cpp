@@ -10,6 +10,7 @@
 #include <codecvt>
 #include <locale>
 #include <string>
+#include <iostream>
 #include "OpenXaml/GL/GLConfig.h"
 using namespace std;
 namespace OpenXaml
@@ -19,72 +20,64 @@ namespace Objects
 void TextBlock::Draw()
 {
 	this->Update();
-	glBindVertexArray(TextBlock::VAO);
-	glUseProgram(GL::xamlShader);
-	int vertexColorLocation = glGetUniformLocation(GL::xamlShader, "thecolor");
-	int modeLoc = glGetUniformLocation(GL::xamlShader, "mode");
-	glUniform4f(vertexColorLocation, 0.0f, 0.0f, 0.0f, 1.0f);
-	glUniform1i(modeLoc, 2);
+	/*
+			glBindVertexArray(TextBlock::VAO);
+			glUseProgram(GL::xamlShader);
+			int vertexColorLocation = glGetUniformLocation(GL::xamlShader, "thecolor");
+			int modeLoc = glGetUniformLocation(GL::xamlShader, "mode");
+			glUniform4f(vertexColorLocation, 0.0f, 0.0f, 0.0f, 1.0f);
+			glUniform1i(modeLoc, 2);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
-	for (int i = 0; i < vertexBuffers.size(); i++)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[i]);
-		glBindTexture(GL_TEXTURE_2D, textureMap[vertexBuffers[i]]);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-	}
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
+			for (int i = 0; i < vertexBuffers.size(); i++)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[i]);
+				glBindTexture(GL_TEXTURE_2D, textureMap[vertexBuffers[i]]);
+				glEnableVertexAttribArray(0);
+				glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+				glEnableVertexAttribArray(1);
+				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+			}*/
 }
 void TextBlock::Initialize()
 {
 	glGenVertexArrays(1, &(TextBlock::VAO));
 	glBindVertexArray(TextBlock::VAO);
-	unsigned short indeces[] =
-		{
-			0, 1, 2,
-			1, 2, 3};
 	glGenBuffers(1, &edgeBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
-	glGenBuffers(1, &edgeBuffer2);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 	glGenBuffers(1, &vertexBuffer);
+	glGenBuffers(1, &textureBuffer);
 }
 void TextBlock::Update()
 {
 	font = Environment::GetFont(FontProperties{FontFamily, FontSize});
-	glBindVertexArray(TextBlock::VAO);
-	font->FormatText(Text);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer2);
-
-	for (int i = 0; i < vertexBuffers.size(); i++)
-	{
-		glDeleteBuffers(1, &(vertexBuffers[i]));
-	}
-	vertexBuffers.clear();
+	auto formattedText = font->FormatText(Text);
 	if (font == NULL)
 	{
 		return;
 	}
-	u32string text = Text;
-	int width = 0;
+
+	static const char32_t splitChars[] = {U' ', U'-', U'\t', U'\n'};
+
+	int cluster = -1;
+
+	int desiredLineWidth = 0;
+	int lineWidth = 0;
+	int desiredHeight = 0;
 	int wordWidth = 0;
+	int width = 0;
 	int lineCount = 0;
 	int maxWidth = 0;
 	int wordCount = 0;
 	float fBounds = (maxCoord.x - minCoord.x) / OpenXaml::Environment::window->xScale;
-	static const char splitChars[] = {' ', '-', '\t', '\n'};
-	for (int i = 0; i < text.length(); i++)
+	for (auto character : formattedText)
 	{
-		char sample = text.at(i);
-		wordWidth += font->operator[](sample).AdvanceX >> 6;
-		if (find(begin(splitChars), end(splitChars), sample) != end(splitChars))
+		wordWidth += character.xAdvance;
+		if (font->IsSeperator(character.Character))
 		{
-			//we hit the end of a word
 			bool lineBreak = false;
-			if (sample == '\n')
+			if (font->IsNewLine(character.Character))
 			{
 				lineBreak = true;
 			}
@@ -93,6 +86,7 @@ void TextBlock::Update()
 				//we need to wrap
 				lineBreak = true;
 			}
+
 			if (lineBreak)
 			{
 				lineCount++;
@@ -108,24 +102,25 @@ void TextBlock::Update()
 				wordCount++;
 			}
 		}
-		else if (i == text.length() - 1)
-		{
-			//we need to increment once more at the end if it isn't a seperator
-			lineCount++;
-			width += wordWidth;
-			wordWidth = 0;
-			maxWidth = std::max(maxWidth, width);
-		}
+	}
+
+	if (!font->IsNewLine(formattedText.back().Character))
+	{
+		//we need to increment once more at the end if it isn't a seperator
+		lineCount++;
+		width += wordWidth;
+		wordWidth = 0;
+		maxWidth = std::max(maxWidth, width);
 	}
 
 	width = 0;
 	wordWidth = 0;
-
 	// we now know the total number of lines
 	//so we do largely the same thing, except we can now render line by line
 	//word by word still breaks for center justified text
 	float fWidth = maxWidth * OpenXaml::Environment::window->xScale;
 	int height = (font->Height >> 6);
+
 	float fHeight = height * OpenXaml::Environment::window->yScale * lineCount;
 	switch (VerticalAlignment)
 	{
@@ -189,15 +184,15 @@ void TextBlock::Update()
 	int ppIndex = 0;
 	float penX = 0;
 	float penY = maxRendered.y - height * OpenXaml::Environment::window->yScale;
-	for (int i = 0; i < text.length(); i++)
+	for (int i = 0; i < formattedText.size(); i++)
 	{
-		char sample = text.at(i);
-		wordWidth += font->operator[](sample).AdvanceX >> 6;
-		if (find(begin(splitChars), end(splitChars), sample) != end(splitChars))
+		auto character = formattedText.at(i);
+		wordWidth += character.xAdvance;
+		if (font->IsSeperator(character.Character))
 		{
 			//we hit the end of a word
 			bool lineBreak = false;
-			if (sample == '\n')
+			if (font->IsNewLine(character.Character))
 			{
 				lineBreak = true;
 			}
@@ -231,13 +226,11 @@ void TextBlock::Update()
 				}
 				for (int j = priorIndex; j < ppIndex; j++)
 				{
-					char toRender = text.at(j);
-					Character ch = font->operator[](toRender);
 					if (penX > maxCoord.x)
 					{
 						break;
 					}
-					RenderCharacter(toRender, penX, penY);
+					RenderCharacter(character, penX, penY);
 				}
 				priorIndex = ppIndex + 1;
 				penY -= height * OpenXaml::Environment::window->yScale;
@@ -255,7 +248,7 @@ void TextBlock::Update()
 			wordWidth = 0;
 			ppIndex = i;
 		}
-		else if (i == text.length() - 1)
+		else if (i == formattedText.size() - 1)
 		{
 			//render here too
 			width += wordWidth;
@@ -280,107 +273,75 @@ void TextBlock::Update()
 			}
 			for (int j = priorIndex; j <= i; j++)
 			{
-				char toRender = text.at(j);
-				Character ch = font->operator[](toRender);
 				if (penX > maxCoord.x)
 				{
 					break;
 				}
-				RenderCharacter(toRender, penX, penY);
+				RenderCharacter(character, penX, penY);
 			}
 		}
 	}
 	boxWidth = (maxRendered.x - minRendered.x) / OpenXaml::Environment::window->xScale;
 	boxHeight = (maxRendered.y - minRendered.y) / OpenXaml::Environment::window->yScale;
+	glBindVertexArray(TextBlock::VAO);
 }
 
-void TextBlock::RenderCharacter(wchar_t toRender, float &penX, float &penY)
+void TextBlock::RenderCharacter(UChar ch, float &penX, float &penY)
 {
-	Character ch = font->operator[](toRender);
-	if (!iscntrl(toRender))
+	float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
+	float dx0, dx1, dy0, dy1;
+	dx0 = penX;
+	dx1 = penX + ch.xOffset;
+	dy0 = penY;
+	dy1 = penY + ch.yOffset;
+
+	x0 = max(dx0, minCoord.x);
+	x1 = min(dx1, maxCoord.x);
+	y0 = min(dy0, maxCoord.y);
+	y1 = max(dy1, minCoord.y);
+
+	float dwidth = dx1 - dx0;
+	float dheight = dy1 - dy0;
+	if (x0 != dx0)
 	{
-		float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
-		float dx0, dx1, dy0, dy1;
-		dx0 = penX + ch.BearingX * OpenXaml::Environment::window->xScale;
-		dx1 = penX + (ch.BearingX + ch.Width) * OpenXaml::Environment::window->xScale;
-		dy0 = penY + ch.BearingY * OpenXaml::Environment::window->yScale;
-		dy1 = penY + (ch.BearingY - (int)ch.Height) * OpenXaml::Environment::window->yScale;
-
-		x0 = max(dx0, minCoord.x);
-		x1 = min(dx1, maxCoord.x);
-		y0 = min(dy0, maxCoord.y);
-		y1 = max(dy1, minCoord.y);
-
-		if (y1 < y0)
-		{
-			int a = 0;
-			a++;
-		}
-
-		if (y0 < minCoord.y)
-		{
-			int b = 0;
-			b++;
-		}
-		else if (y1 < minCoord.y)
-		{
-			int c = 0;
-			c++;
-		}
-
-		float dwidth = dx1 - dx0;
-		float dheight = dy1 - dy0;
-		if (x0 != dx0)
-		{
-			tx0 = 1 - (x1 - x0) / dwidth;
-		}
-		else
-		{
-			tx0 = 0;
-		}
-		if (x1 != dx1)
-		{
-			tx1 = (x1 - x0) / dwidth;
-		}
-		else
-		{
-			tx1 = 1;
-		}
-		if (y0 != dy0)
-		{
-			if (toRender != ' ')
-			{
-				int a = 0;
-				a += 3;
-			}
-			ty0 = 1 - (y1 - y0) / dheight;
-		}
-		else
-		{
-			ty0 = 0;
-		}
-		if (y1 != dy1)
-		{
-			ty1 = (y1 - y0) / dheight;
-		}
-		else
-		{
-			ty1 = 1;
-		}
-
-		GLfloat vertices[16] = {
-			x0, y0, tx0, ty0,
-			x1, y0, tx1, ty0,
-			x0, y1, tx0, ty1,
-			x1, y1, tx1, ty1};
-		GLuint sepBuffer;
-		glGenBuffers(1, &sepBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, sepBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		textureMap[sepBuffer] = ch.TextureID;
-		vertexBuffers.push_back(sepBuffer);
+		tx0 = 1 - (x1 - x0) / dwidth;
 	}
-	penX += (ch.AdvanceX >> 6) * OpenXaml::Environment::window->xScale;
+	else
+	{
+		tx0 = 0;
+	}
+	if (x1 != dx1)
+	{
+		tx1 = (x1 - x0) / dwidth;
+	}
+	else
+	{
+		tx1 = 1;
+	}
+	if (y0 != dy0)
+	{
+		ty0 = 1 - (y1 - y0) / dheight;
+	}
+	else
+	{
+		ty0 = 0;
+	}
+	if (y1 != dy1)
+	{
+		ty1 = (y1 - y0) / dheight;
+	}
+	else
+	{
+		ty1 = 1;
+	}
+
+	GLfloat vertices[16] = {
+		x0, y0, tx0, ty0,
+		x1, y0, tx1, ty0,
+		x0, y1, tx0, ty1,
+		x1, y1, tx1, ty1};
+	//need to add data to arrays for gpu offloading
+	penX += ch.xAdvance * OpenXaml::Environment::window->xScale;
 }
 
 TextBlock::TextBlock()
