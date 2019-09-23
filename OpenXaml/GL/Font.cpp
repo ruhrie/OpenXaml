@@ -94,10 +94,12 @@ namespace OpenXaml
 			auto bound = GlyphBound{
 				(float)(x * maxWidth) / (float)width,
 				(float)((x * maxWidth) + bx) / (float)width,
-				(float)(y * maxHeight) / (float)height,
 				(float)(y * maxHeight + by) / (float)height,
+				(float)(y * maxHeight + 0 ) / (float)height,
 				bx * Environment::window->xScale,
 				by * Environment::window->yScale,
+				(float)newFace->glyph->metrics.horiBearingX / 64,
+				(float)newFace->glyph->metrics.horiBearingY / 64
 			};
 			GlyphMap[newFace->glyph->glyph_index] = bound;
 			if (++x > width / maxWidth)

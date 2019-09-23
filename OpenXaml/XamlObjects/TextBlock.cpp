@@ -183,7 +183,7 @@ namespace OpenXaml
 			for (int i = 0; i < formattedText.size(); i++)
 			{
 				auto character = formattedText.at(i);
-				wordWidth += character.xAdvance;
+				wordWidth += font->GlyphMap[character.Character].width / Environment::window->xScale;
 				if (font->IsSeperator(character.Character))
 				{
 					//we hit the end of a word
@@ -226,7 +226,7 @@ namespace OpenXaml
 							{
 								break;
 							}
-							RenderCharacter(character, penX, penY, vBuffer, eBuffer, arrayIndex);
+							RenderCharacter(formattedText.at(j), penX, penY, vBuffer, eBuffer, arrayIndex);
 						}
 						priorIndex = ppIndex + 1;
 						penY -= height * OpenXaml::Environment::window->yScale;
@@ -273,7 +273,7 @@ namespace OpenXaml
 						{
 							break;
 						}
-						RenderCharacter(character, penX, penY, vBuffer, eBuffer, arrayIndex);
+						RenderCharacter(formattedText.at(j), penX, penY, vBuffer, eBuffer, arrayIndex);
 					}
 				}
 			}
@@ -291,12 +291,14 @@ namespace OpenXaml
 
 		void TextBlock::RenderCharacter(UChar ch, float& penX, float& penY, float* vertexBuffer, unsigned short* edgeBuffer, int &index)
 		{
+			auto uchar = font->GlyphMap[ch.Character];
 			float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
 			float dx0, dx1, dy0, dy1;
-			dx0 = penX + ch.xOffset * Environment::window->xScale;
-			dx1 = dx0 + font->GlyphMap[ch.Character].width;
-			dy0 = penY + ch.yOffset * Environment::window->yScale;
-			dy1 = dy0 + font->GlyphMap[ch.Character].height;
+			dx0 = penX + (ch.xOffset + uchar.xBearingH) * Environment::window->xScale;
+			dx1 = dx0 + uchar.width;
+			dy1 = penY + (ch.yOffset + uchar.yBearingH) * Environment::window->yScale;
+			dy0 = dy1 - uchar.height;
+
 
 			
 

@@ -13,6 +13,8 @@ namespace OpenXaml
 		float tyMax;
 		float width;
 		float height;
+		float xBearingH;
+		float yBearingH;
 	};
 
 	struct UChar
