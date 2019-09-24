@@ -66,6 +66,7 @@ namespace OpenXaml
 			float fBounds = (maxCoord.x - minCoord.x) / OpenXaml::Environment::window->xScale;
 			for (auto character : formattedText)
 			{
+				auto uchar = font->GlyphMap[character.Character];
 				wordWidth += character.xAdvance;
 				if (font->IsSeperator(character.Character))
 				{
@@ -183,7 +184,8 @@ namespace OpenXaml
 			for (int i = 0; i < formattedText.size(); i++)
 			{
 				auto character = formattedText.at(i);
-				wordWidth += font->GlyphMap[character.Character].width / Environment::window->xScale;
+				auto uchar = font->GlyphMap[character.Character];
+				wordWidth += character.xAdvance;
 				if (font->IsSeperator(character.Character))
 				{
 					//we hit the end of a word
@@ -202,6 +204,16 @@ namespace OpenXaml
 						//there isn't enough space for the word or we need to line wrap
 						//or there is a new line feed
 						//we can now render it
+
+						for (int j = priorIndex; j < ppIndex + 1; j++)
+						{
+							if (penX > maxCoord.x)
+							{
+								break;
+							}
+							RenderCharacter(formattedText.at(j), penX, penY, vBuffer, eBuffer, arrayIndex);
+						}
+
 						switch (TextAlignment)
 						{
 						case TextAlignment::Center:
@@ -220,15 +232,8 @@ namespace OpenXaml
 							break;
 						}
 						}
-						for (int j = priorIndex; j < ppIndex; j++)
-						{
-							if (penX > maxCoord.x)
-							{
-								break;
-							}
-							RenderCharacter(formattedText.at(j), penX, penY, vBuffer, eBuffer, arrayIndex);
-						}
-						priorIndex = ppIndex + 1;
+						
+						priorIndex = ++ppIndex;
 						penY -= height * OpenXaml::Environment::window->yScale;
 						if (penY < minCoord.y - height * OpenXaml::Environment::window->yScale)
 						{
@@ -369,6 +374,7 @@ namespace OpenXaml
 
 			index++;
 			penX += ch.xAdvance * OpenXaml::Environment::window->xScale;
+			penY -= ch.yAdvance * OpenXaml::Environment::window->yScale;
 		}
 
 		TextBlock::TextBlock()
