@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 	}
 	catch (int error)
 	{
-		std::cerr << "Failed\n";
+		std::cerr << "Failed" << error << "\n";
 		return -1;
 	}
 
