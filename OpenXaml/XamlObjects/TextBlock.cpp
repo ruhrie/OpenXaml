@@ -271,6 +271,7 @@ namespace OpenXaml
                     RenderCharacter(formattedText.at(j), penX, penY, vBuffer, eBuffer, arrayIndex);
                 }
                 penY -= height * OpenXaml::Environment::window->yScale;
+                width = 0;
             }
             
             boxWidth = (maxRendered.x - minRendered.x) / OpenXaml::Environment::window->xScale;
