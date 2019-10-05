@@ -100,10 +100,10 @@ namespace OpenXaml
                 }
                 //we now know the number of lines in this 'line' as well as its width, so increment and set the width
                 lineCount++;
-                maxWidth = std::max(maxWidth, width);
+                maxWidth = std::max(maxWidth, wordWidth);
                 charsToRender += formattedText.size();
             }
-
+            maxWidth = std::max(maxWidth, width);
             //we now know the true number of lines and the true width
             //so we can start rendering
 
@@ -248,7 +248,7 @@ namespace OpenXaml
                 {
                     case TextAlignment::Center:
                     {
-                        penX = (minRendered.x + maxRendered.x) * 0.5f - width * 0.5f * OpenXaml::Environment::window->xScale;
+                        penX = (minRendered.x + maxRendered.x) * 0.5f - wordWidth * 0.5f * OpenXaml::Environment::window->xScale;
                         break;
                     }
                     case TextAlignment::End:

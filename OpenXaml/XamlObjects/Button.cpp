@@ -6,67 +6,66 @@
 
 using namespace std;
 
-namespace OpenXaml 
+namespace OpenXaml
 {
-	namespace Objects
-	{
-		void Button::Draw()
-		{
-			this->Update();
-			Frame->Draw();
-			Label->Draw();
-		}
-		void Button::Initialize()
-		{
-			Frame->Initialize();
-			Label->Initialize();
-		}
+    namespace Objects
+    {
+        void Button::Draw()
+        {
+            Frame->Draw();
+            Label->Draw();
+        }
+        void Button::Initialize()
+        {
+            Frame->Initialize();
+            Label->Initialize();
+            Update();
+        }
 
-		void Button::Update()
-		{
-			Label->setText(Text);
-			Label->setVerticalAlignment(VerticalAlignment);
-			Label->setHorizontalAlignment(HorizontalAlignment);
-			Label->setTextAlignment(TextAlignment::Center);
-			Label->Update();
-			Frame->setWidth(Label->getWidth());
-			Frame->setHeight(Label->getHeight());
-			Frame->setHorizontalAlignment(HorizontalAlignment);
-			Frame->setVerticalAlignment(VerticalAlignment);
-			Frame->setFill(Fill);
-			Frame->Update();
-			maxRendered = GetMaxRendered();
-			minRendered = GetMinRendered();
-		}
-		Button::Button()
-		{
-			Label = new TextBlock();
-			Frame = new Rectangle();
-			DerivedElements.push_back(Label);
-			DerivedElements.push_back(Frame);
-		}
-		Button::~Button()
-		{
-			delete Label;
-			delete Frame;
-		}
+        void Button::Update()
+        {
+            Label->setText(Text);
+            Label->setVerticalAlignment(VerticalAlignment);
+            Label->setHorizontalAlignment(HorizontalAlignment);
+            Label->setTextAlignment(TextAlignment::Center);
+            Label->Update();
+            Frame->setWidth(Label->getWidth());
+            Frame->setHeight(Label->getHeight());
+            Frame->setHorizontalAlignment(HorizontalAlignment);
+            Frame->setVerticalAlignment(VerticalAlignment);
+            Frame->setFill(Fill);
+            Frame->Update();
+            maxRendered = GetMaxRendered();
+            minRendered = GetMinRendered();
+        }
+        Button::Button()
+        {
+            Label = new TextBlock();
+            Frame = new Rectangle();
+            DerivedElements.push_back(Label);
+            DerivedElements.push_back(Frame);
+        }
+        Button::~Button()
+        {
+            delete Label;
+            delete Frame;
+        }
 
-
-		void Button::setFill(unsigned int fill)
-		{
-			this->Fill = fill;
-		}
-		unsigned int Button::getFill()
-		{
-			return this->Fill;
-		}
-		void Button::setText(std::string content)
-		{
-			this->Text = content;
-		}
-		std::string Button::getText()
-		{
-			return this->Text;
-		}
-	}
-}
+        void Button::setFill(unsigned int fill)
+        {
+            this->Fill = fill;
+        }
+        unsigned int Button::getFill()
+        {
+            return this->Fill;
+        }
+        void Button::setText(std::string content)
+        {
+            this->Text = content;
+        }
+        std::string Button::getText()
+        {
+            return this->Text;
+        }
+    } // namespace Objects
+} // namespace OpenXaml
