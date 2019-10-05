@@ -306,7 +306,7 @@ namespace OpenXaml
             auto textureLoc = font->GlyphMap[ch.Character];
             if (x0 != dx0)
             {
-                tx0 = textureLoc.txMin + (textureLoc.txMax - textureLoc.txMin) * (x1 - x0) / dwidth;
+                tx0 = textureLoc.txMax - (textureLoc.txMax - textureLoc.txMin) * (x1 - x0) / dwidth;
             }
             else
             {
