@@ -12,7 +12,11 @@ namespace OpenXaml
             PlaceholderTextTextBlock = new TextBlock();
             TextTextBlock = new TextBlock();
             TextTextBlock->setText(Text);
+            TextTextBlock->setTextAlignment(TextAlignment::Start);
+            TextTextBlock->setHorizontalAlignment(HorizontalAlignment::Left);
+            PlaceholderTextTextBlock->setTextAlignment(TextAlignment::Start);
             PlaceholderTextTextBlock->setText(PlaceholderText);
+            PlaceholderTextTextBlock->setHorizontalAlignment(HorizontalAlignment::Left);
             DerivedElements.push_back(PlaceholderTextTextBlock);
             DerivedElements.push_back(TextTextBlock);
             DerivedElements.push_back(Frame);
@@ -74,11 +78,12 @@ namespace OpenXaml
             Frame->setHorizontalAlignment(HorizontalAlignment);
             Frame->setVerticalAlignment(VerticalAlignment);
             Frame->Update();
-            PlaceholderTextTextBlock->setHorizontalAlignment(HorizontalAlignment);
-            PlaceholderTextTextBlock->setVerticalAlignment(VerticalAlignment);
+            auto min = Frame->GetMinRendered();
+            auto max = Frame->GetMaxRendered();
+            PlaceholderTextTextBlock->SetBoundingBox(min, max);
             PlaceholderTextTextBlock->Update();
-            TextTextBlock->setHorizontalAlignment(HorizontalAlignment);
-            TextTextBlock->setVerticalAlignment(VerticalAlignment);
+            TextTextBlock->setText(Text);
+            TextTextBlock->SetBoundingBox(min, max);
             TextTextBlock->Update();
             XamlObject::Update();
         }
@@ -93,7 +98,6 @@ namespace OpenXaml
         }
         void TextBox::setText(std::string text)
         {
-            TextTextBlock->setText(text);
             Text = text;
             Update();
         }
