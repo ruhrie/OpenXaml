@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <codecvt>
 #include <glad/glad.h>
-#include <hb.h>
+#include <harfbuzz/hb.h>
 #include <iostream>
 #include <locale>
 #include <sstream>

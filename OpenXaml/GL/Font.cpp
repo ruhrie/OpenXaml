@@ -5,8 +5,8 @@
 #include <filesystem>
 #include <ft2build.h>
 #include <glad/glad.h>
-#include <hb-ft.h>
-#include <hb.h>
+#include <harfbuzz/hb-ft.h>
+#include <harfbuzz/hb.h>
 #include <iostream>
 #include <string>
 #include <vector>
