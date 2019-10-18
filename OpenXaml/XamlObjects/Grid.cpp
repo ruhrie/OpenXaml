@@ -21,6 +21,7 @@ namespace OpenXaml
 		{
 			delete RowDefinitions;
 			delete ColumnDefinitions;
+			XamlObject::~XamlObject();
 		}
 		void Grid::Initialize()
 		{

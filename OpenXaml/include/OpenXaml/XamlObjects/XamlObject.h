@@ -20,7 +20,7 @@ namespace OpenXaml
             virtual void Initialize() = 0;      ///Currently responsible for initializing the OpenGL attributes. Due to be removed soon.
             virtual void Update();
             XamlObject();
-            ~XamlObject();
+            virtual ~XamlObject();
             void setHorizontalAlignment(HorizontalAlignment alignment);
             void setVerticalAlignment(VerticalAlignment alignment);
             HorizontalAlignment getHorizontalAlignment();

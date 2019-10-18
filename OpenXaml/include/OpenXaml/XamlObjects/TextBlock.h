@@ -35,7 +35,6 @@ namespace OpenXaml
 		private:
 			unsigned int edgeBuffer;
 			unsigned int vertexBuffer;
-			unsigned int textureBuffer;
 			std::map<unsigned int, unsigned int> textureMap;
 			unsigned int boxWidth;
 			unsigned int boxHeight;

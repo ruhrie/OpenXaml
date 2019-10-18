@@ -11,10 +11,7 @@ namespace OpenXaml
 		}
 		ColumnDefinitionCollection::~ColumnDefinitionCollection()
 		{
-			for (auto child : Children)
-			{
-				delete child;
-			}
+			XamlObject::~XamlObject();
 		}
 
 		void ColumnDefinitionCollection::Draw()

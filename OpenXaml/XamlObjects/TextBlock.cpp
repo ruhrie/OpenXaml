@@ -193,7 +193,6 @@ namespace OpenXaml
                 int k = 0;
                 for (auto character : formattedText)
                 {
-                    auto uchar = font->GlyphMap[character.Character];
                     wordWidth += character.xAdvance;
                     if (font->IsSeperator(character.Character))
                     {
@@ -378,6 +377,7 @@ namespace OpenXaml
         {
             //glBindVertexArray(TextBlock::VAO);
             //glDeleteVertexArrays(1, &TextBlock::VAO);
+            XamlObject::~XamlObject();
         }
 
         void TextBlock::setText(u32string text)

@@ -49,6 +49,7 @@ namespace OpenXaml
         {
             delete Label;
             delete Frame;
+            XamlObject::~XamlObject();
         }
 
         void Button::setFill(unsigned int fill)

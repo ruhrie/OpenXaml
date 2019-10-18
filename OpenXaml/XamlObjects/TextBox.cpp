@@ -30,6 +30,7 @@ namespace OpenXaml
             delete Frame;
             delete PlaceholderTextTextBlock;
             delete TextTextBlock;
+            XamlObject::~XamlObject();
         }
 
         void TextBox::setOnClick(std::function<void(XamlObject *)> func)

@@ -161,6 +161,7 @@ namespace OpenXaml
 			glDeleteBuffers(1, &vertexBuffer);
 			glDeleteBuffers(1, &edgeBuffer);
 			glDeleteVertexArrays(1, &(Rectangle::VAO));
+			XamlObject::~XamlObject();
 		}
 
 		void Rectangle::setFill(unsigned int fill)

@@ -10,10 +10,7 @@ namespace OpenXaml
 		}
 		RowDefinitionCollection::~RowDefinitionCollection()
 		{
-			for (auto child : Children)
-			{
-				delete child;
-			}
+			XamlObject::~XamlObject();
 		}
 		void RowDefinitionCollection::Draw()
 		{

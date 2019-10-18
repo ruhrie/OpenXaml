@@ -96,6 +96,7 @@ namespace OpenXaml
 			glDeleteBuffers(1, &vertexBuffer);
 			glDeleteBuffers(1, &edgeBuffer);
 			glDeleteVertexArrays(1, &VAO);
+			XamlObject::~XamlObject();
 		}
 
 		void Frame::setFill(unsigned int fill)
