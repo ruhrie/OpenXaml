@@ -10,7 +10,6 @@ namespace OpenXaml
 	{
 		void Rectangle::Draw()
 		{
-			this->Update();
 			glBindVertexArray(Rectangle::VAO);
 			glUseProgram(GL::xamlShader);
 			int vertexColorLocation = glGetUniformLocation(GL::xamlShader, "thecolor");
@@ -44,6 +43,7 @@ namespace OpenXaml
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
 			glBindVertexArray(0);
+			Update();
 		}
 
 		void Rectangle::Update()

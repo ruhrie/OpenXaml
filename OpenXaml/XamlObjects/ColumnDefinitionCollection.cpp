@@ -2,29 +2,18 @@
 
 namespace OpenXaml
 {
-	namespace Objects
-	{
+    namespace Objects
+    {
 
-		ColumnDefinitionCollection::ColumnDefinitionCollection()
-		{
-
-		}
-		ColumnDefinitionCollection::~ColumnDefinitionCollection()
-		{
-			XamlObject::~XamlObject();
-		}
-
-		void ColumnDefinitionCollection::Draw()
-		{
-
-		}
-		void ColumnDefinitionCollection::Initialize()
-		{
-
-		}
-		void ColumnDefinitionCollection::Update()
-		{
-
-		}
-	}
-}
+        ColumnDefinitionCollection::ColumnDefinitionCollection()
+        {
+        }
+        ColumnDefinitionCollection::~ColumnDefinitionCollection()
+        {
+            for (auto col : Children)
+            {
+                delete col;
+			}
+        }
+    } // namespace Objects
+} // namespace OpenXaml

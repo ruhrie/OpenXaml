@@ -10,7 +10,7 @@ namespace xut
 		TextBoxElement::TextBoxElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::TextBox)
 		{
 			init += "OpenXaml::Objects::TextBox* %name%;\n";
-			term += "delete %name%;\n";
+			//term += "delete %name%;\n";
 			bodyInit += "%name% = new OpenXaml::Objects::TextBox();\n";
 			DOMAttr* text = element->getAttributeNode(XMLString::transcode("Text"));
 			if (text != NULL)

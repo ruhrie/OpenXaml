@@ -9,7 +9,7 @@ namespace xut
 		ColumnDefinitionElement::ColumnDefinitionElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::ColumnDefinition)
 		{
 			init += "OpenXaml::Objects::ColumnDefinition* %name%;\n";
-			term += "delete %name%;\n";
+			//term += "delete %name%;\n";
 			bodyInit += "%name% = new OpenXaml::Objects::ColumnDefinition();\n";
 			/*DOMAttr* width = element->getAttributeNode(XMLString::transcode("Width"));
 			if (width != NULL)

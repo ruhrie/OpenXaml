@@ -10,7 +10,7 @@ namespace xut
 		TextBlockElement::TextBlockElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::TextBlock)
 		{
 			init += "OpenXaml::Objects::TextBlock* %name%;\n";
-			term += "delete %name%;\n";
+			//term += "delete %name%;\n";
 			bodyInit += "%name% = new OpenXaml::Objects::TextBlock();\n";
 			DOMAttr* fill = element->getAttributeNode(XMLString::transcode("Fill"));
 			if (fill != NULL)

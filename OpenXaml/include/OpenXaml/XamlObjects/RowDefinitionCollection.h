@@ -1,21 +1,17 @@
 #pragma once
-#include <vector>
 #include "OpenXaml/XamlObjects/RowDefinition.h"
-#include "OpenXaml/XamlObjects/XamlObject.h"
+#include <vector>
 namespace OpenXaml
 {
-	namespace Objects
-	{
-		///A renderable wrapper for row definitions
-		class RowDefinitionCollection : public XamlObject
-		{
-		public:
-			RowDefinitionCollection();
-			~RowDefinitionCollection();
-			std::vector<RowDefinition*> Children;
-			void Draw();
-			void Initialize();
-			void Update();
-		};
-	}
-}
+    namespace Objects
+    {
+        ///A wrapper for row definitions
+        class RowDefinitionCollection
+        {
+        public:
+            RowDefinitionCollection();
+            ~RowDefinitionCollection();
+            std::vector<RowDefinition *> Children;
+        };
+    } // namespace Objects
+} // namespace OpenXaml

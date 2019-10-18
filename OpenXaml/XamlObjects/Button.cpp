@@ -47,8 +47,6 @@ namespace OpenXaml
         }
         Button::~Button()
         {
-            delete Label;
-            delete Frame;
             XamlObject::~XamlObject();
         }
 

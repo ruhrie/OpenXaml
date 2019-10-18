@@ -27,9 +27,6 @@ namespace OpenXaml
         {
             Events::RemoveEvent(Events::XamlEvent::TextEvent, this);
             Events::RemoveEvent(Events::XamlEvent::ClickEvent, this);
-            delete Frame;
-            delete PlaceholderTextTextBlock;
-            delete TextTextBlock;
             XamlObject::~XamlObject();
         }
 
