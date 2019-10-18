@@ -7,6 +7,7 @@
 #include <glad/glad.h>
 #include <filesystem>
 #include <iostream>
+#include <codecvt>
 #ifdef VULKAN
 #define GLFW_INCLUDE_VULKAN
 #endif
