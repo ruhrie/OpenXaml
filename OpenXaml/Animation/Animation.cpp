@@ -1,8 +1,10 @@
 #include "OpenXaml/Animation/Animation.h"
+#include "OpenXaml/Animation/AnimationEvent.h"
 #include <map>
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <tuple>
 #include <vector>
 using namespace std::chrono;
 namespace OpenXaml
@@ -10,16 +12,15 @@ namespace OpenXaml
     namespace Animation
     {
         //https://en.cppreference.com/w/cpp/thread/condition_variable
-        std::priority_queue<steady_clock::time_point, std::vector<steady_clock::time_point>, std::greater<steady_clock::time_point>> waitQueue;
+        std::priority_queue<AnimationEvent, std::vector<AnimationEvent>, std::greater<AnimationEvent>> waitQueue;
         std::condition_variable cv;
         std::mutex queueMutex, workerMutex, stopMutex;
         std::thread animationThread;
         bool stopThread = false;
-        void AddTimeoutEvent(Objects::XamlObject *object, microseconds delay)
+        void AddTimeoutEvent(Objects::XamlObject *object, AnimationEvent event)
         {
             queueMutex.lock();
-            time_point<steady_clock> time = steady_clock::now() + delay;
-            waitQueue.push(time);
+            waitQueue.push(event);
             queueMutex.unlock();
             cv.notify_one();
         }
@@ -31,6 +32,7 @@ namespace OpenXaml
                 stopMutex.lock();
                 bool toStop = stopThread;
                 stopMutex.unlock();
+                bool toSkip = false;
                 if (toStop)
                 {
                     return;
@@ -38,44 +40,35 @@ namespace OpenXaml
                 else
                 {
                     auto now = steady_clock::now();
-                    steady_clock::time_point waitTil;
                     std::unique_lock<std::mutex> lk(queueMutex);
-                    if (!waitQueue.empty())
+                    AnimationEvent t;
+                    while (true)
                     {
-                        auto t = waitQueue.top();
-                        while (t <= now)
+                        if (waitQueue.empty())
                         {
-                            //notify controls here
-                            waitQueue.pop();
-                            if (waitQueue.empty())
-                            {
-                                t = now;
-                                break;
-                            }
-                            t = waitQueue.top();
+                            toSkip = true;
+                            break;
                         }
-                        if (t != now)
+                        t = waitQueue.top();
+                        if (t.Time <= now)
                         {
-                            waitTil = t;
+                            waitQueue.pop();
+                            //notify here
                         }
                         else
                         {
-                            waitTil = now;
+                            break;
                         }
-                    }
-                    else
-                    {
-                        waitTil = now;
                     }
                     lk.unlock();
                     std::unique_lock<std::mutex> pk(workerMutex);
-                    if (waitTil == now)
+                    if (toSkip)
                     {
                         cv.wait(pk);
                     }
                     else
                     {
-                        cv.wait_until(pk, waitTil);
+                        cv.wait_until(pk, t.Time);
                     }
                 }
             }
