@@ -1,5 +1,5 @@
 #include "OpenXaml/Animation/Animation.h"
-#include "OpenXaml/Animation/AnimationEvent.h"
+#include <GLFW/glfw3.h>
 #include <map>
 #include <mutex>
 #include <queue>
@@ -13,11 +13,12 @@ namespace OpenXaml
     {
         //https://en.cppreference.com/w/cpp/thread/condition_variable
         std::priority_queue<AnimationEvent, std::vector<AnimationEvent>, std::greater<AnimationEvent>> waitQueue;
+        std::vector<AnimationEvent> AnimationQueue;
         std::condition_variable cv;
-        std::mutex queueMutex, workerMutex, stopMutex;
+        std::mutex queueMutex, workerMutex, stopMutex, animationMutex;
         std::thread animationThread;
         bool stopThread = false;
-        void AddTimeoutEvent(Objects::XamlObject *object, AnimationEvent event)
+        void AddTimeoutEvent(AnimationEvent event)
         {
             queueMutex.lock();
             waitQueue.push(event);
@@ -53,7 +54,10 @@ namespace OpenXaml
                         if (t.Time <= now)
                         {
                             waitQueue.pop();
-                            //notify here
+                            animationMutex.lock();
+                            AnimationQueue.push_back(t);
+                            glfwPostEmptyEvent();
+                            animationMutex.unlock();
                         }
                         else
                         {

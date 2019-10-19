@@ -28,7 +28,7 @@ namespace OpenXaml
                 return lhs.Time >= rhs.Time;
             }
 
-            AnimationEvent(std::chrono::microseconds delay, Objects::XamlObject *target)
+            AnimationEvent(Objects::XamlObject *target, std::chrono::microseconds delay)
             {
                 Time = std::chrono::steady_clock::now() + delay;
                 Target = target;

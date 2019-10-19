@@ -30,6 +30,11 @@ namespace OpenXaml
         }
     }
 
+    void windowSizeCallback(GLFWwindow *window, int width, int height)
+    {
+        Environment::UpdateDpi();
+    }
+
     void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
     }
@@ -68,11 +73,11 @@ namespace OpenXaml
             throw 2;
         }
         Environment::LoadEnvironment();
-		Animation::StartAnimationThread();
+        Animation::StartAnimationThread();
     }
     Application::~Application()
     {
-		Animation::StopAnimationThread();
+        Animation::StopAnimationThread();
         delete frame;
         glfwTerminate();
         Environment::ClearEnvironment();
@@ -80,6 +85,7 @@ namespace OpenXaml
 
     void Application::Run()
     {
+        glfwSwapInterval(1);
         glfwShowWindow(window);
         while (!glfwWindowShouldClose(window))
         {
@@ -91,7 +97,7 @@ namespace OpenXaml
             glfwGetWindowSize(window, &width, &height);
 
             glViewport(0, 0, width, height);
-            glfwPollEvents();
+            glfwWaitEvents();
             Events::HandleEvents();
         }
         glfwHideWindow(window);
@@ -107,6 +113,7 @@ namespace OpenXaml
         glfwSetMouseButtonCallback(window, mouseButtonCallback);
         glfwSetKeyCallback(window, keyCallback);
         glfwSetCharCallback(window, textCallback);
+        glfwSetWindowSizeCallback(window, windowSizeCallback);
         frame->Initialize();
     }
 } // namespace OpenXaml
