@@ -192,5 +192,10 @@ namespace OpenXaml
                 }
             }
         }
+
+        void XamlObject::AnimationUpdate(int arg)
+        {
+            Update();
+		}
     } // namespace Objects
 } // namespace OpenXaml

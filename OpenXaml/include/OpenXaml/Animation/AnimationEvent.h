@@ -10,6 +10,7 @@ namespace OpenXaml
         {
             Objects::XamlObject *Target;
             std::chrono::steady_clock::time_point Time;
+            int Argument;
 
             friend bool operator<(const AnimationEvent &lhs, const AnimationEvent &rhs)
             {
@@ -28,15 +29,17 @@ namespace OpenXaml
                 return lhs.Time >= rhs.Time;
             }
 
-            AnimationEvent(Objects::XamlObject *target, std::chrono::microseconds delay)
+            AnimationEvent(Objects::XamlObject *target, std::chrono::microseconds delay, int argument = -1)
             {
                 Time = std::chrono::steady_clock::now() + delay;
                 Target = target;
+                Argument = argument;
             }
             AnimationEvent()
             {
                 Time = std::chrono::steady_clock::now();
                 Target = NULL;
+                Argument = -1;
             }
         };
     } // namespace Animation

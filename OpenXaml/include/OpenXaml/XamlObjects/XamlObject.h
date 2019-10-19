@@ -42,6 +42,7 @@ namespace OpenXaml
             std::function<void(XamlObject *)> getOnClick();
             coordinate GetMaxRendered(); ///Gets the upper right corner of the actually rendered object
             coordinate GetMinRendered(); ///Gets the lower left corner of the actually rendered object
+            virtual void AnimationUpdate(int arg);
 
         protected:
             coordinate minCoord;

@@ -9,5 +9,6 @@ namespace OpenXaml
         void AddTimeoutEvent(AnimationEvent event);
         void StartAnimationThread();
         void StopAnimationThread();
+        void PostPendingAnimations();
     } // namespace Animation
 } // namespace OpenXaml

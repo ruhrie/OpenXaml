@@ -89,5 +89,17 @@ namespace OpenXaml
             cv.notify_one();
             animationThread.join();
         }
+        void GetPendingAnimations()
+        {
+            std::vector<AnimationEvent> pendingEvents;
+            animationMutex.lock();
+            pendingEvents = AnimationQueue;
+            AnimationQueue.clear();
+            animationMutex.unlock();
+            for (auto event : pendingEvents)
+            {
+                event.Target->AnimationUpdate(event.Argument);
+            }
+        }
     } // namespace Animation
 } // namespace OpenXaml
