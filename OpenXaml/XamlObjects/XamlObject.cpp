@@ -5,8 +5,8 @@
 #include "OpenXaml/XamlObjects/Rectangle.h"
 #include "OpenXaml/XamlObjects/TextBlock.h"
 #include <OpenXaml/Environment/Environment.h>
-#include <OpenXaml\Environment\Window.h>
-#include <OpenXaml\XamlEvents\XamlEvent.h>
+#include <OpenXaml/Environment/Window.h>
+#include <OpenXaml/XamlEvents/XamlEvent.h>
 #include <algorithm>
 #include <functional>
 

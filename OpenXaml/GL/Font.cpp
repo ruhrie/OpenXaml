@@ -7,6 +7,7 @@
 #include <glad/glad.h>
 #include <harfbuzz/hb-ft.h>
 #include <harfbuzz/hb.h>
+#include <math.h>
 #include <iostream>
 #include <string>
 #include <vector>

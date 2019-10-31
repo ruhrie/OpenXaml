@@ -1,7 +1,7 @@
 #pragma once
 #include "OpenXaml/GL/Font.h"
 #include "OpenXaml/GL/FontProperties.h"
-#include <OpenXaml\XamlObjects\XamlObject.h>
+#include <OpenXaml/XamlObjects/XamlObject.h>
 #include <map>
 #include <string>
 #include <vector>

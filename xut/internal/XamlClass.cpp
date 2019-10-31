@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <fstream>
 #include "OpenXaml/Application.h"
-#include <xml\ErrorReader.h>
+#include <xml/ErrorReader.h>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMText.hpp>

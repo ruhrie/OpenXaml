@@ -1,7 +1,7 @@
 #include "OpenXaml/XamlObjects/TextBox.h"
 #include "OpenXaml/Environment/Environment.h"
 #include "OpenXaml/XamlEvents/XamlEvents.h"
-#include "OpenXaml\Environment\Window.h"
+#include "OpenXaml/Environment/Window.h"
 namespace OpenXaml
 {
     namespace Objects

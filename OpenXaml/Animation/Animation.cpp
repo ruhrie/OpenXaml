@@ -4,6 +4,7 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <condition_variable>
 #include <tuple>
 #include <vector>
 using namespace std::chrono;

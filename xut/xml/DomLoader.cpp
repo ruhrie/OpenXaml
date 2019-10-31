@@ -2,7 +2,7 @@
 #include "xml/UID.h"
 #include <sstream>
 #include <xercesc/dom/DOMDocument.hpp>
-#include <xercesc\util\XMLString.hpp>
+#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 using namespace xercesc;
