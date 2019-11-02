@@ -17,9 +17,12 @@ namespace OpenXaml
             PlaceholderTextTextBlock->setTextAlignment(TextAlignment::Start);
             PlaceholderTextTextBlock->setText(PlaceholderText);
             PlaceholderTextTextBlock->setHorizontalAlignment(HorizontalAlignment::Left);
+            Indicator = new Rectangle();
+
             DerivedElements.push_back(PlaceholderTextTextBlock);
             DerivedElements.push_back(TextTextBlock);
             DerivedElements.push_back(Frame);
+            DerivedElements.push_back(Indicator);
             Events::AddEvent(Events::XamlEvent::TextEvent, this);
             Events::AddEvent(Events::XamlEvent::ClickEvent, this);
         }
@@ -40,6 +43,7 @@ namespace OpenXaml
             Frame->Initialize();
             PlaceholderTextTextBlock->Initialize();
             TextTextBlock->Initialize();
+            Indicator->Initialize();
             Update();
         }
         void TextBox::Draw()
@@ -108,7 +112,10 @@ namespace OpenXaml
         {
             if (Environment::ActiveElement == this)
             {
-                Text += text;
+                std::string pre = Text.substr(0, Index);
+                std::string post = Text.substr(Index, Text.length() - Index);
+                Text = pre + text + post;
+                Index += text.length();
                 Update();
             }
         }
