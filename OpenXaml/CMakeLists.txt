@@ -13,20 +13,24 @@ set (LOCAL_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 set (OPENGL_INC "")
 set (VULKAN_INC "")
 set (LIBRARIES glfw harfbuzz::harfbuzz Freetype::Freetype)
+set (COMP_DEC "")
+
 if (UNIX)
-	set(LIBRARIES ${LIBRARIES} "-lstdc++fs")
-endif(UNIX)
+	set(LIBRARIES ${LIBRARIES} "-lstdc++fs")	
+elseif (WIN32)
+	list(APPEND COMP_DEC "_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING")
+endif()
 
 if(OPENGL_FOUND)
 	set (LIBRARIES ${LIBRARIES} ${OPENGL_gl_LIBRARY})
 	set (OPENGL_INC ${OPENGL_INCLUDE_DIR})
-	add_compile_definitions("OPENGL")
+	list(APPEND COMP_DEC "OPENGL")
 endif(OPENGL_FOUND)
 
 if(Vulkan_FOUND)
     set (LIBRARIES ${LIBRARIES} ${Vulkan_LIBRARIES})
     set(VULKAN_INC ${Vulkan_INCLUDE_DIRS})
-    add_compile_definitions("VULKAN")
+    list(APPEND COMP_DEC "VULKAN")
 endif(Vulkan_FOUND)
 add_library(OpenXaml STATIC ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp")
 set_target_properties(OpenXaml 
@@ -37,6 +41,9 @@ set_target_properties(OpenXaml
 
 target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INCLUDE_DIRS} ${GLAD_INC} ${GLFW_INCCLUDE_DIR} ${OPENGL_INC} ${HARFBUZZ_INC})
 target_link_libraries(OpenXaml PRIVATE ${LIBRARIES})
+if(WIN32)
+	target_compile_definitions(OpenXaml PRIVATE ${COMP_DEC})
+endif()
 
 file(GLOB HEADERS "include/OpenXaml")
 
