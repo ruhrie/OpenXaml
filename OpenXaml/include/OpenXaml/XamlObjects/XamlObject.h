@@ -1,6 +1,7 @@
 #pragma once
 #include "OpenXaml/Properties/Alignment.h"
 #include "OpenXaml/Properties/TextWrapping.h"
+#include "OpenXaml/Properties/Thickness.h"
 #include "OpenXaml/Properties/Visibility.h"
 #include "OpenXaml/XamlObjects/Coordinate.h"
 #include <functional>
@@ -43,6 +44,7 @@ namespace OpenXaml
             coordinate GetMaxRendered(); ///Gets the upper right corner of the actually rendered object
             coordinate GetMinRendered(); ///Gets the lower left corner of the actually rendered object
             virtual void AnimationUpdate(int arg);
+            Thickness Margin;
 
         protected:
             coordinate minCoord;
