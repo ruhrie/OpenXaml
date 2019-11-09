@@ -1,7 +1,7 @@
 #pragma once
 namespace OpenXaml
 {
-	enum class Visibliity
+	enum class Visibility
 	{
 		Visible,
 		Collapsed

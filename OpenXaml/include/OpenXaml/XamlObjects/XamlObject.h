@@ -34,18 +34,19 @@ namespace OpenXaml
             int getRow();
             void setRow(int row);
             void setColumn(int column);
-            void setVisibility(OpenXaml::Visibliity visibility);
-            OpenXaml::Visibliity getVisibility();
+            void setVisibility(OpenXaml::Visibility visibility);
+            OpenXaml::Visibility getVisibility();
             virtual void SetBoundingBox(coordinate min, coordinate max); ///Sets the bounding box for rendering the object (not where it actually renders).
             void Click();
             void Click(double x, double y);
             virtual void setOnClick(std::function<void(XamlObject *)> func);
             std::function<void(XamlObject *)> getOnClick();
             coordinate GetMaxRendered(); ///Gets the upper right corner of the actually rendered object
+            coordinate GetMaxRenderable();
             coordinate GetMinRendered(); ///Gets the lower left corner of the actually rendered object
+            coordinate GetMinRenderable();
             virtual void AnimationUpdate(int arg);
             Thickness Margin;
-
         protected:
             coordinate minCoord;
             coordinate maxCoord;
@@ -53,7 +54,7 @@ namespace OpenXaml
             coordinate maxRendered;
             int Height;
             int Width;
-            OpenXaml::Visibliity Visibility;
+            OpenXaml::Visibility Visibility;
             HorizontalAlignment HorizontalAlignment = HorizontalAlignment::Stretch;
             VerticalAlignment VerticalAlignment = VerticalAlignment::Stretch;
             unsigned int VAO;

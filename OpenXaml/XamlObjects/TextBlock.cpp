@@ -224,7 +224,7 @@ namespace OpenXaml
                                     break;
                                 }
                                 RenderCharacter(formattedText.at(j), penX, penY, vBuffer, eBuffer, arrayIndex);
-                            }                            
+                            }
 
                             priorIndex = ++ppIndex;
                             penY -= height * OpenXaml::Environment::window->yScale;
@@ -272,7 +272,7 @@ namespace OpenXaml
                 penY -= height * OpenXaml::Environment::window->yScale;
                 width = 0;
             }
-            
+
             boxWidth = (maxRendered.x - minRendered.x) / OpenXaml::Environment::window->xScale;
             boxHeight = (maxRendered.y - minRendered.y) / OpenXaml::Environment::window->yScale;
             glBindVertexArray(TextBlock::VAO);
@@ -370,6 +370,7 @@ namespace OpenXaml
             boxHeight = 0;
             boxWidth = 0;
             edgeBuffer = 0;
+            vertexBuffer = 0;
             font = NULL;
         }
 
@@ -448,27 +449,53 @@ namespace OpenXaml
                 font = Environment::GetFont(FontProperties{FontFamily, FontSize});
             }
             coordinate result = {0, 0};
-            int width = 0;
-            int maxWidth = 0;
-            int lines = 0;
-            for (int i = 0; i < Text.length(); i++)
+
+            vector<size_t> indexes;
+            for (size_t i = 0; i < Text.size(); i++)
             {
-                char32_t sample = Text.at(i);
-                width += font->operator[](sample).AdvanceX >> 6;
-                if (sample == '\n')
+                char32_t a = Text.at(i);
+                if (a == U'\n')
                 {
-                    maxWidth = std::max(maxWidth, width);
-                    width = 0;
-                    lines++;
+                    indexes.push_back(i);
                 }
             }
-            if (Text.back() != '\n')
+
+            int wordWidth = 0; //width of current word
+            size_t currentIndex = 0;
+            int lineCount = 0; //number of lines
+            int width = 0;     //width of current line
+            int maxWidth = 0;  //max line width
+            size_t charsToRender = 0;
+            vector<u32string> splitStrings;
+            for (int i = 0; i < indexes.size() + 1; i++)
             {
-                lines++;
+                size_t index = i == indexes.size() ? Text.size() : indexes.at(i);
+                u32string subString = Text.substr(currentIndex, index - currentIndex);
+                if (i < indexes.size())
+                {
+                    currentIndex = indexes.at(i) + 1;
+                }
+                //we should render this line
+
+                auto formattedText = font->FormatText(subString);
+                for (auto character : formattedText)
+                {
+                    wordWidth += character.xAdvance;
+                    if (font->IsSeperator(character.Character))
+                    {
+                        width += wordWidth;
+                        wordWidth = 0;
+                    }
+                }
+                //we now know the number of lines in this 'line' as well as its width, so increment and set the width
+                lineCount++;
+                maxWidth = std::max(maxWidth, wordWidth);
+                charsToRender += formattedText.size();
             }
             maxWidth = std::max(maxWidth, width);
+
             result.x = maxWidth * OpenXaml::Environment::window->xScale;
-            result.y = lines * OpenXaml::Environment::window->yScale * (font->Height >> 6);
+            result.y = lineCount * OpenXaml::Environment::window->yScale * (font->Height >> 6);
             return result;
         }
     } // namespace Objects

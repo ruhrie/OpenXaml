@@ -25,7 +25,7 @@ namespace OpenXaml
             this->maxCoord = coordinate{0, 0};
             maxRendered = {0.0f, 0.0f};
             minRendered = {0.0f, 0.0f};
-            this->Visibility = OpenXaml::Visibliity::Visible;
+            this->Visibility = OpenXaml::Visibility::Visible;
         }
 
         void XamlObject::SetBoundingBox(coordinate min, coordinate max)
@@ -137,12 +137,12 @@ namespace OpenXaml
             Column = column;
         }
 
-        void XamlObject::setVisibility(OpenXaml::Visibliity vis)
+        void XamlObject::setVisibility(OpenXaml::Visibility vis)
         {
             Visibility = vis;
         }
 
-        OpenXaml::Visibliity XamlObject::getVisibility()
+        OpenXaml::Visibility XamlObject::getVisibility()
         {
             return XamlObject::Visibility;
         }

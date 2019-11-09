@@ -25,12 +25,23 @@ namespace OpenXaml
         void Button::Update()
         {
             Label->setText(Text);
+            auto desiredDimensions = Label->getDesiredDimensions();
+            if (Width == 0)
+            {
+                int w = desiredDimensions.x / OpenXaml::Environment::window->xScale;
+                Frame->setWidth(w);
+                Label->setWidth(w);
+            }
+            if (Height == 0)
+            {
+                int h = desiredDimensions.y / OpenXaml::Environment::window->yScale;
+                Frame->setHeight(h);
+                Label->setHeight(h);
+            }
             Label->setVerticalAlignment(VerticalAlignment);
             Label->setHorizontalAlignment(HorizontalAlignment);
             Label->setTextAlignment(TextAlignment::Center);
             Label->Update();
-            Frame->setWidth(Label->getWidth());
-            Frame->setHeight(Label->getHeight());
             Frame->setHorizontalAlignment(HorizontalAlignment);
             Frame->setVerticalAlignment(VerticalAlignment);
             Frame->setFill(Fill);
