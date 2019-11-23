@@ -1,12 +1,11 @@
 
 find_package(OpenGL REQUIRED)
-find_package(Vulkan)
 
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
 configure_file("GL/GLConfig.cpp.in" "GL/GLConfig.cpp")
 
-file(GLOB SOURCES "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp" "XamlEvents/*.cpp" "Environment/*.cpp" "Animation/*.cpp")
+file(GLOB SOURCES "XamlObjects/*.cpp" "GL/*.cpp" "*.cpp" "XamlEvents/*.cpp" "Environment/*.cpp" "Animation/*.cpp")
 
 set (OPENXAML_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/" PARENT_SCOPE)
 set (LOCAL_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
@@ -26,21 +25,16 @@ if(OPENGL_FOUND)
 	set (OPENGL_INC ${OPENGL_INCLUDE_DIR})
 	list(APPEND COMP_DEC "OPENGL")
 endif(OPENGL_FOUND)
-
-if(Vulkan_FOUND)
-    set (LIBRARIES ${LIBRARIES} ${Vulkan_LIBRARIES})
-    set(VULKAN_INC ${Vulkan_INCLUDE_DIRS})
-    list(APPEND COMP_DEC "VULKAN")
-endif(Vulkan_FOUND)
-add_library(OpenXaml STATIC ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp")
+add_library(OpenXaml STATIC ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp" ${GLAD_SRC})
 set_target_properties(OpenXaml 
 	PROPERTIES
 	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
-target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INCLUDE_DIRS} ${GLAD_INC} ${GLFW_INCCLUDE_DIR} ${OPENGL_INC} ${HARFBUZZ_INC})
+target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INCLUDE_DIRS} ${GLFW_INCCLUDE_DIR} ${OPENGL_INC} ${HARFBUZZ_INC} ${GLAD_INC} ${DEP_INC})
 target_link_libraries(OpenXaml PRIVATE ${LIBRARIES})
+#target_link_libraries(OpenXaml PRIVATE glad::glad)
 if(WIN32)
 	target_compile_definitions(OpenXaml PRIVATE ${COMP_DEC})
 endif()

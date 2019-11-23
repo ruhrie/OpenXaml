@@ -1,6 +1,5 @@
-#version 330 core
+#version 310 es
 //This is a mega shader with configuration modes depending on what it is doing
-out vec4 outColor;
 in vec2 texCoord;
 
 uniform vec4 thecolor;
@@ -13,19 +12,19 @@ void main()
 {
 	if (mode == 0)
 	{
-		outColor = thecolor;
+		gl_FragColor = thecolor;
 	}		
 	else if (mode == 1)
 	{
-		outColor = texture(inTexture, texCoord);
+		gl_FragColor = texture(inTexture, texCoord);
 	}
 	else if (mode == 2)
 	{
 		vec4 sampled = vec4(1.0, 1.0, 1.0, texture(inTexture, texCoord).x);
-		outColor = sampled * thecolor;
+		gl_FragColor = sampled * thecolor;
 	}
 	else
 	{
-		outColor = vec4(0,0,0,0);
+		gl_FragColor = vec4(0,0,0,0);
 	}
 }

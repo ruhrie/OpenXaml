@@ -9,9 +9,7 @@
 #include <filesystem>
 #include <glad/glad.h>
 #include <iostream>
-#ifdef VULKAN
-#define GLFW_INCLUDE_VULKAN
-#endif
+#define GLFW_INCLUDE_ES31
 #include <GLFW/glfw3.h>
 namespace OpenXaml
 {
@@ -67,7 +65,7 @@ namespace OpenXaml
             throw 2;
         }
         glfwMakeContextCurrent(window);
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) /* There was an error initilizing GLAD */
+        if (!gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress)) /* There was an error initilizing GLAD */
         {
             glfwTerminate();
             throw 2;
