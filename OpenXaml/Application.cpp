@@ -7,9 +7,8 @@
 #include "OpenXaml/XamlEvents/XamlEvents.h"
 #include <codecvt>
 #include <filesystem>
-#include <glad/glad.h>
 #include <iostream>
-#define GLFW_INCLUDE_ES31
+#define GLFW_INCLUDE_ES30
 #include <GLFW/glfw3.h>
 namespace OpenXaml
 {
@@ -53,23 +52,20 @@ namespace OpenXaml
         frame = NULL;
         if (!glfwInit())
             throw 2;
+        //glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
         glfwWindowHint(GLFW_VISIBLE, 0);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
         window = glfwCreateWindow(640, 480, "My Window", NULL, NULL);
-
         if (!window)
         {
             glfwTerminate();
             throw 2;
         }
         glfwMakeContextCurrent(window);
-        if (!gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress)) /* There was an error initilizing GLAD */
-        {
-            glfwTerminate();
-            throw 2;
-        }
+        char* a = (char*)glGetString(GL_VERSION);
+        std::string b(a);
         Environment::LoadEnvironment();
         Animation::StartAnimationThread();
     }
