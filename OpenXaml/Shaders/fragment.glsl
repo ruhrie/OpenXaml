@@ -1,4 +1,4 @@
-#version 310 es
+#version 300 es
 //This is a mega shader with configuration modes depending on what it is doing
 in vec2 texCoord;
 

@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <ft2build.h>
-#include <glad/glad.h>
+#include <GLES3/gl3.h>
 #include <harfbuzz/hb-ft.h>
 #include <harfbuzz/hb.h>
 #include <math.h>

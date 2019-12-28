@@ -12,8 +12,7 @@ find_package(Freetype REQUIRED)
 find_package(harfbuzz CONFIG REQUIRED)
 find_package(XercesC CONFIG REQUIRED)
 find_package(unofficial-angle CONFIG REQUIRED)
-
-add_subdirectory("Dependencies" EXCLUDE_FROM_ALL)
+find_package(cxxopts CONFIG REQUIRED)
 
 add_subdirectory("OpenXaml")
 

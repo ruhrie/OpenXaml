@@ -1,7 +1,7 @@
 #include "OpenXaml/XamlObjects/Frame.h"
 #include "OpenXaml/GL/GLConfig.h"
 #include "OpenXaml/XamlObjects/XamlObject.h"
-#include <glad/glad.h>
+#include <GLES3/gl3.h>
 #include <sstream>
 
 namespace OpenXaml

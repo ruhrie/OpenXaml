@@ -11,8 +11,8 @@ set_target_properties(xut
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" 
 )
 
-target_include_directories(xut PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${DEP_INC} ${OPENXAML_INC})
-target_link_libraries(xut OpenXaml  xerces_xerces-c XercesC::XercesC)
+target_include_directories(xut PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${OPENXAML_INC})
+target_link_libraries(xut OpenXaml  xerces_xerces-c XercesC::XercesC cxxopts::cxxopts)
 
 install(TARGETS xut EXPORT OpenXaml DESTINATION "bin")
 

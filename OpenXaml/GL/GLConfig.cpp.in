@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
-#include <glad/glad.h>
+#include <GLES3/gl3.h>
 using namespace std;
 namespace GL
 {
@@ -46,8 +46,17 @@ namespace GL
 		GLuint shaderProgram = glCreateProgram();
 		glAttachShader(shaderProgram, vertexShader);
 		glAttachShader(shaderProgram, fragmentShader);
+		glBindAttribLocation(shaderProgram, 0, "a_Position");
+		glBindAttribLocation(shaderProgram, 0, "a_Color");
 		//glBindFragDataLocation(shaderProgram, 0, "outColor");
 		glLinkProgram(shaderProgram);
+
+		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+
+		if(!success)
+		{
+			std::cout << "ERROR::SHADER::LINK\n";
+		}
 
 		xamlShader = shaderProgram;
 	}

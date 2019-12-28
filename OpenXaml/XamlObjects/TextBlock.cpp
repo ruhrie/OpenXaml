@@ -6,7 +6,7 @@
 #include "OpenXaml/Properties/TextWrapping.h"
 #include <algorithm>
 #include <codecvt>
-#include <glad/glad.h>
+#include <GLES3/gl3.h>
 #include <harfbuzz/hb.h>
 #include <iostream>
 #include <locale>

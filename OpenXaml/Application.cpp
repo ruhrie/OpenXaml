@@ -8,11 +8,18 @@
 #include <codecvt>
 #include <filesystem>
 #include <iostream>
+#include <string>
 #define GLFW_INCLUDE_ES30
 #include <GLFW/glfw3.h>
 namespace OpenXaml
 {
     GLFWwindow *window;
+
+    void glfwErrorCallback(int a, const char *b)
+    {
+        std::cout << std::string(b);
+    }
+
     void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
     {
         if (button == GLFW_MOUSE_BUTTON_LEFT)
@@ -52,6 +59,7 @@ namespace OpenXaml
         frame = NULL;
         if (!glfwInit())
             throw 2;
+        glfwSetErrorCallback(glfwErrorCallback);
         //glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
         glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
         glfwWindowHint(GLFW_VISIBLE, 0);
@@ -64,8 +72,6 @@ namespace OpenXaml
             throw 2;
         }
         glfwMakeContextCurrent(window);
-        char* a = (char*)glGetString(GL_VERSION);
-        std::string b(a);
         Environment::LoadEnvironment();
         Animation::StartAnimationThread();
     }
