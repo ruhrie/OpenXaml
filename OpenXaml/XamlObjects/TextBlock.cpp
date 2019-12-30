@@ -12,6 +12,7 @@
 #include <locale>
 #include <sstream>
 #include <string>
+#include <math.h>
 using namespace std;
 namespace OpenXaml
 {
@@ -460,11 +461,11 @@ namespace OpenXaml
                 }
             }
 
-            int wordWidth = 0; //width of current word
+            float wordWidth = 0; //width of current word
             size_t currentIndex = 0;
             int lineCount = 0; //number of lines
-            int width = 0;     //width of current line
-            int maxWidth = 0;  //max line width
+            float width = 0;     //width of current line
+            float maxWidth = 0;  //max line width
             size_t charsToRender = 0;
             vector<u32string> splitStrings;
             for (int i = 0; i < indexes.size() + 1; i++)
@@ -494,7 +495,7 @@ namespace OpenXaml
             }
             maxWidth = std::max(maxWidth, width);
 
-            result.x = maxWidth * OpenXaml::Environment::window->xScale;
+            result.x = std::ceil(maxWidth) * OpenXaml::Environment::window->xScale;
             result.y = lineCount * OpenXaml::Environment::window->yScale * (font->Height >> 6);
             return result;
         }

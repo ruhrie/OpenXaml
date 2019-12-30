@@ -42,14 +42,3 @@ file(GLOB HEADERS "include/OpenXaml")
 
 install(TARGETS OpenXaml EXPORT OpenXaml DESTINATION "lib")
 install(DIRECTORY ${HEADERS} DESTINATION "include")
-
-
-
-
-
-
-
-
-
-
-
