@@ -9,9 +9,6 @@
 #include <filesystem>
 #include <glad/glad.h>
 #include <iostream>
-#ifdef VULKAN
-#define GLFW_INCLUDE_VULKAN
-#endif
 #include <GLFW/glfw3.h>
 namespace OpenXaml
 {

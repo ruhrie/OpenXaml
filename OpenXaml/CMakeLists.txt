@@ -1,6 +1,5 @@
 
 find_package(OpenGL REQUIRED)
-find_package(Vulkan)
 
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
@@ -11,7 +10,6 @@ file(GLOB SOURCES "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" 
 set (OPENXAML_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/" PARENT_SCOPE)
 set (LOCAL_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 set (OPENGL_INC "")
-set (VULKAN_INC "")
 set (LIBRARIES glfw harfbuzz::harfbuzz Freetype::Freetype)
 set (COMP_DEC "")
 
@@ -27,11 +25,6 @@ if(OPENGL_FOUND)
 	list(APPEND COMP_DEC "OPENGL")
 endif(OPENGL_FOUND)
 
-if(Vulkan_FOUND)
-    set (LIBRARIES ${LIBRARIES} ${Vulkan_LIBRARIES})
-    set(VULKAN_INC ${Vulkan_INCLUDE_DIRS})
-    list(APPEND COMP_DEC "VULKAN")
-endif(Vulkan_FOUND)
 add_library(OpenXaml STATIC ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/GL/GLConfig.cpp")
 set_target_properties(OpenXaml 
 	PROPERTIES
