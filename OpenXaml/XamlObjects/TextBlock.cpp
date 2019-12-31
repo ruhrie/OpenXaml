@@ -178,7 +178,7 @@ namespace OpenXaml
 
             int arrayIndex = 0;
             float penX = 0;
-            float penY = maxRendered.y - height * OpenXaml::Environment::window->yScale;
+            float penY = maxRendered.y - (height - (font->VerticalOffset >> 6)) * OpenXaml::Environment::window->yScale;
             currentIndex = 0;
             for (int i = 0; i < indexes.size() + 1; i++)
             {

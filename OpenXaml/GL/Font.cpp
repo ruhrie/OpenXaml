@@ -36,7 +36,7 @@ namespace OpenXaml
         }
         double dpi = OpenXaml::Environment::DPI;
         FT_Set_Char_Size(newFace, 0, (int)(size * 64), (int)dpi, (int)dpi);
-        Height = newFace->size->metrics.height;
+        
         faceMap[this] = newFace;
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -64,7 +64,8 @@ namespace OpenXaml
             }
             charcode = FT_Get_Next_Char(newFace, charcode, &gindex);
         }
-
+        Height = newFace->size->metrics.height;
+        VerticalOffset = -1 * newFace->size->metrics.descender;
         charcode = FT_Get_First_Char(newFace, &gindex);
 
         double sides = ceil(sqrt(numChars));

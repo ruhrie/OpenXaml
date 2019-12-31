@@ -34,6 +34,7 @@ namespace OpenXaml
         Font(std::string file, float size);
         Character &operator[](const char32_t index);
         int Height;
+        int VerticalOffset;
         std::map<unsigned int, GlyphBound> GlyphMap;
         std::vector<UChar> FormatText(std::u32string input);
         bool IsSeperator(unsigned int charcode);
