@@ -30,7 +30,7 @@ namespace OpenXaml
 			TextAlignment getTextAlignment();
 			int getWidth();
 			int getHeight();
-			coordinate getDesiredDimensions();
+			vec2<float> getDesiredDimensions();
 
 		private:
 			unsigned int edgeBuffer;

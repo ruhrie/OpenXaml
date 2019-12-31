@@ -9,7 +9,7 @@ namespace OpenXaml
 		{
 		public:
 			ClickEvent(double x, double y);
-			coordinate GetLocation();
+			vec2<float> GetLocation();
 		private:
 			float xCoord;
 			float yCoord;

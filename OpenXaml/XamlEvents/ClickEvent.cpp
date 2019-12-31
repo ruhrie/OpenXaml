@@ -11,9 +11,9 @@ namespace OpenXaml
 			yCoord = (float)y;
 		}
 
-		coordinate ClickEvent::GetLocation()
+		vec2<float> ClickEvent::GetLocation()
 		{
-			return coordinate{ xCoord, yCoord };
+			return vec2<float>{ xCoord, yCoord };
 		}
 	}
 }

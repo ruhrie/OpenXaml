@@ -8,8 +8,8 @@
 #include <codecvt>
 #include <filesystem>
 #include <glad/glad.h>
-#include <iostream>
 #include <GLFW/glfw3.h>
+#include <iostream>
 namespace OpenXaml
 {
     GLFWwindow *window;
@@ -29,7 +29,9 @@ namespace OpenXaml
 
     void windowSizeCallback(GLFWwindow *window, int width, int height)
     {
-        Environment::UpdateDpi();
+        Environment::UpdateWindow();
+        Environment::window->width = width;
+        Environment::window->height = height;
     }
 
     void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -57,7 +59,8 @@ namespace OpenXaml
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         window = glfwCreateWindow(640, 480, "My Window", NULL, NULL);
-
+        Environment::window->width = 640;
+        Environment::window->height = 480;
         if (!window)
         {
             glfwTerminate();
@@ -106,6 +109,8 @@ namespace OpenXaml
         glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
         Environment::window->xScale = 2.0f / frame->getWidth();
         Environment::window->yScale = 2.0f / frame->getHeight();
+        Environment::window->width = frame->getWidth();
+        Environment::window->height = frame->getHeight();
         GL::LoadShaders();
         glfwSetMouseButtonCallback(window, mouseButtonCallback);
         glfwSetKeyCallback(window, keyCallback);

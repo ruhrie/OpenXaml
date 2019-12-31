@@ -443,13 +443,13 @@ namespace OpenXaml
         {
             return max(this->Height, (int)this->boxHeight);
         }
-        coordinate TextBlock::getDesiredDimensions()
+        vec2<float> TextBlock::getDesiredDimensions()
         {
             if (font == NULL)
             {
                 font = Environment::GetFont(FontProperties{FontFamily, FontSize});
             }
-            coordinate result = {0, 0};
+            vec2<float> result = {0, 0};
 
             vector<size_t> indexes;
             for (size_t i = 0; i < Text.size(); i++)

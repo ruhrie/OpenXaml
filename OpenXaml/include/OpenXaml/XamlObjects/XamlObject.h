@@ -3,7 +3,7 @@
 #include "OpenXaml/Properties/TextWrapping.h"
 #include "OpenXaml/Properties/Thickness.h"
 #include "OpenXaml/Properties/Visibility.h"
-#include "OpenXaml/XamlObjects/Coordinate.h"
+#include "OpenXaml/XamlObjects/vec2.h"
 #include <functional>
 #include <string>
 #include <vector>
@@ -36,22 +36,22 @@ namespace OpenXaml
             void setColumn(int column);
             void setVisibility(OpenXaml::Visibility visibility);
             OpenXaml::Visibility getVisibility();
-            virtual void SetBoundingBox(coordinate min, coordinate max); ///Sets the bounding box for rendering the object (not where it actually renders).
+            virtual void SetBoundingBox(vec2<float> min, vec2<float> max); ///Sets the bounding box for rendering the object (not where it actually renders).
             void Click();
             void Click(double x, double y);
             virtual void setOnClick(std::function<void(XamlObject *)> func);
             std::function<void(XamlObject *)> getOnClick();
-            coordinate GetMaxRendered(); ///Gets the upper right corner of the actually rendered object
-            coordinate GetMaxRenderable();
-            coordinate GetMinRendered(); ///Gets the lower left corner of the actually rendered object
-            coordinate GetMinRenderable();
+            vec2<float> GetMaxRendered(); ///Gets the upper right corner of the actually rendered object
+            vec2<float> GetMaxRenderable();
+            vec2<float> GetMinRendered(); ///Gets the lower left corner of the actually rendered object
+            vec2<float> GetMinRenderable();
             virtual void AnimationUpdate(int arg);
             Thickness Margin;
         protected:
-            coordinate minCoord;
-            coordinate maxCoord;
-            coordinate minRendered;
-            coordinate maxRendered;
+            vec2<float> minCoord;
+            vec2<float> maxCoord;
+            vec2<float> minRendered;
+            vec2<float> maxRendered;
             int Height;
             int Width;
             OpenXaml::Visibility Visibility;

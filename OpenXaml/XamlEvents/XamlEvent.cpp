@@ -28,7 +28,7 @@ namespace OpenXaml
             {
                 EventBase *e = EventQueue.back();
                 std::set<XamlObject *> targets;
-                coordinate location = {0, 0};
+                vec2<float> location = {0, 0};
                 switch (e->eventType)
                 {
                     case XamlEvent::ClickEvent:

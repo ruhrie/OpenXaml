@@ -21,14 +21,14 @@ namespace OpenXaml
             this->Height = 0;
             this->Width = 0;
             this->VAO = 0;
-            this->minCoord = coordinate{0, 0};
-            this->maxCoord = coordinate{0, 0};
+            this->minCoord = vec2<float>{0, 0};
+            this->maxCoord = vec2<float>{(float)Environment::window->width, (float)Environment::window->height};
             maxRendered = {0.0f, 0.0f};
             minRendered = {0.0f, 0.0f};
             this->Visibility = OpenXaml::Visibility::Visible;
         }
 
-        void XamlObject::SetBoundingBox(coordinate min, coordinate max)
+        void XamlObject::SetBoundingBox(vec2<float> min, vec2<float> max)
         {
             minCoord = min;
             maxCoord = max;
@@ -91,9 +91,9 @@ namespace OpenXaml
             return this->Width;
         }
 
-        coordinate XamlObject::GetMaxRendered()
+        vec2<float> XamlObject::GetMaxRendered()
         {
-            coordinate result = {-1.0f, -1.0f};
+            vec2<float> result = {-1.0f, -1.0f};
             for (auto der : DerivedElements)
             {
                 result.x = std::max(result.x, der->maxRendered.x);
@@ -104,9 +104,9 @@ namespace OpenXaml
             return result;
         }
 
-        coordinate XamlObject::GetMinRendered()
+        vec2<float> XamlObject::GetMinRendered()
         {
-            coordinate result = {1.0f, 1.0f};
+            vec2<float> result = {1.0f, 1.0f};
             for (auto der : DerivedElements)
             {
                 result.x = std::min(result.x, der->minRendered.x);

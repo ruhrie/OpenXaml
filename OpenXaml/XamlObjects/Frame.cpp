@@ -1,4 +1,6 @@
 #include "OpenXaml/XamlObjects/Frame.h"
+#include "OpenXaml/Environment/Environment.h"
+#include "OpenXaml/Environment/Window.h"
 #include "OpenXaml/GL/GLConfig.h"
 #include "OpenXaml/XamlObjects/XamlObject.h"
 #include <glad/glad.h>
@@ -28,6 +30,8 @@ namespace OpenXaml
             glUseProgram(GL::xamlShader);
             int vertexColorLocation = glGetUniformLocation(GL::xamlShader, "thecolor");
             int modeLoc = glGetUniformLocation(GL::xamlShader, "mode");
+            int wUniform = glGetUniformLocation(GL::xamlShader, "WindowDimensions");
+            glUniform2f(wUniform, Environment::window->width, Environment::window->height);
             float a, r, g, b;
             a = ((Fill & 0xFF000000) >> 24) / 255.0f;
             r = ((Fill & 0x00FF0000) >> 16) / 255.0f;
@@ -52,10 +56,10 @@ namespace OpenXaml
             glGenBuffers(1, &edgeBuffer);
             glBindVertexArray(Frame::VAO);
             float vertices[] = {
-                -1, 1, 0, 1,
-                1, 1, 1, 1,
-                -1, -1, 0, 0,
-                1, -1, 1, 0};
+                0, 0, 0, 1,
+                (float)OpenXaml::Environment::window->width, 0, 1, 1,
+                0, (float)OpenXaml::Environment::window->height, 0, 0,
+                (float)OpenXaml::Environment::window->width, (float)OpenXaml::Environment::window->height, 1, 0};
 
             unsigned short indeces[] =
                 {

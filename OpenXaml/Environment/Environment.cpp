@@ -1,4 +1,5 @@
 #include "OpenXaml/Environment/Environment.h"
+#include "OpenXaml/Environment/Window.h"
 #include "OpenXaml/GL/Font.h"
 #include <GLFW/glfw3.h>
 #include <algorithm>
@@ -22,16 +23,18 @@ namespace OpenXaml
         {
             FT_Init_FreeType(&fontLibrary);
             LoadFonts();
-            UpdateDpi();
+            UpdateWindow();
         }
-        void UpdateDpi()
+        void UpdateWindow()
         {
             GLFWmonitor *primary = glfwGetPrimaryMonitor();
             int widthMM, heightMM;
             glfwGetMonitorPhysicalSize(primary, &widthMM, &heightMM);
             const GLFWvidmode *mode = glfwGetVideoMode(primary);
             DPI = mode->width / (widthMM / 25.4);
-		}
+            window->xScale = DPI;
+            window->yScale = DPI;
+        }
 
         void ClearEnvironment()
         {

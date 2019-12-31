@@ -14,6 +14,8 @@ namespace OpenXaml
 			glUseProgram(GL::xamlShader);
 			int vertexColorLocation = glGetUniformLocation(GL::xamlShader, "thecolor");
 			int modeLoc = glGetUniformLocation(GL::xamlShader, "mode");
+            int wUniform = glGetUniformLocation(GL::xamlShader, "WindowDimensions");
+            glUniform2f(wUniform, Environment::window->width, Environment::window->height);
 			float a, r, g, b;
 			a = ((Fill & 0xFF000000) >> 24) / 255.0f;
 			r = ((Fill & 0x00FF0000) >> 16) / 255.0f;

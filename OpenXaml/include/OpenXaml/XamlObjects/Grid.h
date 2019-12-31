@@ -17,7 +17,7 @@ namespace OpenXaml {
 			ColumnDefinitionCollection* ColumnDefinitions = NULL;
 			RowDefinitionCollection* RowDefinitions = NULL;
 		protected:
-			void SetBoundingBox(coordinate min, coordinate max);
+			void SetBoundingBox(vec2<float> min, vec2<float> max);
 		};
 	}	
 }

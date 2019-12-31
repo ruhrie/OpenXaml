@@ -1,6 +1,6 @@
 #pragma once
 #include "OpenXaml/XamlObjects/Frame.h"
-#include "OpenXaml/XamlObjects/Coordinate.h"
+#include "OpenXaml/XamlObjects/vec2.h"
 
 namespace OpenXaml
 {
@@ -14,6 +14,6 @@ namespace OpenXaml
 		void InitializeComponent(Objects::Frame* frame);
 	private:
 		Objects::Frame* frame;
-		coordinate PixelScale;
+		vec2<float> PixelScale;
 	};
 }

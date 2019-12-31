@@ -37,7 +37,7 @@ namespace OpenXaml
 				child->Update();
 			}
 		}
-		void Grid::SetBoundingBox(coordinate min, coordinate max)
+		void Grid::SetBoundingBox(vec2<float> min, vec2<float> max)
 		{
 			std::vector<float> rowHeights;
 			std::vector<float> rowStarts;
@@ -84,11 +84,11 @@ namespace OpenXaml
 			{
 				int row = child->getRow();
 				int col = child->getColumn();
-				coordinate min = {
+				vec2<float> min = {
 					columnStarts[col],
 					rowStarts[row]
 				};
-				coordinate max = {
+				vec2<float> max = {
 					min.x + columnWidths[col],
 					min.y + rowHeights[row]
 				};

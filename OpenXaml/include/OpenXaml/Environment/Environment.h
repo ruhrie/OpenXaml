@@ -16,6 +16,6 @@ namespace OpenXaml
         void LoadEnvironment();             ///Initializes environment variables
         void ClearEnvironment();            ///Releases environment resources
         extern Objects::XamlObject *ActiveElement;
-        void UpdateDpi();
+        void UpdateWindow();
     } // namespace Environment
 } // namespace OpenXaml
