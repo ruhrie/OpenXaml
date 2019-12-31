@@ -8,6 +8,7 @@
 #include <OpenXaml/Environment/Window.h>
 #include <OpenXaml/XamlEvents/XamlEvent.h>
 #include <algorithm>
+#include <cfloat>
 #include <functional>
 
 using namespace std;
@@ -93,7 +94,7 @@ namespace OpenXaml
 
         vec2<float> XamlObject::GetMaxRendered()
         {
-            vec2<float> result = {-1.0f, -1.0f};
+            vec2<float> result = {FLT_MIN, FLT_MIN};
             for (auto der : DerivedElements)
             {
                 result.x = std::max(result.x, der->maxRendered.x);
@@ -106,7 +107,7 @@ namespace OpenXaml
 
         vec2<float> XamlObject::GetMinRendered()
         {
-            vec2<float> result = {1.0f, 1.0f};
+            vec2<float> result = {FLT_MAX, FLT_MAX};
             for (auto der : DerivedElements)
             {
                 result.x = std::min(result.x, der->minRendered.x);

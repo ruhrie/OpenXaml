@@ -52,8 +52,8 @@ namespace OpenXaml
             vec2<float> maxCoord;
             vec2<float> minRendered;
             vec2<float> maxRendered;
-            int Height;
-            int Width;
+            float Height;
+            float Width;
             OpenXaml::Visibility Visibility;
             HorizontalAlignment HorizontalAlignment = HorizontalAlignment::Stretch;
             VerticalAlignment VerticalAlignment = VerticalAlignment::Stretch;

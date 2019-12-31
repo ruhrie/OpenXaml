@@ -437,11 +437,11 @@ namespace OpenXaml
         }
         int TextBlock::getWidth()
         {
-            return max(this->Width, (int)this->boxWidth);
+            return std::ceil(max(this->Width, this->boxWidth));
         }
         int TextBlock::getHeight()
         {
-            return max(this->Height, (int)this->boxHeight);
+            return std::ceil(max(this->Height, this->boxHeight));
         }
         vec2<float> TextBlock::getDesiredDimensions()
         {

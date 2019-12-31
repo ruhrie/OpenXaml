@@ -12,15 +12,15 @@ namespace OpenXaml
     {
         Frame::Frame()
         {
-            minCoord.x = -1;
-            minCoord.y = -1;
-            maxCoord.x = 1;
-            maxCoord.y = 1;
+            minCoord.x = 0;
+            minCoord.y = 0;
+            maxCoord.x = Environment::window->width;
+            maxCoord.y = Environment::window->height;
             Width = 640;
             Height = 480;
             Fill = 0xFF000000;
-            maxRendered = {1.0f, 1.0f};
-            minRendered = {-1.0f, -1.0f};
+            maxRendered = {Environment::window->width, Environment::window->height};
+            minRendered = {0,0};
         }
 
         void Frame::Draw()
@@ -49,7 +49,7 @@ namespace OpenXaml
 
         void Frame::Initialize()
         {
-            SetBoundingBox({-1.0f, -1.0f}, {1.0f, 1.0f});
+            SetBoundingBox({0,0}, {Environment::window->width, Environment::window->height});
             glGenVertexArrays(1, &(Frame::VAO));
             glBindVertexArray(Frame::VAO);
             glGenBuffers(1, &vertexBuffer);

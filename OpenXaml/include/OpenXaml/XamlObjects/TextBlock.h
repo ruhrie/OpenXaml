@@ -36,8 +36,8 @@ namespace OpenXaml
 			unsigned int edgeBuffer;
 			unsigned int vertexBuffer;
 			std::map<unsigned int, unsigned int> textureMap;
-			unsigned int boxWidth;
-			unsigned int boxHeight;
+			float boxWidth;
+			float boxHeight;
 			void RenderCharacter(UChar ch, float& penX, float& penY, float* vertexBuffer, unsigned short* edgeBuffer, int &index);
 			Font* font;
 			unsigned int glyphCount = 0;

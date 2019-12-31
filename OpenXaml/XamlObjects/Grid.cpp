@@ -44,10 +44,9 @@ namespace OpenXaml
 			if (RowDefinitions != NULL)
 			{
 				float position = max.y;
-				float yScale = OpenXaml::Environment::window->yScale;
 				for (auto row : RowDefinitions->Children)
 				{
-					float height = row->getHeight() * yScale;
+					float height = row->getHeight();
 					rowHeights.push_back(height);
 					position -= height;
 					rowStarts.push_back(position);
@@ -64,10 +63,9 @@ namespace OpenXaml
 			if (ColumnDefinitions != NULL)
 			{
 				float position = min.x;
-				float xScale = OpenXaml::Environment::window->xScale;
 				for (auto col : ColumnDefinitions->Children)
 				{
-					float width = col->getWidth() * xScale;
+					float width = col->getWidth();
 					columnWidths.push_back(width);
 					columnStarts.push_back(position);
 					position += width;
