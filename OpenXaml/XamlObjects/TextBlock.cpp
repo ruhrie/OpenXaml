@@ -61,11 +61,11 @@ namespace OpenXaml
                 }
             }
 
-            int wordWidth = 0; //width of current word
+            float wordWidth = 0; //width of current word
             size_t currentIndex = 0;
             int lineCount = 0; //number of lines
-            int width = 0;     //width of current line
-            int maxWidth = 0;  //max line width
+            float width = 0;     //width of current line
+            float maxWidth = 0;  //max line width
             size_t charsToRender = 0;
             float fBounds = (maxCoord.x - minCoord.x) / OpenXaml::Environment::window->xScale;
             vector<u32string> splitStrings;
