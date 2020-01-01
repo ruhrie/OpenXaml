@@ -146,7 +146,7 @@ namespace OpenXaml
             minRendered = GetMinRendered();
         }
 
-        void XamlObject::setOnClick(std::function<void(std::shared_ptr<XamlObject>)> func)
+        void XamlObject::setOnClick(std::function<void(XamlObject *)> func)
         {
 
             if (OnClick != NULL && func == NULL)
@@ -160,7 +160,7 @@ namespace OpenXaml
             OnClick = func;
         }
 
-        function<void(shared_ptr<XamlObject>)> XamlObject::getOnClick()
+        function<void(XamlObject *)> XamlObject::getOnClick()
         {
             return OnClick;
         }
@@ -169,7 +169,7 @@ namespace OpenXaml
         {
             if (OnClick != NULL)
             {
-                OnClick(shared_ptr<XamlObject>(this));
+                OnClick(this);
             }
         }
         void XamlObject::Click(double x, double y)

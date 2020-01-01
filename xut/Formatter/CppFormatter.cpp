@@ -114,7 +114,7 @@ std::string GetPlaceholderText(std::string input)
 std::string GetClickSigniture(xercesc::DOMAttr *input)
 {
     string value = XMLString::transcode(input->getNodeValue());
-    std::string result = "virtual void " + value + "(std::shared_ptr<OpenXaml::Objects::XamlObject> sender) = 0;\n";
+    std::string result = "void " + value + "(std::shared_ptr<OpenXaml::Objects::XamlObject> sender);\n";
     return result;
 }
 

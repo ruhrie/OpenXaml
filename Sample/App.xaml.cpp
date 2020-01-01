@@ -1,4 +1,4 @@
-#include "MainPage.xaml.h"
+#include "MainPage.hpp"
 #include "OpenXaml/Application.h"
 #include "OpenXaml/XamlObjects/Frame.h"
 #include <fstream>
@@ -12,7 +12,7 @@ using namespace OpenXaml;
 
 int main()
 {
-    shared_ptr<MainPageInstance> inst = make_shared<MainPageInstance>();
+    shared_ptr<MainPage> inst = make_shared<MainPage>();
     Application app = Application();
     app.InitializeComponent(inst);
     app.Run();

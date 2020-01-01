@@ -1,6 +1,6 @@
-#include "MainPage.xaml.h"
+#include "MainPage.hpp"
 #include <iostream>
-void MainPageInstance::Test(std::shared_ptr<OpenXaml::Objects::XamlObject> sender)
+void MainPage::Test(std::shared_ptr<OpenXaml::Objects::XamlObject> sender)
 {
     std::cout << "Pushed\n";
 }

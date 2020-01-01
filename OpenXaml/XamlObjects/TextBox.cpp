@@ -1,7 +1,7 @@
 #include "OpenXaml/XamlObjects/TextBox.h"
 #include "OpenXaml/Environment/Environment.h"
-#include "OpenXaml/XamlEvents/XamlEvents.h"
 #include "OpenXaml/Environment/Window.h"
+#include "OpenXaml/XamlEvents/XamlEvents.h"
 
 using namespace std;
 namespace OpenXaml
@@ -35,7 +35,7 @@ namespace OpenXaml
             XamlObject::~XamlObject();
         }
 
-        void TextBox::setOnClick(std::function<void(std::shared_ptr<XamlObject>)> func)
+        void TextBox::setOnClick(std::function<void(XamlObject *)> func)
         {
             OnClick = func;
         }
