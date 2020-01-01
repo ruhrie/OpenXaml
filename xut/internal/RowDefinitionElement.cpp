@@ -9,14 +9,8 @@ namespace xut
 	{
 		RowDefinitionElement::RowDefinitionElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::RowDefinition)
 		{
-			init += "OpenXaml::Objects::RowDefinition* %name%;\n";
-			//term += "delete %name%;\n";
-			bodyInit += "%name% = new OpenXaml::Objects::RowDefinition();\n";
-			/*DOMAttr* height = element->getAttributeNode(XMLString::transcode("Height"));
-			if (height != NULL)
-			{
-				body += GetHeight(height, root);
-			}*/
+			init += "std::shared_ptr<OpenXaml::Objects::RowDefinition> %name%;\n";
+			bodyInit += "%name% = std::make_shared<OpenXaml::Objects::RowDefinition>();\n";
 		}
 	}
 }

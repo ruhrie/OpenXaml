@@ -8,9 +8,8 @@ namespace xut
 	{
 		GridElement::GridElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::Grid)
 		{
-			init += "OpenXaml::Objects::Grid* %name%;\n";
-			//term += "delete %name%;\n";
-			bodyInit += "%name% = new OpenXaml::Objects::Grid();\n";
+			init += "std::shared_ptr<OpenXaml::Objects::Grid> %name%;\n";
+			bodyInit += "%name% = std::make_shared<OpenXaml::Objects::Grid>();\n";
 		}
 	}
 }

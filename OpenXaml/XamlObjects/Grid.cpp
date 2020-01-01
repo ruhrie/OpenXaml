@@ -1,6 +1,7 @@
 #include "OpenXaml/XamlObjects/Grid.h"
 #include <vector>
 #include "OpenXaml/Environment/Window.h"
+using namespace std;
 namespace OpenXaml
 {
 	namespace Objects
@@ -15,12 +16,11 @@ namespace OpenXaml
 		}
 		Grid::Grid()
 		{
-
+			ColumnDefinitions = make_shared<ColumnDefinitionCollection>();
+			RowDefinitions = make_shared<RowDefinitionCollection>();
 		}
 		Grid::~Grid()
 		{
-			delete RowDefinitions;
-			delete ColumnDefinitions;
 			XamlObject::~XamlObject();
 		}
 		void Grid::Initialize()
@@ -46,7 +46,7 @@ namespace OpenXaml
 				float position = max.y;
 				for (auto row : RowDefinitions->Children)
 				{
-					float height = row->getHeight();
+					float height = (float)row->getHeight();
 					rowHeights.push_back(height);
 					position -= height;
 					rowStarts.push_back(position);

@@ -20,15 +20,15 @@ namespace OpenXaml
             void setText(std::string text);
             std::string getText();
             void TextUpdate(std::string text);
-            void setOnClick(std::function<void(XamlObject *)> func);
+            void setOnClick(std::function<void(std::shared_ptr<XamlObject>)> func);
 
         private:
             std::string Text = "";
             std::string PlaceholderText = "Placeholder";
-            Rectangle *Frame;
-            TextBlock *PlaceholderTextTextBlock;
-            TextBlock *TextTextBlock;
-            Rectangle *Indicator;
+            std::shared_ptr<Rectangle> Frame;
+            std::shared_ptr<TextBlock> PlaceholderTextTextBlock;
+            std::shared_ptr<TextBlock> TextTextBlock;
+            std::shared_ptr<Rectangle> Indicator;
             int Index = 0;
         };
     } // namespace Objects

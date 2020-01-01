@@ -30,8 +30,8 @@ namespace OpenXaml
     void windowSizeCallback(GLFWwindow *window, int width, int height)
     {
         Environment::UpdateWindow();
-        Environment::window->width = width;
-        Environment::window->height = height;
+        Environment::window->width = (float)width;
+        Environment::window->height = (float)height;
     }
 
     void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -51,7 +51,6 @@ namespace OpenXaml
     {
         PixelScale = {0.0f, 0.0f};
         Environment::window = new Environment::Window();
-        frame = NULL;
         if (!glfwInit())
             throw 2;
         glfwWindowHint(GLFW_VISIBLE, 0);
@@ -78,7 +77,6 @@ namespace OpenXaml
     Application::~Application()
     {
         Animation::StopAnimationThread();
-        delete frame;
         glfwTerminate();
         Environment::ClearEnvironment();
     }
@@ -103,12 +101,12 @@ namespace OpenXaml
         glfwHideWindow(window);
     }
 
-    void Application::InitializeComponent(Objects::Frame *input)
+    void Application::InitializeComponent(std::shared_ptr<Objects::Frame> input)
     {
         frame = input;
         glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
-        Environment::window->width = frame->getWidth();
-        Environment::window->height = frame->getHeight();
+        Environment::window->width = (float)frame->getWidth();
+        Environment::window->height = (float)frame->getHeight();
         GL::LoadShaders();
         glfwSetMouseButtonCallback(window, mouseButtonCallback);
         glfwSetKeyCallback(window, keyCallback);

@@ -51,8 +51,8 @@ namespace OpenXaml
         }
         Button::Button()
         {
-            Label = new TextBlock();
-            Frame = new Rectangle();
+            Label = std::make_shared<TextBlock>();
+            Frame = std::make_shared<Rectangle>();
             DerivedElements.push_back(Label);
             DerivedElements.push_back(Frame);
         }

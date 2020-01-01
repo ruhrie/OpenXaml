@@ -21,8 +21,8 @@ namespace OpenXaml
 			void setText(std::string content);
 			std::string getText();
 		private:
-			TextBlock* Label;
-			Rectangle* Frame;
+			std::shared_ptr<TextBlock> Label;
+			std::shared_ptr<Rectangle> Frame;
 		protected:
 			unsigned int Fill = 0x33FFFFFF;
 			std::string Text = "Click";

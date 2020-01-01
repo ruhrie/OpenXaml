@@ -9,10 +9,6 @@ namespace OpenXaml
         }
         RowDefinitionCollection::~RowDefinitionCollection()
         {
-            for (auto row : Children)
-            {
-                delete row;
-			}
         }
     } // namespace Objects
 } // namespace OpenXaml

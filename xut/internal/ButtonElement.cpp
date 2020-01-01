@@ -8,9 +8,8 @@ namespace xut
 	{
 		ButtonElement::ButtonElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::Button)
 		{
-			init += "OpenXaml::Objects::Button* %name%;\n";
-			//term += "delete %name%;\n";
-			bodyInit += "%name% = new OpenXaml::Objects::Button();\n";
+			init += "std::shared_ptr<OpenXaml::Objects::Button> %name%;\n";
+			bodyInit += "%name% = std::make_shared<OpenXaml::Objects::Button>();\n";
 			DOMAttr* fill = element->getAttributeNode(XMLString::transcode("Fill"));
 			if (fill != NULL)
 			{

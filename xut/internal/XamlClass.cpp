@@ -156,7 +156,7 @@ namespace xut
 
 		std::string XamlClass::ToString()
 		{
-			std::string result = "#include <OpenXaml/XamlObjects/XamlObjects.h>\n#include <functional>\n";
+			std::string result = "#include <OpenXaml/XamlObjects/XamlObjects.h>\n#include <functional>\n#include <memory>\n";
 
 			result += "class " + Name + " : public OpenXaml::Objects::" + RootType + "\n";
 			result += "{\n";

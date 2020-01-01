@@ -2,22 +2,24 @@
 #include "OpenXaml/Environment/Environment.h"
 #include "OpenXaml/XamlEvents/XamlEvents.h"
 #include "OpenXaml/Environment/Window.h"
+
+using namespace std;
 namespace OpenXaml
 {
     namespace Objects
     {
         TextBox::TextBox()
         {
-            Frame = new Rectangle();
-            PlaceholderTextTextBlock = new TextBlock();
-            TextTextBlock = new TextBlock();
+            TextTextBlock = make_shared<TextBlock>();
+            PlaceholderTextTextBlock = make_shared<TextBlock>();
+            Indicator = make_shared<Rectangle>();
+            Frame = make_shared<Rectangle>();
             TextTextBlock->setText(Text);
             TextTextBlock->setTextAlignment(TextAlignment::Start);
             TextTextBlock->setHorizontalAlignment(HorizontalAlignment::Left);
             PlaceholderTextTextBlock->setTextAlignment(TextAlignment::Start);
             PlaceholderTextTextBlock->setText(PlaceholderText);
             PlaceholderTextTextBlock->setHorizontalAlignment(HorizontalAlignment::Left);
-            Indicator = new Rectangle();
 
             DerivedElements.push_back(PlaceholderTextTextBlock);
             DerivedElements.push_back(TextTextBlock);
@@ -33,7 +35,7 @@ namespace OpenXaml
             XamlObject::~XamlObject();
         }
 
-        void TextBox::setOnClick(std::function<void(XamlObject *)> func)
+        void TextBox::setOnClick(std::function<void(std::shared_ptr<XamlObject>)> func)
         {
             OnClick = func;
         }

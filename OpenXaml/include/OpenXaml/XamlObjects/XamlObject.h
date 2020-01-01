@@ -17,7 +17,7 @@ namespace OpenXaml
         {
         public:
             virtual void Draw() = 0;            ///The draw call which actually renders the object.
-            std::vector<XamlObject *> Children; ///The child objects to the current xaml element.
+            std::vector<std::shared_ptr<XamlObject>> Children; ///The child objects to the current xaml element.
             virtual void Initialize() = 0;      ///Currently responsible for initializing the OpenGL attributes. Due to be removed soon.
             virtual void Update();
             XamlObject();
@@ -39,8 +39,8 @@ namespace OpenXaml
             virtual void SetBoundingBox(vec2<float> min, vec2<float> max); ///Sets the bounding box for rendering the object (not where it actually renders).
             void Click();
             void Click(double x, double y);
-            virtual void setOnClick(std::function<void(XamlObject *)> func);
-            std::function<void(XamlObject *)> getOnClick();
+            virtual void setOnClick(std::function<void(std::shared_ptr<XamlObject>)> func);
+            std::function<void(std::shared_ptr<XamlObject>)> getOnClick();
             vec2<float> GetMaxRendered(); ///Gets the upper right corner of the actually rendered object
             vec2<float> GetMaxRenderable();
             vec2<float> GetMinRendered(); ///Gets the lower left corner of the actually rendered object
@@ -58,8 +58,8 @@ namespace OpenXaml
             HorizontalAlignment HorizontalAlignment = HorizontalAlignment::Stretch;
             VerticalAlignment VerticalAlignment = VerticalAlignment::Stretch;
             unsigned int VAO;
-            std::vector<XamlObject *> DerivedElements;
-            std::function<void(XamlObject *)> OnClick;
+            std::vector<std::shared_ptr<XamlObject>> DerivedElements;
+            std::function<void(std::shared_ptr<XamlObject>)> OnClick;
 
         private:
             XamlObject &operator=(const XamlObject &);

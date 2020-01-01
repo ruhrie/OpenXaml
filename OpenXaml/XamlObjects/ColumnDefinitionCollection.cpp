@@ -10,10 +10,6 @@ namespace OpenXaml
         }
         ColumnDefinitionCollection::~ColumnDefinitionCollection()
         {
-            for (auto col : Children)
-            {
-                delete col;
-            }
         }
     } // namespace Objects
 } // namespace OpenXaml

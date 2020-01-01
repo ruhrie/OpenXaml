@@ -9,9 +9,8 @@ namespace xut
 	{
 		RowDefinitionCollectionElement::RowDefinitionCollectionElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::RowDefinitionCollection)
 		{
-			init += "OpenXaml::Objects::RowDefinitionCollection* %name%;\n";
-			//term += "delete %name%;\n";
-			bodyInit += "%name% = new OpenXaml::Objects::RowDefinitionCollection();\n";
+			init += "std::shared_ptr<OpenXaml::Objects::RowDefinitionCollection> %name%;\n";
+			bodyInit += "%name% = std::make_shared<OpenXaml::Objects::RowDefinitionCollection>();\n";
 		}
 	}
 }

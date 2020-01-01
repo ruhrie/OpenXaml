@@ -16,13 +16,13 @@ namespace xut
 	std::string StringFromRectangle(xercesc::DOMElement* element);
 	std::string StringFromTextBlock(xercesc::DOMElement* element);
 
-	OpenXaml::Objects::XamlObject* LoadXaml(xercesc::DOMElement* element);
+	std::shared_ptr<OpenXaml::Objects::XamlObject> LoadXaml(xercesc::DOMElement* element);
 
-	OpenXaml::Objects::Frame* DomToFrame(xercesc::DOMElement* element);
+	std::shared_ptr<OpenXaml::Objects::Frame> DomToFrame(xercesc::DOMElement* element);
 
-	OpenXaml::Objects::Button* DomToButton(xercesc::DOMElement* element);
+	std::shared_ptr<OpenXaml::Objects::Button> DomToButton(xercesc::DOMElement* element);
 
-	OpenXaml::Objects::Rectangle* DomToRectangle(xercesc::DOMElement* element);
+	std::shared_ptr<OpenXaml::Objects::Rectangle> DomToRectangle(xercesc::DOMElement* element);
 
-	OpenXaml::Objects::TextBlock* DomToTextBlock(xercesc::DOMElement* element);
+	std::shared_ptr<OpenXaml::Objects::TextBlock> DomToTextBlock(xercesc::DOMElement* element);
 }

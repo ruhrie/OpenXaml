@@ -1,5 +1,6 @@
 #pragma once
 #include "OpenXaml/XamlObjects/RowDefinition.h"
+#include <memory>
 #include <vector>
 namespace OpenXaml
 {
@@ -11,7 +12,7 @@ namespace OpenXaml
         public:
             RowDefinitionCollection();
             ~RowDefinitionCollection();
-            std::vector<RowDefinition *> Children;
+            std::vector<std::shared_ptr<RowDefinition>> Children;
         };
     } // namespace Objects
 } // namespace OpenXaml

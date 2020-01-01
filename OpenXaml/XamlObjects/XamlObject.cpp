@@ -45,14 +45,6 @@ namespace OpenXaml
 
         XamlObject::~XamlObject()
         {
-            for (auto child : Children)
-            {
-                delete child;
-            }
-            for (auto der : DerivedElements)
-            {
-                delete der;
-            }
         }
 
         void XamlObject::setHorizontalAlignment(OpenXaml::HorizontalAlignment alignment)
@@ -154,7 +146,7 @@ namespace OpenXaml
             minRendered = GetMinRendered();
         }
 
-        void XamlObject::setOnClick(std::function<void(XamlObject *)> func)
+        void XamlObject::setOnClick(std::function<void(std::shared_ptr<XamlObject>)> func)
         {
 
             if (OnClick != NULL && func == NULL)
@@ -168,7 +160,7 @@ namespace OpenXaml
             OnClick = func;
         }
 
-        function<void(XamlObject *)> XamlObject::getOnClick()
+        function<void(shared_ptr<XamlObject>)> XamlObject::getOnClick()
         {
             return OnClick;
         }
@@ -177,7 +169,7 @@ namespace OpenXaml
         {
             if (OnClick != NULL)
             {
-                OnClick(this);
+                OnClick(shared_ptr<XamlObject>(this));
             }
         }
         void XamlObject::Click(double x, double y)

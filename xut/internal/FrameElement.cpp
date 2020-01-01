@@ -9,9 +9,8 @@ namespace xut
 		{
 			if (!root)
 			{
-				init += "OpenXaml::Objects::Frame* %name%;\n";
-				term += "delete %name%;\n";
-				bodyInit += "%name% = new OpenXaml::Objects::Frame();\n";
+				init += "std::shared_ptr<OpenXaml::Objects::Frame> %name%;\n";
+				bodyInit += "%name% = std::make_shared<OpenXaml::Objects::Frame()>;\n";
 			}
 			DOMAttr* fill = element->getAttributeNode(XMLString::transcode("Fill"));
 			if (fill != NULL)

@@ -12,11 +12,11 @@ using namespace std;
 
 namespace xut
 {
-	XamlObject* LoadXaml(DOMElement* element)
+	shared_ptr<XamlObject> LoadXaml(DOMElement* element)
 	{
 		const XMLCh* xmlString = element->getTagName();
 		string name = XMLString::transcode(xmlString);
-		XamlObject* result;
+		shared_ptr<XamlObject> result;
 		if (name == "Frame")
 		{
 			result = DomToFrame(element);
@@ -40,9 +40,9 @@ namespace xut
 		return result;
 	}
 
-	Frame* DomToFrame(DOMElement* element)
+	shared_ptr<Frame> DomToFrame(DOMElement* element)
 	{
-		Frame* result = new Frame();
+		shared_ptr<Frame> result;
 		DOMNamedNodeMap* attributes = element->getAttributes();
 		for (int i = 0; i < attributes->getLength(); i++)
 		{
@@ -77,9 +77,9 @@ namespace xut
 		return result;
 	}
 
-	Button* DomToButton(DOMElement* element)
+	shared_ptr<Button> DomToButton(DOMElement* element)
 	{
-		Button* result = new Button();
+		shared_ptr<Button> result;
 
 		DOMNamedNodeMap* attributes = element->getAttributes();
 		for (int i = 0; i < attributes->getLength(); i++)
@@ -160,9 +160,9 @@ namespace xut
 		return result;
 	}
 
-	OpenXaml::Objects::Rectangle* DomToRectangle(DOMElement* element)
+	shared_ptr<OpenXaml::Objects::Rectangle> DomToRectangle(DOMElement* element)
 	{
-		OpenXaml::Objects::Rectangle* result = new OpenXaml::Objects::Rectangle();
+		shared_ptr<OpenXaml::Objects::Rectangle> result;
 
 		DOMNamedNodeMap* attributes = element->getAttributes();
 		for (int i = 0; i < attributes->getLength(); i++)
@@ -237,9 +237,9 @@ namespace xut
 		return result;
 	}
 
-	OpenXaml::Objects::TextBlock* DomToTextBlock(xercesc::DOMElement* element)
+	shared_ptr<OpenXaml::Objects::TextBlock> DomToTextBlock(xercesc::DOMElement* element)
 	{
-		TextBlock* result = new TextBlock();
+		shared_ptr<TextBlock> result;
 
 		DOMNamedNodeMap* attributes = element->getAttributes();
 		for (int i = 0; i < attributes->getLength(); i++)

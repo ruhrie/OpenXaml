@@ -9,9 +9,8 @@ namespace xut
 	{
 		TextBlockElement::TextBlockElement(xercesc::DOMElement* element, bool root) : XamlElement(element, root, ElementType::TextBlock)
 		{
-			init += "OpenXaml::Objects::TextBlock* %name%;\n";
-			//term += "delete %name%;\n";
-			bodyInit += "%name% = new OpenXaml::Objects::TextBlock();\n";
+			init += "std::shared_ptr<OpenXaml::Objects::TextBlock> %name%;\n";
+			bodyInit += "%name% = std::make_shared<OpenXaml::Objects::TextBlock>();\n";
 			DOMAttr* fill = element->getAttributeNode(XMLString::transcode("Fill"));
 			if (fill != NULL)
 			{
