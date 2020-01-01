@@ -182,11 +182,9 @@ namespace OpenXaml
         }
         void XamlObject::Click(double x, double y)
         {
-            float xc = (float)x * OpenXaml::Environment::window->xScale - 1.0f;
-            float yc = 1.0f - (float)y * OpenXaml::Environment::window->yScale;
-            if (xc > minRendered.x && xc < maxRendered.x)
+            if (x > minRendered.x && x < maxRendered.x)
             {
-                if (yc < maxRendered.y && yc > minRendered.y)
+                if (y < maxRendered.y && y > minRendered.y)
                 {
                     Environment::ActiveElement = this;
                     Click();
