@@ -107,8 +107,6 @@ namespace OpenXaml
     {
         frame = input;
         glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
-        Environment::window->xScale = 2.0f / frame->getWidth();
-        Environment::window->yScale = 2.0f / frame->getHeight();
         Environment::window->width = frame->getWidth();
         Environment::window->height = frame->getHeight();
         GL::LoadShaders();

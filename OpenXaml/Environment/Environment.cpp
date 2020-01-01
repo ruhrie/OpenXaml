@@ -32,8 +32,6 @@ namespace OpenXaml
             glfwGetMonitorPhysicalSize(primary, &widthMM, &heightMM);
             const GLFWvidmode *mode = glfwGetVideoMode(primary);
             DPI = mode->width / (widthMM / 25.4);
-            window->xScale = DPI;
-            window->yScale = DPI;
         }
 
         void ClearEnvironment()
