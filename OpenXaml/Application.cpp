@@ -49,7 +49,6 @@ namespace OpenXaml
 
     Application::Application()
     {
-        PixelScale = {0.0f, 0.0f};
         Environment::window = new Environment::Window();
         if (!glfwInit())
             throw 2;

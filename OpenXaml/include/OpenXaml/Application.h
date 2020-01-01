@@ -15,6 +15,5 @@ namespace OpenXaml
 
     private:
         std::shared_ptr<Objects::Frame> frame;
-        vec2<float> PixelScale;
     };
 } // namespace OpenXaml
