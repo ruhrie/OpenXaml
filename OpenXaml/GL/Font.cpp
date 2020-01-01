@@ -98,8 +98,8 @@ namespace OpenXaml
                 (float)((x * maxWidth) + bx) / (float)width,
                 (float)(y * maxHeight + by) / (float)height,
                 (float)(y * maxHeight + 0) / (float)height,
-                bx * Environment::window->xScale,
-                by * Environment::window->yScale,
+                (float)bx,
+                (float)by,
                 (float)newFace->glyph->metrics.horiBearingX / 64,
                 (float)newFace->glyph->metrics.horiBearingY / 64};
             GlyphMap[newFace->glyph->glyph_index] = bound;

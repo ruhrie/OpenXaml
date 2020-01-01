@@ -67,7 +67,7 @@ namespace OpenXaml
             float width = 0;     //width of current line
             float maxWidth = 0;  //max line width
             size_t charsToRender = 0;
-            float fBounds = (maxCoord.x - minCoord.x) / OpenXaml::Environment::window->xScale;
+            float fBounds = (maxCoord.x - minCoord.x);
             vector<u32string> splitStrings;
             for (int i = 0; i < indexes.size() + 1; i++)
             {
@@ -115,8 +115,8 @@ namespace OpenXaml
             width = 0;
 
             int height = (font->Height >> 6);
-            float fWidth = maxWidth * OpenXaml::Environment::window->xScale;
-            float fHeight = height * OpenXaml::Environment::window->yScale * lineCount;
+            float fWidth = maxWidth;
+            float fHeight = height * lineCount;
 
             switch (VerticalAlignment)
             {
@@ -177,8 +177,8 @@ namespace OpenXaml
             }
 
             int arrayIndex = 0;
-            float penX = 0;
-            float penY = maxRendered.y - (height - (font->VerticalOffset >> 6)) * OpenXaml::Environment::window->yScale;
+            float penX = minRendered.x;
+            float penY = maxRendered.y - (height - (font->VerticalOffset >> 6));
             currentIndex = 0;
             for (int i = 0; i < indexes.size() + 1; i++)
             {
@@ -203,12 +203,12 @@ namespace OpenXaml
                             {
                                 case TextAlignment::Center:
                                 {
-                                    penX = (minRendered.x + maxRendered.x) * 0.5f - width * 0.5f * OpenXaml::Environment::window->xScale;
+                                    penX = (minRendered.x + maxRendered.x) * 0.5f - width * 0.5f;
                                     break;
                                 }
                                 case TextAlignment::End:
                                 {
-                                    penX = (maxRendered.x) - width * OpenXaml::Environment::window->xScale;
+                                    penX = (maxRendered.x) - width;
                                     break;
                                 }
                                 case TextAlignment::Start:
@@ -228,8 +228,8 @@ namespace OpenXaml
                             }
 
                             priorIndex = ++ppIndex;
-                            penY -= height * OpenXaml::Environment::window->yScale;
-                            if (penY < minCoord.y - height * OpenXaml::Environment::window->yScale)
+                            penY -= height;
+                            if (penY < minCoord.y - height)
                             {
                                 break;
                             }
@@ -248,12 +248,12 @@ namespace OpenXaml
                 {
                     case TextAlignment::Center:
                     {
-                        penX = (minRendered.x + maxRendered.x) * 0.5f - wordWidth * 0.5f * OpenXaml::Environment::window->xScale;
+                        penX = (minRendered.x + maxRendered.x) * 0.5f - wordWidth * 0.5f;
                         break;
                     }
                     case TextAlignment::End:
                     {
-                        penX = (maxRendered.x) - width * OpenXaml::Environment::window->xScale;
+                        penX = (maxRendered.x) - width;
                         break;
                     }
                     case TextAlignment::Start:
@@ -270,12 +270,12 @@ namespace OpenXaml
                     }
                     RenderCharacter(formattedText.at(j), penX, penY, vBuffer, eBuffer, arrayIndex);
                 }
-                penY -= height * OpenXaml::Environment::window->yScale;
+                penY -= height;
                 width = 0;
             }
 
-            boxWidth = (maxRendered.x - minRendered.x) / OpenXaml::Environment::window->xScale;
-            boxHeight = (maxRendered.y - minRendered.y) / OpenXaml::Environment::window->yScale;
+            boxWidth = (maxRendered.x - minRendered.x);
+            boxHeight = (maxRendered.y - minRendered.y);
             glBindVertexArray(TextBlock::VAO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, edgeBuffer);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * (size_t)arrayIndex * sizeof(unsigned short), eBuffer, GL_STATIC_DRAW);
@@ -291,9 +291,9 @@ namespace OpenXaml
             auto uchar = font->GlyphMap[ch.Character];
             float x0, x1, y0, y1, tx0, tx1, ty0, ty1;
             float dx0, dx1, dy0, dy1;
-            dx0 = penX + (ch.xOffset + uchar.xBearingH) * Environment::window->xScale;
+            dx0 = penX + (ch.xOffset + uchar.xBearingH);
             dx1 = dx0 + uchar.width;
-            dy1 = penY + (ch.yOffset + uchar.yBearingH) * Environment::window->yScale;
+            dy1 = penY + (ch.yOffset + uchar.yBearingH);
             dy0 = dy1 - uchar.height;
 
             x0 = max(dx0, minCoord.x);
@@ -362,8 +362,8 @@ namespace OpenXaml
             edgeBuffer[6 * index + 5] = 3 + 4 * index;
 
             index++;
-            penX += ch.xAdvance * OpenXaml::Environment::window->xScale;
-            penY -= ch.yAdvance * OpenXaml::Environment::window->yScale;
+            penX += ch.xAdvance;
+            penY -= ch.yAdvance;
         }
 
         TextBlock::TextBlock()
@@ -495,8 +495,8 @@ namespace OpenXaml
             }
             maxWidth = std::max(maxWidth, width);
 
-            result.x = std::ceil(maxWidth) * OpenXaml::Environment::window->xScale;
-            result.y = lineCount * OpenXaml::Environment::window->yScale * (font->Height >> 6);
+            result.x = std::ceil(maxWidth);
+            result.y = lineCount * (font->Height >> 6);
             return result;
         }
     } // namespace Objects

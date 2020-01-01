@@ -28,13 +28,13 @@ namespace OpenXaml
             auto desiredDimensions = Label->getDesiredDimensions();
             if (Width == 0)
             {
-                int w = desiredDimensions.x / OpenXaml::Environment::window->xScale;
+                int w = desiredDimensions.x;
                 Frame->setWidth(w);
                 Label->setWidth(w);
             }
             if (Height == 0)
             {
-                int h = desiredDimensions.y / OpenXaml::Environment::window->yScale;
+                int h = desiredDimensions.y;
                 Frame->setHeight(h);
                 Label->setHeight(h);
             }
