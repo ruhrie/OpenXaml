@@ -54,64 +54,81 @@ namespace OpenXaml
 
 			GLfloat vertices[16];
 
+			vec2<float> localMax;
+			vec2<float> localMin;
+			
+			localMax.x = maxCoord.x - Margin.Right;
+			localMax.y = maxCoord.y - Margin.Top;
+			localMin.x = minCoord.x + Margin.Left;
+			localMin.y = minCoord.y + Margin.Bottom;
+
+			if(localMax.x < localMin.x)
+			{
+				localMax.x = localMin.x;
+			}
+			if(localMax.y < localMin.y)
+			{
+				localMax.y = localMin.y;
+			}
+
 			if (Rectangle::HorizontalAlignment == HorizontalAlignment::Right)
 			{
-				vertices[0] = std::max(maxCoord.x - Width, minCoord.x);
-				vertices[4] = maxCoord.x;
-				vertices[8] = std::max(maxCoord.x - Width, minCoord.x);
-				vertices[12] = maxCoord.x;
+				vertices[0] = std::max(localMax.x - Width, localMin.x);
+				vertices[4] = localMax.x;
+				vertices[8] = std::max(localMax.x - Width, localMin.x);
+				vertices[12] = localMax.x;
 			}
 			else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Left)
 			{
-				vertices[0] = minCoord.x;
-				vertices[4] = std::min(minCoord.x + Width, maxCoord.x);
-				vertices[8] = minCoord.x;
-				vertices[12] = std::min(minCoord.x + Width, maxCoord.x);
+				vertices[0] = localMin.x;
+				vertices[4] = std::min(localMin.x + Width, localMax.x);
+				vertices[8] = localMin.x;
+				vertices[12] = std::min(localMin.x + Width, localMax.x);
 			}
 			else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Center)
 			{
-				float mid = (minCoord.x + maxCoord.x) / 2;
-				vertices[0] = std::max(mid - Width / 2, minCoord.x);
-				vertices[4] = std::min(mid + Width / 2, maxCoord.x);
-				vertices[8] = std::max(mid - Width / 2, minCoord.x);
-				vertices[12] = std::min(mid + Width / 2, maxCoord.x);
+				float mid = (localMin.x + localMax.x) / 2;
+				vertices[0] = std::max(mid - Width / 2, localMin.x);
+				vertices[4] = std::min(mid + Width / 2, localMax.x);
+				vertices[8] = std::max(mid - Width / 2, localMin.x);
+				vertices[12] = std::min(mid + Width / 2, localMax.x);
 			}
 			else if (Rectangle::HorizontalAlignment == HorizontalAlignment::Stretch)
 			{
 				if (Width == 0)
 				{
-					vertices[0] = minCoord.x;
-					vertices[4] = maxCoord.x;
-					vertices[8] = minCoord.x;
-					vertices[12] = maxCoord.x;
+					vertices[0] = localMin.x;
+					vertices[4] = localMax.x;
+					vertices[8] = localMin.x;
+					vertices[12] = localMax.x;
 				}
 				else
 				{
-					float mid = (minCoord.x + maxCoord.x) / 2;
-					vertices[0] = std::min(mid - Width / 2, minCoord.x);
-					vertices[4] = std::max(mid + Width / 2, maxCoord.x);
-					vertices[8] = std::min(mid - Width / 2, minCoord.x);
-					vertices[12] = std::max(mid + Width / 2, maxCoord.x);
+					float mid = (localMin.x + localMax.x) / 2;
+					vertices[0] = std::min(mid - Width / 2, localMin.x);
+					vertices[4] = std::max(mid + Width / 2, localMax.x);
+					vertices[8] = std::min(mid - Width / 2, localMin.x);
+					vertices[12] = std::max(mid + Width / 2, localMax.x);
 				}
 			}
 
 			if (Rectangle::VerticalAlignment == VerticalAlignment::Top)
 			{
-				vertices[1] = maxCoord.y;
-				vertices[5] = maxCoord.y;
-				vertices[9] = std::max(maxCoord.y - Height, minCoord.y);
-				vertices[13] = std::max(maxCoord.y - Height, minCoord.y);
+				vertices[1] = localMax.y;
+				vertices[5] = localMax.y;
+				vertices[9] = std::max(localMax.y - Height, localMin.y);
+				vertices[13] = std::max(localMax.y - Height, localMin.y);
 			}
 			else if (Rectangle::VerticalAlignment == VerticalAlignment::Bottom)
 			{
-				vertices[1] = std::min(minCoord.y + Height, maxCoord.y);
-				vertices[5] = std::min(minCoord.y + Height, maxCoord.y);
-				vertices[9] = minCoord.y;
-				vertices[13] = minCoord.y;
+				vertices[1] = std::min(localMin.y + Height, localMax.y);
+				vertices[5] = std::min(localMin.y + Height, localMax.y);
+				vertices[9] = localMin.y;
+				vertices[13] = localMin.y;
 			}
 			else if (Rectangle::VerticalAlignment == VerticalAlignment::Center)
 			{
-				float mid = (minCoord.y + maxCoord.y) / 2;
+				float mid = (localMin.y + localMax.y) / 2;
 				vertices[1] = mid + Height / 2;
 				vertices[5] = mid + Height / 2;
 				vertices[9] = mid - Height / 2;
@@ -121,18 +138,18 @@ namespace OpenXaml
 			{
 				if (Height == 0)
 				{
-					vertices[1] = maxCoord.y;
-					vertices[5] = maxCoord.y;
-					vertices[9] = minCoord.y;
-					vertices[13] = minCoord.y;
+					vertices[1] = localMax.y;
+					vertices[5] = localMax.y;
+					vertices[9] = localMin.y;
+					vertices[13] = localMin.y;
 				}
 				else
 				{
-					float mid = (minCoord.y + maxCoord.y) / 2;
-					vertices[1] = std::min(mid + Height / 2, minCoord.y);
-					vertices[5] = std::min(mid + Height / 2, minCoord.y);
-					vertices[9] = std::max(mid - Height / 2, maxCoord.y);
-					vertices[13] = std::max(mid - Height / 2, maxCoord.y);
+					float mid = (localMin.y + localMax.y) / 2;
+					vertices[1] = std::min(mid + Height / 2, localMin.y);
+					vertices[5] = std::min(mid + Height / 2, localMin.y);
+					vertices[9] = std::max(mid - Height / 2, localMax.y);
+					vertices[13] = std::max(mid - Height / 2, localMax.y);
 				}
 			}
 			vertices[2] = 0.0f;
