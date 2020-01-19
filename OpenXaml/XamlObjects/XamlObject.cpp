@@ -144,6 +144,20 @@ namespace OpenXaml
         {
             maxRendered = GetMaxRendered();
             minRendered = GetMinRendered();
+
+            localMax.x = maxCoord.x - Margin.Right;
+            localMax.y = maxCoord.y - Margin.Top;
+            localMin.x = minCoord.x + Margin.Left;
+            localMin.y = minCoord.y + Margin.Bottom;
+
+            if (localMax.x < localMin.x)
+            {
+                localMax.x = localMin.x;
+            }
+            if (localMax.y < localMin.y)
+            {
+                localMax.y = localMin.y;
+            }
         }
 
         void XamlObject::setOnClick(std::function<void(XamlObject *)> func)

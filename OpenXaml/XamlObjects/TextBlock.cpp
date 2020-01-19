@@ -45,6 +45,7 @@ namespace OpenXaml
         }
         void TextBlock::Update()
         {
+            XamlObject::Update();
             font = Environment::GetFont(FontProperties{FontFamily, FontSize});
             if (font == NULL)
             {
@@ -67,7 +68,7 @@ namespace OpenXaml
             float width = 0;     //width of current line
             float maxWidth = 0;  //max line width
             size_t charsToRender = 0;
-            float fBounds = (maxCoord.x - minCoord.x);
+            float fBounds = (localMax.x - localMin.x);
             vector<u32string> splitStrings;
             for (int i = 0; i < indexes.size() + 1; i++)
             {
@@ -122,27 +123,27 @@ namespace OpenXaml
             {
                 case VerticalAlignment::Bottom:
                 {
-                    minRendered.y = minCoord.y;
-                    maxRendered.y = min(maxCoord.y, minCoord.y + fHeight);
+                    minRendered.y = localMin.y;
+                    maxRendered.y = min(localMax.y, localMin.y + fHeight);
                     break;
                 }
                 case VerticalAlignment::Top:
                 {
-                    maxRendered.y = maxCoord.y;
-                    minRendered.y = max(minCoord.y, maxCoord.y - fHeight);
+                    maxRendered.y = localMax.y;
+                    minRendered.y = max(localMin.y, localMax.y - fHeight);
                     break;
                 }
                 case VerticalAlignment::Center:
                 {
-                    float mean = 0.5f * (maxCoord.y + minCoord.y);
-                    maxRendered.y = min(maxCoord.y, mean + fHeight / 2);
-                    minRendered.y = max(minCoord.y, mean - fHeight / 2);
+                    float mean = 0.5f * (localMax.y + localMin.y);
+                    maxRendered.y = min(localMax.y, mean + fHeight / 2);
+                    minRendered.y = max(localMin.y, mean - fHeight / 2);
                     break;
                 }
                 case VerticalAlignment::Stretch:
                 {
-                    maxRendered.y = maxCoord.y;
-                    minRendered.y = minCoord.y;
+                    maxRendered.y = localMax.y;
+                    minRendered.y = localMin.y;
                     break;
                 }
             }
@@ -151,27 +152,27 @@ namespace OpenXaml
             {
                 case HorizontalAlignment::Left:
                 {
-                    minRendered.x = minCoord.x;
-                    maxRendered.x = min(maxCoord.x, minCoord.x + fWidth);
+                    minRendered.x = localMin.x;
+                    maxRendered.x = min(localMax.x, localMin.x + fWidth);
                     break;
                 }
                 case HorizontalAlignment::Right:
                 {
-                    maxRendered.x = maxCoord.x;
-                    minRendered.x = max(minCoord.x, maxCoord.x - fWidth);
+                    maxRendered.x = localMax.x;
+                    minRendered.x = max(localMin.x, localMax.x - fWidth);
                     break;
                 }
                 case HorizontalAlignment::Center:
                 {
-                    float mean = 0.5f * (maxCoord.x + minCoord.x);
-                    maxRendered.x = min(maxCoord.x, mean + fWidth / 2);
-                    minRendered.x = max(minCoord.x, mean - fWidth / 2);
+                    float mean = 0.5f * (localMax.x + localMin.x);
+                    maxRendered.x = min(localMax.x, mean + fWidth / 2);
+                    minRendered.x = max(localMin.x, mean - fWidth / 2);
                     break;
                 }
                 case HorizontalAlignment::Stretch:
                 {
-                    maxRendered.x = maxCoord.x;
-                    minRendered.x = minCoord.x;
+                    maxRendered.x = localMax.x;
+                    minRendered.x = localMin.x;
                     break;
                 }
             }
@@ -220,7 +221,7 @@ namespace OpenXaml
 
                             for (int j = priorIndex; j < ppIndex + 1; j++)
                             {
-                                if (penX > maxCoord.x)
+                                if (penX > localMax.x)
                                 {
                                     break;
                                 }
@@ -229,7 +230,7 @@ namespace OpenXaml
 
                             priorIndex = ++ppIndex;
                             penY -= height;
-                            if (penY < minCoord.y - height)
+                            if (penY < localMin.y - height)
                             {
                                 break;
                             }
@@ -264,7 +265,7 @@ namespace OpenXaml
                 }
                 for (int j = priorIndex; j < formattedText.size(); j++)
                 {
-                    if (penX > maxCoord.x)
+                    if (penX > localMax.x)
                     {
                         break;
                     }
@@ -296,10 +297,10 @@ namespace OpenXaml
             dy1 = penY + (ch.yOffset + uchar.yBearingH);
             dy0 = dy1 - uchar.height;
 
-            x0 = max(dx0, minCoord.x);
-            x1 = min(dx1, maxCoord.x);
-            y0 = min(dy0, maxCoord.y);
-            y1 = max(dy1, minCoord.y);
+            x0 = max(dx0, localMin.x);
+            x1 = min(dx1, localMax.x);
+            y0 = min(dy0, localMax.y);
+            y1 = max(dy1, localMin.y);
 
             float dwidth = dx1 - dx0;
             float dheight = dy1 - dy0;

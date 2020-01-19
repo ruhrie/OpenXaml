@@ -61,6 +61,8 @@ namespace OpenXaml
             unsigned int VAO;
             std::vector<std::shared_ptr<XamlObject>> DerivedElements;
             std::function<void(XamlObject *)> OnClick;
+            vec2<float> localMax;
+            vec2<float> localMin;
 
         private:
             XamlObject &operator=(const XamlObject &);
