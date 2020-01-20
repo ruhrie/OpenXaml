@@ -297,16 +297,18 @@ namespace OpenXaml
             dy1 = penY + (ch.yOffset + uchar.yBearingH);
             dy0 = dy1 - uchar.height;
 
-            x0 = max(dx0, localMin.x);
-            x1 = min(dx1, localMax.x);
-            y0 = min(dy0, localMax.y);
-            y1 = max(dy1, localMin.y);
+            x0 = clamp(dx0, localMin.x, localMax.x);
+            x1 = clamp(dx1, localMin.x, localMax.x);
+            y0 = clamp(dy0, localMin.y, localMax.y);
+            y1 = clamp(dy1, localMin.y, localMax.y);
 
             float dwidth = dx1 - dx0;
             float dheight = dy1 - dy0;
             auto textureLoc = font->GlyphMap[ch.Character];
+            //handle the font textures, note that they are upside down
             if (x0 != dx0)
             {
+                //we are missing part of the left
                 tx0 = textureLoc.txMax - (textureLoc.txMax - textureLoc.txMin) * (x1 - x0) / dwidth;
             }
             else
@@ -315,6 +317,7 @@ namespace OpenXaml
             }
             if (x1 != dx1)
             {
+                //we are missing part of the right
                 tx1 = textureLoc.txMin + (textureLoc.txMax - textureLoc.txMin) * (x1 - x0) / dwidth;
             }
             else
@@ -323,7 +326,8 @@ namespace OpenXaml
             }
             if (y0 != dy0)
             {
-                ty0 = textureLoc.tyMin - (textureLoc.tyMax - textureLoc.tyMin) * (y1 - y0) / dheight;
+                //we are missing part of the bottom
+                ty0 = textureLoc.tyMax - (textureLoc.tyMax - textureLoc.tyMin) * (y1 - y0) / dheight; 
             }
             else
             {
@@ -331,6 +335,7 @@ namespace OpenXaml
             }
             if (y1 != dy1)
             {
+                //we are missing part of the bottom
                 ty1 = textureLoc.tyMin + (textureLoc.tyMax - textureLoc.tyMin) * (y1 - y0) / dheight;
             }
             else
