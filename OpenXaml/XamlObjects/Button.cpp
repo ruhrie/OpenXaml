@@ -24,6 +24,7 @@ namespace OpenXaml
 
         void Button::Update()
         {
+            XamlObject::Update();
             Label->setText(Text);
             auto desiredDimensions = Label->getDesiredDimensions();
             if (Width == 0)
@@ -41,13 +42,15 @@ namespace OpenXaml
             Label->setVerticalAlignment(VerticalAlignment);
             Label->setHorizontalAlignment(HorizontalAlignment);
             Label->setTextAlignment(TextAlignment::Center);
+            Label->Margin = Margin;
             Label->Update();
             Frame->setHorizontalAlignment(HorizontalAlignment);
             Frame->setVerticalAlignment(VerticalAlignment);
             Frame->setFill(Fill);
+            Frame->Margin = Margin;
             Frame->Update();
-            maxRendered = GetMaxRendered();
-            minRendered = GetMinRendered();
+            maxRendered = Frame->GetMaxRendered();
+            minRendered = Frame->GetMinRendered();
         }
         Button::Button()
         {

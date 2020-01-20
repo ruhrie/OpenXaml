@@ -142,9 +142,6 @@ namespace OpenXaml
 
         void XamlObject::Update()
         {
-            maxRendered = GetMaxRendered();
-            minRendered = GetMinRendered();
-
             localMax.x = maxCoord.x - Margin.Right;
             localMax.y = maxCoord.y - Margin.Top;
             localMin.x = minCoord.x + Margin.Left;
@@ -188,9 +185,10 @@ namespace OpenXaml
         }
         void XamlObject::Click(double x, double y)
         {
+            float ny = Environment::window->height - y;
             if (x > minRendered.x && x < maxRendered.x)
             {
-                if (y < maxRendered.y && y > minRendered.y)
+                if (ny < maxRendered.y && ny > minRendered.y)
                 {
                     Environment::ActiveElement = this;
                     Click();
