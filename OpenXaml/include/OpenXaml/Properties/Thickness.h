@@ -27,4 +27,15 @@ struct Thickness
         Right = right;
         Bottom = bottom;
     }
+
+    Thickness operator+(const Thickness& a)
+    {
+        Thickness result(
+            Left + a.Left,
+            Right + a.Right,
+            Top + a.Top,
+            Bottom + a.Bottom   
+        );
+        return result;
+    }
 };

@@ -27,22 +27,25 @@ namespace OpenXaml
             XamlObject::Update();
             Label->setText(Text);
             auto desiredDimensions = Label->getDesiredDimensions();
+            vec2<float> outerDimensions;
+            outerDimensions.x = desiredDimensions.x + 6;
+            outerDimensions.y = desiredDimensions.y + 6; //this is the margin for the label
             if (Width == 0)
             {
                 int w = desiredDimensions.x;
-                Frame->setWidth(w);
+                Frame->setWidth(outerDimensions.x);
                 Label->setWidth(w);
             }
             if (Height == 0)
             {
                 int h = desiredDimensions.y;
-                Frame->setHeight(h);
+                Frame->setHeight(outerDimensions.y);
                 Label->setHeight(h);
             }
             Label->setVerticalAlignment(VerticalAlignment);
             Label->setHorizontalAlignment(HorizontalAlignment);
             Label->setTextAlignment(TextAlignment::Center);
-            Label->Margin = Margin;
+            Label->Margin = Margin + Thickness(3);
             Label->Update();
             Frame->setHorizontalAlignment(HorizontalAlignment);
             Frame->setVerticalAlignment(VerticalAlignment);
