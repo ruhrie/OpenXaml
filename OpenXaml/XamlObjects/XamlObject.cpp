@@ -200,5 +200,14 @@ namespace OpenXaml
         {
             Update();
         }
+
+        std::string XamlObject::getName()
+        {
+            return Name;
+        }
+        void XamlObject::setName(std::string name)
+        {
+            Name = name;
+        }
     } // namespace Objects
 } // namespace OpenXaml

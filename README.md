@@ -10,6 +10,7 @@ Building OpenXaml requires the cmake build tool. Libraries it utilizes are downl
 * GLAD
 * xerces-c
 * Freetype
+* spdlog
 
 GLFW adds a dependency on Visual C++ (Windows), xcode (OSX), or xorg-dev (Linux).
 

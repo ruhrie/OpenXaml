@@ -12,9 +12,9 @@
     <xs:attributeGroup ref="Grid.Column"/>
     <xs:attributeGroup ref="OnClick"/>
     <xs:attributeGroup ref="Margin"/>
+    <xs:attributeGroup ref="Name"/>
   </xs:complexType>
-  
-  
+
   <xs:element name="Frame">
     <xs:complexType>
       <xs:complexContent>
@@ -28,7 +28,7 @@
           <xs:attributeGroup ref="Fill"/>
           <xs:attributeGroup ref="Class"/>
         </xs:extension>
-      </xs:complexContent>      
+      </xs:complexContent>
     </xs:complexType>
   </xs:element>
 
@@ -115,14 +115,22 @@
   <xs:element name="Button" id="Button">
     <xs:complexType mixed="true">
       <xs:complexContent>
-        <xs:extension base="XamlObject">          
+        <xs:extension base="XamlObject">
           <xs:attributeGroup ref="Text"/>
           <xs:attributeGroup ref="Fill"/>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
-  
+
+  <xs:attributeGroup name="Name">
+    <xs:attribute name="Name">
+      <xs:simpleType>
+        <xs:restriction base="xs:string"/>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
   <xs:attributeGroup name="Width">
     <xs:attribute name="Width">
       <xs:simpleType>
@@ -261,22 +269,22 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
-  
+
   <xs:attributeGroup name="OnClick">
     <xs:attribute name="OnClick">
       <xs:simpleType>
         <xs:restriction base="xs:string"/>
-      </xs:simpleType>      
+      </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
 
-    <xs:attributeGroup name="Margin">
+  <xs:attributeGroup name="Margin">
     <xs:attribute name="Margin">
       <xs:simpleType>
         <xs:restriction base="xs:string">
           <xs:pattern value="(([0-9])*,([0-9])*,([0-9])*,([0-9])*)|([0-9])*"/>
         </xs:restriction>
-      </xs:simpleType>      
+      </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
 
@@ -290,5 +298,5 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
-  
+
 </xs:schema>

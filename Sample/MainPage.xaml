@@ -12,7 +12,7 @@
       <ColumnDefinition Width="200"/>
       <ColumnDefinition Width="824"/>
     </ColumnDefinitionCollection>
-    <Button Margin="5,5,5,5" Text="asdf" Fill="#FFFF00FF" HorizontalAlignment="Left" VerticalAlignment="Top" OnClick="Test" Grid.Row="1"/>
+    <Button Margin="5,5,5,5" Text="asdf" Fill="#FFFF00FF" HorizontalAlignment="Left" VerticalAlignment="Top" OnClick="Test" Grid.Row="1" Name="TestButton"/>
     <Rectangle Fill="#440000AA" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="100"/>
     <Rectangle HorizontalAlignment="Left" Fill="#AA000000" Width="1000"/>
     <TextBlock TextWrapping="Wrap" Grid.Row="1" Grid.Column="1">
@@ -23,5 +23,6 @@
       Phasellus varius dui eu quam commodo molestie. Donec nec ultrices tortor. Cras dictum orci sit amet orci rutrum vestibulum. Morbi quis urna sed ipsum congue hendrerit. Vivamus pretium feugiat augue, in rutrum metus. Phasellus in mollis odio, sed porta metus. Integer consectetur sem eu lacus luctus porta. Nam lacus risus, venenatis eu metus non, ornare posuere lacus.
     </TextBlock>
     <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Rectangle Fill="#FFFF0000" Width="100" Height="100" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
   </Grid>
 </Frame>

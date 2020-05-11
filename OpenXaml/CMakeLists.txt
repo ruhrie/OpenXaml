@@ -10,7 +10,7 @@ file(GLOB SOURCES "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" 
 set (OPENXAML_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/" PARENT_SCOPE)
 set (LOCAL_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 set (OPENGL_INC "")
-set (LIBRARIES glfw harfbuzz::harfbuzz Freetype::Freetype)
+set (LIBRARIES glfw harfbuzz::harfbuzz Freetype::Freetype spdlog::spdlog_header_only)
 set (COMP_DEC "")
 
 if (UNIX)

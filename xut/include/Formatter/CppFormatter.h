@@ -3,7 +3,8 @@
 #include <xercesc/dom/DOMAttr.hpp>
 
 /// This file contains helper methods that convert xml to cpp strings
-
+std::string GetNameString(xercesc::DOMAttr *input);
+std::string GetName(xercesc::DOMAttr *input, bool root = false);
 std::string GetHeight(xercesc::DOMAttr *, bool root = false);
 std::string GetFill(xercesc::DOMAttr *, bool root = false);
 std::string GetWidth(xercesc::DOMAttr *, bool root = false);

@@ -7,6 +7,26 @@
 #include <xercesc/parsers/XercesDOMParser.hpp>
 using namespace std;
 using namespace xercesc;
+
+string GetName(DOMAttr *input, bool root)
+{
+    string value = XMLString::transcode(input->getNodeValue());
+    if (root)
+    {
+        return "setName(" + value + ");\n";
+    }
+    else
+    {
+        return "%name%->setName(\"" + value + "\");\n";
+    }
+}
+
+string GetNameString(DOMAttr *input)
+{
+    string value = XMLString::transcode(input->getNodeValue());
+    return value;
+}
+
 string GetHeight(DOMAttr *input, bool root)
 {
     string value = XMLString::transcode(input->getNodeValue());

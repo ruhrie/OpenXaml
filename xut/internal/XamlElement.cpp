@@ -70,6 +70,18 @@ namespace xut
         XamlElement::XamlElement(xercesc::DOMElement *element, bool root, ElementType type)
         {
             Type = type;
+            DOMAttr *name = element->getAttributeNode(XMLString::transcode("Name"));
+            string nameStr = "";
+            if (name != NULL)
+            {
+                body += GetName(name, root);
+                nameStr = GetNameString(name);
+                Public = true;
+            }
+            else
+            {
+                nameStr = "var_" + to_string(GetUID());
+            }
             DOMAttr *height = element->getAttributeNode(XMLString::transcode("Height"));
             if (height != NULL)
             {
@@ -116,16 +128,7 @@ namespace xut
             {
                 body += GetMargin(margin);
             }
-            string name = "";
-            if (name == "")
-            {
-                name = "var_" + to_string(GetUID());
-            }
-            else
-            {
-                Public = true;
-            }
-            Name = name;
+            Name = nameStr;
             size_t childCount = element->getChildElementCount();
             auto children = element->getChildNodes();
             for (int i = 0; i < childCount; i++)

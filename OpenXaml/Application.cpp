@@ -9,7 +9,7 @@
 #include <filesystem>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
+#include <spdlog/spdlog.h>
 namespace OpenXaml
 {
     GLFWwindow *window;
@@ -49,6 +49,7 @@ namespace OpenXaml
 
     Application::Application()
     {
+        spdlog::set_level(spdlog::level::debug);
         Environment::window = new Environment::Window();
         if (!glfwInit())
             throw 2;

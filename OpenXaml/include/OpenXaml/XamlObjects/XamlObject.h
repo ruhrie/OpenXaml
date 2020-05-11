@@ -47,6 +47,8 @@ namespace OpenXaml
             vec2<float> GetMinRenderable();
             virtual void AnimationUpdate(int arg);
             Thickness Margin;
+            std::string getName();
+            void setName(std::string name);
 
         protected:
             vec2<float> minCoord;
@@ -63,6 +65,7 @@ namespace OpenXaml
             std::function<void(XamlObject *)> OnClick;
             vec2<float> localMax;
             vec2<float> localMin;
+            std::string Name;
 
         private:
             XamlObject &operator=(const XamlObject &);

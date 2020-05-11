@@ -11,6 +11,7 @@ find_package(glfw3 CONFIG REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(harfbuzz CONFIG REQUIRED)
 find_package(XercesC CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 
 add_subdirectory("Dependencies" EXCLUDE_FROM_ALL)
 

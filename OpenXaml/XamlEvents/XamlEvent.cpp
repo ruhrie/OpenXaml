@@ -3,7 +3,7 @@
 #include "OpenXaml/XamlObjects/Button.h"
 #include "OpenXaml/XamlObjects/TextBox.h"
 #include <algorithm>
-#include <iostream>
+#include <spdlog/spdlog.h>
 namespace OpenXaml
 {
     namespace Events
@@ -39,6 +39,7 @@ namespace OpenXaml
 
                         for (XamlObject *target : targets)
                         {
+                            spdlog::warn("Clicked " + target->getName());
                             target->Click(location.x, location.y);
                         }
                         break;
