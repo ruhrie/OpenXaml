@@ -9,6 +9,7 @@
 #include <GLFW/glfw3.h>
 #include <codecvt>
 #include <filesystem>
+#include <utility>
 #include <spdlog/spdlog.h>
 namespace OpenXaml
 {
@@ -19,9 +20,10 @@ namespace OpenXaml
         {
             if (action == GLFW_PRESS)
             {
-                double x, y;
+                double x;
+                double y;
                 glfwGetCursorPos(window, &x, &y);
-                Events::ClickEvent *e = new Events::ClickEvent(x, y);
+                auto *e = new Events::ClickEvent(x, y);
                 Events::EventQueue.push_back(e);
             }
         }
@@ -40,32 +42,34 @@ namespace OpenXaml
 
     void textCallback(GLFWwindow *window, unsigned int codepoint)
     {
-        char32_t unicodeInput = (char32_t)codepoint;
+        auto unicodeInput = (char32_t)codepoint;
         std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> converter;
         std::string text = converter.to_bytes(unicodeInput);
-        Events::TextEvent *e = new Events::TextEvent(text);
+        auto *e = new Events::TextEvent(text);
         Events::EventQueue.push_back(e);
     }
 
     Application::Application()
     {
         Environment::window = new Environment::Window();
-        if (!glfwInit())
+        if (glfwInit() == 0)
+        {
             throw 2;
+        }
         glfwWindowHint(GLFW_VISIBLE, 0);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        window = glfwCreateWindow(640, 480, "My Window", NULL, NULL);
+        window = glfwCreateWindow(640, 480, "My Window", nullptr, nullptr);
         Environment::window->width = 640;
         Environment::window->height = 480;
-        if (!window)
+        if (window == nullptr)
         {
             glfwTerminate();
             throw 2;
         }
         glfwMakeContextCurrent(window);
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) /* There was an error initilizing GLAD */
+        if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0) /* There was an error initilizing GLAD */
         {
             glfwTerminate();
             throw 2;
@@ -84,13 +88,14 @@ namespace OpenXaml
     {
         glfwSwapInterval(1);
         glfwShowWindow(window);
-        while (!glfwWindowShouldClose(window))
+        while (glfwWindowShouldClose(window) == 0)
         {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             frame->Draw();
             glfwSwapBuffers(window);
 
-            int width, height;
+            int width;
+            int height;
             glfwGetWindowSize(window, &width, &height);
 
             glViewport(0, 0, width, height);
@@ -102,7 +107,7 @@ namespace OpenXaml
 
     void Application::InitializeComponent(std::shared_ptr<Objects::Frame> input)
     {
-        frame = input;
+        frame = std::move(input);
         glfwSetWindowSize(window, frame->getWidth(), frame->getHeight());
         Environment::window->width = (float)frame->getWidth();
         Environment::window->height = (float)frame->getHeight();

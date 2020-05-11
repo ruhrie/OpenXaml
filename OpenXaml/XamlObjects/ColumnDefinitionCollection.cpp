@@ -1,15 +1,8 @@
 #include "OpenXaml/XamlObjects/ColumnDefinitionCollection.h"
 
-namespace OpenXaml
+namespace OpenXaml::Objects
 {
-    namespace Objects
-    {
 
-        ColumnDefinitionCollection::ColumnDefinitionCollection()
-        {
-        }
-        ColumnDefinitionCollection::~ColumnDefinitionCollection()
-        {
-        }
-    } // namespace Objects
-} // namespace OpenXaml
+    ColumnDefinitionCollection::ColumnDefinitionCollection() = default;
+    ColumnDefinitionCollection::~ColumnDefinitionCollection() = default;
+} // namespace OpenXaml::Objects

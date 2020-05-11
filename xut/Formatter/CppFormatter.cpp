@@ -1,5 +1,6 @@
 #include "Formatter/CppFormatter.h"
 #include <sstream>
+#include <utility>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
@@ -15,10 +16,8 @@ string GetName(DOMAttr *input, bool root)
     {
         return "setName(" + value + ");\n";
     }
-    else
-    {
-        return "%name%->setName(\"" + value + "\");\n";
-    }
+
+    return "%name%->setName(\"" + value + "\");\n";
 }
 
 string GetNameString(DOMAttr *input)
@@ -34,10 +33,8 @@ string GetHeight(DOMAttr *input, bool root)
     {
         return "setHeight(" + to_string(stoi(value)) + ");\n";
     }
-    else
-    {
-        return "%name%->setHeight(" + to_string(stoi(value)) + ");\n";
-    }
+
+    return "%name%->setHeight(" + to_string(stoi(value)) + ");\n";
 }
 
 std::string GetFill(DOMAttr *input, bool root)
@@ -46,7 +43,7 @@ std::string GetFill(DOMAttr *input, bool root)
     std::istringstream iss(value.substr(1, value.size()));
     unsigned int val;
     iss >> std::hex >> val;
-    string result = "";
+    string result;
     if (root)
     {
         result += "setFill(" + to_string(val) + ");\n";
@@ -65,68 +62,62 @@ string GetWidth(DOMAttr *input, bool root)
     {
         return "setWidth(" + to_string(stoi(value)) + ");\n";
     }
-    else
-    {
-        return "%name%->setWidth(" + to_string(stoi(value)) + ");\n";
-    }
+
+    return "%name%->setWidth(" + to_string(stoi(value)) + ");\n";
 }
 
-string GetHorizontalAlignment(xercesc::DOMAttr *input, bool root)
+string GetHorizontalAlignment(xercesc::DOMAttr *input)
 {
     string value = XMLString::transcode(input->getNodeValue());
     if (value == "Right")
     {
         return "%name%->setHorizontalAlignment(OpenXaml::HorizontalAlignment::Right);\n";
     }
-    else if (value == "Left")
+    if (value == "Left")
     {
         return "%name%->setHorizontalAlignment(OpenXaml::HorizontalAlignment::Left);\n";
     }
-    else if (value == "Center")
+    if (value == "Center")
     {
         return "%name%->setHorizontalAlignment(OpenXaml::HorizontalAlignment::Center);\n";
     }
-    else if (value == "Stretch")
+    if (value == "Stretch")
     {
         return "%name%->setHorizontalAlignment(OpenXaml::HorizontalAlignment::Stretch);\n";
     }
-    else
-    {
-        throw 2;
-    }
+
+    throw 2;
 }
 
-string GetVerticalAlignment(xercesc::DOMAttr *input, bool root)
+string GetVerticalAlignment(xercesc::DOMAttr *input)
 {
     string value = XMLString::transcode(input->getNodeValue());
     if (value == "Top")
     {
         return "%name%->setVerticalAlignment(OpenXaml::VerticalAlignment::Top);\n";
     }
-    else if (value == "Bottom")
+    if (value == "Bottom")
     {
         return "%name%->setVerticalAlignment(OpenXaml::VerticalAlignment::Bottom);\n";
     }
-    else if (value == "Center")
+    if (value == "Center")
     {
         return "%name%->setVerticalAlignment(OpenXaml::VerticalAlignment::Center);\n";
     }
-    else if (value == "Stretch")
+    if (value == "Stretch")
     {
         return "%name%->setVerticalAlignment(OpenXaml::VerticalAlignment::Stretch);\n";
     }
-    else
-    {
-        throw 2;
-    }
+
+    throw 2;
 }
 
-std::string GetText(std::string input)
+std::string GetText(const std::string &input)
 {
     return "%name%->setText(\"" + FormatString(input) + "\");\n";
 }
 
-std::string GetPlaceholderText(std::string input)
+std::string GetPlaceholderText(const std::string &input)
 {
     return "%name%->setPlaceholderText(\"" + FormatString(input) + "\");\n";
 }
@@ -163,18 +154,16 @@ std::string GetTextAlignment(xercesc::DOMAttr *input)
     {
         return "%name%->setTextAlignment(TextAlignment::Left);\n";
     }
-    else if (value == "Right")
+    if (value == "Right")
     {
         return "%name%->setTextAlignment(TextAlignment::Right);\n";
     }
-    else if (value == "Center")
+    if (value == "Center")
     {
         return "%name%->setTextAlignment(TextAlignment::Center);\n";
     }
-    else
-    {
-        throw 2;
-    }
+
+    throw 2;
 }
 
 std::string GetText(xercesc::DOMAttr *input)
@@ -196,23 +185,21 @@ std::string GetTextWrapping(xercesc::DOMAttr *input)
     {
         return "%name%->setTextWrapping(OpenXaml::TextWrapping::None);\n";
     }
-    else if (value == "Wrap")
+    if (value == "Wrap")
     {
         return "%name%->setTextWrapping(OpenXaml::TextWrapping::Wrap);\n";
     }
-    else if (value == "WrapWholeWords")
+    if (value == "WrapWholeWords")
     {
         return "%name%->setTextWrapping(OpenXaml::TextWrapping::WrapWholeWords);\n";
     }
-    else
-    {
-        throw 2;
-    }
+
+    throw 2;
 }
 
-std::string FormatString(std::string input)
+std::string FormatString(const std::string &input)
 {
-    std::string result = "";
+    std::string result;
     for (auto ch : input)
     {
         switch (ch)
@@ -293,8 +280,6 @@ std::string GetMargin(xercesc::DOMAttr *input)
     {
         return "%name%->Margin = Thickness(" + value + ");\n";
     }
-    else
-    {
-        return "%name%->Margin = Thickness(" + value + ");\n";
-    }
+
+    return "%name%->Margin = Thickness(" + value + ");\n";
 }

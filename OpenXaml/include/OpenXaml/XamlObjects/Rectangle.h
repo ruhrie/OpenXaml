@@ -14,7 +14,7 @@ namespace OpenXaml
             void Update();
             ~Rectangle();
             void setFill(unsigned int fill);
-            unsigned int getFill();
+            unsigned int getFill() const;
 
         private:
             unsigned int vertexBuffer;

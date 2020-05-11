@@ -17,8 +17,8 @@ namespace xut
             std::string Initializer = "";
             std::string Terminator = "XamlObject::~XamlObject();\n";
             std::string ToString();
-            XamlClass(std::string fileName);
-            void WriteToFile(std::string fileName);
+            XamlClass(const std::string &fileName);
+            void WriteToFile(const std::string &fileName);
 
         private:
             void AddXamlElement(XamlElement *element);

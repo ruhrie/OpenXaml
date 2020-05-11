@@ -15,7 +15,7 @@ namespace OpenXaml
             void Update();
             ~Frame();
             void setFill(unsigned int fill);
-            unsigned int getFill();
+            unsigned int getFill() const;
 
         private:
             unsigned int vertexBuffer;

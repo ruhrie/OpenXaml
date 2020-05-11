@@ -1,12 +1,9 @@
 #include "OpenXaml/XamlEvents/KeyDownEvent.h"
 
-namespace OpenXaml
+namespace OpenXaml::Events
 {
-    namespace Events
+    KeyDownEvent::KeyDownEvent()
     {
-        KeyDownEvent::KeyDownEvent()
-        {
-            eventType = XamlEvent::KeyDownEvent;
-        }
-    } // namespace Events
-} // namespace OpenXaml
+        eventType = XamlEvent::KeyDownEvent;
+    }
+} // namespace OpenXaml::Events

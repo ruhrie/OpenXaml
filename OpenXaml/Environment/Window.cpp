@@ -1,9 +1,6 @@
 #include "OpenXaml/Environment/Window.h"
 
-namespace OpenXaml
+namespace OpenXaml::Environment
 {
-    namespace Environment
-    {
-        Window *window = new Window();
-    }
-} // namespace OpenXaml
+    Window *window = new Window();
+} // namespace OpenXaml::Environment

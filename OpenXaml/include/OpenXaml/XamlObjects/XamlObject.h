@@ -6,6 +6,7 @@
 #include "OpenXaml/XamlObjects/vec2.h"
 #include <functional>
 #include <string>
+#include <memory>
 #include <vector>
 
 namespace OpenXaml
@@ -27,11 +28,11 @@ namespace OpenXaml
             HorizontalAlignment getHorizontalAlignment();
             VerticalAlignment getVerticalAlignment();
             void setHeight(int height);
-            int getHeight();
+            int getHeight() const;
             void setWidth(int width);
-            int getWidth();
-            int getColumn();
-            int getRow();
+            int getWidth() const;
+            int getColumn() const;
+            int getRow() const;
             void setRow(int row);
             void setColumn(int column);
             void setVisibility(OpenXaml::Visibility visibility);

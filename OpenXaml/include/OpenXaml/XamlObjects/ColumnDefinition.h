@@ -8,9 +8,9 @@ namespace OpenXaml
         {
         public:
             ColumnDefinition();
-            ~ColumnDefinition();
+            ~ColumnDefinition() = default;
             void setWidth(int width);
-            int getWidth();
+            int getWidth() const;
 
         private:
             int Width;

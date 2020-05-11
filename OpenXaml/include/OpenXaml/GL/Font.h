@@ -31,16 +31,16 @@ namespace OpenXaml
     class Font
     {
     public:
-        Font(std::string file, float size);
+        Font(const std::string &file, float size);
         Character &operator[](const char32_t index);
         int Height;
         int VerticalOffset;
         std::map<unsigned int, GlyphBound> GlyphMap;
-        std::vector<UChar> FormatText(std::u32string input);
+        std::vector<UChar> FormatText(const std::u32string &input);
         bool IsSeperator(unsigned int charcode);
         bool IsNewLine(unsigned int charcode);
         ~Font();
-        unsigned int getFontAtlasTexture();
+        unsigned int getFontAtlasTexture() const;
 
     private:
         std::map<char32_t, Character> characterMap;

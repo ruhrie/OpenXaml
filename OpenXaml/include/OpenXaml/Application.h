@@ -11,7 +11,7 @@ namespace OpenXaml
         Application();
         ~Application();
         void Run();
-        void InitializeComponent(std::shared_ptr<Objects::Frame> frame);
+        void InitializeComponent(std::shared_ptr<Objects::Frame> input);
 
     private:
         std::shared_ptr<Objects::Frame> frame;

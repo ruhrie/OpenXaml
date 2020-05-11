@@ -1,14 +1,7 @@
 #include "OpenXaml/XamlObjects/RowDefinitionCollection.h"
 
-namespace OpenXaml
+namespace OpenXaml::Objects
 {
-    namespace Objects
-    {
-        RowDefinitionCollection::RowDefinitionCollection()
-        {
-        }
-        RowDefinitionCollection::~RowDefinitionCollection()
-        {
-        }
-    } // namespace Objects
-} // namespace OpenXaml
+    RowDefinitionCollection::RowDefinitionCollection() = default;
+    RowDefinitionCollection::~RowDefinitionCollection() = default;
+} // namespace OpenXaml::Objects

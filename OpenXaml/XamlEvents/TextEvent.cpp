@@ -1,13 +1,12 @@
 #include "OpenXaml/XamlEvents/TextEvent.h"
 
-namespace OpenXaml
+#include <utility>
+
+namespace OpenXaml::Events
 {
-    namespace Events
+    TextEvent::TextEvent(std::string text)
     {
-        TextEvent::TextEvent(std::string text)
-        {
-            eventType = XamlEvent::TextEvent;
-            Text = text;
-        }
-    } // namespace Events
-} // namespace OpenXaml
+        eventType = XamlEvent::TextEvent;
+        Text = std::move(text);
+    }
+} // namespace OpenXaml::Events

@@ -15,11 +15,11 @@ namespace OpenXaml
             void Initialize();
             void Draw();
             void Update();
-            void setPlaceholderText(std::string placeholderText);
+            void setPlaceholderText(const std::string &placeholderText);
             std::string getPlaceholderText();
             void setText(std::string text);
             std::string getText();
-            void TextUpdate(std::string text);
+            void TextUpdate(const std::string &text);
             void setOnClick(std::function<void(XamlObject *)> func);
 
         private:

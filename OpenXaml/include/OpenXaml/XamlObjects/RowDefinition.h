@@ -8,8 +8,8 @@ namespace OpenXaml
         {
         public:
             RowDefinition();
-            ~RowDefinition();
-            int getHeight();
+            ~RowDefinition() = default;
+            int getHeight() const;
             void setHeight(int height);
 
         private:

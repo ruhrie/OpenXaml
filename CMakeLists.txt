@@ -3,9 +3,7 @@ Project(OpenXaml VERSION 0.1.0)
 
 option(BUILD_SAMPLE_APPLICATION "Build a sample application" ON)
 option(BUILD_DOCUMENTATION "Build the documentation" OFF)
-
-set (CMAKE_CXX_STANDARD 17)
-
+option(USE_LINTER "Use the linter" OFF)
 #these are currently tested and verified against windows vcpkg, linux probably works
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Freetype REQUIRED)
@@ -13,13 +11,32 @@ find_package(harfbuzz CONFIG REQUIRED)
 find_package(XercesC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 
-add_subdirectory("Dependencies" EXCLUDE_FROM_ALL)
-
 if(WIN32)
 	add_compile_options(-W4 -Wno-unused-parameter) #the unused is temporary (hopefully)
 else()
 	add_compile_options(-Wall -Wextra)
 endif()
+
+if(USE_LINTER)
+	find_program(LINTER clang-tidy)
+	if(${LINTER} STREQUAL "LINTER-NOTFOUND")
+		message(CRITICAL "clang-tidy not found")
+	else()
+		message(STATUS "Found clang-tidy at ${LINTER}")
+		if(NOT WIN32)
+			set(CMAKE_CXX_CLANG_TIDY 
+				${LINTER}
+				--checks=readability-*,-readability-magic-numbers,performance-*,portability-*,modernize-*,-modernize-use-trailing-return-type,-modernize-avoid-c-arrays
+			)
+		else()
+			message(CRITICAL "cmake currently cannot run clang-tidy")
+		endif()
+	endif()
+endif()
+
+set (CMAKE_CXX_STANDARD 17)
+
+add_subdirectory("Dependencies" EXCLUDE_FROM_ALL)
 
 add_subdirectory("OpenXaml")
 

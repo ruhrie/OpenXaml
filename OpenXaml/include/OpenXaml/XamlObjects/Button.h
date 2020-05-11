@@ -3,6 +3,7 @@
 #include "OpenXaml/XamlObjects/TextBlock.h"
 #include "OpenXaml/XamlObjects/XamlObject.h"
 #include <map>
+#include <memory>
 namespace OpenXaml
 {
     namespace Objects
@@ -17,7 +18,7 @@ namespace OpenXaml
             Button();
             ~Button();
             void setFill(unsigned int fill);
-            unsigned int getFill();
+            unsigned int getFill() const;
             void setText(std::string content);
             std::string getText();
 

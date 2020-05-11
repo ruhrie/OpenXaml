@@ -1,23 +1,16 @@
 #include "OpenXaml/XamlObjects/ColumnDefinition.h"
 
-namespace OpenXaml
+namespace OpenXaml::Objects
 {
-    namespace Objects
-    {
 
-        ColumnDefinition::ColumnDefinition()
-        {
-        }
-        ColumnDefinition::~ColumnDefinition()
-        {
-        }
-        int ColumnDefinition::getWidth()
-        {
-            return Width;
-        }
-        void ColumnDefinition::setWidth(int width)
-        {
-            Width = width;
-        }
-    } // namespace Objects
-} // namespace OpenXaml
+    ColumnDefinition::ColumnDefinition() = default;
+
+    int ColumnDefinition::getWidth() const
+    {
+        return Width;
+    }
+    void ColumnDefinition::setWidth(int width)
+    {
+        Width = width;
+    }
+} // namespace OpenXaml::Objects

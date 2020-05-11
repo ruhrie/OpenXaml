@@ -1,4 +1,4 @@
-build/
+build*/
 
 
 
@@ -330,3 +330,5 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 .vscode/
+_uild/*
+out/*

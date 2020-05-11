@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     auto result = options.parse(argc, argv);
     try
     {
-        xut::elements::XamlClass *c = new xut::elements::XamlClass(inputFile);
+        auto *c = new xut::elements::XamlClass(inputFile);
         c->WriteToFile(outputFile);
     }
     catch (int error)

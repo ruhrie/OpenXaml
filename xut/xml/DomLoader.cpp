@@ -68,10 +68,10 @@ namespace xut
             }
         }
         size_t childCount = element->getChildElementCount();
-        auto children = element->getChildNodes();
+        auto *children = element->getChildNodes();
         for (uint32_t i = 0; i < childCount; i++)
         {
-            auto child = children->item(i);
+            auto *child = children->item(i);
             result->Children.push_back(LoadXaml((DOMElement *)child));
         }
         return result;
@@ -148,13 +148,13 @@ namespace xut
             }
         }
 
-        auto text = element->getTextContent();
+        const auto *text = element->getTextContent();
         result->setText(XMLString::transcode(text));
         size_t childCount = element->getChildElementCount();
-        auto children = element->getChildNodes();
+        auto *children = element->getChildNodes();
         for (uint32_t i = 0; i < childCount; i++)
         {
-            auto child = children->item(i);
+            auto *child = children->item(i);
             result->Children.push_back(LoadXaml((DOMElement *)child));
         }
         return result;
@@ -228,10 +228,10 @@ namespace xut
         }
 
         size_t childCount = element->getChildElementCount();
-        auto children = element->getChildNodes();
+        auto *children = element->getChildNodes();
         for (uint32_t i = 0; i < childCount; i++)
         {
-            auto child = children->item(i);
+            auto *child = children->item(i);
             result->Children.push_back(LoadXaml((DOMElement *)child));
         }
         return result;
@@ -339,14 +339,14 @@ namespace xut
             }
         }
 
-        auto text = element->getTextContent();
+        const auto *text = element->getTextContent();
         result->setText(XMLString::transcode(text));
 
         size_t childCount = element->getChildElementCount();
-        auto children = element->getChildNodes();
+        auto *children = element->getChildNodes();
         for (uint32_t i = 0; i < childCount; i++)
         {
-            auto child = children->item(i);
+            auto *child = children->item(i);
             result->Children.push_back(LoadXaml((DOMElement *)child));
         }
 

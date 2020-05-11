@@ -8,7 +8,7 @@
 #include <harfbuzz/hb-ft.h>
 #include <harfbuzz/hb.h>
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <string>
 #include <vector>
 
@@ -23,12 +23,12 @@ namespace OpenXaml
     } // namespace Environment
     std::map<Font *, FT_Face> faceMap;
 
-    Font::Font(string file, float size)
+    Font::Font(const string &file, float size)
     {
         // load the font from the file at the given size
         FT_Face newFace;
         auto error = FT_New_Face(OpenXaml::Environment::fontLibrary, file.c_str(), 0, &newFace);
-        if (error)
+        if (error != 0)
         {
             std::cerr << "Failed to open " << file << "\n";
             return;
@@ -51,7 +51,7 @@ namespace OpenXaml
         while (gindex != 0)
         {
             auto error = FT_Load_Glyph(newFace, gindex, FT_LOAD_DEFAULT);
-            if (error)
+            if (error != 0)
             {
                 std::cerr << "Failed to load " << gindex << "\n";
             }
@@ -63,25 +63,29 @@ namespace OpenXaml
             }
             charcode = FT_Get_Next_Char(newFace, charcode, &gindex);
         }
+        if (maxWidth == 0)
+        {
+            return;
+        }
         Height = newFace->size->metrics.height;
         VerticalOffset = -1 * newFace->size->metrics.descender;
         charcode = FT_Get_First_Char(newFace, &gindex);
 
         double sides = ceil(sqrt(numChars));
-        size_t width = (size_t)(sides * maxWidth);
-        size_t height = (size_t)(ceil(numChars / sides) * maxHeight);
-        uint8_t *fontAtlas = (uint8_t *)calloc(width * height, sizeof(uint8_t));
+        auto width = (size_t)(sides * maxWidth);
+        auto height = (size_t)(ceil(numChars / sides) * maxHeight);
+        auto *fontAtlas = (uint8_t *)calloc(width * height, sizeof(uint8_t));
         uint32_t x = 0;
         int y = 0;
         while (gindex != 0)
         {
             auto error = FT_Load_Glyph(newFace, gindex, FT_LOAD_DEFAULT);
-            if (error)
+            if (error != 0)
             {
                 std::cerr << "Failed to load " << gindex << "\n";
             }
             error = FT_Render_Glyph(newFace->glyph, FT_RENDER_MODE_NORMAL);
-            if (error)
+            if (error != 0)
             {
                 std::cerr << "Failed to render " << gindex << "\n";
             }
@@ -143,51 +147,49 @@ namespace OpenXaml
         {
             return characterMap[index];
         }
-        else
+
+        //otherwise get the attributes from freetype
+        int glyph_index = FT_Get_Char_Index(faceMap[this], index);
+        auto error = FT_Load_Glyph(faceMap[this], glyph_index, FT_LOAD_DEFAULT);
+        if (error != 0)
         {
-            //otherwise get the attributes from freetype
-            int glyph_index = FT_Get_Char_Index(faceMap[this], index);
-            auto error = FT_Load_Glyph(faceMap[this], glyph_index, FT_LOAD_DEFAULT);
-            if (error)
-            {
-                std::cerr << "Failed to load " << index << "\n";
-            }
-            error = FT_Render_Glyph(faceMap[this]->glyph, FT_RENDER_MODE_NORMAL);
-            if (error)
-            {
-                std::cerr << "Failed to render " << index << "\n";
-            }
-            GLuint texture;
-            glGenTextures(1, &texture);
-            glBindTexture(GL_TEXTURE_2D, texture);
-            glTexImage2D(
-                GL_TEXTURE_2D,
-                0,
-                GL_RED,
-                faceMap[this]->glyph->bitmap.width,
-                faceMap[this]->glyph->bitmap.rows,
-                0,
-                GL_RED,
-                GL_UNSIGNED_BYTE,
-                faceMap[this]->glyph->bitmap.buffer);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            Character character = {
-                texture,
-                faceMap[this]->glyph->bitmap.width,
-                faceMap[this]->glyph->bitmap.rows,
-                faceMap[this]->glyph->bitmap_left,
-                faceMap[this]->glyph->bitmap_top,
-                faceMap[this]->glyph->advance.x,
-                faceMap[this]->glyph->advance.y};
-            characterMap[index] = character;
-            return characterMap[index];
+            std::cerr << "Failed to load " << index << "\n";
         }
+        error = FT_Render_Glyph(faceMap[this]->glyph, FT_RENDER_MODE_NORMAL);
+        if (error != 0)
+        {
+            std::cerr << "Failed to render " << index << "\n";
+        }
+        GLuint texture;
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            0,
+            GL_RED,
+            faceMap[this]->glyph->bitmap.width,
+            faceMap[this]->glyph->bitmap.rows,
+            0,
+            GL_RED,
+            GL_UNSIGNED_BYTE,
+            faceMap[this]->glyph->bitmap.buffer);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        Character character = {
+            texture,
+            faceMap[this]->glyph->bitmap.width,
+            faceMap[this]->glyph->bitmap.rows,
+            faceMap[this]->glyph->bitmap_left,
+            faceMap[this]->glyph->bitmap_top,
+            faceMap[this]->glyph->advance.x,
+            faceMap[this]->glyph->advance.y};
+        characterMap[index] = character;
+        return characterMap[index];
     }
 
-    unsigned int Font::getFontAtlasTexture()
+    unsigned int Font::getFontAtlasTexture() const
     {
         return fontAtlasTexture;
     }
@@ -196,10 +198,10 @@ namespace OpenXaml
     {
         hb_font_destroy((hb_font_t *)hbFont);
         FT_Done_Face(faceMap[this]);
-        faceMap[this] = NULL;
+        faceMap[this] = nullptr;
     }
 
-    vector<UChar> Font::FormatText(u32string input)
+    vector<UChar> Font::FormatText(const u32string &input)
     {
         hb_buffer_t *buf = hb_buffer_create();
         hb_buffer_add_utf32(buf, (const uint32_t *)input.c_str(), -1, 0, -1);
@@ -207,7 +209,7 @@ namespace OpenXaml
         hb_buffer_set_script(buf, HB_SCRIPT_LATIN);
         hb_buffer_set_cluster_level(buf, HB_BUFFER_CLUSTER_LEVEL_MONOTONE_CHARACTERS);
         hb_buffer_set_language(buf, hb_language_from_string("en", -1));
-        hb_shape((hb_font_t *)hbFont, buf, NULL, 0);
+        hb_shape((hb_font_t *)hbFont, buf, nullptr, 0);
         unsigned int glyphCount;
         hb_glyph_info_t *glyph_info = hb_buffer_get_glyph_infos(buf, &glyphCount);
         hb_glyph_position_t *glyph_pos = hb_buffer_get_glyph_positions(buf, &glyphCount);
@@ -216,10 +218,10 @@ namespace OpenXaml
         {
             result.push_back(
                 {glyph_info[i].codepoint,
-                 glyph_pos[i].x_offset / 64.0f,
-                 glyph_pos[i].y_offset / 64.0f,
-                 glyph_pos[i].x_advance / 64.0f,
-                 glyph_pos[i].y_advance / 64.0f,
+                 glyph_pos[i].x_offset / 64.0F,
+                 glyph_pos[i].y_offset / 64.0F,
+                 glyph_pos[i].x_advance / 64.0F,
+                 glyph_pos[i].y_advance / 64.0F,
                  glyph_info[i].cluster});
         }
         hb_buffer_destroy(buf);
