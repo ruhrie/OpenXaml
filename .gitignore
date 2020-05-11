@@ -332,3 +332,4 @@ ASALocalRun/
 .vscode/
 _uild/*
 out/*
+CMakeSettings.json
