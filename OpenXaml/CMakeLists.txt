@@ -8,7 +8,6 @@ configure_file("GL/GLConfig.cpp.in" "GL/GLConfig.cpp")
 file(GLOB SOURCES "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp" "XamlEvents/*.cpp" "Environment/*.cpp" "Animation/*.cpp")
 
 set (OPENXAML_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/" PARENT_SCOPE)
-set (LOCAL_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 set (OPENGL_INC "")
 set (LIBRARIES glfw harfbuzz::harfbuzz Freetype::Freetype spdlog::spdlog_header_only)
 set (COMP_DEC "")
@@ -32,7 +31,8 @@ set_target_properties(OpenXaml
 	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
-target_include_directories(OpenXaml PRIVATE ${LOCAL_INC} ${FREETYPE_INCLUDE_DIRS} ${GLAD_INC} ${GLFW_INCCLUDE_DIR} ${OPENGL_INC} ${HARFBUZZ_INC})
+target_include_directories(OpenXaml PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include/" ${GLAD_INC})
+target_include_directories(OpenXaml SYSTEM INTERFACE  ${FREETYPE_INCLUDE_DIRS} ${GLFW_INCLUDE_DIR} ${OPENGL_INC} ${HARFBUZZ_INC})
 target_link_libraries(OpenXaml PRIVATE ${LIBRARIES})
 if(WIN32)
 	target_compile_definitions(OpenXaml PRIVATE ${COMP_DEC})

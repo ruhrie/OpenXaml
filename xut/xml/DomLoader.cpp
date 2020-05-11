@@ -44,7 +44,7 @@ namespace xut
     {
         shared_ptr<Frame> result;
         DOMNamedNodeMap *attributes = element->getAttributes();
-        for (int i = 0; i < attributes->getLength(); i++)
+        for (uint32_t i = 0; i < attributes->getLength(); i++)
         {
             DOMNode *item = attributes->item(i);
             const XMLCh *nameXML = item->getNodeName();
@@ -69,7 +69,7 @@ namespace xut
         }
         size_t childCount = element->getChildElementCount();
         auto children = element->getChildNodes();
-        for (int i = 0; i < childCount; i++)
+        for (uint32_t i = 0; i < childCount; i++)
         {
             auto child = children->item(i);
             result->Children.push_back(LoadXaml((DOMElement *)child));
@@ -82,7 +82,7 @@ namespace xut
         shared_ptr<Button> result;
 
         DOMNamedNodeMap *attributes = element->getAttributes();
-        for (int i = 0; i < attributes->getLength(); i++)
+        for (uint32_t i = 0; i < attributes->getLength(); i++)
         {
             DOMNode *item = attributes->item(i);
             const XMLCh *nameXML = item->getNodeName();
@@ -152,7 +152,7 @@ namespace xut
         result->setText(XMLString::transcode(text));
         size_t childCount = element->getChildElementCount();
         auto children = element->getChildNodes();
-        for (int i = 0; i < childCount; i++)
+        for (uint32_t i = 0; i < childCount; i++)
         {
             auto child = children->item(i);
             result->Children.push_back(LoadXaml((DOMElement *)child));
@@ -165,7 +165,7 @@ namespace xut
         shared_ptr<OpenXaml::Objects::Rectangle> result;
 
         DOMNamedNodeMap *attributes = element->getAttributes();
-        for (int i = 0; i < attributes->getLength(); i++)
+        for (uint32_t i = 0; i < attributes->getLength(); i++)
         {
             DOMNode *item = attributes->item(i);
             const XMLCh *nameXML = item->getNodeName();
@@ -229,7 +229,7 @@ namespace xut
 
         size_t childCount = element->getChildElementCount();
         auto children = element->getChildNodes();
-        for (int i = 0; i < childCount; i++)
+        for (uint32_t i = 0; i < childCount; i++)
         {
             auto child = children->item(i);
             result->Children.push_back(LoadXaml((DOMElement *)child));
@@ -242,7 +242,7 @@ namespace xut
         shared_ptr<TextBlock> result;
 
         DOMNamedNodeMap *attributes = element->getAttributes();
-        for (int i = 0; i < attributes->getLength(); i++)
+        for (uint32_t i = 0; i < attributes->getLength(); i++)
         {
             DOMNode *item = attributes->item(i);
             const XMLCh *nameXML = item->getNodeName();
@@ -344,7 +344,7 @@ namespace xut
 
         size_t childCount = element->getChildElementCount();
         auto children = element->getChildNodes();
-        for (int i = 0; i < childCount; i++)
+        for (uint32_t i = 0; i < childCount; i++)
         {
             auto child = children->item(i);
             result->Children.push_back(LoadXaml((DOMElement *)child));

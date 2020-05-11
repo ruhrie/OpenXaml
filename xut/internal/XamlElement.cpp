@@ -131,7 +131,7 @@ namespace xut
             Name = nameStr;
             size_t childCount = element->getChildElementCount();
             auto children = element->getChildNodes();
-            for (int i = 0; i < childCount; i++)
+            for (uint32_t i = 0; i < childCount; i++)
             {
                 auto child = children->item(i);
                 XamlElement *childElement = XamlElement::GetXamlElement((DOMElement *)child, false);

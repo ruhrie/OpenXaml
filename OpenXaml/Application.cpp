@@ -49,7 +49,6 @@ namespace OpenXaml
 
     Application::Application()
     {
-        spdlog::set_level(spdlog::level::debug);
         Environment::window = new Environment::Window();
         if (!glfwInit())
             throw 2;

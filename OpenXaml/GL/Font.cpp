@@ -11,7 +11,6 @@
 #include <math.h>
 #include <string>
 #include <vector>
-#include FT_FREETYPE_H
 
 using namespace std;
 
@@ -46,7 +45,7 @@ namespace OpenXaml
         FT_ULong charcode;
         charcode = FT_Get_First_Char(newFace, &gindex);
         unsigned int maxHeight = 0;
-        unsigned int maxWidth = 0;
+        uint32_t maxWidth = 0;
         unsigned int numChars = 0;
 
         while (gindex != 0)
@@ -72,7 +71,7 @@ namespace OpenXaml
         size_t width = (size_t)(sides * maxWidth);
         size_t height = (size_t)(ceil(numChars / sides) * maxHeight);
         uint8_t *fontAtlas = (uint8_t *)calloc(width * height, sizeof(uint8_t));
-        int x = 0;
+        uint32_t x = 0;
         int y = 0;
         while (gindex != 0)
         {

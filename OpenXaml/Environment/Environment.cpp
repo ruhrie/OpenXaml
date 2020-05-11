@@ -62,7 +62,7 @@ namespace OpenXaml
             validExtensions.push_back(".ttc");
             validExtensions.push_back(".otf");
 
-            for (int i = 0; i < fontDirectories.size(); i++)
+            for (uint32_t i = 0; i < fontDirectories.size(); i++)
             {
                 for (auto &entry : std::filesystem::recursive_directory_iterator(fontDirectories[i]))
                 {
@@ -77,11 +77,11 @@ namespace OpenXaml
             }
             fontFileMap.clear();
 
-            for (int i = 0; i < fontFiles.size(); i++)
+            for (uint32_t i = 0; i < fontFiles.size(); i++)
             {
                 string file = fontFiles[i];
                 bool correct = false;
-                for (int j = 0; j < validExtensions.size(); j++)
+                for (uint32_t j = 0; j < validExtensions.size(); j++)
                 {
                     string extension = validExtensions[j];
                     correct = 0 == file.compare(file.length() - extension.length(), extension.length(), extension);

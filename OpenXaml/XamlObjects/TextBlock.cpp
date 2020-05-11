@@ -70,7 +70,7 @@ namespace OpenXaml
             size_t charsToRender = 0;
             float fBounds = (localMax.x - localMin.x);
             vector<u32string> splitStrings;
-            for (int i = 0; i < indexes.size() + 1; i++)
+            for (uint32_t i = 0; i < indexes.size() + 1; i++)
             {
                 size_t index = i == indexes.size() ? Text.size() : indexes.at(i);
                 u32string subString = Text.substr(currentIndex, index - currentIndex);
@@ -181,7 +181,7 @@ namespace OpenXaml
             float penX = minRendered.x;
             float penY = maxRendered.y - (height - (font->VerticalOffset >> 6));
             currentIndex = 0;
-            for (int i = 0; i < indexes.size() + 1; i++)
+            for (uint32_t i = 0; i < indexes.size() + 1; i++)
             {
                 int priorIndex = 0;
                 int ppIndex = 0;
@@ -263,7 +263,7 @@ namespace OpenXaml
                         break;
                     }
                 }
-                for (int j = priorIndex; j < formattedText.size(); j++)
+                for (uint32_t j = priorIndex; j < formattedText.size(); j++)
                 {
                     if (penX > localMax.x)
                     {
@@ -474,7 +474,7 @@ namespace OpenXaml
             float maxWidth = 0; //max line width
             size_t charsToRender = 0;
             vector<u32string> splitStrings;
-            for (int i = 0; i < indexes.size() + 1; i++)
+            for (uint32_t i = 0; i < indexes.size() + 1; i++)
             {
                 size_t index = i == indexes.size() ? Text.size() : indexes.at(i);
                 u32string subString = Text.substr(currentIndex, index - currentIndex);

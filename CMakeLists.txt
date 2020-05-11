@@ -15,6 +15,12 @@ find_package(spdlog CONFIG REQUIRED)
 
 add_subdirectory("Dependencies" EXCLUDE_FROM_ALL)
 
+if(WIN32)
+	add_compile_options(-W4 -Wno-unused-parameter) #the unused is temporary (hopefully)
+else()
+	add_compile_options(-Wall -Wextra)
+endif()
+
 add_subdirectory("OpenXaml")
 
 add_subdirectory("xut")
