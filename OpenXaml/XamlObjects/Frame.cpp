@@ -20,7 +20,7 @@ namespace OpenXaml
             Height = 480;
             Fill = 0xFF000000;
             maxRendered = {Environment::window->width, Environment::window->height};
-            minRendered = {0,0};
+            minRendered = {0, 0};
         }
 
         void Frame::Draw()
@@ -49,7 +49,7 @@ namespace OpenXaml
 
         void Frame::Initialize()
         {
-            SetBoundingBox({0,0}, {Environment::window->width, Environment::window->height});
+            SetBoundingBox({0, 0}, {Environment::window->width, Environment::window->height});
             glGenVertexArrays(1, &(Frame::VAO));
             glBindVertexArray(Frame::VAO);
             glGenBuffers(1, &vertexBuffer);

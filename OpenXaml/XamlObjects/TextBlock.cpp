@@ -10,9 +10,9 @@
 #include <harfbuzz/hb.h>
 #include <iostream>
 #include <locale>
+#include <math.h>
 #include <sstream>
 #include <string>
-#include <math.h>
 using namespace std;
 namespace OpenXaml
 {
@@ -64,9 +64,9 @@ namespace OpenXaml
 
             float wordWidth = 0; //width of current word
             size_t currentIndex = 0;
-            int lineCount = 0; //number of lines
-            float width = 0;     //width of current line
-            float maxWidth = 0;  //max line width
+            int lineCount = 0;  //number of lines
+            float width = 0;    //width of current line
+            float maxWidth = 0; //max line width
             size_t charsToRender = 0;
             float fBounds = (localMax.x - localMin.x);
             vector<u32string> splitStrings;
@@ -327,7 +327,7 @@ namespace OpenXaml
             if (y0 != dy0)
             {
                 //we are missing part of the bottom
-                ty0 = textureLoc.tyMax - (textureLoc.tyMax - textureLoc.tyMin) * (y1 - y0) / dheight; 
+                ty0 = textureLoc.tyMax - (textureLoc.tyMax - textureLoc.tyMin) * (y1 - y0) / dheight;
             }
             else
             {
@@ -469,9 +469,9 @@ namespace OpenXaml
 
             float wordWidth = 0; //width of current word
             size_t currentIndex = 0;
-            int lineCount = 0; //number of lines
-            float width = 0;     //width of current line
-            float maxWidth = 0;  //max line width
+            int lineCount = 0;  //number of lines
+            float width = 0;    //width of current line
+            float maxWidth = 0; //max line width
             size_t charsToRender = 0;
             vector<u32string> splitStrings;
             for (int i = 0; i < indexes.size() + 1; i++)

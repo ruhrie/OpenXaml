@@ -5,10 +5,10 @@
 #include "OpenXaml/GL/GLConfig.h"
 #include "OpenXaml/XamlEvents/XamlEvent.h"
 #include "OpenXaml/XamlEvents/XamlEvents.h"
-#include <codecvt>
-#include <filesystem>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <codecvt>
+#include <filesystem>
 #include <spdlog/spdlog.h>
 namespace OpenXaml
 {

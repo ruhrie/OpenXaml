@@ -11,6 +11,7 @@ namespace OpenXaml
             ~ColumnDefinition();
             void setWidth(int width);
             int getWidth();
+
         private:
             int Width;
         };

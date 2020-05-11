@@ -1,7 +1,7 @@
 #pragma once
 #include "OpenXaml/XamlObjects/XamlObject.h"
-#include <math.h>
 #include <chrono>
+#include <math.h>
 namespace OpenXaml
 {
     namespace Animation

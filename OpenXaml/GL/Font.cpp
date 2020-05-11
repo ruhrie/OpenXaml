@@ -7,8 +7,8 @@
 #include <glad/glad.h>
 #include <harfbuzz/hb-ft.h>
 #include <harfbuzz/hb.h>
-#include <math.h>
 #include <iostream>
+#include <math.h>
 #include <string>
 #include <vector>
 #include FT_FREETYPE_H
@@ -36,7 +36,7 @@ namespace OpenXaml
         }
         double dpi = OpenXaml::Environment::DPI;
         FT_Set_Char_Size(newFace, 0, (int)(size * 64), (int)dpi, (int)dpi);
-        
+
         faceMap[this] = newFace;
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 

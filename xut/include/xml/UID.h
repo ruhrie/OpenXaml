@@ -2,5 +2,5 @@
 
 namespace xut
 {
-	unsigned int GetUID();
+    unsigned int GetUID();
 }

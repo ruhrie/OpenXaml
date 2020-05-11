@@ -1,9 +1,10 @@
 #pragma once
 namespace OpenXaml
 {
-	enum class TextWrapping {
-		NoWrap,
-		Wrap, 
-		WrapWholeWords
-	};
+    enum class TextWrapping
+    {
+        NoWrap,
+        Wrap,
+        WrapWholeWords
+    };
 }

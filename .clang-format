@@ -10,3 +10,4 @@ NamespaceIndentation: All
 BreakBeforeBraces: Allman
 UseTab: Never
 IndentCaseLabels: true
+SortIncludes: false

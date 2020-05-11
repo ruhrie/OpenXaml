@@ -2,15 +2,15 @@
 
 namespace OpenXaml
 {
-	namespace Environment
-	{
-		class Window
-		{
-		public:
-			float width = 0;
-			float height = 0;
-		};
+    namespace Environment
+    {
+        class Window
+        {
+        public:
+            float width = 0;
+            float height = 0;
+        };
 
-		extern Window* window;
-	}
-}
+        extern Window *window;
+    } // namespace Environment
+} // namespace OpenXaml

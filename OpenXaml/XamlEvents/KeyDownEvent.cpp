@@ -2,11 +2,11 @@
 
 namespace OpenXaml
 {
-	namespace Events
-	{
-		KeyDownEvent::KeyDownEvent()
-		{
-			eventType = XamlEvent::KeyDownEvent;
-		}
-	}
-}
+    namespace Events
+    {
+        KeyDownEvent::KeyDownEvent()
+        {
+            eventType = XamlEvent::KeyDownEvent;
+        }
+    } // namespace Events
+} // namespace OpenXaml

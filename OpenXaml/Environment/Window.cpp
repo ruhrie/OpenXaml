@@ -2,8 +2,8 @@
 
 namespace OpenXaml
 {
-	namespace Environment
-	{
-		Window* window = new Window();
-	}
-}
+    namespace Environment
+    {
+        Window *window = new Window();
+    }
+} // namespace OpenXaml
