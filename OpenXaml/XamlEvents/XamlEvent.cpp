@@ -3,6 +3,7 @@
 #include "OpenXaml/XamlObjects/Button.h"
 #include "OpenXaml/XamlObjects/TextBox.h"
 #include <algorithm>
+#include "OpenXaml/Environment/Environment.h"
 #include <spdlog/spdlog.h>
 namespace OpenXaml::Events
 {
@@ -37,8 +38,17 @@ namespace OpenXaml::Events
 
                     for (XamlObject *target : targets)
                     {
-                        spdlog::warn("Clicked " + target->getName());
-                        target->Click(location.x, location.y);
+                        auto maxRendered = target->GetMaxRendered();
+                        auto minRendered = target->GetMinRendered();
+                        if (location.x > minRendered.x && location.x < maxRendered.x)
+                        {
+                            if (location.y < maxRendered.y && location.y > minRendered.y)
+                            {
+                                spdlog::warn("Clicked " + target->getName());
+                                Environment::ActiveElement = target;
+                                target->Click();
+                            }
+                        }
                     }
                     break;
                 }

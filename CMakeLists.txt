@@ -12,7 +12,7 @@ find_package(XercesC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 
 if(WIN32)
-	add_compile_options(-W4 -Wno-unused-parameter) #the unused is temporary (hopefully)
+	add_compile_options(-W4) #the unused is temporary (hopefully)
 else()
 	add_compile_options(-Wall -Wextra)
 endif()

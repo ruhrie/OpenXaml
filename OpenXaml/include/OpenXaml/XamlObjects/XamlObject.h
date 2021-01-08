@@ -39,7 +39,6 @@ namespace OpenXaml
             OpenXaml::Visibility getVisibility();
             virtual void SetBoundingBox(vec2<float> min, vec2<float> max); ///Sets the bounding box for rendering the object (not where it actually renders).
             void Click();
-            void Click(double x, double y);
             virtual void setOnClick(std::function<void(XamlObject *)> func);
             std::function<void(XamlObject *)> getOnClick();
             vec2<float> GetMaxRendered(); ///Gets the upper right corner of the actually rendered object

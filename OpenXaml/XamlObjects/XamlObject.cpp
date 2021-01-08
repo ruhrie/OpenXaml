@@ -40,6 +40,7 @@ namespace OpenXaml::Objects
         {
             der->SetBoundingBox(min, max);
         }
+        Update();
     }
 
     XamlObject::~XamlObject() = default;
@@ -178,18 +179,6 @@ namespace OpenXaml::Objects
         if (OnClick != nullptr)
         {
             OnClick(this);
-        }
-    }
-    void XamlObject::Click(double x, double y)
-    {
-        float ny = Environment::window->height - y;
-        if (x > minRendered.x && x < maxRendered.x)
-        {
-            if (ny < maxRendered.y && ny > minRendered.y)
-            {
-                Environment::ActiveElement = this;
-                Click();
-            }
         }
     }
 

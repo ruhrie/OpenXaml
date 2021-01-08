@@ -20,11 +20,12 @@ namespace OpenXaml::Objects
         PlaceholderTextTextBlock->setTextAlignment(TextAlignment::Start);
         PlaceholderTextTextBlock->setText(PlaceholderText);
         PlaceholderTextTextBlock->setHorizontalAlignment(HorizontalAlignment::Left);
+        TextTextBlock->setName("asdf");
 
         DerivedElements.push_back(PlaceholderTextTextBlock);
         DerivedElements.push_back(TextTextBlock);
         DerivedElements.push_back(Frame);
-        DerivedElements.push_back(Indicator);
+        //DerivedElements.push_back(Indicator);
         Events::AddEvent(Events::XamlEvent::TextEvent, this);
         Events::AddEvent(Events::XamlEvent::ClickEvent, this);
     }
@@ -82,12 +83,12 @@ namespace OpenXaml::Objects
         Frame->setHorizontalAlignment(HorizontalAlignment);
         Frame->setVerticalAlignment(VerticalAlignment);
         Frame->Update();
-        auto min = Frame->GetMinRendered();
-        auto max = Frame->GetMaxRendered();
-        PlaceholderTextTextBlock->SetBoundingBox(min, max);
+        minRendered = Frame->GetMinRendered();
+        maxRendered = Frame->GetMaxRendered();
+        PlaceholderTextTextBlock->SetBoundingBox(minRendered, maxRendered);
         PlaceholderTextTextBlock->Update();
         TextTextBlock->setText(Text);
-        TextTextBlock->SetBoundingBox(min, max);
+        TextTextBlock->SetBoundingBox(minRendered, maxRendered);
         TextTextBlock->Update();
         XamlObject::Update();
     }

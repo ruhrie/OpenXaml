@@ -110,7 +110,8 @@ namespace OpenXaml::Objects
 
         if (charsToRender == 0)
         {
-            return;
+            lineCount = 0;
+            //return;
         }
 
         auto *vBuffer = (float *)calloc(16 * charsToRender, sizeof(float));
