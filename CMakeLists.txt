@@ -3,13 +3,16 @@ Project(OpenXaml VERSION 0.1.0)
 
 option(BUILD_SAMPLE_APPLICATION "Build a sample application" ON)
 option(BUILD_DOCUMENTATION "Build the documentation" OFF)
-option(USE_LINTER "Use the linter" OFF)
+option(ENABLE_LINTER "Run linter" OFF)
+
 #these are currently tested and verified against windows vcpkg, linux probably works
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(harfbuzz CONFIG REQUIRED)
 find_package(XercesC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
+find_package(cxxopts CONFIG REQUIRED)
 
 if(WIN32)
 	add_compile_options(-W4) #the unused is temporary (hopefully)
@@ -17,26 +20,7 @@ else()
 	add_compile_options(-Wall -Wextra)
 endif()
 
-if(USE_LINTER)
-	find_program(LINTER clang-tidy)
-	if(${LINTER} STREQUAL "LINTER-NOTFOUND")
-		message(CRITICAL "clang-tidy not found")
-	else()
-		message(STATUS "Found clang-tidy at ${LINTER}")
-		if(NOT WIN32)
-			set(CMAKE_CXX_CLANG_TIDY 
-				${LINTER}
-				--checks=readability-*,-readability-magic-numbers,performance-*,portability-*,modernize-*,-modernize-use-trailing-return-type,-modernize-avoid-c-arrays
-			)
-		else()
-			message(CRITICAL "cmake currently cannot run clang-tidy")
-		endif()
-	endif()
-endif()
-
 set (CMAKE_CXX_STANDARD 17)
-
-add_subdirectory("Dependencies" EXCLUDE_FROM_ALL)
 
 add_subdirectory("OpenXaml")
 
@@ -64,7 +48,7 @@ if(BUILD_DOCUMENTATION)
 endif(BUILD_DOCUMENTATION)
 
 #stollen from https://github.com/ttroy50/cmake-examples/blob/master/04-static-analysis/clang-format/cmake/modules/clang-format.cmake
-set(CLANG_FORMAT_EXCLUDE_PATTERNS "build" "vcpkg" "Dependencies")
+set(CLANG_FORMAT_EXCLUDE_PATTERNS "build" "vcpkg")
 file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h *.c)
 foreach (SOURCE_FILE ${ALL_SOURCE_FILES})
     foreach (EXCLUDE_PATTERN ${CLANG_FORMAT_EXCLUDE_PATTERNS})
@@ -82,3 +66,21 @@ add_custom_target(
     -i
     ${ALL_SOURCE_FILES}
 )
+
+if(${ENABLE_LINTER})
+    find_program(TIDY NAMES clang-tidy-9 clang-tidy)
+    if(${TIDY} STREQUAL "TIDY-NOTFOUND")
+        message(FATAL_ERROR "clang-tidy not found! Necessary for linting!")
+    else()
+        message(STATUS "Found clang-tidy in ${TIDY}")
+    endif()
+    
+    set(CMAKE_CXX_CLANG_TIDY 
+        ${TIDY};
+        --checks=readability-*,-readability-magic-numbers,performance-*,portability-*,modernize-*,-modernize-use-trailing-return-type;
+        )
+    set(CMAKE_C_CLANG_TIDY 
+        ${TIDY};
+        --checks=readability-*,-readability-magic-numbers,performance-*,portability-*,-clang-analyzer-security.insecureAPI.*;
+        )
+endif()

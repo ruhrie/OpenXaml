@@ -1,0 +1,7 @@
+glfw3
+Freetype
+harfbuzz
+xerces-c
+spdlog
+glad
+cxxopts

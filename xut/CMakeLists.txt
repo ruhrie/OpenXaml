@@ -1,6 +1,7 @@
 project("xut")
 
 set (CMAKE_CXX_STANDARD 17)
+
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Schema/XamlStandard.xsd" XAML_STANDARD_XSD)
 configure_file("Schema/XamlStandard.cpp.in" "Schema/XamlStandard.cpp")
 file (GLOB SOURCES "*.cpp" "xml/*.cpp" "internal/*.cpp" "${CMAKE_CURRENT_BINARY_DIR}/Schema/*.cpp" "Formatter/*.cpp")
@@ -11,8 +12,8 @@ set_target_properties(xut
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" 
 )
 
-target_include_directories(xut PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${DEP_INC} ${OPENXAML_INC})
-target_link_libraries(xut OpenXaml  xerces_xerces-c XercesC::XercesC)
+target_include_directories(xut PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${OPENXAML_INC})
+target_link_libraries(xut PRIVATE OpenXaml  xerces_xerces-c XercesC::XercesC cxxopts::cxxopts)
 
 install(TARGETS xut EXPORT OpenXaml DESTINATION "bin")
 
