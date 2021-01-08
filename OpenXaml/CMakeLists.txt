@@ -5,11 +5,11 @@ file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/fragment.glsl" FRAGMENT_CODE)
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/Shaders/vertex.glsl" VERTEX_CODE)
 configure_file("GL/GLConfig.cpp.in" "GL/GLConfig.cpp")
 
-file(GLOB SOURCES "XamlObjects/*.cpp" "../Dependencies/glad/src/*.c" "GL/*.cpp" "*.cpp" "XamlEvents/*.cpp" "Environment/*.cpp" "Animation/*.cpp")
+file(GLOB SOURCES "XamlObjects/*.cpp" "GL/*.cpp" "*.cpp" "XamlEvents/*.cpp" "Environment/*.cpp" "Animation/*.cpp")
 
 set (OPENXAML_INC "${CMAKE_CURRENT_SOURCE_DIR}/include/" PARENT_SCOPE)
 set (OPENGL_INC "")
-set (LIBRARIES glfw harfbuzz::harfbuzz Freetype::Freetype spdlog::spdlog_header_only)
+set (LIBRARIES glfw harfbuzz::harfbuzz Freetype::Freetype spdlog::spdlog_header_only glad::glad)
 set (COMP_DEC "")
 
 if (UNIX)
@@ -32,7 +32,7 @@ set_target_properties(OpenXaml
 )
 
 target_include_directories(OpenXaml PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include/" ${GLAD_INC})
-target_include_directories(OpenXaml SYSTEM INTERFACE  ${FREETYPE_INCLUDE_DIRS} ${GLFW_INCLUDE_DIR} ${OPENGL_INC} ${HARFBUZZ_INC})
+target_include_directories(OpenXaml SYSTEM INTERFACE ${OPENGL_INC})
 target_link_libraries(OpenXaml PRIVATE ${LIBRARIES})
 if(WIN32)
 	target_compile_definitions(OpenXaml PRIVATE ${COMP_DEC})
