@@ -1,0 +1,13 @@
+{
+    "name": "openxaml",
+    "version": "0.0.1",
+    "dependencies": [
+        "glfw3",
+        "freetype",
+        "harfbuzz",
+        "xerces-c",
+        "spdlog",
+        "glad",
+        "cxxopts"
+    ]
+}
